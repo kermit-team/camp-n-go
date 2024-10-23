@@ -103,6 +103,7 @@ xcuserdata/
 .env
 .venv
 env/
+envs/
 venv/
 ENV/
 env.bak/

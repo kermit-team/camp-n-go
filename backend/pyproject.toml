@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "Camp'n'go"
+version = "0.1.0"
+description = ""
+authors = [
+    "Patryk Beberok <patryk.beberok0990@gmail.com>",
+    "Katarzyna Szczepańczyk <k.szczepanczyk83@gmail.com>",
+    "Mateusz Dworaczyk <mateuszdwyk@gmail.com>",
+    "Kamil Gajczak <kamil.gajczak@gmail.com>",
+]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0"
+django-split-settings = "^1.2.0"
+psycopg2 = "2.9.9"
+django-cors-headers = "^4.3.1"
+argon2-cffi = "^23.1.0"
+djangorestframework = "^3.14.0"
+djangorestframework-simplejwt = "^5.3.1"
+drf-spectacular = "^0.27.1"
+drf-spectacular-sidecar = "^2024.1.1"
+django-filter = "^23.5"
+gitpython = "^3.1.41"
+pillow = "^10.3.0"
+
+[tool.poetry.group.dev.dependencies]
+django-silk = "^5.1.0"
+bpython = "^0.24"
+types-setuptools = "^69.0.0.20240125"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

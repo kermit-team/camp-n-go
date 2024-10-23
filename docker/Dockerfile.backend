@@ -1,0 +1,48 @@
+FROM python:3.12-bullseye
+
+ARG DJANGO_ENV
+
+ENV DJANGO_ENV=${DJANGO_ENV} \
+  PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  # poetry
+  POETRY_VERSION=1.8 \
+  POETRY_NO_INTERACTION=1 \
+  POETRY_VIRTUALENVS_CREATE=false \
+  POETRY_CACHE_DIR='/var/cache/pypoetry' \
+  POETRY_HOME='/usr/local' \
+  # pytest
+  PYTEST_ADDOPTS="--color=yes"
+
+RUN apt-get update && apt-get install -y \
+  gcc \
+  python3-dev \
+  libpq-dev \
+  libxml2-dev \
+  libxslt-dev \
+  netcat \
+  curl \
+  gettext \
+  entr \
+  && pip install "poetry==$POETRY_VERSION" \
+  && poetry --version \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /code
+
+COPY backend/pyproject.toml /code/
+COPY backend/poetry.lock /code/
+
+RUN poetry install --no-interaction --no-ansi -vvv
+
+COPY backend /code
+
+COPY bin/entrypoint.dev.sh /bin/
+RUN chmod +x /bin/entrypoint.dev.sh
+
+EXPOSE 8000
+CMD ["sh", "/bin/entrypoint.dev.sh"]

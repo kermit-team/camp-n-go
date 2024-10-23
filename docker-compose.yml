@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  database:
+    container_name: database
+    image: postgres:16
+    ports:
+      - '5432:5432'
+    env_file:
+      - envs/.database.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DATABASE"'
+      timeout: 2s
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.frontend
+    env_file:
+      - envs/.frontend.env
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./frontend:/code
+      - /code/node_modules
+    depends_on:
+      backend:
+        condition: service_started
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/code
+    depends_on:
+      database:
+        condition: service_healthy
+volumes:
+  postgres_data:

@@ -100,10 +100,9 @@ xcuserdata/
 *.xccheckout
 
 # Environments
-.env
-.venv
+*.env
+*.venv
 env/
-envs/
 venv/
 ENV/
 env.bak/

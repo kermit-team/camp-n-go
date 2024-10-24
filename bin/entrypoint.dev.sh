@@ -3,7 +3,7 @@
 set -o errexit
 set -o nounset
 
-cd /code/src
+cd /code
 
 echo "Migrating database..."
 python manage.py migrate --noinput

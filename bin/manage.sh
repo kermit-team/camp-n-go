@@ -1,2 +1,2 @@
 #!/bin/sh
-docker compose run --rm backend python src/manage.py "$@"
+docker compose run --rm backend python manage.py "$@"

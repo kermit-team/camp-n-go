@@ -25,11 +25,21 @@ drf-spectacular-sidecar = "^2024.1.1"
 django-filter = "^23.5"
 gitpython = "^3.1.41"
 pillow = "^10.3.0"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
 
 [tool.poetry.group.dev.dependencies]
 django-silk = "^5.1.0"
 bpython = "^0.24"
 types-setuptools = "^69.0.0.20240125"
+wemake-python-styleguide = "^0.19.2"
+flake8 = "^7.1.1"
+xenon = "^0.9.3"
+bandit = "^1.7.10"
+pip-audit = "^2.7.3"
+mypy = "^1.13.0"
+pytest = "^8.3.3"
+pytest-django = "^4.9.0"
+pytest-cov = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]

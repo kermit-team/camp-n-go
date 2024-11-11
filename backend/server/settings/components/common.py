@@ -1,11 +1,8 @@
 import os
-from pathlib import PurePath
-
-from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR.joinpath('some')
 # `pathlib` is better than writing: dirname(dirname(dirname(__file__)))
-BASE_DIR = PurePath(__file__).parent.parent.parent.parent
+BASE_DIR = '/code'  # Temporarily set to prevent problems with split settings invalid base_dir
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv('DEBUG', 0)))
@@ -48,28 +45,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'server.wsgi.application'
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = 'pl-PL'
-
-TIME_ZONE = 'Europe/Warsaw'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-LANGUAGES = [
-    ('pl', _('Polish')),
-    ('en', _('English')),
-]
-
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'server', 'locale'),
-]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

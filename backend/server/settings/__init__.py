@@ -18,10 +18,13 @@ ENV = environ['DJANGO_ENV']
 
 base_settings = [
     'components/apps.py',
+    'components/camping.py',
     'components/common.py',
     'components/database.py',
+    'components/permissions.py',
     'components/rest.py',
     'components/security.py',
+    'components/translations.py',
     'environments/{0}.py'.format(ENV),
 ]
 

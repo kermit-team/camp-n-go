@@ -10,9 +10,11 @@ INSTALLED_APPS = [
     # 3rd party apps
     'corsheaders',
     'django_filters',
+    'phonenumber_field',
     'rest_framework',
     'rest_framework_simplejwt',
 
     # apps
+    'server.apps.account',
     'server.apps.common',
 ]

@@ -1,0 +1,1 @@
+from server.apps.account.serializers.register import AccountRegisterSerializer

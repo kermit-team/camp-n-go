@@ -3,7 +3,7 @@ from typing import Any
 from rest_framework import serializers
 
 from server.apps.account.models import Account, AccountProfile
-from server.business_logic.account.register import RegisterAccountBL
+from server.business_logic.account.register import AccountRegisterBL
 
 
 class AccountProfileRegisterSerializer(serializers.ModelSerializer):
@@ -33,7 +33,7 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data: Any) -> Account:
         profile_data = validated_data.get('profile')
 
-        return RegisterAccountBL.process(
+        return AccountRegisterBL.process(
             email=validated_data.get('email'),
             password=validated_data.get('password'),
             first_name=profile_data.get('first_name'),

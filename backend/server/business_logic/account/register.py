@@ -5,10 +5,11 @@ from django.db import transaction
 
 from server.apps.account.models import Account
 from server.business_logic.abstract import AbstractBL
+from server.business_logic.mailing.account.email_verification import AccountEmailVerificationMail
 from server.datastore.commands.account import AccountCommand
 
 
-class RegisterAccountBL(AbstractBL):
+class AccountRegisterBL(AbstractBL):
     group_names = [settings.CLIENT]
 
     @classmethod
@@ -23,7 +24,7 @@ class RegisterAccountBL(AbstractBL):
         avatar: Optional[str] = None,
         id_card: Optional[str] = None,
     ) -> Account:
-        return AccountCommand.create(
+        account = AccountCommand.create(
             email=email,
             password=password,
             first_name=first_name,
@@ -35,3 +36,6 @@ class RegisterAccountBL(AbstractBL):
             id_card=id_card,
             group_names=cls.group_names,
         )
+        AccountEmailVerificationMail.send(account=account)
+
+        return account

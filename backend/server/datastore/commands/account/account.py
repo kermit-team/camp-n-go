@@ -66,6 +66,11 @@ class AccountCommand:
         )
 
     @classmethod
+    def activate(cls, account: Account) -> None:
+        account.is_active = True
+        account.save()
+
+    @classmethod
     def _add_groups_to_account(cls, account: Account, names: list[str]) -> None:
         groups = []
         for name in names:

@@ -9,3 +9,4 @@ docker images | egrep 'camp-n-go.+' | awk '{ print $1 }' | xargs docker rmi -f |
 rm envs/.backend.env
 rm envs/.database.env
 rm envs/.frontend.env
+rm envs/.rabbitmq.env

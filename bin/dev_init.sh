@@ -3,6 +3,7 @@ set -e
 cp -n envs/backend-env-default envs/.backend.env
 cp -n envs/database-env-default envs/.database.env
 cp -n envs/frontend-env-default envs/.frontend.env
+cp -n envs/rabbitmq-env-default envs/.rabbitmq.env
 
 docker compose up -d
 

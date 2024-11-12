@@ -165,3 +165,10 @@ class AccountCommandTestCase(TestCase):
         )
 
         assert account is not None
+
+    def test_activate(self):
+        account = baker.make(_model=Account, is_active=False)
+
+        AccountCommand.activate(account=account)
+
+        assert account.is_active

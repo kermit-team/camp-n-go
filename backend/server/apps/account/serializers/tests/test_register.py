@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.serializers import AccountRegisterSerializer
-from server.business_logic.account.register import RegisterAccountBL
+from server.business_logic.account.register import AccountRegisterBL
 
 
 class AccountRegisterSerializerTestCase(TestCase):
@@ -14,7 +14,7 @@ class AccountRegisterSerializerTestCase(TestCase):
         self.account = baker.prepare(_model=Account, _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
-    @mock.patch.object(RegisterAccountBL, 'process')
+    @mock.patch.object(AccountRegisterBL, 'process')
     def test_create(self, register_account_mock):
         serializer = AccountRegisterSerializer(
             data={
@@ -42,7 +42,7 @@ class AccountRegisterSerializerTestCase(TestCase):
             id_card=self.account_profile.id_card,
         )
 
-    @mock.patch.object(RegisterAccountBL, 'process')
+    @mock.patch.object(AccountRegisterBL, 'process')
     def test_create_without_optional_fields(self, register_account_mock):
         serializer = AccountRegisterSerializer(
             data={

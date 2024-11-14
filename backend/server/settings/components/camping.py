@@ -12,5 +12,5 @@ XL_LENGTH = 512
 DJANGO_SILK_ON = bool(int(os.getenv('DJANGO_SILK_ON', 0)))
 DRF_SPECTACULAR_ON = bool(int(os.getenv('DRF_SPECTACULAR_ON', 0)))
 
-AVATAR_DEFAULT_IMAGE = os.getenv('AVATAR_DEFAULT_IMAGE', 'avatar.png')
-AVATARS_SUBDIRECTORY = os.getenv('AVATARS_SUBDIRECTORY')
+AVATAR_DEFAULT_IMAGE = 'avatar.png'
+AVATARS_SUBDIRECTORY = 'account/avatars/'

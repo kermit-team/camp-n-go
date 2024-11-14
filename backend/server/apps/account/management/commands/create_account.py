@@ -8,7 +8,7 @@ from server.datastore.commands.account import AccountCommand
 
 
 class Command(BaseCommand):
-    help = 'Create account based on the given details'
+    help = 'Create account based on the given details.'
 
     def add_arguments(self, parser):
         parser.add_argument(

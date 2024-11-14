@@ -16,5 +16,3 @@ EMAIL_HOST=smtp_server
 EMAIL_PORT=1025
 
 FRONTEND_EMAIL_VERIFICATION_URL_SCHEMA=http://localhost:4200/email-verification/{uidb64}/{token}
-
-AVATARS_SUBDIRECTORY=account/avatars/

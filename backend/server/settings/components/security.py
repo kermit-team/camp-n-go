@@ -34,8 +34,12 @@ PASSWORD_HASHERS = [
 CORS_ALLOW_CREDENTIALS = True
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=30),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(
+        seconds=int(os.getenv('ACCESS_TOKEN_LIFETIME_IN_SECONDS', 60 * 30)),
+    ),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(
+        seconds=int(os.getenv('REFRESH_TOKEN_LIFETIME_IN_SECONDS', 60 * 60 * 24)),
+    ),
 }
 
-PASSWORD_RESET_TIMEOUT = os.getenv('PASSWORD_RESET_TIMEOUT', 60 * 60 * 24)
+PASSWORD_RESET_TIMEOUT = int(os.getenv('REFRESH_TOKEN_LIFETIME_IN_SECONDS', 60 * 60 * 24))

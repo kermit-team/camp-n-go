@@ -9,11 +9,11 @@ from model_bakery import baker
 from server.apps.account.exceptions.account import (
     AccountAlreadyActiveError,
     AccountEmailVerificationTokenError,
-    AccountNotExistsError,
+    AccountIdentifierNotExistsError,
 )
 from server.apps.account.generators import AccountEmailVerificationTokenGenerator
 from server.apps.account.models import Account, AccountProfile
-from server.business_logic.account.email_verification import AccountEmailVerificationBL
+from server.business_logic.account import AccountEmailVerificationBL
 from server.datastore.commands.account import AccountCommand
 from server.datastore.queries.account import AccountQuery
 
@@ -49,7 +49,7 @@ class AccountEmailVerificationBLTestCase(TestCase):
 
         get_account_by_identifier_mock.side_effect = Account.DoesNotExist()
 
-        with self.assertRaises(AccountNotExistsError):
+        with self.assertRaises(AccountIdentifierNotExistsError):
             AccountEmailVerificationBL.process(
                 uidb64=uidb64,
                 token=token,

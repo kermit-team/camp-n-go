@@ -7,9 +7,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from model_bakery import baker
 
-from server.apps.account.generators import AccountEmailVerificationTokenGenerator
 from server.apps.account.models import Account, AccountProfile
-from server.business_logic.mailing.account.email_verification import AccountEmailVerificationMail
+from server.business_logic.mailing.account import AccountEmailVerificationMail
 from server.services.consumer.enums import TaskNameEnum
 from server.services.consumer.serializers.mailing import MailingSerializer
 
@@ -21,13 +20,9 @@ class AccountEmailVerificationMailTestCase(TestCase):
         self.account = baker.make(Account, _fill_optional=True)
         baker.make(AccountProfile, account=self.account, _fill_optional=True)
 
-        self.token = AccountEmailVerificationMail._token_generator().make_token(user=self.account)
-
     @mock.patch(mock_celery_app_path)
-    @mock.patch.object(AccountEmailVerificationTokenGenerator, 'make_token')
     def test_send(
         self,
-        token_generator_mock,
         celery_app_mock,
     ):
         emails = [self.account.email]
@@ -42,9 +37,7 @@ class AccountEmailVerificationMailTestCase(TestCase):
         }
         message = render_to_string(AccountEmailVerificationMail._message_template, ctx)
 
-        token_generator_mock.return_value = token
-
-        AccountEmailVerificationMail.send(account=self.account)
+        AccountEmailVerificationMail.send(account=self.account, token=token)
 
         expected_payload = MailingSerializer(
             to_email=emails,

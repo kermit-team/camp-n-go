@@ -3,7 +3,7 @@ from typing import Any
 from rest_framework import serializers
 
 from server.apps.account.models import Account, AccountProfile
-from server.business_logic.account.register import AccountRegisterBL
+from server.business_logic.account import AccountRegisterBL
 
 
 class AccountProfileRegisterSerializer(serializers.ModelSerializer):

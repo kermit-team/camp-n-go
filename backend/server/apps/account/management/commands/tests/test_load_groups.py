@@ -5,7 +5,7 @@ from django.core.management import CommandError, call_command
 from django.test import TestCase, override_settings
 
 from server.apps.account.errors.permission import PermissionErrorMessagesEnum
-from server.business_logic.account.load_permissions import LoadPermissionsBL
+from server.business_logic.account import LoadPermissionsBL
 
 
 class LoadGroupsCommandTestCase(TestCase):

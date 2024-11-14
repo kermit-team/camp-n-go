@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 from server.apps.account.exceptions.permission import PermissionNotExistsError
-from server.business_logic.account.load_groups import LoadGroupsBL
+from server.business_logic.account import LoadGroupsBL
 
 
 class Command(BaseCommand):

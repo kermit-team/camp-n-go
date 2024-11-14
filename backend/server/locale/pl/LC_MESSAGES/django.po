@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-09 22:02+0100\n"
+"POT-Creation-Date: 2024-11-13 19:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,13 +21,45 @@ msgstr ""
 "%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
 #: server/apps/account/apps.py:8
-#: server/apps/account/models/account_profile.py:44
+#: server/apps/account/models/account_profile.py:49
 msgid "Account"
 msgstr "Użytkownik"
 
 #: server/apps/account/apps.py:9
 msgid "Accounts"
 msgstr "Użytkownicy"
+
+#: server/apps/account/errors/account.py:7
+#, python-brace-format
+msgid "Account {identifier} does not exist."
+msgstr "Użytkownik {identifier} nie istnieje."
+
+#: server/apps/account/errors/account.py:8
+#, python-brace-format
+msgid "Account with email {email} does not exist."
+msgstr "Użytkownik o adresie e-mail {email} nie istnieje."
+
+#: server/apps/account/errors/account.py:9
+#, python-brace-format
+msgid "Account {identifier} is already active."
+msgstr "Użytkownik {identifier} jest już aktywny."
+
+#: server/apps/account/errors/account.py:10
+#, python-brace-format
+msgid "Given token is invalid or expired for account {identifier}."
+msgstr ""
+"Podany token jest niewłaściwy lub stracił ważność dla użytkownika "
+"{identifier}."
+
+#: server/apps/account/errors/group.py:7
+#, python-brace-format
+msgid "Group {name} does not exist."
+msgstr "Grupa {name} nie istnieje."
+
+#: server/apps/account/errors/permission.py:7
+#, python-brace-format
+msgid "Permission {codename} does not exist."
+msgstr "Uprawnienie {codename} nie istnieje."
 
 #: server/apps/account/models/account.py:14
 msgid "Identifier"
@@ -49,23 +81,23 @@ msgstr ""
 "Określa czy ten użytkownik powinien być traktowany jako aktywny. Odznacz tą "
 "opcję zamiast usuwać użytkownika."
 
-#: server/apps/account/models/account_profile.py:13
+#: server/apps/account/models/account_profile.py:15
 msgid "FirstName"
 msgstr "Imię"
 
-#: server/apps/account/models/account_profile.py:19
+#: server/apps/account/models/account_profile.py:21
 msgid "LastName"
 msgstr "Nazwisko"
 
-#: server/apps/account/models/account_profile.py:25
+#: server/apps/account/models/account_profile.py:27
 msgid "PhoneNumber"
 msgstr "Numer telefonu"
 
-#: server/apps/account/models/account_profile.py:30
+#: server/apps/account/models/account_profile.py:32
 msgid "Avatar"
 msgstr "Awatar"
 
-#: server/apps/account/models/account_profile.py:35
+#: server/apps/account/models/account_profile.py:40
 msgid "IdCard"
 msgstr "Dowód osobisty"
 
@@ -76,6 +108,10 @@ msgstr "Czas utworzenia"
 #: server/apps/common/models/created_updated.py:7
 msgid "ModifiedAt"
 msgstr "Czas modyfikacji"
+
+#: server/business_logic/mailing/account/email_verification.py:13
+msgid "AccountEmailVerificationEmailSubject"
+msgstr "Weryfikacja adresu e-mail"
 
 #: server/settings/components/permissions.py:3
 msgid "Owner"
@@ -89,7 +125,7 @@ msgstr "Pracownik"
 msgid "Client"
 msgstr "Klient"
 
-#: server/settings/components/rest.py:28
+#: server/settings/components/rest.py:31
 msgid "Application for camping management"
 msgstr "Aplikacja do zarządzania kempingiem"
 
@@ -100,3 +136,31 @@ msgstr "Polski"
 #: server/settings/components/translations.py:19
 msgid "English"
 msgstr "Angielski"
+
+#: server/templates/mailing/account/email_verification.html:6
+msgid "E-mail address verification"
+msgstr "Weryfikacja adresu e-mail"
+
+#: server/templates/mailing/account/email_verification.html:9
+msgid "Hi"
+msgstr "Cześć"
+
+#: server/templates/mailing/account/email_verification.html:10
+msgid "To confirm your email address, please click on the link below:"
+msgstr "Aby potwierdzić swój adres e-mail, kliknij poniższy link:"
+
+#: server/templates/mailing/account/email_verification.html:16
+msgid "Verify e-mail address"
+msgstr "Zweryfikuj adres e-mail"
+
+#: server/templates/mailing/account/email_verification.html:20
+msgid "If the button does not work for any reason, please use the link below:"
+msgstr "Jeśli przycisk z jakiegoś powodu nie działa, skorzystaj z poniższego linku:"
+
+#: server/templates/mailing/account/email_verification.html:28
+msgid "If you have not registered on our site, please ignore this message."
+msgstr "Jeśli nie zarejestrowałeś się na naszej stronie, zignoruj tę wiadomość."
+
+#: server/templates/mailing/account/email_verification.html:34
+msgid "Regards"
+msgstr "Pozdrawia"

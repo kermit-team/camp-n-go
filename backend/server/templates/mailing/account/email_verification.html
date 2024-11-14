@@ -7,7 +7,7 @@
     </h1>
     <p style="text-align: justify;">
         {% translate "Hi" %} {{ name }}!</br>
-        {% blocktranslate %}
+        {% blocktranslate trimmed %}
             To confirm your email address, please click on the link below:
         {% endblocktranslate %}
     </p>
@@ -17,7 +17,7 @@
     </button>
     <p style="text-align: justify;margin: 0;line-height: 1.5;padding: 10px;">
         <small>
-            {% blocktranslate %}
+            {% blocktranslate trimmed %}
                 If the button does not work for any reason, please use the link below:
             {% endblocktranslate %}<br>
             <a href="{{ verification_url }}">{{ verification_url }}</a>
@@ -25,7 +25,7 @@
     </p>
     <p style="text-align: justify;margin: 0;line-height: 1.5;padding: 10px;">
         <small>
-            {% blocktranslate %}
+            {% blocktranslate trimmed %}
                 If you have not registered on our site, please ignore this message.
             {% endblocktranslate %}
         </small>

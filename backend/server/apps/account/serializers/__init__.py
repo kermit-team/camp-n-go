@@ -1,1 +1,2 @@
+from server.apps.account.serializers.email_verification_resend import AccountEmailVerificationResendSerializer
 from server.apps.account.serializers.register import AccountRegisterSerializer

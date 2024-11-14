@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from server.business_logic.account.load_permissions import LoadPermissionsBL
+from server.business_logic.account import LoadPermissionsBL
 
 
 class Command(BaseCommand):

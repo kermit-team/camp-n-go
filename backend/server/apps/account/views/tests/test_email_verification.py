@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase
 
 from server.apps.account.views import AccountEmailVerificationView
-from server.business_logic.account.email_verification import AccountEmailVerificationBL
+from server.business_logic.account import AccountEmailVerificationBL
 
 
 class AccountEmailVerificationViewTestCase(APITestCase):
@@ -21,7 +21,7 @@ class AccountEmailVerificationViewTestCase(APITestCase):
         parameters = {'uidb64': uidb64, 'token': token}
 
         url = reverse(
-            'account_email_verification',
+            'email_verification',
             kwargs=parameters,
         )
         req = self.factory.get(url)

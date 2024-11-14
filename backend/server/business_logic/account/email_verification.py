@@ -5,7 +5,7 @@ from django.utils.http import urlsafe_base64_decode
 from server.apps.account.exceptions.account import (
     AccountAlreadyActiveError,
     AccountEmailVerificationTokenError,
-    AccountNotExistsError,
+    AccountIdentifierNotExistsError,
 )
 from server.apps.account.generators import AccountEmailVerificationTokenGenerator
 from server.apps.account.models import Account
@@ -22,6 +22,7 @@ class AccountEmailVerificationBL(AbstractBL):
         identifier = uuid.UUID(urlsafe_base64_decode(uidb64).decode())
         account = cls._get_account(identifier=identifier)
         cls._validate_token(account=account, token=token)
+
         AccountCommand.activate(account=account)
 
     @classmethod
@@ -36,4 +37,4 @@ class AccountEmailVerificationBL(AbstractBL):
         try:
             return AccountQuery.get_by_identifier(identifier=identifier)
         except (Account.DoesNotExist):
-            raise AccountNotExistsError(identifier=identifier)
+            raise AccountIdentifierNotExistsError(identifier=identifier)

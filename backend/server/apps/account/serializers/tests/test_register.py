@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.serializers import AccountRegisterSerializer
-from server.business_logic.account.register import AccountRegisterBL
+from server.business_logic.account import AccountRegisterBL
 
 
 class AccountRegisterSerializerTestCase(TestCase):

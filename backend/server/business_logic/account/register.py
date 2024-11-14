@@ -3,14 +3,17 @@ from typing import Optional
 from django.conf import settings
 from django.db import transaction
 
+from server.apps.account.generators import AccountEmailVerificationTokenGenerator
 from server.apps.account.models import Account
 from server.business_logic.abstract import AbstractBL
-from server.business_logic.mailing.account.email_verification import AccountEmailVerificationMail
+from server.business_logic.mailing.account import AccountEmailVerificationMail
 from server.datastore.commands.account import AccountCommand
 
 
 class AccountRegisterBL(AbstractBL):
-    group_names = [settings.CLIENT]
+    default_group_names = [settings.CLIENT]
+
+    _token_generator = AccountEmailVerificationTokenGenerator
 
     @classmethod
     @transaction.atomic
@@ -34,8 +37,10 @@ class AccountRegisterBL(AbstractBL):
             phone_number=phone_number,
             avatar=avatar,
             id_card=id_card,
-            group_names=cls.group_names,
+            group_names=cls.default_group_names,
         )
-        AccountEmailVerificationMail.send(account=account)
+
+        email_verification_token = cls._token_generator().make_token(user=account)
+        AccountEmailVerificationMail.send(account=account, token=email_verification_token)
 
         return account

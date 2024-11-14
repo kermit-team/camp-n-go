@@ -3,9 +3,14 @@ import uuid
 from server.apps.account.errors.account import AccountErrorMessagesEnum
 
 
-class AccountNotExistsError(Exception):
+class AccountIdentifierNotExistsError(Exception):
     def __init__(self, identifier: uuid.UUID):
-        super().__init__(AccountErrorMessagesEnum.NOT_EXISTS.value.format(identifier=identifier))
+        super().__init__(AccountErrorMessagesEnum.IDENTIFIER_NOT_EXISTS.value.format(identifier=identifier))
+
+
+class AccountEmailNotExistsError(Exception):
+    def __init__(self, email: str):
+        super().__init__(AccountErrorMessagesEnum.EMAIL_NOT_EXISTS.value.format(email=email))
 
 
 class AccountAlreadyActiveError(Exception):

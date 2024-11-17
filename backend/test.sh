@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-set -o errexit
-set -o nounset
+set -e -u
 
 # Initializing global variables and functions:
 : "${DJANGO_ENV:=test}"

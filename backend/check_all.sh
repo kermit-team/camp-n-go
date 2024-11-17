@@ -1,7 +1,6 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-set -o errexit
-set -o nounset
+set -e -u
 
 pyclean () {
   find . | grep -E '(__pycache__|\.py[cod]$)' | xargs rm -rf

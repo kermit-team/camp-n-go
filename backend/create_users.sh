@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 if [ "$DJANGO_ENV" != 'development' ]; then
   echo "DJANGO_ENV is not set to 'development'. Creating hardcoded users is forbidden!"
   exit 1

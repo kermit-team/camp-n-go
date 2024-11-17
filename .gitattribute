@@ -1,2 +1,3 @@
 *.vcproj    eol=crlf
 *.sh        eol=lf
+* text=auto eol=lf

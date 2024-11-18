@@ -1,6 +1,9 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -44,17 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider<AuthBloc>(
-    //   create: (context) => serviceLocator<AuthBloc>()..add(LoadCredentials()),
-    // );
-
-    return Builder(
-      builder: (context) => MaterialApp.router(
-        title: Constants.appName,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.yellow.shade700),
+    return BlocProvider<AuthBloc>(
+      create: (BuildContext context) =>
+          serviceLocator<AuthBloc>()..add(LoadCredentials()),
+      child: Builder(
+        builder: (context) => MaterialApp.router(
+          title: Constants.appName,
+          theme: ThemeData(
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: Colors.yellow.shade700),
+          ),
+          routerConfig: serviceLocator<GoRouter>(),
         ),
-        routerConfig: serviceLocator<GoRouter>(),
       ),
     );
 

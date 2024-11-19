@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e -u
+set -e
 
 # Initializing global variables and functions:
 : "${DJANGO_ENV:=test}"

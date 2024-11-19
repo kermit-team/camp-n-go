@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e -u
+set -e
 
 cd /code
 

@@ -1,3 +1,4 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/auth/presentation/widgets/custom_buttons.dart';
 import 'package:campngo/features/auth/presentation/widgets/golden_text_field.dart';
 import 'package:campngo/features/auth/presentation/widgets/hyperlink_text.dart';
@@ -27,68 +28,80 @@ class _LoginPageState extends State<LoginPage> {
             left: 40.0,
             right: 40.0,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const IconAppBar(),
-              const TitleText('Witaj ponownie!'),
-              const SizedBox(height: 10),
-              const StandardText(
-                "Wpisz dane dostępowe poniżej",
-              ),
-              const SizedBox(height: 40),
-              GoldenTextField(
-                controller: emailController,
-                hintText: "email",
-              ),
-              const SizedBox(height: 20),
-              GoldenTextField(
-                controller: passwordController,
-                hintText: "hasło",
-                isPassword: true,
-              ),
-              const SizedBox(height: 30),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: HyperlinkText(
-                  text: "Zapomniałem hasła",
-                  isUnderlined: true,
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            "Teraz leci info o zapomnieniu hasła do backendu i przejście na stronę z info"),
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const IconAppBar(),
+                    const TitleText('Witaj ponownie!'),
+                    const SizedBox(height: Constants.spaceS),
+                    const StandardText(
+                      "Wpisz dane dostępowe poniżej",
+                    ),
+                    const SizedBox(height: Constants.spaceL),
+                    GoldenTextField(
+                      controller: emailController,
+                      hintText: "Email",
+                    ),
+                    const SizedBox(height: Constants.spaceM),
+                    GoldenTextField(
+                      controller: passwordController,
+                      hintText: "Hasło",
+                      isPassword: true,
+                    ),
+                    const SizedBox(height: Constants.spaceML),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: HyperlinkText(
+                        text: "Zapomniałem hasła",
+                        isUnderlined: true,
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "Teraz leci info o zapomnieniu hasła do backendu i przejście na stronę z info"),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: Constants.spaceML),
+                    CustomButton(
+                      text: "Zaloguj",
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Leci zalogowanie się do aplikacji"),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: Constants.spaceS),
+                    CustomButtonInverted(
+                      text: "GOOGLE Zaloguj się przez Google",
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: Constants.spaceS),
+                    Wrap(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const StandardText("Nie masz konta?"),
+                            const SizedBox(width: Constants.spaceXS),
+                            HyperlinkText(
+                                text: "Zarejestruj się za darmo", onTap: () {}),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              const SizedBox(height: 30),
-              CustomButton(
-                text: "Zaloguj",
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Leci zalogowanie się do aplikacji"),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              CustomButtonInverted(
-                text: "GOOGLE Zaloguj się przez Google",
-                onPressed: () {},
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const StandardText("Nie masz konta?"),
-                  const SizedBox(width: 5),
-                  HyperlinkText(text: "Zarejestruj się za darmo", onTap: () {}),
-                ],
-              )
             ],
           ),
         ),

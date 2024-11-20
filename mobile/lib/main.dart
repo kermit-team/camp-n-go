@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/injection_container.dart';
@@ -17,13 +18,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -45,10 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Builder(
         builder: (context) => MaterialApp.router(
           title: Constants.appName,
-          theme: ThemeData(
-            colorScheme:
-                ColorScheme.fromSeed(seedColor: Colors.yellow.shade700),
-          ),
+          theme: theme(),
           routerConfig: serviceLocator<GoRouter>(),
         ),
       ),

@@ -1,0 +1,27 @@
+<div class="profile-mini-container">
+  <button class="profile-mini-button" (click)="toggleDropdown()" >
+    <div class="circle">
+      {{ 'A' }}{{ 'B' }}
+    </div>
+    <div  class="user-data-profile">
+      <span>{{ 'Adam' }}</span>
+      <span>{{ 'Bielecki' }}</span>
+    </div>
+  </button>
+  <div class="dropdown" [class.show]="showDropdown">
+<!--    <p class="dropdown-option" *ngIf="isAdmin" [routerLink]="['/adminPanel']">Panel Administratora</p>-->
+    <p class="dropdown-option" [routerLink]="['/profile']">Mój Profil</p>
+    <p class="dropdown-option" [routerLink]="['/reservations']">Moje Rezerwacje</p>
+    <p class="dropdown-option" [routerLink]="['/']">Strona Główna</p>
+    <p class="dropdown-option">Wyloguj się</p>
+    <!-- Dropdown content goes here -->
+  </div>
+</div>
+
+
+
+<!-- [routerLink]="['/profile']" -->
+
+<!-- *ngIf="userData?.groups?.includes('Administratorzy')" -->
+
+

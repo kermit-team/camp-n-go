@@ -1,13 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RegisterFormComponent } from '../../components/register-form/register-form.component';
 import { RouterLink } from '@angular/router';
-import { RegisterRequest } from '../../models/register.interface';
 import { AuthFacade } from '../../services/auth.facade';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import {
-  ForgotPasswordRequest,
-  LoginRequest,
-} from '../../models/auth.interface';
+import { ForgotPasswordRequest } from '../../models/auth.interface';
 import { ForgotPasswordFormComponent } from '../../components/forgot-password-form/forgot-password-form.component';
 
 @Component({

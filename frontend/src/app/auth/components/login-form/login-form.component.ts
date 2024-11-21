@@ -1,13 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgClass, NgIf, NgOptimizedImage } from '@angular/common';
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { FormHelperComponent } from '../../../shared/classes/form-helper.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
-import { passwordsMatchValidator } from '../../../shared/validators/same-password.validator';
-import { RegisterRequest } from '../../models/register.interface';
 import { LoginRequest } from '../../models/auth.interface';
 
 @Component({

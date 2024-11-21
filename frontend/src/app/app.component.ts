@@ -1,12 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { FormBuilder } from '@angular/forms';
 import { filter } from 'rxjs';
 
 @Component({

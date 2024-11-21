@@ -1,0 +1,15 @@
+<div
+[ngClass]="{
+'lib-alert-error': data.type === 'error',
+'lib-alert-success': data.type === 'success',
+'lib-alert-warning': data.type === 'warning',
+}"
+>
+  <div class="lib-alert-content-content">{{data.content}}</div>
+  <div class="lib-alert-content-button-wrapper">
+    <button class="lib-alert-content-button" mat-dialog-close>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+
+</div>

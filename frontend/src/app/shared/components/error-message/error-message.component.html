@@ -1,0 +1,7 @@
+@for(message of errorMessages; track message) {
+  @if(field.hasError(message.error) && fieldTouched) {
+    <div class="invalid-field">
+      {{ message.message}}
+    </div>
+  }
+}

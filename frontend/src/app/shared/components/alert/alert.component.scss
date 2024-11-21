@@ -1,0 +1,30 @@
+.lib-alert-error, .lib-alert-success, .lib-alert-warning {
+  padding: 14px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+
+  .lib-alert-content-button {
+    border: none;
+    background-color: transparent;
+    display: flex;
+
+    mat-icon {
+      align-self: center;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+
+.lib-alert-success {
+  background-color: #669F1BFF;
+  color: #ffffff;
+}
+
+.lib-alert-error {
+  background-color: #b82727;
+  color: #ffffff;
+}

@@ -1,10 +1,25 @@
 import { Routes } from '@angular/router';
-import {AppComponent} from './app.component';
-import {LandingPageComponent} from './landing-page/containers/landing-page/landing-page.component';
+import { AppRoutes } from './shared/routes.enum';
+import { RegisterComponent } from './auth/containers/register/register.component';
+import { LandingPageComponent } from './landing-page/containers/landing-page/landing-page.component';
+import { LoginComponent } from './auth/containers/login/login.component';
+import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
+    path: AppRoutes.Register,
+    component: RegisterComponent,
+  },
+  {
+    path: AppRoutes.Login,
+    component: LoginComponent,
+  },
+  {
+    path: AppRoutes.ForgotPassword,
+    component: ForgotPasswordComponent,
+  },
+  {
     path: '',
     component: LandingPageComponent,
-  }
+  },
 ];

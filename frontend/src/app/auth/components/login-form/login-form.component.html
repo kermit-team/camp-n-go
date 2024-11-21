@@ -1,0 +1,43 @@
+<form class="login-form" name="form" [formGroup]="form">
+  <div class="login-form__input-wrapper">
+    <lib-input
+      placeholder="Email"
+      [formControlName]="'email'"
+      [fieldHasError]="controlHasError('email')"
+      [fieldRequired]="true"
+    ></lib-input>
+    <lib-error-message [field]="form.get('email')"></lib-error-message>
+  </div>
+  <div class="login-form__input-wrapper">
+    <lib-input
+      placeholder="Hasło"
+      [formControlName]="'password'"
+      [fieldHasError]="controlHasError('password')"
+      [fieldRequired]="true"
+      [type]="'password'"
+    ></lib-input>
+    <lib-error-message
+      [field]="form.get('password')"
+    ></lib-error-message>
+    <lib-error-message [field]="form"></lib-error-message>
+  </div>
+<div class="login__signin--forgot-wrapper">
+  <a [routerLink]="['/forgot-password']" class="login__signin--button"
+  >Zapomniałem hasła</a
+  >
+</div>
+
+
+  <lib-button
+    class="login-form__submit"
+    [fullWidth]="true"
+    (click)="submitForm()"
+    >Stwórz konto</lib-button
+  >
+  <span class="login__signin--text"
+    >Nie masz konta?
+    <a [routerLink]="['/register']" class="login__signin--button"
+      >Zarejestruj się za darmo</a
+    ></span
+  >
+</form>

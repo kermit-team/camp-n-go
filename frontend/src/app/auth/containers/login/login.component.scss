@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+.login {
+  background-color: white;
+  width: 47vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.logo {
+  margin-top: 4vh;
+  margin-bottom: 3vh;
+  width: 8em;
+  height: 8em;
+  cursor: pointer;
+}
+.login__container {
+  width: 65%;
+}
+.login__greeting {
+  font-family: 'Playfair Display';
+  font-size: 57px;
+  margin-bottom: 20px;
+}
+.login__phrase {
+  margin-bottom: 5vh;
+  font-size: 1.2rem;
+}
+
+.picture {
+  width: 53vw;
+  background-image: url("../../../../assets/register-photo.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+@media only screen and (max-width: 900px) {
+  .login{
+    width: 60vw;
+  }
+  .picture {
+    width: 40vw;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .picture {
+    display: none;
+  }
+  .login{
+    width: 100%;
+  }
+  .login__container {
+    width: 80%;
+  }
+  .login__greeting {
+    font-size: 2.55em;
+  }
+  .login__phrase{
+    font-size: 1em;
+  }
+  .logo {
+    margin-top: 2vh;
+  }
+  [class^="login-form__input-"] {
+    font-size: 1em;
+  }
+  button {
+    font-size: 1em;
+  }
+  .login-form__input{
+    flex-direction: column;
+    gap: 0;
+
+  }
+}

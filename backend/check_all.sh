@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e -u
+set -e
 
 pyclean () {
   find . | grep -E '(__pycache__|\.py[cod]$)' | xargs rm -rf

@@ -4,7 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData theme({bool isDarkTheme = false}) => ThemeData.from(
       colorScheme: lightColorScheme,
-    ).copyWith();
+    ).copyWith(
+      scaffoldBackgroundColor: Colors.white,
+      appBarTheme: const AppBarTheme(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+      ),
+    );
 
 TextStyle titleTextStyle() {
   return GoogleFonts.playfairDisplay(
@@ -22,7 +28,7 @@ TextStyle subtitleTextStyle() {
   );
 }
 
-TextStyle mainTestStyle({Color? color}) {
+TextStyle mainTextStyle({Color? color}) {
   return GoogleFonts.montserrat(
     fontSize: Constants.textSizeS,
     fontStyle: FontStyle.normal,

@@ -1,6 +1,6 @@
 class Constants {
   static const String appName = "Camp'n'go";
-  static const String apiUrl = 'http://localhost:8000/api';
+  static const String apiUrl = 'http://10.0.2.2:8000/api';
 
   static const double spaceXS = 5;
   static const double spaceS = 10;

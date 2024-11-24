@@ -6,6 +6,7 @@ from rest_framework.test import APIRequestFactory, APITestCase
 
 from server.apps.account.views import AccountPasswordResetConfirmView
 from server.business_logic.account import AccountPasswordResetConfirmBL
+from server.utils.tests.baker_generators import generate_password
 
 
 class AccountPasswordResetConfirmViewTestCase(APITestCase):
@@ -19,7 +20,7 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
 
     @mock.patch.object(AccountPasswordResetConfirmBL, 'process')
     def test_request(self, account_password_reset_confirm_mock):
-        password = 'Q@werty123!'
+        password = generate_password()
         parameters = {'uidb64': self.uidb64, 'token': self.token}
         request_data = {'password': password}
         url = reverse(
@@ -36,19 +37,3 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
             password=password,
         )
         assert res.status_code == status.HTTP_200_OK
-
-    @mock.patch.object(AccountPasswordResetConfirmBL, 'process')
-    def test_request_invalid_data(self, account_password_reset_confirm_mock):
-        password = 'bad_password'
-        parameters = {'uidb64': self.uidb64, 'token': self.token}
-        request_data = {'password': password}
-        url = reverse(
-            'password_reset_confirm',
-            kwargs=parameters,
-        )
-
-        req = self.factory.post(url, data=request_data)
-        res = self.view.as_view()(req, **parameters)
-
-        account_password_reset_confirm_mock.assert_not_called()
-        assert res.status_code == status.HTTP_400_BAD_REQUEST

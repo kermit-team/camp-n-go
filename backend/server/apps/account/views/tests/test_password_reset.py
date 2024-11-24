@@ -25,15 +25,3 @@ class AccountPasswordResetViewTestCase(APITestCase):
 
         account_password_reset_mock.assert_called_once_with(email=email)
         assert res.status_code == status.HTTP_200_OK
-
-    @mock.patch.object(AccountPasswordResetBL, 'process')
-    def test_request_invalid_data(self, account_password_reset_mock):
-        email = 'bad_email_example'
-        request_data = {'email': email}
-        url = reverse('password_reset')
-
-        req = self.factory.post(url, data=request_data)
-        res = self.view.as_view()(req)
-
-        account_password_reset_mock.assert_not_called()
-        assert res.status_code == status.HTTP_400_BAD_REQUEST

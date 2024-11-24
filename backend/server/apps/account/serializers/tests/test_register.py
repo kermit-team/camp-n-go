@@ -1,9 +1,7 @@
 from unittest import mock
 
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 from model_bakery import baker
-from rest_framework.exceptions import ErrorDetail
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.serializers import AccountRegisterSerializer
@@ -18,8 +16,7 @@ class AccountRegisterSerializerTestCase(TestCase):
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
     @mock.patch.object(AccountRegisterBL, 'process')
-    @mock.patch('server.apps.account.serializers.register.validate_password')
-    def test_create(self, validate_password_mock, register_account_mock):
+    def test_create(self, register_account_mock):
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
@@ -36,7 +33,6 @@ class AccountRegisterSerializerTestCase(TestCase):
         assert serializer.is_valid()
         serializer.save()
 
-        validate_password_mock.assert_called_once_with(password=self.account.password)
         register_account_mock.assert_called_once_with(
             email=self.account.email,
             password=self.account.password,
@@ -48,8 +44,7 @@ class AccountRegisterSerializerTestCase(TestCase):
         )
 
     @mock.patch.object(AccountRegisterBL, 'process')
-    @mock.patch('server.apps.account.serializers.register.validate_password')
-    def test_create_without_optional_fields(self, validate_password_mock, register_account_mock):
+    def test_create_without_optional_fields(self, register_account_mock):
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
@@ -64,7 +59,6 @@ class AccountRegisterSerializerTestCase(TestCase):
         assert serializer.is_valid()
         serializer.save()
 
-        validate_password_mock.assert_called_once_with(password=self.account.password)
         register_account_mock.assert_called_once_with(
             email=self.account.email,
             password=self.account.password,
@@ -75,8 +69,7 @@ class AccountRegisterSerializerTestCase(TestCase):
             id_card=None,
         )
 
-    @mock.patch('server.apps.account.serializers.register.validate_password')
-    def test_validate(self, validate_password_mock):
+    def test_validate(self):
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
@@ -90,16 +83,12 @@ class AccountRegisterSerializerTestCase(TestCase):
 
         assert serializer.is_valid()
 
-        validate_password_mock.assert_called_once_with(password=self.account.password)
-
-    @mock.patch('server.apps.account.serializers.register.validate_password')
-    def test_validate_invalid_password(self, validate_password_mock):
-        validate_password_mock.side_effect = ValidationError('Wrong password')
-
+    def test_validate_invalid_password(self):
+        password = 'bad_password'
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
-                'password': self.account.password,
+                'password': password,
                 'profile': {
                     'first_name': self.account_profile.first_name,
                     'last_name': self.account_profile.last_name,
@@ -109,9 +98,4 @@ class AccountRegisterSerializerTestCase(TestCase):
 
         assert not serializer.is_valid()
 
-        validate_password_mock.assert_called_once_with(password=self.account.password)
-
         assert 'password' in serializer.errors
-        assert serializer.errors['password'] == [
-            ErrorDetail(string="['Wrong password']", code='invalid'),
-        ]

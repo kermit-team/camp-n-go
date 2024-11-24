@@ -1,6 +1,7 @@
 import 'package:campngo/core/resources/data_result.dart';
+import 'package:campngo/features/auth/domain/entities/auth_credentials.dart';
 import 'package:campngo/features/auth/domain/entities/auth_entity.dart';
-import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
+import 'package:campngo/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_state.dart';
 import 'package:campngo/injection_container.dart';
@@ -10,11 +11,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository authRepository;
+  final AuthUseCase authUseCase;
   final FlutterSecureStorage secureStorage;
 
   AuthBloc({
-    required this.authRepository,
+    required this.authUseCase,
     required this.secureStorage,
   }) : super(const AuthInitial()) {
     on<Login>(
@@ -40,9 +41,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       ));
 
-      final Result<AuthEntity, Exception> result = await authRepository.login(
-        email: event.email,
-        password: event.password,
+      final Result<AuthEntity, Exception> result = await authUseCase.call(
+        params: AuthCredentials(
+          email: event.email,
+          password: event.password,
+        ),
       );
 
       switch (result) {

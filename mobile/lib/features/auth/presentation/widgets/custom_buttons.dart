@@ -1,4 +1,4 @@
-import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,8 +7,6 @@ class CustomButton extends StatelessWidget {
   final void Function() onPressed;
   final double width;
   final double height;
-  final Color backgroundColor;
-  final Color textColor;
 
   const CustomButton({
     super.key,
@@ -16,8 +14,6 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.width = double.maxFinite,
     this.height = double.minPositive,
-    this.backgroundColor = goldenColor, // Default to transparent
-    this.textColor = Colors.white, // Default to black
   });
 
   @override
@@ -25,15 +21,17 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        foregroundColor: textColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         textStyle: GoogleFonts.montserrat(
-          fontSize: 15,
+          fontSize: Constants.textSizeS,
         ),
         minimumSize: Size(width, height),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-          side: BorderSide(color: goldenColor),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(2)),
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
       child: Padding(
@@ -51,8 +49,31 @@ class CustomButtonInverted extends CustomButton {
     required super.onPressed,
     super.width,
     super.height,
-  }) : super(
-          backgroundColor: Colors.white, // White background
-          textColor: Colors.black, // Golden text color
-        );
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        // backgroundColor: Colors.white,
+        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+        textStyle: GoogleFonts.montserrat(
+          fontSize: Constants.textSizeS,
+        ),
+        minimumSize: Size(width, height),
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(2)),
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Text(text),
+      ),
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class HyperlinkText extends StatelessWidget {
         text,
         style: TextStyle(
           color: goldenColor,
-          fontSize: 15,
+          fontSize: Constants.textSizeS,
           decoration:
               isUnderlined ? TextDecoration.underline : TextDecoration.none,
           decorationColor: goldenColor,

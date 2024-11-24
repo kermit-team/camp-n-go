@@ -1,3 +1,5 @@
+import 'package:campngo/core/resources/data_result.dart';
+
 abstract class UseCase<Type, Params> {
-  Future<Type> call({required Params params});
+  Future<Result<Type, Exception>> call({required Params params});
 }

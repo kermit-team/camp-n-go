@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_api_service.dart';
+part of 'register_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'auth_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _AuthApiService implements AuthApiService {
-  _AuthApiService(
+class _RegisterApiService implements RegisterApiService {
+  _RegisterApiService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,21 +24,21 @@ class _AuthApiService implements AuthApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<AuthResponseDTO>> login(
-      {required Map<String, dynamic> credentials}) async {
+  Future<HttpResponse<RegisterDTO>> register(
+      {required Map<String, dynamic> userData}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(credentials);
-    final _options = _setStreamType<HttpResponse<AuthResponseDTO>>(Options(
+    _data.addAll(userData);
+    final _options = _setStreamType<HttpResponse<RegisterDTO>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/accounts/token/',
+          '/accounts/register/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -48,9 +48,9 @@ class _AuthApiService implements AuthApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseDTO _value;
+    late RegisterDTO _value;
     try {
-      _value = AuthResponseDTO.fromJson(_result.data!);
+      _value = RegisterDTO.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

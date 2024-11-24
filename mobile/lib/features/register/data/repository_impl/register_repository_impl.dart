@@ -27,6 +27,12 @@ class RegisterRepositoryImpl implements RegisterRepository {
         return Success(registerEntity);
       }
 
+      Map<String, dynamic> responseData =
+          jsonDecode(httpResponse.response.data);
+      responseData.forEach((key, value) {
+        log('Response ---> $key: $value');
+      });
+
       final errorResponse = json.decode(httpResponse.response.data);
       log('Register error: $errorResponse');
       return Failure(Exception(errorResponse));
@@ -37,8 +43,15 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   Exception handleApiError(DioException dioException) {
     if (dioException.response != null) {
+      String errorText = "";
+      dioException.response!.data.forEach((key, value) {
+        errorText += "\n${value}";
+        print('Key: $key'); // Klucz (np. "email")
+        print('Value: ${value}'); // Pierwszy element listy jako wartość
+      });
+
       log('Dio Register error details: ${dioException.response!.data}');
-      return Exception(dioException.response!.data);
+      return Exception(errorText);
     } else if (dioException.message != null) {
       log('Dio Register error details: ${dioException.message}');
       return Exception(dioException.message);

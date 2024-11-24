@@ -34,6 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return AppBody(
       children: [
+        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
         const TitleText("Stwórz konto"),
         const SizedBox(height: Constants.spaceS),

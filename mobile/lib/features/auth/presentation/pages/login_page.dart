@@ -32,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return AppBody(
       children: [
+        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
         const TitleText('Witaj ponownie!'),
         const SizedBox(height: Constants.spaceS),
@@ -68,12 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Zapomniałem hasła",
                   isUnderlined: true,
                   onTap: () {
-                    context.read<AuthBloc>().add(
-                          Login(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          ),
-                        );
+                    context.read<GoRouter>().go("");
                   },
                 ),
               ),

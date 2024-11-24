@@ -13,4 +13,9 @@ abstract class RegisterApiService {
   Future<HttpResponse<RegisterDTO>> register({
     @Body() required Map<String, dynamic> userData,
   });
+
+  @POST('/accounts/email-verification/resend')
+  Future<HttpResponse<dynamic>> forgotPassword({
+    @Body() required Map<String, dynamic> email,
+  });
 }

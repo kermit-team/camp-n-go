@@ -75,6 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final storageEmail = await secureStorage.read(key: 'email');
     final storagePassword = await secureStorage.read(key: 'password');
     if (storageEmail == null || storagePassword == null) {
+      emit(const AuthInitial());
       return;
     } else {
       emit(AuthCredentialsLoaded(

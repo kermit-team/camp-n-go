@@ -9,6 +9,7 @@ import 'package:campngo/features/register/data/data_sources/register_api_service
 import 'package:campngo/features/register/data/repository_impl/register_repository_impl.dart';
 import 'package:campngo/features/register/domain/repository/register_repository.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
+import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -49,6 +50,12 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerFactory(
     () => RegisterBloc(
       registerUseCase: registerUseCase,
+      secureStorage: secureStorage,
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => ForgotPasswordBloc(
+      registerRepository: registerRepository,
       secureStorage: secureStorage,
     ),
   );

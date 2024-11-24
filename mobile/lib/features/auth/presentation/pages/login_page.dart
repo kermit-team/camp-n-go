@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Zapomniałem hasła",
                   isUnderlined: true,
                   onTap: () {
-                    context.read<GoRouter>().go("");
+                    serviceLocator<GoRouter>().push("/forgotPassword");
                   },
                 ),
               ),
@@ -127,6 +127,11 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       builder: (authContext, authState) {
+        if (authState is AuthLoading) {
+          return CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.primary,
+          );
+        }
         return CustomButton(
           text: "Zaloguj",
           onPressed: () {

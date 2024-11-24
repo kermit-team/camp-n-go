@@ -41,13 +41,40 @@ class RegisterRepositoryImpl implements RegisterRepository {
     }
   }
 
+  @override
+  Future<Result<dynamic, Exception>> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      final httpResponse = await _registerApiService.forgotPassword(
+        email: {"email": email},
+      );
+
+      if (httpResponse.response.statusCode == 200) {
+        return const Success(null);
+      }
+
+      Map<String, dynamic> responseData =
+          jsonDecode(httpResponse.response.data);
+      responseData.forEach((key, value) {
+        log('Response ---> $key: $value');
+      });
+
+      final errorResponse = json.decode(httpResponse.response.data);
+      log('Register error: $errorResponse');
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
+
   Exception handleApiError(DioException dioException) {
     if (dioException.response != null) {
       String errorText = "";
       dioException.response!.data.forEach((key, value) {
-        errorText += "\n${value}";
-        print('Key: $key'); // Klucz (np. "email")
-        print('Value: ${value}'); // Pierwszy element listy jako wartość
+        errorText += "$value";
+        print('Key: $key');
+        print('Value: $value');
       });
 
       log('Dio Register error details: ${dioException.response!.data}');

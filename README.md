@@ -4,9 +4,13 @@ App for camping management
 ## Initialization 
 Local environment is handled by docker compose. 
 List of services:
-- backend (Django)
-- frontend (Angular)
 - database (PostgreSQL)
+- frontend (Angular)
+- backend (Django)
+- rabbitmq (RabbitMQ - message broker)
+- flower (Flower - Celery monitoring)
+- smtp_server (Mailhog - fake smtp server)
+- worker (Celery worker - handles tasks in backend)
 
 To initialize local development server you should run script 
 ```bash

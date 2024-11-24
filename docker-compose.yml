@@ -90,6 +90,23 @@ services:
     ports:
       - '8025:8025'
 
+  worker:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+      - envs/.rabbitmq.env
+    volumes:
+      - ./backend:/code
+    command: sh run_consumer.dev.sh common celery
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   flower_data:

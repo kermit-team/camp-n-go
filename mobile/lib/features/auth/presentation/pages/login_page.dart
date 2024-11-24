@@ -11,7 +11,9 @@ import 'package:campngo/features/auth/presentation/widgets/standard_text.dart';
 import 'package:campngo/features/auth/presentation/widgets/title_text.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,11 +36,9 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
-        const TitleText('Witaj ponownie!'),
+        TitleText('${LocaleKeys.welcomeAgain.tr()}!'),
         const SizedBox(height: Constants.spaceS),
-        const StandardText(
-          "Wpisz dane dostępowe poniżej",
-        ),
+        StandardText(LocaleKeys.enterCredentialsBelow.tr()),
         const SizedBox(height: Constants.spaceL),
         Form(
           key: _formKey,
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               GoldenTextField(
                 controller: emailController,
-                hintText: "Email",
+                hintText: LocaleKeys.email.tr(),
                 validations: const [
                   RequiredValidation(),
                   EmailValidation(),
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: Constants.spaceM),
               GoldenTextField(
                 controller: passwordController,
-                hintText: "Hasło",
+                hintText: LocaleKeys.password.tr(),
                 isPassword: true,
                 validations: const [
                   RequiredValidation(),
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: HyperlinkText(
-                  text: "Zapomniałem hasła",
+                  text: LocaleKeys.forgotPassword.tr(),
                   isUnderlined: true,
                   onTap: () {
                     serviceLocator<GoRouter>().push("/forgotPassword");
@@ -85,10 +85,10 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const StandardText("Nie masz konta?"),
+                      StandardText("${LocaleKeys.dontHaveAccount.tr()}?"),
                       const SizedBox(width: Constants.spaceXS),
                       HyperlinkText(
-                        text: "Zarejestruj się za darmo",
+                        text: LocaleKeys.registerForFree.tr(),
                         onTap: () {
                           serviceLocator<GoRouter>().go("/register");
                         },
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
         return CustomButton(
-          text: "Zaloguj",
+          text: LocaleKeys.login.tr(),
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
               context.read<AuthBloc>().add(

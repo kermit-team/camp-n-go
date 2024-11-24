@@ -10,6 +10,8 @@ import 'package:campngo/features/register/presentation/bloc/forgot_password_even
 import 'package:campngo/features/register/presentation/bloc/forgot_password_state.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,16 +33,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       children: [
         const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
-        const TitleText("Zapomniałeś hasła?"),
+        TitleText(LocaleKeys.forgotPassword.tr()),
         const SizedBox(height: Constants.spaceS),
-        const StandardText("Wyślemy Ci instrukcję hasła"),
+        StandardText(LocaleKeys.weWillSendYouEmail.tr()),
         const SizedBox(height: Constants.spaceL),
         Form(
           child: Column(
             children: [
               GoldenTextField(
                 controller: emailController,
-                hintText: "Email",
+                hintText: LocaleKeys.email.tr(),
                 validations: const [
                   RequiredValidation(),
                   EmailValidation(),
@@ -74,7 +76,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         } else if (forgotPasswordState is ForgotPasswordSuccess) {
           AppSnackBar.showSnackBar(
             context: context,
-            text: "Wysłano maila do resetu hasła",
+            text: LocaleKeys.emailToResetPasswordSent.tr(),
           );
         }
       },
@@ -85,7 +87,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           );
         }
         return CustomButton(
-          text: "Zresetuj hasło",
+          text: LocaleKeys.resetPassword.tr(),
           onPressed: () {
             if (formKey.currentState?.validate() == true) {
               context

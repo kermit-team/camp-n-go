@@ -127,10 +127,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: storageEmail,
         password: storagePassword,
       ));
-      // add(InitialLogin(
-      //   email: storageEmail,
-      //   password: storagePassword,
-      // ));
     }
   }
 

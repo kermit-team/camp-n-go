@@ -10,7 +10,9 @@ import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -143,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
       listener: (context, state) {},
       builder: (context, state) {
         return CustomButton(
-            text: "Stwórz konto",
+            text: LocaleKeys.createAccount.tr(),
             onPressed: () {
               if (formKey.currentState?.validate() == true) {
                 context.read<RegisterBloc>().add(Register(

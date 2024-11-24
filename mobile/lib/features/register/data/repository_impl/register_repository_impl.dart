@@ -73,8 +73,8 @@ class RegisterRepositoryImpl implements RegisterRepository {
       String errorText = "";
       dioException.response!.data.forEach((key, value) {
         errorText += "$value";
-        print('Key: $key');
-        print('Value: $value');
+        log('Key: $key');
+        log('Value: $value');
       });
 
       log('Dio Register error details: ${dioException.response!.data}');

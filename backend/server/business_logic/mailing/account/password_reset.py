@@ -9,20 +9,20 @@ from server.business_logic.mailing.abstract import AbstractMailBL
 from server.services.consumer.messages import ConsumerMessagesEnum
 
 
-class AccountEmailVerificationMail(AbstractMailBL):
-    _subject_template = _('AccountEmailVerificationEmailSubject')
-    _message_template = 'mailing/account/email_verification.html'
-    _logger_message = ConsumerMessagesEnum.ENQUEUED_ACCOUNT_EMAIL_VERIFICATION_TO_MAIL.value
+class AccountPasswordResetMail(AbstractMailBL):
+    _subject_template = _('AccountPasswordResetEmailSubject')
+    _message_template = 'mailing/account/password_reset.html'
+    _logger_message = ConsumerMessagesEnum.ENQUEUED_ACCOUNT_PASSWORD_RESET_TO_MAIL.value
 
     @classmethod
     def send(cls, account: Account, token: str) -> None:
         uidb64 = urlsafe_base64_encode(force_bytes(account.identifier))
-        email_verification_url = settings.FRONTEND_EMAIL_VERIFICATION_URL_SCHEMA.format(uidb64=uidb64, token=token)
+        password_reset_url = settings.FRONTEND_PASSWORD_RESET_URL_SCHEMA.format(uidb64=uidb64, token=token)
 
         subject = str(cls._subject_template)
         ctx = {
             'name': account.profile.short_name,
-            'email_verification_url': email_verification_url,
+            'password_reset_url': password_reset_url,
         }
 
         message = render_to_string(cls._message_template, ctx)

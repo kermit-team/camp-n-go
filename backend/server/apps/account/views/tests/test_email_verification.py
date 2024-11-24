@@ -14,11 +14,12 @@ class AccountEmailVerificationViewTestCase(APITestCase):
         cls.factory = APIRequestFactory()
         cls.view = AccountEmailVerificationView
 
+        cls.uidb64 = 'some_encoded_uidb64'
+        cls.token = 'some_token'
+
     @mock.patch.object(AccountEmailVerificationBL, 'process')
     def test_request(self, account_email_verification_mock):
-        uidb64 = 'some_encoded_uidb64'
-        token = 'some_token'
-        parameters = {'uidb64': uidb64, 'token': token}
+        parameters = {'uidb64': self.uidb64, 'token': self.token}
 
         url = reverse(
             'email_verification',
@@ -29,8 +30,8 @@ class AccountEmailVerificationViewTestCase(APITestCase):
         res = self.view.as_view()(req, **parameters)
 
         account_email_verification_mock.assert_called_once_with(
-            uidb64=uidb64,
-            token=token,
+            uidb64=self.uidb64,
+            token=self.token,
         )
 
         assert res.status_code == status.HTTP_200_OK

@@ -16,9 +16,7 @@ class AccountEmailVerificationResendViewTestCase(APITestCase):
 
     @mock.patch.object(AccountEmailVerificationResendBL, 'process')
     def test_request(self, account_email_verification_resend_mock):
-        request_data = {
-            'email': 'admin@example.com',
-        }
+        request_data = {'email': 'admin@example.com'}
 
         url = reverse('email_verification_resend')
         req = self.factory.post(url, data=request_data)
@@ -31,9 +29,7 @@ class AccountEmailVerificationResendViewTestCase(APITestCase):
 
     @mock.patch.object(AccountEmailVerificationResendBL, 'process')
     def test_request_invalid_data(self, account_email_verification_resend_mock):
-        request_data = {
-            'email': 'bad_email_example',
-        }
+        request_data = {'email': 'bad_email_example'}
 
         url = reverse('email_verification_resend')
         req = self.factory.post(url, data=request_data)

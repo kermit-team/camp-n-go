@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from server.apps.account.serializers import AccountEmailSerializer
-from server.business_logic.account import AccountEmailVerificationResendBL
+from server.business_logic.account import AccountPasswordResetBL
 
 
-class AccountEmailVerificationResendView(APIView):
+class AccountPasswordResetView(APIView):
     permission_classes = [AllowAny]
     serializer_class = AccountEmailSerializer
 
@@ -15,5 +15,5 @@ class AccountEmailVerificationResendView(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        AccountEmailVerificationResendBL.process(email=serializer.validated_data['email'])
+        AccountPasswordResetBL.process(email=serializer.validated_data['email'])
         return Response()

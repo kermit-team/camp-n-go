@@ -172,3 +172,11 @@ class AccountCommandTestCase(TestCase):
         AccountCommand.activate(account=account)
 
         assert account.is_active
+
+    def test_change_password(self):
+        account = baker.make(_model=Account, is_active=False)
+        password = 'some_password'
+
+        AccountCommand.change_password(account=account, password=password)
+
+        assert account.check_password(raw_password=password)

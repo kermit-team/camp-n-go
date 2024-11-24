@@ -1,2 +1,3 @@
-from server.apps.account.serializers.email_verification_resend import AccountEmailVerificationResendSerializer
+from server.apps.account.serializers.email import AccountEmailSerializer
+from server.apps.account.serializers.password_reset import AccountPasswordResetSerializer
 from server.apps.account.serializers.register import AccountRegisterSerializer

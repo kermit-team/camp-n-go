@@ -9,13 +9,13 @@ from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
 from server.business_logic.mailing.abstract import logger
-from server.business_logic.mailing.account import AccountEmailVerificationMail
+from server.business_logic.mailing.account import AccountPasswordResetMail
 from server.services.consumer.enums import TaskNameEnum
 from server.services.consumer.serializers.mailing import MailingSerializer
 from server.utils.tests.helpers import get_formatted_log, is_log_in_logstream
 
 
-class AccountEmailVerificationMailTestCase(TestCase):
+class AccountPasswordResetMailTestCase(TestCase):
     mock_celery_app_path = 'server.business_logic.mailing.abstract.app'
 
     def setUp(self):
@@ -28,22 +28,22 @@ class AccountEmailVerificationMailTestCase(TestCase):
         celery_app_mock,
     ):
         emails = [self.account.email]
-        subject = str(AccountEmailVerificationMail._subject_template)
+        subject = str(AccountPasswordResetMail._subject_template)
         token = 'some_token_example'
         uidb64 = urlsafe_base64_encode(force_bytes(self.account.identifier))
-        email_verification_url = settings.FRONTEND_EMAIL_VERIFICATION_URL_SCHEMA.format(uidb64=uidb64, token=token)
+        password_reset_url = settings.FRONTEND_PASSWORD_RESET_URL_SCHEMA.format(uidb64=uidb64, token=token)
 
         ctx = {
             'name': self.account.profile.short_name,
-            'email_verification_url': email_verification_url,
+            'password_reset_url': password_reset_url,
         }
-        message = render_to_string(AccountEmailVerificationMail._message_template, ctx)
+        message = render_to_string(AccountPasswordResetMail._message_template, ctx)
 
         with self.assertLogs(logger=logger.name, level='DEBUG') as context:
-            AccountEmailVerificationMail.send(account=self.account, token=token)
+            AccountPasswordResetMail.send(account=self.account, token=token)
 
             expected_log = get_formatted_log(
-                msg=AccountEmailVerificationMail._logger_message,
+                msg=AccountPasswordResetMail._logger_message,
                 level='INFO',
                 logger=logger,
             )

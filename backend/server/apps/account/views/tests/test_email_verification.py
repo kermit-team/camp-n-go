@@ -20,18 +20,16 @@ class AccountEmailVerificationViewTestCase(APITestCase):
     @mock.patch.object(AccountEmailVerificationBL, 'process')
     def test_request(self, account_email_verification_mock):
         parameters = {'uidb64': self.uidb64, 'token': self.token}
-
         url = reverse(
             'email_verification',
             kwargs=parameters,
         )
-        req = self.factory.get(url)
 
+        req = self.factory.get(url)
         res = self.view.as_view()(req, **parameters)
 
         account_email_verification_mock.assert_called_once_with(
             uidb64=self.uidb64,
             token=self.token,
         )
-
         assert res.status_code == status.HTTP_200_OK

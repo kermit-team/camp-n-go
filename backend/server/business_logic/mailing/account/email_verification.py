@@ -1,5 +1,5 @@
-from django.conf import settings
 from django.template.loader import render_to_string
+from django.urls.base import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import gettext_lazy as _
@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from server.apps.account.models import Account
 from server.business_logic.mailing.abstract import AbstractMailBL
 from server.services.consumer.messages import ConsumerMessagesEnum
+from server.utils.api import get_frontend_url
 
 
 class AccountEmailVerificationMail(AbstractMailBL):
@@ -17,7 +18,9 @@ class AccountEmailVerificationMail(AbstractMailBL):
     @classmethod
     def send(cls, account: Account, token: str) -> None:
         uidb64 = urlsafe_base64_encode(force_bytes(account.identifier))
-        email_verification_url = settings.FRONTEND_EMAIL_VERIFICATION_URL_SCHEMA.format(uidb64=uidb64, token=token)
+
+        url_path = reverse(viewname='email_verification', kwargs={'uidb64': uidb64, 'token': token})
+        email_verification_url = get_frontend_url(backend_url_path=url_path)
 
         subject = str(cls._subject_template)
         ctx = {

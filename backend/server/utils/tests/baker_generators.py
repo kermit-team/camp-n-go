@@ -42,7 +42,7 @@ def generate_password() -> str:
         random.choice(special_characters),
         random.choice(digits),
         random.choice(lowercase),
-        random.choice(uppercase)
+        random.choice(uppercase),
     ]
 
     required_chars.extend(random.choices(all_characters, k=5))

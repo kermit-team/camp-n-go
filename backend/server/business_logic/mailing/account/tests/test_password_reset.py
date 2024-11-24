@@ -1,8 +1,8 @@
 from unittest import mock
 
-from django.conf import settings
 from django.template.loader import render_to_string
 from django.test import TestCase
+from django.urls.base import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from model_bakery import baker
@@ -12,6 +12,7 @@ from server.business_logic.mailing.abstract import logger
 from server.business_logic.mailing.account import AccountPasswordResetMail
 from server.services.consumer.enums import TaskNameEnum
 from server.services.consumer.serializers.mailing import MailingSerializer
+from server.utils.api import get_frontend_url
 from server.utils.tests.helpers import get_formatted_log, is_log_in_logstream
 
 
@@ -31,7 +32,8 @@ class AccountPasswordResetMailTestCase(TestCase):
         subject = str(AccountPasswordResetMail._subject_template)
         token = 'some_token_example'
         uidb64 = urlsafe_base64_encode(force_bytes(self.account.identifier))
-        password_reset_url = settings.FRONTEND_PASSWORD_RESET_URL_SCHEMA.format(uidb64=uidb64, token=token)
+        url_path = reverse(viewname='password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
+        password_reset_url = get_frontend_url(backend_url_path=url_path)
 
         ctx = {
             'name': self.account.profile.short_name,

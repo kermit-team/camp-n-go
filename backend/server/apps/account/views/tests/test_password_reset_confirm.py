@@ -22,13 +22,12 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
         password = 'Q@werty123!'
         parameters = {'uidb64': self.uidb64, 'token': self.token}
         request_data = {'password': password}
-
         url = reverse(
             'password_reset_confirm',
             kwargs=parameters,
         )
-        req = self.factory.post(url, data=request_data)
 
+        req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req, **parameters)
 
         account_password_reset_confirm_mock.assert_called_once_with(
@@ -36,7 +35,6 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
             token=self.token,
             password=password,
         )
-
         assert res.status_code == status.HTTP_200_OK
 
     @mock.patch.object(AccountPasswordResetConfirmBL, 'process')
@@ -44,15 +42,13 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
         password = 'bad_password'
         parameters = {'uidb64': self.uidb64, 'token': self.token}
         request_data = {'password': password}
-
         url = reverse(
             'password_reset_confirm',
             kwargs=parameters,
         )
-        req = self.factory.post(url, data=request_data)
 
+        req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req, **parameters)
 
         account_password_reset_confirm_mock.assert_not_called()
-
         assert res.status_code == status.HTTP_400_BAD_REQUEST

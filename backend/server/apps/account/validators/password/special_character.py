@@ -19,5 +19,5 @@ class SpecialCharacterValidator:
     @staticmethod
     def get_help_text():
         return _(  # pragma: no cover
-            r'Your password must contain at least 1 symbol: [()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]'
+            r'Your password must contain at least 1 symbol: [()[\]{}|\\`~!@#$%^&*_\-+=;:\'",<>./?]',
         )

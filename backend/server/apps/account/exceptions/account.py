@@ -18,6 +18,11 @@ class AccountAlreadyActiveError(Exception):
         super().__init__(AccountErrorMessagesEnum.ALREADY_ACTIVE.value.format(identifier=identifier))
 
 
-class AccountEmailVerificationTokenError(Exception):
+class AccountNotActiveError(Exception):
+    def __init__(self, identifier: uuid.UUID):
+        super().__init__(AccountErrorMessagesEnum.NOT_ACTIVE.value.format(identifier=identifier))
+
+
+class AccountInvalidTokenError(Exception):
     def __init__(self, identifier: uuid.UUID):
         super().__init__(AccountErrorMessagesEnum.INVALID_TOKEN.value.format(identifier=identifier))

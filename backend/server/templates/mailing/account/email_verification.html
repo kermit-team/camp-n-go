@@ -12,7 +12,7 @@
         {% endblocktranslate %}
     </p>
     <button style="display: inline-block;justify-content: center;background-color: #007bff;color: #fff;padding: 15px 20px;border-radius: 5px;margin-top: 20px;border:0;">
-        <a href="{{ verification_url }}"
+        <a href="{{ email_verification_url }}"
            style="text-decoration: None;">{% translate "Verify e-mail address" %}</a>
     </button>
     <p style="text-align: justify;margin: 0;line-height: 1.5;padding: 10px;">
@@ -20,7 +20,7 @@
             {% blocktranslate trimmed %}
                 If the button does not work for any reason, please use the link below:
             {% endblocktranslate %}<br>
-            <a href="{{ verification_url }}">{{ verification_url }}</a>
+            <a href="{{ email_verification_url }}">{{ email_verification_url }}</a>
         </small>
     </p>
     <p style="text-align: justify;margin: 0;line-height: 1.5;padding: 10px;">

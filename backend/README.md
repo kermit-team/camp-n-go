@@ -4,16 +4,17 @@ Backend web application for camping management built with Django REST Framework.
 ## Scripts
 Scripts are located inside **bin** directory.
 
-| Script                     | Comment                                                               |
-|----------------------------|-----------------------------------------------------------------------|
-| check.sh                   | Is running flake8, xenon, pip-audit, bandit, mypy, migrations checks. |
-| create_users.sh            | Is creating superuser and users for each group.                       |
-| enter.sh                   | Is connecting to backend container.                                   |
-| entrypoint.dev.sh          | Is starting development sever.                                        |
-| isort.sh                   | Is for sort imports in python files.                                  |
-| manage.sh                  | Is running manage.py with optional parameters.                        |
-| poetry.sh                  | Is running poetry inside container.                                   |
-| test.sh                    | Is running tests with coverage .                                      |
+| Script              | Comment                                                               |
+|---------------------|-----------------------------------------------------------------------|
+| check.sh            | Is running flake8, xenon, pip-audit, bandit, mypy, migrations checks. |
+| create_users.sh     | Is creating superuser and users for each group.                       |
+| enter.sh            | Is connecting to backend container.                                   |
+| entrypoint.dev.sh   | Is starting development sever.                                        |
+| isort.sh            | Is for sort imports in python files.                                  |
+| manage.sh           | Is running manage.py with optional parameters.                        |
+| poetry.sh           | Is running poetry inside container.                                   |
+| run_consumer.dev.sh | Is running Celery worker for given queue.                             |
+| test.sh             | Is running tests with coverage .                                      |
 
 ## Commands
 There are implemented some Django CLI commands simplifying instance management.

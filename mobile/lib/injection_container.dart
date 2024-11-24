@@ -2,7 +2,6 @@ import 'package:campngo/config/routes/app_router.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
 import 'package:campngo/features/auth/data/repository_impl/auth_repository_impl.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
-import 'package:campngo/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/register/data/data_sources/register_api_service.dart';
 import 'package:campngo/features/register/data/repository_impl/register_repository_impl.dart';
@@ -24,7 +23,6 @@ Future<void> initializeDependencies() async {
   const secureStorage = FlutterSecureStorage();
   final authApiService = AuthApiService(dio);
   final authRepository = AuthRepositoryImpl(authApiService);
-  final authUseCase = AuthUseCase(authRepository);
   final registerApiService = RegisterApiService(dio);
   final registerRepository = RegisterRepositoryImpl(registerApiService);
   final registerUseCase = RegisterUseCase(registerRepository);
@@ -35,10 +33,9 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerLazySingleton(() => secureStorage);
   serviceLocator.registerSingleton<AuthApiService>(authApiService);
   serviceLocator.registerSingleton<AuthRepository>(authRepository);
-  serviceLocator.registerSingleton<AuthUseCase>(authUseCase);
   serviceLocator.registerFactory<AuthBloc>(
     () => AuthBloc(
-      authUseCase: authUseCase,
+      authRepository: authRepository,
       secureStorage: secureStorage,
     ),
   );

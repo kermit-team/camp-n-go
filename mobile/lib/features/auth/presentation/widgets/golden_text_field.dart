@@ -1,4 +1,6 @@
 import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/core/validation/validations.dart';
+import 'package:campngo/core/validation/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,12 +8,14 @@ class GoldenTextField extends StatefulWidget {
   final TextEditingController controller;
   final bool isPassword;
   final String? hintText;
+  final List<Validation<String>>? validations;
 
   const GoldenTextField({
     super.key,
     required this.controller,
     this.isPassword = false,
     this.hintText,
+    this.validations,
   });
 
   @override
@@ -23,7 +27,7 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       obscureText: widget.isPassword ? _obscureText : false,
       cursorColor: goldenColor,
@@ -56,6 +60,10 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
                 },
               )
             : null,
+      ),
+      validator: Validator.apply(
+        context: context,
+        validations: widget.validations ?? [],
       ),
     );
   }

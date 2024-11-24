@@ -18,6 +18,34 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<AuthEntity, Exception>> login({
     required AuthCredentials params,
   }) async {
+    if (params.email.trim().isEmpty || params.password.trim().isEmpty) {
+      return Failure(Exception("Credentials not entered"));
+    }
+    try {
+      final httpResponse = await _authApiService.login(
+        credentials: {
+          "email": params.email,
+          "password": params.password,
+        },
+      );
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final AuthEntity authEntity = httpResponse.data.toEntity();
+        return Success(authEntity);
+      }
+      final errorResponse = json.decode(httpResponse.response.data["detail"]);
+      log('Login error: ${errorResponse["detail"]}');
+      return Failure(Exception(errorResponse['detail']));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
+
+  @override
+  Future<Result<AuthEntity, Exception>> initialLogin({
+    required AuthCredentials params,
+  }) async {
     try {
       final httpResponse = await _authApiService.login(
         credentials: {

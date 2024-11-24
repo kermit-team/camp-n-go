@@ -10,6 +10,8 @@ class Login extends AuthEvent {
   });
 }
 
+class InitialLogin extends AuthEvent {}
+
 class SaveCredentials extends AuthEvent {
   final String email;
   final String password;

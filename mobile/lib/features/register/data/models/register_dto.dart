@@ -18,11 +18,12 @@ class RegisterDTO {
 
   factory RegisterDTO.fromJson(Map<String, dynamic> json) => RegisterDTO(
         email: json['email'] as String,
-        profile:
-            ProfileDTO.fromJson((json['profile'] as Map<String, dynamic>?)?.map(
-                  (k, e) => MapEntry(k, e == "" ? null : e),
-                ) ??
-                {}), // Handle null and empty strings
+        profile: ProfileDTO.fromJson(
+          (json['profile'] as Map<String, dynamic>?)?.map(
+                (k, e) => MapEntry(k, e == "" ? null : e),
+              ) ??
+              {},
+        ), // Handle null and empty strings
       );
 
   Map<String, dynamic> toJson() => _$RegisterDTOToJson(this);

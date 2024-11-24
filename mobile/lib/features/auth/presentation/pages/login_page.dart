@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_state.dart';
@@ -23,6 +24,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -37,59 +39,70 @@ class _LoginPageState extends State<LoginPage> {
           "Wpisz dane dostępowe poniżej",
         ),
         const SizedBox(height: Constants.spaceL),
-        GoldenTextField(
-          controller: emailController,
-          hintText: "Email",
-        ),
-        const SizedBox(height: Constants.spaceM),
-        GoldenTextField(
-          controller: passwordController,
-          hintText: "Hasło",
-          isPassword: true,
-        ),
-        const SizedBox(height: Constants.spaceML),
-        Align(
-          alignment: AlignmentDirectional.centerEnd,
-          child: HyperlinkText(
-            text: "Zapomniałem hasła",
-            isUnderlined: true,
-            onTap: () {
-              context.read<AuthBloc>().add(
-                    Login(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    ),
-                  );
-            },
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              GoldenTextField(
+                controller: emailController,
+                hintText: "Email",
+                validations: const [
+                  RequiredValidation(),
+                  EmailValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceM),
+              GoldenTextField(
+                controller: passwordController,
+                hintText: "Hasło",
+                isPassword: true,
+                validations: const [
+                  RequiredValidation(),
+                  PasswordValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceML),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: HyperlinkText(
+                  text: "Zapomniałem hasła",
+                  isUnderlined: true,
+                  onTap: () {
+                    context.read<AuthBloc>().add(
+                          Login(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          ),
+                        );
+                  },
+                ),
+              ),
+              const SizedBox(height: Constants.spaceM),
+              _getButtons(
+                context,
+                emailController,
+                passwordController,
+              ),
+              const SizedBox(height: Constants.spaceS),
+              Wrap(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const StandardText("Nie masz konta?"),
+                      const SizedBox(width: Constants.spaceXS),
+                      HyperlinkText(
+                        text: "Zarejestruj się za darmo",
+                        onTap: () {
+                          serviceLocator<GoRouter>().go("/register");
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: Constants.spaceM),
-        _getButtons(
-          context,
-          emailController,
-          passwordController,
-        ),
-        const SizedBox(height: Constants.spaceS),
-        // CustomButtonInverted(
-        //   text: "GOOGLE Zaloguj się przez Google",
-        //   onPressed: () {},
-        // ),
-        // const SizedBox(height: Constants.spaceS),
-        Wrap(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const StandardText("Nie masz konta?"),
-                const SizedBox(width: Constants.spaceXS),
-                HyperlinkText(
-                    text: "Zarejestruj się za darmo",
-                    onTap: () {
-                      serviceLocator<GoRouter>().go("/register");
-                    }),
-              ],
-            ),
-          ],
         ),
         const SizedBox(
           height: Constants.spaceL,
@@ -109,18 +122,26 @@ class _LoginPageState extends State<LoginPage> {
             context: context,
             text: authState.exception!.toString(),
           );
+        } else if (authState is AuthEmailEmpty) {
+          AppSnackBar.showSnackBar(
+              context: context, text: "Email nie może być pusty");
+        } else if (authState is AuthPasswordEmpty) {
+          AppSnackBar.showSnackBar(
+              context: context, text: "Hasło nie może być puste");
         }
       },
       builder: (authContext, authState) {
         return CustomButton(
           text: "Zaloguj",
           onPressed: () {
-            context.read<AuthBloc>().add(
-                  Login(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  ),
-                );
+            if (_formKey.currentState?.validate() == true) {
+              context.read<AuthBloc>().add(
+                    Login(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    ),
+                  );
+            }
           },
         );
       },

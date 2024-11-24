@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return BlocProvider<AuthBloc>(
       create: (BuildContext context) =>
-          serviceLocator<AuthBloc>()..add(LoadCredentials()),
+          serviceLocator<AuthBloc>()..add(InitialLogin()),
       child: Builder(
         builder: (context) => MaterialApp.router(
           title: Constants.appName,

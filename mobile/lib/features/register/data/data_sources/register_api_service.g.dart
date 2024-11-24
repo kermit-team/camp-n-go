@@ -74,7 +74,7 @@ class _RegisterApiService implements RegisterApiService {
     )
         .compose(
           _dio.options,
-          '/accounts/email-verification/resend',
+          '/accounts/password-reset',
           queryParameters: queryParameters,
           data: _data,
         )

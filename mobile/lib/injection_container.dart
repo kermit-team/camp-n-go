@@ -1,13 +1,15 @@
 import 'package:campngo/config/routes/app_router.dart';
+import 'package:campngo/core/interceptors/token_interceptor.dart';
+import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
 import 'package:campngo/features/auth/data/repository_impl/auth_repository_impl.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
-import 'package:campngo/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/register/data/data_sources/register_api_service.dart';
 import 'package:campngo/features/register/data/repository_impl/register_repository_impl.dart';
 import 'package:campngo/features/register/domain/repository/register_repository.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
+import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -19,12 +21,12 @@ final serviceLocator = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Create dependencies
-  final dio = _createDio();
   final router = AppRouter().router;
   const secureStorage = FlutterSecureStorage();
+  const tokenStorage = TokenStorage(secureStorage);
+  final dio = _createDio(tokenStorage);
   final authApiService = AuthApiService(dio);
   final authRepository = AuthRepositoryImpl(authApiService);
-  final authUseCase = AuthUseCase(authRepository);
   final registerApiService = RegisterApiService(dio);
   final registerRepository = RegisterRepositoryImpl(registerApiService);
   final registerUseCase = RegisterUseCase(registerRepository);
@@ -33,12 +35,12 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerSingleton<Dio>(dio);
   serviceLocator.registerSingleton<GoRouter>(router);
   serviceLocator.registerLazySingleton(() => secureStorage);
+  serviceLocator.registerSingleton(tokenStorage);
   serviceLocator.registerSingleton<AuthApiService>(authApiService);
   serviceLocator.registerSingleton<AuthRepository>(authRepository);
-  serviceLocator.registerSingleton<AuthUseCase>(authUseCase);
   serviceLocator.registerFactory<AuthBloc>(
     () => AuthBloc(
-      authUseCase: authUseCase,
+      authRepository: authRepository,
       secureStorage: secureStorage,
     ),
   );
@@ -51,9 +53,15 @@ Future<void> initializeDependencies() async {
       secureStorage: secureStorage,
     ),
   );
+  serviceLocator.registerFactory(
+    () => ForgotPasswordBloc(
+      registerRepository: registerRepository,
+      secureStorage: secureStorage,
+    ),
+  );
 }
 
-Dio _createDio() {
+Dio _createDio(TokenStorage tokenStorage) {
   final dio = Dio(
     BaseOptions(
       receiveDataWhenStatusError: true,
@@ -61,6 +69,10 @@ Dio _createDio() {
       receiveTimeout: const Duration(seconds: 5),
     ),
   );
+  dio.interceptors.add(TokenInterceptor(
+    tokenStorage: tokenStorage,
+    dio: dio,
+  ));
   dio.interceptors.add(
     PrettyDioLogger(
       requestHeader: true,

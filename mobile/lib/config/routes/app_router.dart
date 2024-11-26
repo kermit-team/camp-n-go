@@ -1,6 +1,8 @@
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
+import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
+import 'package:campngo/features/register/presentation/pages/forgot_password_page.dart';
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +60,17 @@ class AppRouter {
             child: BlocProvider<RegisterBloc>(
               create: (context) => serviceLocator<RegisterBloc>(),
               child: const RegisterPage(),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: "/forgotPassword",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: BlocProvider<ForgotPasswordBloc>(
+              create: (context) => serviceLocator<ForgotPasswordBloc>(),
+              child: const ForgotPasswordPage(),
             ),
           );
         },

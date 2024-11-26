@@ -1,0 +1,18 @@
+{
+  "email": "Email",
+  "password": "Hasło",
+  "login": "Zaloguj",
+  "resetPassword": "Zresetuj hasło",
+  "createAccount": "Utwórz konto",
+  "credentialsNotEntered": "Dane dostępowe nie zostały podane",
+  "loginError": "Błąd logowania",
+  "welcomeAgain": "Witaj ponownie",
+  "enterCredentialsBelow": "Wpisz dane dostępowe poniżej",
+  "forgotPassword": "Zapomniałem hasła",
+  "forgotPasswordQuestion": "Zapomniałeś hasła",
+  "weWillSendYouEmail": "Wyślemy Ci instrukcję hasła",
+  "emailToResetPasswordSent": "Wysłano email do resetu hasła",
+  "dontHaveAccount": "Nie masz konta",
+  "registerForFree": "Zarejestruj się za darmo",
+  "emailCannotBeEmpty": "Email nie może być pusty"
+}

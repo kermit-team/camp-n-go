@@ -27,6 +27,39 @@ class RegisterRepositoryImpl implements RegisterRepository {
         return Success(registerEntity);
       }
 
+      Map<String, dynamic> responseData =
+          jsonDecode(httpResponse.response.data);
+      responseData.forEach((key, value) {
+        log('Response ---> $key: $value');
+      });
+
+      final errorResponse = json.decode(httpResponse.response.data);
+      log('Register error: $errorResponse');
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
+
+  @override
+  Future<Result<dynamic, Exception>> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      final httpResponse = await _registerApiService.forgotPassword(
+        email: {"email": email},
+      );
+
+      if (httpResponse.response.statusCode == 200) {
+        return const Success(null);
+      }
+
+      Map<String, dynamic> responseData =
+          jsonDecode(httpResponse.response.data);
+      responseData.forEach((key, value) {
+        log('Response ---> $key: $value');
+      });
+
       final errorResponse = json.decode(httpResponse.response.data);
       log('Register error: $errorResponse');
       return Failure(Exception(errorResponse));
@@ -37,8 +70,15 @@ class RegisterRepositoryImpl implements RegisterRepository {
 
   Exception handleApiError(DioException dioException) {
     if (dioException.response != null) {
+      String errorText = "";
+      dioException.response!.data.forEach((key, value) {
+        errorText += "$value";
+        log('Key: $key');
+        log('Value: $value');
+      });
+
       log('Dio Register error details: ${dioException.response!.data}');
-      return Exception(dioException.response!.data);
+      return Exception(errorText);
     } else if (dioException.message != null) {
       log('Dio Register error details: ${dioException.message}');
       return Exception(dioException.message);

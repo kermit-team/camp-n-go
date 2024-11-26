@@ -5,4 +5,8 @@ abstract class RegisterRepository {
   Future<Result<RegisterEntity, Exception>> register({
     required RegisterEntity params,
   });
+
+  Future<Result<dynamic, Exception>> forgotPassword({
+    required String email,
+  });
 }

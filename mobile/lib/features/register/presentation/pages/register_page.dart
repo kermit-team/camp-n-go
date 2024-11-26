@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/auth/presentation/widgets/custom_buttons.dart';
 import 'package:campngo/features/auth/presentation/widgets/golden_text_field.dart';
 import 'package:campngo/features/auth/presentation/widgets/hyperlink_text.dart';
@@ -9,7 +10,9 @@ import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +25,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -32,67 +36,94 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return AppBody(
       children: [
+        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
         const TitleText("Stwórz konto"),
         const SizedBox(height: Constants.spaceS),
         const StandardText("Aby zaplanować swój wypoczynek"),
         const SizedBox(height: Constants.spaceL),
-        GoldenTextField(
-          controller: firstNameController,
-          hintText: "Imię",
-        ),
-        const SizedBox(height: Constants.spaceM),
-        GoldenTextField(
-          controller: lastNameController,
-          hintText: "Nazwisko",
-        ),
-        const SizedBox(height: Constants.spaceM),
-        GoldenTextField(
-          controller: emailController,
-          hintText: "Email",
-        ),
-        const SizedBox(height: Constants.spaceM),
-        GoldenTextField(
-          controller: passwordController,
-          hintText: "Hasło",
-          isPassword: true,
-        ),
-        const SizedBox(height: Constants.spaceM),
-        GoldenTextField(
-          controller: confirmPasswordController,
-          hintText: "Powtórz hasło",
-          isPassword: true,
-        ),
-        const SizedBox(height: Constants.spaceML),
-        _getButtons(
-          context,
-          firstNameController,
-          lastNameController,
-          emailController,
-          passwordController,
-          confirmPasswordController,
-        ),
-        const SizedBox(height: Constants.spaceS),
-        // CustomButtonInverted(
-        //   text: "GOOGLE Zaloguj się przez Google",
-        //   onPressed: () {},
-        // ),
-        // const SizedBox(height: Constants.spaceS),
-        Wrap(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const StandardText("Posiadasz już konto?"),
-                const SizedBox(width: Constants.spaceXS),
-                HyperlinkText(
-                    text: "Zaloguj się",
-                    onTap: () {
-                      serviceLocator<GoRouter>().go("/login");
-                    }),
-              ],
-            ),
-          ],
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              GoldenTextField(
+                controller: firstNameController,
+                hintText: "Imię",
+                validations: const [
+                  RequiredValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceM),
+              GoldenTextField(
+                controller: lastNameController,
+                hintText: "Nazwisko",
+                validations: const [
+                  RequiredValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceM),
+              GoldenTextField(
+                controller: emailController,
+                hintText: "Email",
+                validations: const [
+                  RequiredValidation(),
+                  EmailValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceM),
+              GoldenTextField(
+                controller: passwordController,
+                hintText: "Hasło",
+                isPassword: true,
+                validations: const [
+                  RequiredValidation(),
+                  PasswordValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceM),
+              GoldenTextField(
+                controller: confirmPasswordController,
+                hintText: "Powtórz hasło",
+                isPassword: true,
+                validations: const [
+                  RequiredValidation(),
+                  PasswordValidation(),
+                ],
+              ),
+              const SizedBox(height: Constants.spaceML),
+              _getButtons(
+                context,
+                _formKey,
+                firstNameController,
+                lastNameController,
+                emailController,
+                passwordController,
+                confirmPasswordController,
+              ),
+              const SizedBox(height: Constants.spaceS),
+              // CustomButtonInverted(
+              //   text: "GOOGLE Zaloguj się przez Google",
+              //   onPressed: () {},
+              // ),
+              // const SizedBox(height: Constants.spaceS),
+              Wrap(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const StandardText("Posiadasz już konto?"),
+                      const SizedBox(width: Constants.spaceXS),
+                      HyperlinkText(
+                          text: "Zaloguj się",
+                          onTap: () {
+                            serviceLocator<GoRouter>().go("/login");
+                          }),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         const SizedBox(
           height: Constants.spaceL,
@@ -103,6 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _getButtons(
     BuildContext context,
+    GlobalKey<FormState> formKey,
     TextEditingController emailController,
     TextEditingController passwordController,
     TextEditingController firstNameController,
@@ -113,15 +145,17 @@ class _RegisterPageState extends State<RegisterPage> {
       listener: (context, state) {},
       builder: (context, state) {
         return CustomButton(
-            text: "Stwórz konto",
+            text: LocaleKeys.createAccount.tr(),
             onPressed: () {
-              context.read<RegisterBloc>().add(Register(
-                    firstName: emailController.text,
-                    lastName: passwordController.text,
-                    email: firstNameController.text,
-                    password: lastNameController.text,
-                    confirmPassword: confirmPasswordController.text,
-                  ));
+              if (formKey.currentState?.validate() == true) {
+                context.read<RegisterBloc>().add(Register(
+                      firstName: emailController.text,
+                      lastName: passwordController.text,
+                      email: firstNameController.text,
+                      password: lastNameController.text,
+                      confirmPassword: confirmPasswordController.text,
+                    ));
+              }
             });
       },
     );

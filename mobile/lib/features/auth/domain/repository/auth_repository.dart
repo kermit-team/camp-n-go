@@ -6,4 +6,8 @@ abstract class AuthRepository {
   Future<Result<AuthEntity, Exception>> login({
     required AuthCredentials params,
   });
+
+  Future<Result<AuthEntity, Exception>> initialLogin({
+    required AuthCredentials params,
+  });
 }

@@ -5,11 +5,11 @@ import {
   MatDateRangeInput,
   MatDateRangePicker
 } from '@angular/material/datepicker';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatFormField, MatFormFieldModule, MatHint, MatLabel, MatPrefix, MatSuffix} from '@angular/material/form-field';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {MatFormField, MatHint, MatLabel, MatPrefix, MatSuffix} from '@angular/material/form-field';
 import {Router} from '@angular/router';
 import {MAT_DATE_FORMATS, MatDateFormats, provideNativeDateAdapter} from '@angular/material/core';
-import {JsonPipe} from '@angular/common';
+
 export const CUSTOM_DATE_FORMATS: MatDateFormats = {
   parse: {
     dateInput: 'DD.MM.YYYY',

@@ -16,6 +16,6 @@ export class LoginComponent {
   private authFacade = inject(AuthFacade);
 
   login(formData: LoginRequest) {
-    //this.authFacade.register(formData);
+    this.authFacade.login(formData);
   }
 }

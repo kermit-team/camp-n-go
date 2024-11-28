@@ -7,7 +7,7 @@ export interface ForgotPasswordRequest {
   email: string;
 }
 
-export interface LoginResponse {
+export interface LoginTokensResponse {
   access: string;
   refresh: string;
 }

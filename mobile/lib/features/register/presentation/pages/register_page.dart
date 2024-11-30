@@ -10,8 +10,10 @@ import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
+import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,11 +38,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return AppBody(
       children: [
-        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
-        const TitleText("Stwórz konto"),
+        TitleText(LocaleKeys.createAccount.tr()),
         const SizedBox(height: Constants.spaceS),
-        const StandardText("Aby zaplanować swój wypoczynek"),
+        StandardText(LocaleKeys.toPlanYourVacation.tr()),
         const SizedBox(height: Constants.spaceL),
         Form(
           key: _formKey,
@@ -48,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               GoldenTextField(
                 controller: firstNameController,
-                hintText: "Imię",
+                hintText: LocaleKeys.firstName.tr(),
                 validations: const [
                   RequiredValidation(),
                 ],
@@ -56,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: Constants.spaceM),
               GoldenTextField(
                 controller: lastNameController,
-                hintText: "Nazwisko",
+                hintText: LocaleKeys.lastName.tr(),
                 validations: const [
                   RequiredValidation(),
                 ],
@@ -64,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: Constants.spaceM),
               GoldenTextField(
                 controller: emailController,
-                hintText: "Email",
+                hintText: LocaleKeys.email.tr(),
                 validations: const [
                   RequiredValidation(),
                   EmailValidation(),
@@ -73,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: Constants.spaceM),
               GoldenTextField(
                 controller: passwordController,
-                hintText: "Hasło",
+                hintText: LocaleKeys.password.tr(),
                 isPassword: true,
                 validations: const [
                   RequiredValidation(),
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: Constants.spaceM),
               GoldenTextField(
                 controller: confirmPasswordController,
-                hintText: "Powtórz hasło",
+                hintText: LocaleKeys.repeatPassword.tr(),
                 isPassword: true,
                 validations: const [
                   RequiredValidation(),
@@ -111,10 +112,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const StandardText("Posiadasz już konto?"),
+                      StandardText("${LocaleKeys.alreadyHaveAccount.tr()}?"),
                       const SizedBox(width: Constants.spaceXS),
                       HyperlinkText(
-                          text: "Zaloguj się",
+                          text: LocaleKeys.login.tr(),
                           onTap: () {
                             serviceLocator<GoRouter>().go("/login");
                           }),
@@ -142,22 +143,44 @@ class _RegisterPageState extends State<RegisterPage> {
     TextEditingController confirmPasswordController,
   ) {
     return BlocConsumer<RegisterBloc, RegisterState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is RegisterFailure) {
+          AppSnackBar.showErrorSnackBar(
+            context: context,
+            text: _getExceptionMessage(state.exception!),
+          );
+        } else if (state is RegisterSuccess) {
+          AppSnackBar.showSnackBar(
+            context: context,
+            text: LocaleKeys.emailToResetPasswordSent.tr(),
+          );
+          serviceLocator<GoRouter>().go("/confirmAccount");
+        }
+      },
       builder: (context, state) {
         return CustomButton(
-            text: LocaleKeys.createAccount.tr(),
-            onPressed: () {
-              if (formKey.currentState?.validate() == true) {
-                context.read<RegisterBloc>().add(Register(
-                      firstName: emailController.text,
-                      lastName: passwordController.text,
-                      email: firstNameController.text,
-                      password: lastNameController.text,
-                      confirmPassword: confirmPasswordController.text,
-                    ));
-              }
-            });
+          text: LocaleKeys.createAccount.tr(),
+          onPressed: () {
+            if (formKey.currentState?.validate() == true) {
+              context.read<RegisterBloc>().add(Register(
+                    firstName: emailController.text,
+                    lastName: passwordController.text,
+                    email: firstNameController.text,
+                    password: lastNameController.text,
+                    confirmPassword: confirmPasswordController.text,
+                  ));
+            }
+          },
+        );
       },
     );
+  }
+
+  String _getExceptionMessage(Exception exception) {
+    if (exception is DioException) {
+      return exception.message ?? exception.toString();
+    }
+    String exceptionWithPrefix = exception.toString();
+    return exceptionWithPrefix.replaceFirst('Exception: ', '');
   }
 }

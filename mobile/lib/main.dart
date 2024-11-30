@@ -11,8 +11,9 @@ import 'package:go_router/go_router.dart';
 //generate translations command:
 //flutter pub run easy_localization:generate -S "assets/translations" -O "lib/generated" -f keys -o locale_keys.g.dart
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   initializeDependencies();
   runApp(EasyLocalization(
     supportedLocales: const [

@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 
 class StandardText extends StatelessWidget {
   final String text;
+  final Color? color;
 
-  const StandardText(this.text, {super.key});
+  const StandardText(this.text, {this.color, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: subtitleTextStyle(),
-      textAlign: TextAlign.start,
+      style: mainTextStyle(color: color),
+      textAlign: TextAlign.center,
     );
   }
 }

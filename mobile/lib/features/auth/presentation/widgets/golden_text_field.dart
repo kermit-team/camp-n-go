@@ -60,6 +60,7 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
                 },
               )
             : null,
+        errorMaxLines: 2,
       ),
       validator: Validator.apply(
         context: context,

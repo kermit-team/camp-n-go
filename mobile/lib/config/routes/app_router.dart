@@ -2,8 +2,10 @@ import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
+import 'package:campngo/features/register/presentation/pages/confirm_aacount_page.dart';
 import 'package:campngo/features/register/presentation/pages/forgot_password_page.dart';
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
+import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,25 +22,23 @@ class AppRouter {
         path: "/",
         pageBuilder: (context, state) {
           return MaterialPage(
-            child: SafeArea(
-              child: Scaffold(
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        "Cześć anon, przejdź do logowania!",
-                        style: mainTextStyle(),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          serviceLocator<GoRouter>().go("/login");
-                        },
-                        icon: const Icon(Icons.login),
-                      ),
-                    ],
-                  ),
+            child: Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      "Cześć anon, przejdź do logowania!",
+                      style: mainTextStyle(),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        serviceLocator<GoRouter>().go("/login");
+                      },
+                      icon: const Icon(Icons.login),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -75,6 +75,22 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        path: "/confirmAccount",
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            child: ConfirmAccountPage(),
+          );
+        },
+      ),
+      GoRoute(
+        path: "/resetPasswordInfo",
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            child: ResetPasswordInfoPage(),
+          );
+        },
+      )
     ],
   );
 }

@@ -1,4 +1,6 @@
 import 'package:campngo/core/validation/app_regex.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 abstract class Validation<T> {
@@ -31,7 +33,7 @@ class EmailValidation extends Validation<String> {
     if (value == null) return null;
 
     if (!AppRegex.emailRegex.hasMatch(value)) {
-      return 'Email is not valid';
+      return LocaleKeys.invalidEmail.tr();
     }
 
     return null;
@@ -46,7 +48,7 @@ class PasswordValidation extends Validation<String> {
     if (value == null) return null;
 
     if (!AppRegex.passwordRegex.hasMatch(value)) {
-      return 'Password is not valid';
+      return LocaleKeys.passwordRules.tr();
     }
 
     return null;

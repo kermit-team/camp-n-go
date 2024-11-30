@@ -11,9 +11,12 @@ import 'package:campngo/features/register/presentation/bloc/forgot_password_stat
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:campngo/injection_container.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -29,15 +32,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      showBackIcon: true,
       children: [
-        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
         TitleText(LocaleKeys.forgotPassword.tr()),
         const SizedBox(height: Constants.spaceS),
         StandardText(LocaleKeys.weWillSendYouEmail.tr()),
         const SizedBox(height: Constants.spaceL),
         Form(
+          key: _formKey,
           child: Column(
             children: [
               GoldenTextField(
@@ -69,15 +71,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return BlocConsumer<ForgotPasswordBloc, ForgotPasswordState>(
       listener: (forgotPasswordContext, forgotPasswordState) {
         if (forgotPasswordState is ForgotPasswordFailure) {
-          AppSnackBar.showSnackBar(
+          AppSnackBar.showErrorSnackBar(
             context: context,
-            text: forgotPasswordState.exception!.toString(),
+            text: _getExceptionMessage(forgotPasswordState.exception!),
           );
         } else if (forgotPasswordState is ForgotPasswordSuccess) {
-          AppSnackBar.showSnackBar(
-            context: context,
-            text: LocaleKeys.emailToResetPasswordSent.tr(),
-          );
+          serviceLocator<GoRouter>().replace("/resetPasswordInfo");
         }
       },
       builder: (forgotPasswordContext, forgotPasswordState) {
@@ -98,5 +97,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         );
       },
     );
+  }
+
+  String _getExceptionMessage(Exception exception) {
+    if (exception is DioException) {
+      return exception.message ?? exception.toString();
+    }
+    String exceptionWithPrefix = exception.toString();
+    return exceptionWithPrefix.replaceFirst('Exception: ', '');
   }
 }

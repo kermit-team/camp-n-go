@@ -13,6 +13,7 @@ import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,15 +27,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late GlobalKey<FormState> _formKey;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBody(
       children: [
-        const SizedBox(height: Constants.spaceL),
         const IconAppBar(),
         TitleText('${LocaleKeys.welcomeAgain.tr()}!'),
         const SizedBox(height: Constants.spaceS),
@@ -49,7 +57,6 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: LocaleKeys.email.tr(),
                 validations: const [
                   RequiredValidation(),
-                  EmailValidation(),
                 ],
               ),
               const SizedBox(height: Constants.spaceM),
@@ -59,7 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                 isPassword: true,
                 validations: const [
                   RequiredValidation(),
-                  PasswordValidation(),
                 ],
               ),
               const SizedBox(height: Constants.spaceML),
@@ -114,16 +120,20 @@ class _LoginPageState extends State<LoginPage> {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (authContext, authState) {
         if (authState is AuthFailure) {
-          AppSnackBar.showSnackBar(
+          AppSnackBar.showErrorSnackBar(
             context: context,
-            text: authState.exception!.toString(),
+            text: _getExceptionMessage(authState.exception!),
           );
         } else if (authState is AuthEmailEmpty) {
-          AppSnackBar.showSnackBar(
-              context: context, text: "Email nie może być pusty");
+          AppSnackBar.showErrorSnackBar(
+            context: context,
+            text: LocaleKeys.emailCannotBeEmpty.tr(),
+          );
         } else if (authState is AuthPasswordEmpty) {
-          AppSnackBar.showSnackBar(
-              context: context, text: "Hasło nie może być puste");
+          AppSnackBar.showErrorSnackBar(
+            context: context,
+            text: LocaleKeys.passwordCannotBeEmpty.tr(),
+          );
         }
       },
       builder: (authContext, authState) {
@@ -147,5 +157,13 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  String _getExceptionMessage(Exception exception) {
+    if (exception is DioException) {
+      return exception.message ?? exception.toString();
+    }
+    String exceptionWithPrefix = exception.toString();
+    return exceptionWithPrefix.replaceFirst('Exception: ', '');
   }
 }

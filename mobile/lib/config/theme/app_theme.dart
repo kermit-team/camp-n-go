@@ -20,14 +20,6 @@ TextStyle titleTextStyle() {
   );
 }
 
-TextStyle subtitleTextStyle() {
-  return GoogleFonts.montserrat(
-    fontSize: Constants.textSizeS,
-    fontStyle: FontStyle.normal,
-    color: Colors.black,
-  );
-}
-
 TextStyle mainTextStyle({Color? color}) {
   return GoogleFonts.montserrat(
     fontSize: Constants.textSizeS,

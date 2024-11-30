@@ -98,12 +98,15 @@ class AuthRepositoryImpl implements AuthRepository {
       });
 
       log('Dio Register error details: ${dioException.response!.data}');
-      return Exception(errorText);
+      return DioException(
+        message: errorText,
+        requestOptions: dioException.requestOptions,
+      );
     } else if (dioException.message != null) {
       log('Dio Register error details: ${dioException.message}');
       return Exception(dioException.message);
     }
 
-    return Exception(dioException.toString());
+    return Exception(dioException.message);
   }
 }

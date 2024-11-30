@@ -14,14 +14,27 @@ class AppSnackBar {
             content: Text(
               text,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onError,
+                color: Theme.of(context).colorScheme.onTertiary,
               ),
               maxLines: 3,
             ),
-            backgroundColor: color ?? Theme.of(context).colorScheme.error,
+            backgroundColor: color ??
+                Theme.of(context).colorScheme.tertiary.withOpacity(0.9),
           ),
         );
       },
+    );
+  }
+
+  static showErrorSnackBar({
+    required BuildContext context,
+    required String text,
+    Color? color,
+  }) {
+    showSnackBar(
+      context: context,
+      text: text,
+      color: color ?? Theme.of(context).colorScheme.error.withOpacity(0.9),
     );
   }
 }

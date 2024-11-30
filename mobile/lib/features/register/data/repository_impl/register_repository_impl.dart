@@ -78,7 +78,10 @@ class RegisterRepositoryImpl implements RegisterRepository {
       });
 
       log('Dio Register error details: ${dioException.response!.data}');
-      return Exception(errorText);
+      return DioException(
+        message: errorText,
+        requestOptions: dioException.requestOptions,
+      );
     } else if (dioException.message != null) {
       log('Dio Register error details: ${dioException.message}');
       return Exception(dioException.message);

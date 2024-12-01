@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 18:39+0100\n"
+"POT-Creation-Date: 2024-12-01 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,27 @@ msgstr "Grupa {name} nie istnieje."
 #, python-brace-format
 msgid "Permission {codename} does not exist."
 msgstr "Uprawnienie {codename} nie istnieje."
+
+#: server/apps/account/messages/account.py:7
+#, python-brace-format
+msgid "Account with uidb64 {uidb64} has been successfully activated."
+msgstr "Użytkownik o uidb64 {uidb64} zostało pomyślnie aktywowany."
+
+#: server/apps/account/messages/account.py:8
+#, python-brace-format
+msgid "Activation process for account with e-mail {email} has been started."
+msgstr "Proces aktywacji dla użytkownika o adresie e-mail {email} został ropoczęty."
+
+#: server/apps/account/messages/account.py:9
+#, python-brace-format
+msgid ""
+"Password reset process for account with e-mail {email} has been started."
+msgstr "Proces resetowania hasła dla użytkownika o adresie e-mail {email} został ropoczęty."
+
+#: server/apps/account/messages/account.py:10
+#, python-brace-format
+msgid "Password for account with uidb64 {uidb64} has been successfully reset."
+msgstr "Hasło dla użytkownika o uidb64 {uidb64} zostało pomyślnie zresetowane."
 
 #: server/apps/account/models/account.py:14
 msgid "Identifier"
@@ -127,8 +148,8 @@ msgid ""
 "Your password must contain at least 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-"
 "+=;:\\'\",<>./?]"
 msgstr ""
-"Twoje hasło musi zawierać co najmniej 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-+=;:"
-"\\'\",<>./?]"
+"Twoje hasło musi zawierać co najmniej 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-"
+"+=;:\\'\",<>./?]"
 
 #: server/apps/account/validators/password/uppercase.py:15
 msgid "The password must contain at least 1 uppercase letter, A-Z."
@@ -221,9 +242,9 @@ msgid ""
 "reset your password. Once you have set your password, don't forget to log in "
 "to the application."
 msgstr ""
-"Wysłaliśmy Ci tę wiadomość e-mail, ponieważ otrzymaliśmy informację, że chcesz "
-"zresetować hasło. Po ustawieniu hasła nie zapomnij zalogować się "
-"do aplikacji."
+"Wysłaliśmy Ci tę wiadomość e-mail, ponieważ otrzymaliśmy informację, że "
+"chcesz zresetować hasło. Po ustawieniu hasła nie zapomnij zalogować się do "
+"aplikacji."
 
 #: server/templates/mailing/account/password_reset.html:16
 msgid "Reset password"

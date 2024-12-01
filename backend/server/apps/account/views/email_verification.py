@@ -3,6 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from server.apps.account.messages import AccountMessagesEnum
 from server.business_logic.account import AccountEmailVerificationBL
 
 
@@ -11,4 +12,6 @@ class AccountEmailVerificationView(APIView):
 
     def get(self, request: Request, uidb64: str, token: str):
         AccountEmailVerificationBL.process(uidb64=uidb64, token=token)
-        return Response()
+        return Response(
+            data={'message': AccountMessagesEnum.EMAIL_VERIFICATION_SUCCESS.value.format(uidb64=uidb64)},
+        )

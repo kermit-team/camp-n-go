@@ -9,7 +9,9 @@ class AccountPasswordResetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['password']
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
     def validate_password(self, value: str) -> str:
         try:

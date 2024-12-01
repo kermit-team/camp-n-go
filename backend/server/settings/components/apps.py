@@ -8,6 +8,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 3rd party apps
+    'cid.apps.CidAppConfig',
     'corsheaders',
     'django_filters',
     'phonenumber_field',

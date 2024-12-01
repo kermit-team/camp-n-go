@@ -792,6 +792,20 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-cid"
+version = "3.0"
+description = "Correlation IDs in Django for debugging requests"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-cid-3.0.tar.gz", hash = "sha256:12a21be3aaf6945be59a85eeb0ab47f97c09c947cf72947dc92c742a989826fd"},
+    {file = "django_cid-3.0-py3-none-any.whl", hash = "sha256:c785ae7d0bb0e74e3faba2bf45b558addece41b85387bff14df05f7110a56e65"},
+]
+
+[package.dependencies]
+django = ">=3.1"
+
+[[package]]
 name = "django-cors-headers"
 version = "4.6.0"
 description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
@@ -2870,4 +2884,4 @@ requests = ">=2.0,<3.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "e3e800f3ec782d9e5db67f8a1ab218e09a916725416869bd528b1518062c4dad"
+content-hash = "446147e9f5d16b35d05fe4f1dd08561c3c639cbbeac4914f2f6bdb4181b1184f"

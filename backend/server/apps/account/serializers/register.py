@@ -30,7 +30,9 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
             'password',
             'profile',
         ]
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
     def create(self, validated_data: Any) -> Account:
         profile_data = validated_data.get('profile')

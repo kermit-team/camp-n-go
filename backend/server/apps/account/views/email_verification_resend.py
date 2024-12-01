@@ -3,13 +3,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from server.apps.account.serializers import AccountEmailVerificationResendSerializer
+from server.apps.account.serializers import AccountEmailSerializer
 from server.business_logic.account import AccountEmailVerificationResendBL
 
 
 class AccountEmailVerificationResendView(APIView):
     permission_classes = [AllowAny]
-    serializer_class = AccountEmailVerificationResendSerializer
+    serializer_class = AccountEmailSerializer
 
     def post(self, request: Request):
         serializer = self.serializer_class(data=request.data)

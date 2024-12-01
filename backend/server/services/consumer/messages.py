@@ -9,3 +9,4 @@ class ConsumerErrorMessages(enum.StrEnum):
 class ConsumerMessagesEnum(enum.StrEnum):
     FINISHED_SUCCESSFULLY = 'Task {name} with id {task_id} has been successfully completed'
     ENQUEUED_ACCOUNT_EMAIL_VERIFICATION_TO_MAIL = 'Enqueueing mail for account email verification to sent'
+    ENQUEUED_ACCOUNT_PASSWORD_RESET_TO_MAIL = 'Enqueueing mail for account password reset to sent'  # noqa: S105

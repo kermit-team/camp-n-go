@@ -71,6 +71,10 @@ class AccountCommand:
         account.save()
 
     @classmethod
+    def change_password(cls, account: Account, password: str) -> None:
+        account.set_password(raw_password=password)
+
+    @classmethod
     def _add_groups_to_account(cls, account: Account, names: list[str]) -> None:
         groups = []
         for name in names:

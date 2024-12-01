@@ -6,12 +6,13 @@ from model_bakery import baker
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.serializers import AccountRegisterSerializer
 from server.business_logic.account import AccountRegisterBL
+from server.utils.tests.baker_generators import generate_password
 
 
 class AccountRegisterSerializerTestCase(TestCase):
 
     def setUp(self):
-        self.account = baker.prepare(_model=Account, _fill_optional=True)
+        self.account = baker.prepare(_model=Account, password=generate_password(), _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
     @mock.patch.object(AccountRegisterBL, 'process')
@@ -67,3 +68,34 @@ class AccountRegisterSerializerTestCase(TestCase):
             avatar=None,
             id_card=None,
         )
+
+    def test_validate(self):
+        serializer = AccountRegisterSerializer(
+            data={
+                'email': self.account.email,
+                'password': self.account.password,
+                'profile': {
+                    'first_name': self.account_profile.first_name,
+                    'last_name': self.account_profile.last_name,
+                },
+            },
+        )
+
+        assert serializer.is_valid()
+
+    def test_validate_invalid_password(self):
+        password = 'bad_password'
+        serializer = AccountRegisterSerializer(
+            data={
+                'email': self.account.email,
+                'password': password,
+                'profile': {
+                    'first_name': self.account_profile.first_name,
+                    'last_name': self.account_profile.last_name,
+                },
+            },
+        )
+
+        assert not serializer.is_valid()
+
+        assert 'password' in serializer.errors

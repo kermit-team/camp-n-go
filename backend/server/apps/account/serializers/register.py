@@ -1,5 +1,7 @@
 from typing import Any
 
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from server.apps.account.models import Account, AccountProfile
@@ -42,3 +44,10 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
             avatar=profile_data.get('avatar'),
             id_card=profile_data.get('id_card'),
         )
+
+    def validate_password(self, value: str) -> str:
+        try:
+            validate_password(password=value)
+        except ValidationError as exc:
+            raise serializers.ValidationError(str(exc))
+        return value

@@ -8,8 +8,8 @@ from model_bakery import baker
 
 from server.apps.account.exceptions.account import (
     AccountAlreadyActiveError,
-    AccountEmailVerificationTokenError,
     AccountIdentifierNotExistsError,
+    AccountInvalidTokenError,
 )
 from server.apps.account.generators import AccountEmailVerificationTokenGenerator
 from server.apps.account.models import Account, AccountProfile
@@ -88,7 +88,7 @@ class AccountEmailVerificationBLTestCase(TestCase):
 
         get_account_by_identifier_mock.return_value = self.account
 
-        with self.assertRaises(AccountEmailVerificationTokenError):
+        with self.assertRaises(AccountInvalidTokenError):
             AccountEmailVerificationBL.process(
                 uidb64=uidb64,
                 token=token,

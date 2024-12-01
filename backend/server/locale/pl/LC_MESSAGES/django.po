@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 19:01+0100\n"
+"POT-Creation-Date: 2024-11-24 18:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,6 +45,11 @@ msgid "Account {identifier} is already active."
 msgstr "Użytkownik {identifier} jest już aktywny."
 
 #: server/apps/account/errors/account.py:10
+#, python-brace-format
+msgid "Account {identifier} is not active."
+msgstr "Użytkownik {identifier} nie jest aktywny."
+
+#: server/apps/account/errors/account.py:11
 #, python-brace-format
 msgid "Given token is invalid or expired for account {identifier}."
 msgstr ""
@@ -101,6 +106,38 @@ msgstr "Awatar"
 msgid "IdCard"
 msgstr "Dowód osobisty"
 
+#: server/apps/account/validators/password/lowercase.py:15
+msgid "The password must contain at least 1 lowercase letter, a-z."
+msgstr "Hasło musi zawierać co najmniej 1 małą literę, a-z."
+
+#: server/apps/account/validators/password/lowercase.py:21
+msgid "Your password must contain at least 1 lowercase letter, a-z."
+msgstr "Twoje hasło musi zawierać co najmniej 1 małą literę, a-z."
+
+#: server/apps/account/validators/password/special_character.py:15
+msgid ""
+"The password must contain at least 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-+=;:"
+"\\'\",<>./?]"
+msgstr ""
+"Hasło musi zawierać co najmniej 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-+=;:"
+"\\'\",<>./?]"
+
+#: server/apps/account/validators/password/special_character.py:22
+msgid ""
+"Your password must contain at least 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-"
+"+=;:\\'\",<>./?]"
+msgstr ""
+"Twoje hasło musi zawierać co najmniej 1 symbol: [()[\\]{}|\\\\`~!@#$%^&*_\\-+=;:"
+"\\'\",<>./?]"
+
+#: server/apps/account/validators/password/uppercase.py:15
+msgid "The password must contain at least 1 uppercase letter, A-Z."
+msgstr "Hasło musi zawierać co najmniej 1 wielką literę, A-Z."
+
+#: server/apps/account/validators/password/uppercase.py:21
+msgid "Your password must contain at least 1 uppercase letter, A-Z."
+msgstr "Twoje hasło musi zawierać co najmniej 1 wielką literę, A-Z."
+
 #: server/apps/common/models/created_updated.py:6
 msgid "CreatedAt"
 msgstr "Czas utworzenia"
@@ -109,9 +146,13 @@ msgstr "Czas utworzenia"
 msgid "ModifiedAt"
 msgstr "Czas modyfikacji"
 
-#: server/business_logic/mailing/account/email_verification.py:13
+#: server/business_logic/mailing/account/email_verification.py:14
 msgid "AccountEmailVerificationEmailSubject"
 msgstr "Weryfikacja adresu e-mail"
+
+#: server/business_logic/mailing/account/password_reset.py:14
+msgid "AccountPasswordResetEmailSubject"
+msgstr "Prośba o zresetowanie hasła"
 
 #: server/settings/components/permissions.py:3
 msgid "Owner"
@@ -142,6 +183,7 @@ msgid "E-mail address verification"
 msgstr "Weryfikacja adresu e-mail"
 
 #: server/templates/mailing/account/email_verification.html:9
+#: server/templates/mailing/account/password_reset.html:9
 msgid "Hi"
 msgstr "Cześć"
 
@@ -154,13 +196,35 @@ msgid "Verify e-mail address"
 msgstr "Zweryfikuj adres e-mail"
 
 #: server/templates/mailing/account/email_verification.html:20
+#: server/templates/mailing/account/password_reset.html:19
 msgid "If the button does not work for any reason, please use the link below:"
-msgstr "Jeśli przycisk z jakiegoś powodu nie działa, skorzystaj z poniższego linku:"
+msgstr ""
+"Jeśli przycisk z jakiegoś powodu nie działa, skorzystaj z poniższego linku:"
 
 #: server/templates/mailing/account/email_verification.html:28
 msgid "If you have not registered on our site, please ignore this message."
-msgstr "Jeśli nie zarejestrowałeś się na naszej stronie, zignoruj tę wiadomość."
+msgstr ""
+"Jeśli nie zarejestrowałeś się na naszej stronie, zignoruj tę wiadomość."
 
 #: server/templates/mailing/account/email_verification.html:34
+#: server/templates/mailing/account/password_reset.html:26
 msgid "Regards"
 msgstr "Pozdrawia"
+
+#: server/templates/mailing/account/password_reset.html:6
+msgid "Password reset"
+msgstr "Reset hasło"
+
+#: server/templates/mailing/account/password_reset.html:10
+msgid ""
+"We sent you this email because we received information that you want to "
+"reset your password. Once you have set your password, don't forget to log in "
+"to the application."
+msgstr ""
+"Wysłaliśmy Ci tę wiadomość e-mail, ponieważ otrzymaliśmy informację, że chcesz "
+"zresetować hasło. Po ustawieniu hasła nie zapomnij zalogować się "
+"do aplikacji."
+
+#: server/templates/mailing/account/password_reset.html:16
+msgid "Reset password"
+msgstr "Zresetuj hasło"

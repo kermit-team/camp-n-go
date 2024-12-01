@@ -19,7 +19,7 @@ class AccountEmailVerificationResendView(APIView):
         AccountEmailVerificationResendBL.process(email=serializer.validated_data['email'])
         return Response(
             data={
-                'message': AccountMessagesEnum.EMAIL_VERIFICATION_SUCCESS.value.format(
+                'message': AccountMessagesEnum.EMAIL_VERIFICATION_RESEND_SUCCESS.value.format(
                     email=serializer.validated_data['email'],
                 ),
             },

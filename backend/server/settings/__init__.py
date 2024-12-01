@@ -21,6 +21,7 @@ base_settings = [
     'components/camping.py',
     'components/common.py',
     'components/database.py',
+    'components/logging.py',
     'components/mailing.py',
     'components/permissions.py',
     'components/queue.py',

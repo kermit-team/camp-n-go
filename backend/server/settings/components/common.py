@@ -6,10 +6,10 @@ BASE_DIR = '/code'  # Temporarily set to prevent problems with split settings in
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.getenv('DEBUG', 0)))
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split()
 
 if csrf_trusted_origins := os.getenv('CSRF_TRUSTED_ORIGINS'):
-    CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split(' ')
+    CSRF_TRUSTED_ORIGINS = csrf_trusted_origins.split()
 
 if cors_allowed_origins := os.getenv('CORS_ALLOWED_ORIGINS'):
     CORS_ALLOWED_ORIGINS = cors_allowed_origins.split()

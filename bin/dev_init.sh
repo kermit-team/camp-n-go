@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 
-cp --update=none envs/backend-env-default envs/.backend.env
-cp --update=none envs/database-env-default envs/.database.env
-cp --update=none envs/frontend-env-default envs/.frontend.env
-cp --update=none envs/rabbitmq-env-default envs/.rabbitmq.env
+cp envs/backend-env-default envs/.backend.env
+cp envs/database-env-default envs/.database.env
+cp envs/frontend-env-default envs/.frontend.env
+cp envs/rabbitmq-env-default envs/.rabbitmq.env
 
 docker compose up -d
 

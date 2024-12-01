@@ -2,6 +2,7 @@ import os
 
 from django.utils.translation import gettext_lazy as _
 
+from server.apps.common.errors import CommonErrorsEnum
 from server.settings.components.camping import DRF_SPECTACULAR_ON
 from server.settings.components.common import DATETIME_INPUT_FORMATS
 
@@ -23,6 +24,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': int(os.getenv('REST_PAGE_SIZE', 10)),
     'DATETIME_FORMAT': DATETIME_INPUT_FORMATS[0],
     'DATETIME_INPUT_FORMATS': DATETIME_INPUT_FORMATS,
+    'EXCEPTION_HANDLER': 'server.utils.api.exception_handler.custom_exception_handler',
 }
 
 if DRF_SPECTACULAR_ON:
@@ -35,3 +37,6 @@ if DRF_SPECTACULAR_ON:
         'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
         'REDOC_DIST': 'SIDECAR',
     }
+
+API_ERROR_MESSAGE = {'message': CommonErrorsEnum.ERROR.value}
+API_MISSING_MESSAGE = {'message': CommonErrorsEnum.MISSING.value}

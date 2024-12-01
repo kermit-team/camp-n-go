@@ -4,6 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase
 
+from server.apps.account.messages import AccountMessagesEnum
 from server.apps.account.views import AccountPasswordResetConfirmView
 from server.business_logic.account import AccountPasswordResetConfirmBL
 from server.utils.tests.baker_generators import generate_password
@@ -27,6 +28,9 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
             'password_reset_confirm',
             kwargs=parameters,
         )
+        expected_message = {
+            'message': AccountMessagesEnum.PASSWORD_RESET_CONFIRM_SUCCESS.value.format(uidb64=parameters['uidb64']),
+        }
 
         req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req, **parameters)
@@ -37,3 +41,4 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
             password=password,
         )
         assert res.status_code == status.HTTP_200_OK
+        assert res.data == expected_message

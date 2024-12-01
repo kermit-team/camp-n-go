@@ -3,6 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from server.apps.account.messages import AccountMessagesEnum
 from server.apps.account.serializers import AccountPasswordResetSerializer
 from server.business_logic.account import AccountPasswordResetConfirmBL
 
@@ -20,4 +21,6 @@ class AccountPasswordResetConfirmView(APIView):
             token=token,
             password=serializer.validated_data['password'],
         )
-        return Response()
+        return Response(
+            data={'message': AccountMessagesEnum.PASSWORD_RESET_CONFIRM_SUCCESS.value.format(uidb64=uidb64)},
+        )

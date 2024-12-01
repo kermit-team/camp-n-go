@@ -3,6 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from server.apps.account.messages import AccountMessagesEnum
 from server.apps.account.serializers import AccountEmailSerializer
 from server.business_logic.account import AccountEmailVerificationResendBL
 
@@ -16,4 +17,10 @@ class AccountEmailVerificationResendView(APIView):
         serializer.is_valid(raise_exception=True)
 
         AccountEmailVerificationResendBL.process(email=serializer.validated_data['email'])
-        return Response()
+        return Response(
+            data={
+                'message': AccountMessagesEnum.EMAIL_VERIFICATION_SUCCESS.value.format(
+                    email=serializer.validated_data['email'],
+                ),
+            },
+        )

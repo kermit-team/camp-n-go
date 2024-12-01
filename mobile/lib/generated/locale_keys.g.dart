@@ -29,5 +29,12 @@ abstract class  LocaleKeys {
   static const returnToLogin = 'returnToLogin';
   static const passwordRules = 'passwordRules';
   static const invalidEmail = 'invalidEmail';
+  static const accountSettings = 'accountSettings';
+  static const updateUserData = 'updateUserData';
+  static const phoneNumber = 'phoneNumber';
+  static const idNumber = 'idNumber';
+  static const edit = 'edit';
+  static const cancel = 'cancel';
+  static const save = 'save';
 
 }

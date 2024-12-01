@@ -10,7 +10,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: titleTextStyle(),
+      style: AppTextStyles.titleTextStyle(),
       textAlign: TextAlign.center,
     );
   }

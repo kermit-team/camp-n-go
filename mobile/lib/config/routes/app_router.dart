@@ -1,4 +1,6 @@
 import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
+import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
@@ -17,6 +19,7 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
+    initialLocation: "/accountSettings",
     routes: <GoRoute>[
       GoRoute(
         path: "/",
@@ -30,7 +33,7 @@ class AppRouter {
                   children: [
                     Text(
                       "Cześć anon, przejdź do logowania!",
-                      style: mainTextStyle(),
+                      style: AppTextStyles.mainTextStyle(),
                     ),
                     IconButton(
                       onPressed: () {
@@ -90,7 +93,18 @@ class AppRouter {
             child: ResetPasswordInfoPage(),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: "/accountSettings",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: BlocProvider(
+              create: (context) => serviceLocator<AccountSettingsCubit>(),
+              child: const AccountSettingsPage(),
+            ),
+          );
+        },
+      ),
     ],
   );
 }

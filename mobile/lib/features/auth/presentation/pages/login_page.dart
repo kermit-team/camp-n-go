@@ -3,14 +3,14 @@ import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_state.dart';
-import 'package:campngo/features/auth/presentation/widgets/custom_buttons.dart';
-import 'package:campngo/features/auth/presentation/widgets/golden_text_field.dart';
-import 'package:campngo/features/auth/presentation/widgets/hyperlink_text.dart';
-import 'package:campngo/features/auth/presentation/widgets/icon_app_bar.dart';
-import 'package:campngo/features/auth/presentation/widgets/standard_text.dart';
-import 'package:campngo/features/auth/presentation/widgets/title_text.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/custom_buttons.dart';
+import 'package:campngo/features/shared/widgets/golden_text_field.dart';
+import 'package:campngo/features/shared/widgets/hyperlink_text.dart';
+import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
+import 'package:campngo/features/shared/widgets/standard_text.dart';
+import 'package:campngo/features/shared/widgets/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
@@ -37,6 +37,13 @@ class _LoginPageState extends State<LoginPage> {
     _formKey = GlobalKey<FormState>();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   @override

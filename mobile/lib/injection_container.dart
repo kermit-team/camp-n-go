@@ -1,6 +1,7 @@
 import 'package:campngo/config/routes/app_router.dart';
 import 'package:campngo/core/interceptors/token_interceptor.dart';
 import 'package:campngo/core/token_storage.dart';
+import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
 import 'package:campngo/features/auth/data/repository_impl/auth_repository_impl.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
@@ -57,6 +58,11 @@ Future<void> initializeDependencies() async {
     () => ForgotPasswordBloc(
       registerRepository: registerRepository,
       secureStorage: secureStorage,
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => AccountSettingsCubit(
+      storage: secureStorage,
     ),
   );
 }

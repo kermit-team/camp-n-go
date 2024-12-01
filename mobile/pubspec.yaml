@@ -50,6 +50,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   google_fonts: ^6.2.1
   easy_localization: ^3.0.7
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:

@@ -99,7 +99,8 @@ class AppRouter {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: BlocProvider(
-              create: (context) => serviceLocator<AccountSettingsCubit>(),
+              create: (context) =>
+                  serviceLocator<AccountSettingsCubit>()..getAccountData(),
               child: const AccountSettingsPage(),
             ),
           );

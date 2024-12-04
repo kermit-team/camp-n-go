@@ -26,6 +26,23 @@ class AccountEntity extends Equatable {
     required this.password,
   });
 
+  copyWith({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phoneNumber,
+    String? idNumber,
+    String? password,
+  }) =>
+      AccountEntity(
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        email: email ?? this.email,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        idNumber: idNumber ?? this.idNumber,
+        password: password ?? this.password,
+      );
+
   @override
   List<Object?> get props => [
         firstName,

@@ -54,6 +54,7 @@ class DisplayTextField extends StatelessWidget {
                 showEditPropertyDialog(
                   context: context,
                   label: label,
+                  initialValue: text,
                   validations: validations,
                   onSave: (newValue) {
                     onHyperlinkPressed(newValue);

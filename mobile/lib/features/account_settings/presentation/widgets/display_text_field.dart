@@ -1,9 +1,8 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/edit_property_dialog.dart';
+import 'package:campngo/features/shared/widgets/golden_text_field.dart';
 import 'package:campngo/features/shared/widgets/hyperlink_text.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
 import 'package:flutter/material.dart';
 
 class DisplayTextField extends StatelessWidget {
@@ -12,6 +11,7 @@ class DisplayTextField extends StatelessWidget {
   final String hyperlinkText;
   final List<Validation<String>>? validations;
   final void Function(String) onHyperlinkPressed;
+  final bool isPassword;
 
   const DisplayTextField({
     super.key,
@@ -20,6 +20,7 @@ class DisplayTextField extends StatelessWidget {
     this.hyperlinkText = 'Edit',
     this.validations,
     required this.onHyperlinkPressed,
+    this.isPassword = false,
   });
 
   @override
@@ -27,22 +28,11 @@ class DisplayTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTextStyles.hintTextStyle()),
-        const SizedBox(height: Constants.spaceS),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ),
-          padding: const EdgeInsets.only(bottom: Constants.spaceS),
-          child: StandardText(
-            text,
-            textAlign: TextAlign.start,
-          ),
+        GoldenTextField(
+          label: label,
+          controller: TextEditingController(text: text),
+          enabled: false,
+          isPassword: isPassword,
         ),
         const SizedBox(height: Constants.spaceS),
         Row(

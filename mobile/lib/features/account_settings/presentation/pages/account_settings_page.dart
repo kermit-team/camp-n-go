@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
+import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
@@ -159,6 +161,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                         DisplayTextField(
                           label: LocaleKeys.password.tr(),
                           text: state.accountEntity?.password ?? '',
+                          isPassword: true,
                           validations: const [RequiredValidation()],
                           onHyperlinkPressed: (String newValue) {
                             context.read<AccountSettingsCubit>().editProperty(
@@ -167,7 +170,10 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 );
                             log("New value for firstName: $newValue");
                           },
-                          //todo: zmienić gwiazdki na kropki
+                        ),
+                        const SizedBox(height: Constants.spaceM),
+                        CarListWidget(
+                          onActionIconPressed: (CarEntity car) {},
                         ),
                       ],
                     ),

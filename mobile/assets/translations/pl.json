@@ -1,5 +1,5 @@
 {
-  "fistName": "Imię",
+  "firstName": "Imię",
   "lastName": "Nazwisko",
   "email": "Email",
   "password": "Hasło",

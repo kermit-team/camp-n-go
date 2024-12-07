@@ -1,18 +1,17 @@
-import { Component } from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthUser } from '../../auth/models/auth.interface';
 
 @Component({
   selector: 'app-profile-mini',
   standalone: true,
-  imports: [
-    RouterLink
-  ],
+  imports: [RouterLink],
   templateUrl: './profile-mini.component.html',
-  styleUrl: './profile-mini.component.scss'
+  styleUrl: './profile-mini.component.scss',
 })
 export class ProfileMiniComponent {
-
-  constructor( private _router: Router) {}
+  @Input() user: AuthUser;
+  constructor(private _router: Router) {}
   showDropdown: boolean = false;
   // ngOnInit() {
   //   const userId: number | null = this._userService.getUserId();
@@ -39,5 +38,4 @@ export class ProfileMiniComponent {
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
-
 }

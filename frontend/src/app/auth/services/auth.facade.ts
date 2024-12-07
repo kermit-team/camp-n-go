@@ -2,10 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { RegisterRequest } from '../models/register.interface';
 import { AuthApi } from './auth.api';
 import { AlertService } from '../../shared/services/alert.service';
-import { first } from 'rxjs';
+import { catchError, first, map, Observable, of, switchMap } from 'rxjs';
 import { AuthState } from '../state/auth.state';
-import { LoginRequest, LoginTokensResponse } from '../models/auth.interface';
+import {
+  AuthUser,
+  LoginRequest,
+  LoginTokensResponse,
+  UserJwt,
+} from '../models/auth.interface';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 const ACCESS_KEY = 'access';
 const REFRESH_KEY = 'refresh';
@@ -40,10 +46,17 @@ export class AuthFacade {
   login(loginData: LoginRequest) {
     this.authApi
       .login(loginData)
-      .pipe(first())
-      .subscribe({
-        next: (tokens: LoginTokensResponse) => {
+      .pipe(
+        first(),
+        switchMap((tokens: LoginTokensResponse) => {
           this.saveTokens(tokens);
+          const decoded = jwtDecode<UserJwt>(tokens.access);
+          return this.authApi.getUserInfo(decoded.user_id);
+        }),
+      )
+      .subscribe({
+        next: (user: AuthUser) => {
+          this.authState.setAuthenticatedUser(user);
           this.router.navigate(['/']);
         },
         error: () =>
@@ -65,5 +78,30 @@ export class AuthFacade {
   removeTokens() {
     localStorage.removeItem(ACCESS_KEY);
     localStorage.removeItem(REFRESH_KEY);
+  }
+
+  verifyEmail(uid64: string, token: string): Observable<{ verified: boolean }> {
+    return this.authApi.verifyEmail(uid64, token).pipe(
+      first(),
+      map(() => ({ verified: true })),
+      catchError(() => of({ verified: false })),
+    );
+  }
+
+  resendEmail(email: string) {
+    this.authApi
+      .resentEmail(email)
+      .pipe(first())
+      .subscribe({
+        next: (email: string) => {
+          this.alertService.showDialog('Wysłano ponownie email', 'success');
+        },
+        error: () =>
+          this.alertService.showDialog('Nie udało się wysłać emaila', 'error'),
+      });
+  }
+
+  selectAuthenticated$(): Observable<AuthUser> {
+    return this.authState.selectAuthenticatedUser$();
   }
 }

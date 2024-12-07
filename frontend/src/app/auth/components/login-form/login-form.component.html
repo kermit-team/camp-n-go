@@ -16,23 +16,20 @@
       [fieldRequired]="true"
       [type]="'password'"
     ></lib-input>
-    <lib-error-message
-      [field]="form.get('password')"
-    ></lib-error-message>
+    <lib-error-message [field]="form.get('password')"></lib-error-message>
     <lib-error-message [field]="form"></lib-error-message>
   </div>
-<div class="login__signin--forgot-wrapper">
-  <a [routerLink]="['/forgot-password']" class="login__signin--button"
-  >Zapomniałem hasła</a
-  >
-</div>
-
+  <div class="login__signin--forgot-wrapper">
+    <a [routerLink]="['/forgot-password']" class="login__signin--button"
+      >Zapomniałem hasła</a
+    >
+  </div>
 
   <lib-button
     class="login-form__submit"
     [fullWidth]="true"
     (click)="submitForm()"
-    >Stwórz konto</lib-button
+    >Zaloguj się</lib-button
   >
   <span class="login__signin--text"
     >Nie masz konta?

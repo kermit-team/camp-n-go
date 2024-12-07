@@ -1,20 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { NgClass, NgIf, NgOptimizedImage, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'lib-button',
   standalone: true,
-  imports: [
-    RouterLink,
-    NgIf,
-    ReactiveFormsModule,
-    NgClass,
-    NgOptimizedImage,
-    FormsModule,
-    NgStyle,
-  ],
+  imports: [ReactiveFormsModule, FormsModule, NgStyle],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })

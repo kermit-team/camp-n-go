@@ -1,7 +1,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-@use 'm3-theme';
+@use "@angular/material" as mat;
+@use "m3-theme";
 /* You can add global styles to this file, and also import other style files */
 @import "./_variables.scss";
 
@@ -15,7 +15,6 @@
   src: url(../assets/fonts/montserrat-normal.ttf);
 }
 
-
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -23,18 +22,19 @@
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-
 // Define the theme object.
-$camping-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary: m3-theme.$main-palette,
-    tertiary: m3-theme.$main-palette,
-  ),
-  density: (
-    scale: 0,
+$camping-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: m3-theme.$main-palette,
+      tertiary: m3-theme.$main-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -51,7 +51,8 @@ $camping-theme: mat.define-theme((
 // @include mat.color-variants-backwards-compatibility($camping-theme);
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html,
+body {
   @include mat.core-theme(m3-theme.$light-theme);
   @include mat.button-theme(m3-theme.$light-theme);
   height: 100%;
@@ -59,7 +60,10 @@ html, body {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .mdc-text-field--outlined {
   .mat-mdc-form-field-flex {
@@ -76,7 +80,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
     /* Customizing the border color of the leading, notch, and trailing parts */
     .mdc-notched-outline__leading {
-      border:none !important;
+      border: none !important;
     }
 
     .mdc-notched-outline__notch {
@@ -113,7 +117,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
   }
 
-
   :focus-within .mdc-notched-outline,
   :focus-within .mdc-notched-outline__leading,
   :focus-within .mdc-notched-outline__trailing {
@@ -126,11 +129,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: none !important;
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 500;
 }

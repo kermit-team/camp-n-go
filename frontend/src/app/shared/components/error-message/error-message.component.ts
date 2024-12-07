@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { errorMessages } from '../../models/error-message.interface';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'lib-error-message',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [],
   templateUrl: './error-message.component.html',
   styleUrl: './error-message.component.scss',
 })

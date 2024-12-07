@@ -1,7 +1,7 @@
-export interface RegisterRequest  {
+export interface RegisterRequest {
   email: string;
   password: string;
-  profile: ProfileRequest
+  profile: ProfileRequest;
 }
 
 export interface ProfileRequest {

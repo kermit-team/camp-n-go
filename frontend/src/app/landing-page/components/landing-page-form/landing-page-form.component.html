@@ -2,22 +2,40 @@
   <form class="search-form" (ngSubmit)="onSubmit()" [formGroup]="search">
     <div class="date-range-input">
       <mat-form-field appearance="outline" class="example-full-width">
-      <mat-date-range-input  [rangePicker]="picker" [min]="minDate" >
-        <input [min]="minDate" matStartDate formControlName="start" placeholder="Data zameldowan..." [value]="minDate">
-        <input matEndDate formControlName="end" placeholder="Data wymeldowan...">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+          <input
+            [min]="minDate"
+            matStartDate
+            formControlName="start"
+            placeholder="Data zameldowan..."
+            [value]="minDate"
+          />
+          <input
+            matEndDate
+            formControlName="end"
+            placeholder="Data wymeldowan..."
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconPrefix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
     <div class="guests-input">
       <label for="adults">
-        <img src="assets/human_icon.svg" alt=""
-             class="guests-item-icon" />
-        Dorośli:</label>
-      <input type="text" id="adults" class="input" formControlName="adults">
+        <img src="assets/human_icon.svg" alt="" class="guests-item-icon" />
+        Dorośli:</label
+      >
+      <input type="text" id="adults" class="input" formControlName="adults" />
       <label for="children">Dzieci:</label>
-      <input type="text" id="children" class="input" formControlName="children">
+      <input
+        type="text"
+        id="children"
+        class="input"
+        formControlName="children"
+      />
     </div>
 
     <button class="search-button" type="submit">Szukaj</button>

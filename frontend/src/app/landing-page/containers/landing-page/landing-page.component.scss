@@ -4,16 +4,15 @@
 }
 
 .landing-page {
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../../assets/camper.jpg) no-repeat;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url(../../../../assets/camper.jpg) no-repeat;
   background-position: top;
   height: 10%;
 }
 
-
-
-
 .title {
-  color: #4D4D4D;
+  color: #4d4d4d;
   font-size: 40px;
   text-align: center;
   margin: 3% auto 0;
@@ -47,16 +46,14 @@
     font-size: 36px;
     width: 50%;
     letter-spacing: 0.3rem;
-    color: #2C2C2C;
+    color: #2c2c2c;
     text-align: left;
-
   }
 
   .text2 {
     text-align: justify;
     width: 50%;
     height: auto;
-
   }
 
   .camper2 {
@@ -74,7 +71,7 @@
     clear: both;
     margin-top: 10px;
     background-color: transparent;
-    color: #4D4D4D;
+    color: #4d4d4d;
     font-size: 0.9rem;
     text-decoration: underline;
     text-decoration-color: #ae9560;
@@ -119,7 +116,6 @@
     width: 20%;
   }
 
-
   .image-with-text {
     width: 80%;
     height: 50%;
@@ -143,12 +139,13 @@
       font-size: 0.5rem;
     }
   }
-
 }
 
 @media only screen and (min-width: 600px) {
   .landing-page {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../../../../assets/camper.jpg) no-repeat;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      url(../../../../assets/camper.jpg) no-repeat;
     background-position: top;
     height: 10%;
   }
@@ -160,7 +157,7 @@
       font-family: CustomFont;
       margin-bottom: 10px;
       font-size: 5.5rem;
-      color: #D3B375;
+      color: #d3b375;
       justify-content: center;
       align-items: center;
       display: flex;
@@ -183,9 +180,8 @@
   //  src: url("../../assets/CreattionDemo.otf");
   //}
 
-
   .title {
-    color: #4D4D4D;
+    color: #4d4d4d;
     font-size: 40px;
     text-align: center;
     margin: 3% auto 0;
@@ -219,16 +215,14 @@
       font-size: 36px;
       width: 50%;
       letter-spacing: 0.3rem;
-      color: #2C2C2C;
+      color: #2c2c2c;
       text-align: left;
-
     }
 
     .text2 {
       text-align: justify;
       width: 50%;
       height: auto;
-
     }
 
     .camper2 {
@@ -246,7 +240,7 @@
       clear: both;
       margin-top: 10px;
       background-color: transparent;
-      color: #4D4D4D;
+      color: #4d4d4d;
       font-size: 0.9rem;
       text-decoration: underline;
       text-decoration-color: #ae9560;
@@ -284,14 +278,11 @@
         font-size: 0.7rem;
       }
     }
-
   }
 }
 
 @media only screen and (min-width: 1600px) {
-
   .image-with-text {
-
     .camper2 {
       float: right;
       width: 22%;

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { NgClass, NgOptimizedImage } from '@angular/common';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { FormHelperComponent } from '../../../shared/classes/form-helper.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
@@ -14,8 +13,6 @@ import { ForgotPasswordRequest } from '../../models/auth.interface';
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    NgClass,
-    NgOptimizedImage,
     InputComponent,
     ButtonComponent,
     ErrorMessageComponent,

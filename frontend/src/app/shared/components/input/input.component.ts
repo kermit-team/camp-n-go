@@ -5,21 +5,13 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { NgClass, NgIf, NgOptimizedImage } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { errorMessages } from '../../models/error-message.interface';
 
 @Component({
   selector: 'lib-input',
   standalone: true,
-  imports: [
-    RouterLink,
-    NgIf,
-    ReactiveFormsModule,
-    NgClass,
-    NgOptimizedImage,
-    FormsModule,
-  ],
+  imports: [ReactiveFormsModule, NgClass, FormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [

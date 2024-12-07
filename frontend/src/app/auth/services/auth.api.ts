@@ -1,7 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from '../models/register.interface';
-import { LoginRequest, LoginTokensResponse } from '../models/auth.interface';
+import {
+  AuthUser,
+  LoginRequest,
+  LoginTokensResponse,
+} from '../models/auth.interface';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,5 +30,27 @@ export class AuthApi {
         ...loginData,
       },
     );
+  }
+
+  verifyEmail(uid64: string, token: string) {
+    return this.httpClient.get<void>(
+      `http://localhost:8000/api/accounts/email-verification/${uid64}/${token}/`,
+    );
+  }
+
+  resentEmail(email: string) {
+    return this.httpClient.post<string>(
+      `http://localhost:8000/api/accounts/email-verification/resend/`,
+      { email },
+    );
+  }
+
+  getUserInfo(id: number): Observable<AuthUser> {
+    return of({
+      name: 'Andrzej',
+      surname: 'Pimpusiowy',
+      email: 'Andrzej@gmail.com',
+      isAdmin: true,
+    });
   }
 }

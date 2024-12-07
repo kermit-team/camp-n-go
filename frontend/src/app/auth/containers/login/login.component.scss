@@ -22,7 +22,7 @@
   width: 65%;
 }
 .login__greeting {
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-size: 57px;
   margin-bottom: 20px;
 }
@@ -39,7 +39,7 @@
 }
 
 @media only screen and (max-width: 900px) {
-  .login{
+  .login {
     width: 60vw;
   }
   .picture {
@@ -51,7 +51,7 @@
   .picture {
     display: none;
   }
-  .login{
+  .login {
     width: 100%;
   }
   .login__container {
@@ -60,7 +60,7 @@
   .login__greeting {
     font-size: 2.55em;
   }
-  .login__phrase{
+  .login__phrase {
     font-size: 1em;
   }
   .logo {
@@ -72,9 +72,8 @@
   button {
     font-size: 1em;
   }
-  .login-form__input{
+  .login-form__input {
     flex-direction: column;
     gap: 0;
-
   }
 }

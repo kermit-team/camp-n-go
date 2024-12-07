@@ -2,24 +2,37 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { filter } from 'rxjs';
+import { AuthFacade } from './auth/services/auth.facade';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   private router = inject(Router);
+  private authFacade = inject(AuthFacade);
+
+  authenticated = this.authFacade.selectAuthenticated$();
   showNavbar = true;
 
   ngOnInit() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        const hiddenRoutes = ['/register', '/login', '/forgot-password'];
-        this.showNavbar = !hiddenRoutes.includes(event.url);
+        const hiddenRoutes = [
+          '/register',
+          '/login',
+          '/forgot-password',
+          '/accounts/email-verification',
+        ];
+        const dynamicPattern = /^\/accounts\/email-verification\/[^/]+\/[^/]+$/;
+        this.showNavbar = !(
+          hiddenRoutes.includes(event.url) || dynamicPattern.test(event.url)
+        );
       });
   }
 

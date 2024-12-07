@@ -39,5 +39,12 @@
   "delete": "Usuń",
   "addCar": "Dodaj samochód",
   "editCar": "Edytuj samochód",
-  "carDetails": "Dane samochodu"
+  "carDetails": "Dane samochodu",
+  "selectPlace": "Wybierz miejsce",
+  "enterRequiredData": "Podaj wymagane dane",
+  "startDate": "Data początku",
+  "endDate": "Data końca",
+  "numberOfAdults": "Ilość dorosłych",
+  "numberOfChildren": "Ilość dzieci",
+  "invalidNumber": "Błędna ilość"
 }

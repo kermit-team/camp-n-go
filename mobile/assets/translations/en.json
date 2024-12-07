@@ -38,5 +38,12 @@
   "delete": "Delete",
   "addCar": "Add car",
   "editCar": "Edit car",
-  "carDetails": "Car details"
+  "carDetails": "Car details",
+  "selectPlace": "Select place",
+  "enterRequiredData": "Enter required data",
+  "startDate": "Start date",
+  "endDate": "End date",
+  "numberOfAdults": "Number of adults",
+  "numberOfChildren": "Number of children",
+  "invalidNumber": "Invalid number"
 }

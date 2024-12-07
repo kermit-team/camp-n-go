@@ -32,34 +32,36 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      children: [
-        const IconAppBar(),
-        TitleText(LocaleKeys.forgotPassword.tr()),
-        const SizedBox(height: Constants.spaceS),
-        StandardText(LocaleKeys.weWillSendYouEmail.tr()),
-        const SizedBox(height: Constants.spaceL),
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              GoldenTextField(
-                controller: emailController,
-                hintText: LocaleKeys.email.tr(),
-                validations: const [
-                  RequiredValidation(),
-                  EmailValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceML),
-              _getButtons(
-                context,
-                _formKey,
-                emailController,
-              ),
-            ],
+      child: Column(
+        children: [
+          const IconAppBar(),
+          TitleText(LocaleKeys.forgotPassword.tr()),
+          const SizedBox(height: Constants.spaceS),
+          StandardText(LocaleKeys.weWillSendYouEmail.tr()),
+          const SizedBox(height: Constants.spaceL),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                GoldenTextField(
+                  controller: emailController,
+                  hintText: LocaleKeys.email.tr(),
+                  validations: const [
+                    RequiredValidation(),
+                    EmailValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceML),
+                _getButtons(
+                  context,
+                  _formKey,
+                  emailController,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -37,99 +37,101 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      children: [
-        const IconAppBar(),
-        TitleText(LocaleKeys.createAccount.tr()),
-        const SizedBox(height: Constants.spaceS),
-        StandardText(LocaleKeys.toPlanYourVacation.tr()),
-        const SizedBox(height: Constants.spaceL),
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              GoldenTextField(
-                controller: firstNameController,
-                hintText: LocaleKeys.firstName.tr(),
-                validations: const [
-                  RequiredValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceM),
-              GoldenTextField(
-                controller: lastNameController,
-                hintText: LocaleKeys.lastName.tr(),
-                validations: const [
-                  RequiredValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceM),
-              GoldenTextField(
-                controller: emailController,
-                hintText: LocaleKeys.email.tr(),
-                validations: const [
-                  RequiredValidation(),
-                  EmailValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceM),
-              GoldenTextField(
-                controller: passwordController,
-                hintText: LocaleKeys.password.tr(),
-                isPassword: true,
-                validations: const [
-                  RequiredValidation(),
-                  PasswordValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceM),
-              GoldenTextField(
-                controller: confirmPasswordController,
-                hintText: LocaleKeys.repeatPassword.tr(),
-                isPassword: true,
-                validations: const [
-                  RequiredValidation(),
-                  PasswordValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceML),
-              _getButtons(
-                context,
-                _formKey,
-                firstNameController,
-                lastNameController,
-                emailController,
-                passwordController,
-                confirmPasswordController,
-              ),
-              const SizedBox(height: Constants.spaceS),
-              // CustomButtonInverted(
-              //   text: "GOOGLE Zaloguj się przez Google",
-              //   onPressed: () {},
-              // ),
-              // const SizedBox(height: Constants.spaceS),
-              Wrap(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      StandardText("${LocaleKeys.alreadyHaveAccount.tr()}?"),
-                      const SizedBox(width: Constants.spaceXS),
-                      HyperlinkText(
-                          text: LocaleKeys.login.tr(),
-                          onTap: () {
-                            serviceLocator<GoRouter>().go("/login");
-                          }),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+      child: Column(
+        children: [
+          const IconAppBar(),
+          TitleText(LocaleKeys.createAccount.tr()),
+          const SizedBox(height: Constants.spaceS),
+          StandardText(LocaleKeys.toPlanYourVacation.tr()),
+          const SizedBox(height: Constants.spaceL),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                GoldenTextField(
+                  controller: firstNameController,
+                  hintText: LocaleKeys.firstName.tr(),
+                  validations: const [
+                    RequiredValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceM),
+                GoldenTextField(
+                  controller: lastNameController,
+                  hintText: LocaleKeys.lastName.tr(),
+                  validations: const [
+                    RequiredValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceM),
+                GoldenTextField(
+                  controller: emailController,
+                  hintText: LocaleKeys.email.tr(),
+                  validations: const [
+                    RequiredValidation(),
+                    EmailValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceM),
+                GoldenTextField(
+                  controller: passwordController,
+                  hintText: LocaleKeys.password.tr(),
+                  isPassword: true,
+                  validations: const [
+                    RequiredValidation(),
+                    PasswordValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceM),
+                GoldenTextField(
+                  controller: confirmPasswordController,
+                  hintText: LocaleKeys.repeatPassword.tr(),
+                  isPassword: true,
+                  validations: const [
+                    RequiredValidation(),
+                    PasswordValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceML),
+                _getButtons(
+                  context,
+                  _formKey,
+                  firstNameController,
+                  lastNameController,
+                  emailController,
+                  passwordController,
+                  confirmPasswordController,
+                ),
+                const SizedBox(height: Constants.spaceS),
+                // CustomButtonInverted(
+                //   text: "GOOGLE Zaloguj się przez Google",
+                //   onPressed: () {},
+                // ),
+                // const SizedBox(height: Constants.spaceS),
+                Wrap(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        StandardText("${LocaleKeys.alreadyHaveAccount.tr()}?"),
+                        const SizedBox(width: Constants.spaceXS),
+                        HyperlinkText(
+                            text: LocaleKeys.login.tr(),
+                            onTap: () {
+                              serviceLocator<GoRouter>().go("/login");
+                            }),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: Constants.spaceL,
-        ),
-      ],
+          const SizedBox(
+            height: Constants.spaceL,
+          ),
+        ],
+      ),
     );
   }
 

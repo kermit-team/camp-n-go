@@ -33,5 +33,10 @@
   "idNumber": "ID card number",
   "edit": "Edit",
   "cancel": "Cancel",
-  "save": "Save"
+  "save": "Save",
+  "add": "Add",
+  "delete": "Delete",
+  "addCar": "Add car",
+  "editCar": "Edit car",
+  "carDetails": "Car details"
 }

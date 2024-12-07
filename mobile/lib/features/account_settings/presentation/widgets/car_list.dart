@@ -1,21 +1,56 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/custom_buttons.dart';
+import 'package:campngo/features/shared/widgets/standard_text.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CarListWidget extends StatelessWidget {
-  final void Function(CarEntity) onActionIconPressed;
+  final void Function(CarEntity) onListTilePressed;
+  final void Function() onAddButtonPressed;
 
   const CarListWidget({
     super.key,
-    required this.onActionIconPressed,
+    required this.onListTilePressed,
+    required this.onAddButtonPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AccountSettingsCubit, AccountSettingsState>(
+    return BlocConsumer<AccountSettingsCubit, AccountSettingsState>(
+      listener: (context, state) {
+        switch (state.carOperationStatus) {
+          case CarOperationStatus.unknown:
+          case CarOperationStatus.loading:
+            break;
+
+          case CarOperationStatus.notDeleted:
+          case CarOperationStatus.notAdded:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: state.exception.toString(),
+              //TODO: add error translations
+            );
+
+          case CarOperationStatus.deleted:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: "Car deleted successfully",
+            );
+            break;
+          case CarOperationStatus.added:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: "Car added successfully",
+            );
+            break;
+        }
+      },
       builder: (context, state) {
         switch (state.carListStatus) {
           case CarListStatus.failure:
@@ -35,15 +70,28 @@ class CarListWidget extends StatelessWidget {
 
           case CarListStatus.success:
             final carList = state.carList!;
-            return ListView.builder(
-              itemCount: carList.length,
-              itemBuilder: (context, index) {
-                final car = carList[index];
-                return CarListItem(
-                  car: car,
-                  onActionIconPressed: onActionIconPressed,
-                );
-              },
+
+            return Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(0),
+                  itemCount: carList.length,
+                  itemBuilder: (context, index) {
+                    final car = carList[index];
+                    return CarListItem(
+                      car: car,
+                      onListTilePressed: onListTilePressed,
+                    );
+                  },
+                ),
+                CustomButton(
+                  text: LocaleKeys.addCar.tr(),
+                  onPressed: onAddButtonPressed,
+                  prefixIcon: Icons.add,
+                ),
+              ],
             );
 
           default:
@@ -62,37 +110,57 @@ class CarListWidget extends StatelessWidget {
 
 class CarListItem extends StatelessWidget {
   final CarEntity car;
-  final void Function(CarEntity) onActionIconPressed;
+  final void Function(CarEntity) onListTilePressed;
 
   const CarListItem({
     super.key,
     required this.car,
-    required this.onActionIconPressed,
+    required this.onListTilePressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.directions_car),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(car.registrationPlate),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Constants.spaceS),
+      child: InkWell(
+        onTap: () {
+          onListTilePressed(car);
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Constants.spaceMS,
+            vertical: Constants.spaceM,
           ),
-          IconButton(
-            onPressed: () {
-              onActionIconPressed(car);
-            },
-            icon: const Icon(Icons.more_vert),
+          decoration: BoxDecoration(
+            border: Border.fromBorderSide(
+              BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ),
-        ],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Icon(
+                Icons.directions_car,
+                color: Theme.of(context).colorScheme.onSurface,
+                size: Constants.textSizeM,
+              ),
+              const SizedBox(width: Constants.spaceM),
+              StandardText(
+                car.registrationPlate,
+                textAlign: TextAlign.center,
+              ),
+              const Spacer(),
+              Icon(
+                Icons.more_horiz,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -16,19 +16,21 @@ class ConfirmAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      children: [
-        const IconAppBar(),
-        TitleText(LocaleKeys.confirmAccount.tr()),
-        const SizedBox(height: Constants.spaceS),
-        StandardText(LocaleKeys.emailToResetPasswordSent.tr()),
-        const SizedBox(height: Constants.spaceL),
-        CustomButton(
-          text: LocaleKeys.returnToLogin.tr(),
-          onPressed: () {
-            serviceLocator<GoRouter>().go('/login');
-          },
-        ),
-      ],
+      child: Column(
+        children: [
+          const IconAppBar(),
+          TitleText(LocaleKeys.confirmAccount.tr()),
+          const SizedBox(height: Constants.spaceS),
+          StandardText(LocaleKeys.emailToResetPasswordSent.tr()),
+          const SizedBox(height: Constants.spaceL),
+          CustomButton(
+            text: LocaleKeys.returnToLogin.tr(),
+            onPressed: () {
+              serviceLocator<GoRouter>().go('/login');
+            },
+          ),
+        ],
+      ),
     );
   }
 }

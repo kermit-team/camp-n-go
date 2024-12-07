@@ -8,6 +8,7 @@ import 'package:campngo/features/account_settings/presentation/cubit/account_set
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
+import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/standard_text.dart';
@@ -62,123 +63,167 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           case LoadAccountSettingsStatus.initial:
             {
               return AppBody(
-                children: [
-                  TitleText(LocaleKeys.accountSettings.tr()),
-                  const SizedBox(height: Constants.spaceS),
-                  StandardText(LocaleKeys.updateUserData.tr()),
-                  const SizedBox(height: Constants.spaceL),
-                  const CircularProgressIndicator()
-                ],
+                child: Column(
+                  children: [
+                    TitleText(LocaleKeys.accountSettings.tr()),
+                    const SizedBox(height: Constants.spaceS),
+                    StandardText(LocaleKeys.updateUserData.tr()),
+                    const SizedBox(height: Constants.spaceL),
+                    const CircularProgressIndicator()
+                  ],
+                ),
               );
             }
           case LoadAccountSettingsStatus.failure:
             {
               return AppBody(
-                children: [
-                  TitleText(LocaleKeys.accountSettings.tr()),
-                  const SizedBox(height: Constants.spaceS),
-                  StandardText(LocaleKeys.updateUserData.tr()),
-                  const SizedBox(height: Constants.spaceL),
-                  const StandardText("Dane nie zostały załadowane prawidłowo"),
-                ],
+                child: Column(
+                  children: [
+                    TitleText(LocaleKeys.accountSettings.tr()),
+                    const SizedBox(height: Constants.spaceS),
+                    StandardText(LocaleKeys.updateUserData.tr()),
+                    const SizedBox(height: Constants.spaceL),
+                    const StandardText(
+                        "Dane nie zostały załadowane prawidłowo"),
+                  ],
+                ),
               );
             }
           case LoadAccountSettingsStatus.success:
             {
               return AppBody(
-                children: [
-                  TitleText(LocaleKeys.accountSettings.tr()),
-                  const SizedBox(height: Constants.spaceS),
-                  StandardText(LocaleKeys.updateUserData.tr()),
-                  const SizedBox(height: Constants.spaceL),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        DisplayTextField(
-                          label: LocaleKeys.firstName.tr(),
-                          text: state.accountEntity?.firstName ?? '',
-                          validations: const [RequiredValidation()],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.firstName,
-                                  newValue: newValue,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TitleText(LocaleKeys.accountSettings.tr()),
+                      const SizedBox(height: Constants.spaceS),
+                      StandardText(LocaleKeys.updateUserData.tr()),
+                      const SizedBox(height: Constants.spaceL),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            DisplayTextField(
+                              label: LocaleKeys.firstName.tr(),
+                              text: state.accountEntity?.firstName ?? '',
+                              validations: const [RequiredValidation()],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.firstName,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            DisplayTextField(
+                              label: LocaleKeys.lastName.tr(),
+                              text: state.accountEntity?.lastName ?? '',
+                              validations: const [RequiredValidation()],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.lastName,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            DisplayTextField(
+                              label: LocaleKeys.email.tr(),
+                              text: state.accountEntity?.email ?? '',
+                              validations: const [
+                                RequiredValidation(),
+                                EmailValidation()
+                              ],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.email,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            DisplayTextField(
+                              label: LocaleKeys.phoneNumber.tr(),
+                              text: state.accountEntity?.phoneNumber ?? '',
+                              validations: const [RequiredValidation()],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.phoneNumber,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            DisplayTextField(
+                              label: LocaleKeys.idNumber.tr(),
+                              text: state.accountEntity?.idNumber ?? '',
+                              validations: const [RequiredValidation()],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.idNumber,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            DisplayTextField(
+                              label: LocaleKeys.password.tr(),
+                              text: state.accountEntity?.password ?? '',
+                              isPassword: true,
+                              validations: const [RequiredValidation()],
+                              onHyperlinkPressed: (String newValue) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editProperty(
+                                      property: AccountProperty.password,
+                                      newValue: newValue,
+                                    );
+                                log("New value for firstName: $newValue");
+                              },
+                            ),
+                            const SizedBox(height: Constants.spaceS),
+                            TextButton(
+                              onPressed: context
+                                  .read<AccountSettingsCubit>()
+                                  .getCarList,
+                              child: const StandardText("Your cars"),
+                            ),
+                            const SizedBox(height: Constants.spaceM),
+                            CarListWidget(
+                              onListTilePressed: (CarEntity car) {
+                                showCarDetailsDialog(
+                                    context: context,
+                                    registrationPlate: car.registrationPlate,
+                                    onDelete: () {
+                                      context
+                                          .read<AccountSettingsCubit>()
+                                          .deleteCar(car: car);
+                                    });
+                              },
+                              onAddButtonPressed: () {
+                                AppSnackBar.showSnackBar(
+                                  context: context,
+                                  text: "Dodawanie nowego samochodu",
                                 );
-                            log("New value for firstName: $newValue");
-                          },
-                        ),
-                        DisplayTextField(
-                          label: LocaleKeys.lastName.tr(),
-                          text: state.accountEntity?.lastName ?? '',
-                          validations: const [RequiredValidation()],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.lastName,
-                                  newValue: newValue,
-                                );
-                            log("New value for firstName: $newValue");
-                          },
-                        ),
-                        DisplayTextField(
-                          label: LocaleKeys.email.tr(),
-                          text: state.accountEntity?.email ?? '',
-                          validations: const [
-                            RequiredValidation(),
-                            EmailValidation()
+                              },
+                            ),
+                            const SizedBox(height: Constants.spaceL),
                           ],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.email,
-                                  newValue: newValue,
-                                );
-                            log("New value for firstName: $newValue");
-                          },
                         ),
-                        DisplayTextField(
-                          label: LocaleKeys.phoneNumber.tr(),
-                          text: state.accountEntity?.phoneNumber ?? '',
-                          validations: const [RequiredValidation()],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.phoneNumber,
-                                  newValue: newValue,
-                                );
-                            log("New value for firstName: $newValue");
-                          },
-                        ),
-                        DisplayTextField(
-                          label: LocaleKeys.idNumber.tr(),
-                          text: state.accountEntity?.idNumber ?? '',
-                          validations: const [RequiredValidation()],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.idNumber,
-                                  newValue: newValue,
-                                );
-                            log("New value for firstName: $newValue");
-                          },
-                        ),
-                        DisplayTextField(
-                          label: LocaleKeys.password.tr(),
-                          text: state.accountEntity?.password ?? '',
-                          isPassword: true,
-                          validations: const [RequiredValidation()],
-                          onHyperlinkPressed: (String newValue) {
-                            context.read<AccountSettingsCubit>().editProperty(
-                                  property: AccountProperty.password,
-                                  newValue: newValue,
-                                );
-                            log("New value for firstName: $newValue");
-                          },
-                        ),
-                        const SizedBox(height: Constants.spaceM),
-                        CarListWidget(
-                          onActionIconPressed: (CarEntity car) {},
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               );
             }
         }

@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +8,7 @@ class CustomButton extends StatelessWidget {
   final void Function() onPressed;
   final double width;
   final double height;
+  final IconData? prefixIcon;
 
   const CustomButton({
     super.key,
@@ -14,6 +16,7 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.width = double.maxFinite,
     this.height = double.minPositive,
+    this.prefixIcon,
   });
 
   @override
@@ -34,9 +37,22 @@ class CustomButton extends StatelessWidget {
           ),
         ),
       ),
+      iconAlignment: IconAlignment.start,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Text(text),
+        child: prefixIcon == null
+            ? Text(text, style: AppTextStyles.mainTextStyle())
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    prefixIcon,
+                    size: Constants.textSizeMS,
+                  ),
+                  const SizedBox(width: Constants.spaceXS),
+                  Text(text, style: AppTextStyles.mainTextStyle()),
+                ],
+              ),
       ),
     );
   }
@@ -49,6 +65,7 @@ class CustomButtonInverted extends CustomButton {
     required super.onPressed,
     super.width,
     super.height,
+    super.prefixIcon,
   });
 
   @override
@@ -72,7 +89,19 @@ class CustomButtonInverted extends CustomButton {
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Text(text),
+        child: prefixIcon == null
+            ? Text(text, style: AppTextStyles.mainTextStyle())
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    prefixIcon,
+                    size: Constants.textSizeMS,
+                  ),
+                  const SizedBox(width: Constants.spaceXS),
+                  Text(text, style: AppTextStyles.mainTextStyle()),
+                ],
+              ),
       ),
     );
   }

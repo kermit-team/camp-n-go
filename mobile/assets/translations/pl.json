@@ -34,5 +34,10 @@
   "idNumber": "Number dowodu osobistego",
   "edit": "Edytuj",
   "cancel": "Anuluj",
-  "save": "Zapisz"
+  "save": "Zapisz",
+  "add": "Dodaj",
+  "delete": "Usuń",
+  "addCar": "Dodaj samochód",
+  "editCar": "Edytuj samochód",
+  "carDetails": "Dane samochodu"
 }

@@ -16,19 +16,21 @@ class ResetPasswordInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      children: [
-        const IconAppBar(),
-        TitleText(LocaleKeys.forgotPassword.tr()),
-        const SizedBox(height: Constants.spaceS),
-        StandardText(LocaleKeys.emailSent.tr()),
-        const SizedBox(height: Constants.spaceL),
-        CustomButton(
-          text: LocaleKeys.returnToLogin.tr(),
-          onPressed: () {
-            serviceLocator<GoRouter>().go('/login');
-          },
-        ),
-      ],
+      child: Column(
+        children: [
+          const IconAppBar(),
+          TitleText(LocaleKeys.forgotPassword.tr()),
+          const SizedBox(height: Constants.spaceS),
+          StandardText(LocaleKeys.emailSent.tr()),
+          const SizedBox(height: Constants.spaceL),
+          CustomButton(
+            text: LocaleKeys.returnToLogin.tr(),
+            onPressed: () {
+              serviceLocator<GoRouter>().go('/login');
+            },
+          ),
+        ],
+      ),
     );
   }
 }

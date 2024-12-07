@@ -36,5 +36,10 @@ abstract class  LocaleKeys {
   static const edit = 'edit';
   static const cancel = 'cancel';
   static const save = 'save';
+  static const add = 'add';
+  static const delete = 'delete';
+  static const addCar = 'addCar';
+  static const editCar = 'editCar';
+  static const carDetails = 'carDetails';
 
 }

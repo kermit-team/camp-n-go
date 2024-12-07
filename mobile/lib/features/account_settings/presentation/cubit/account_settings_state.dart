@@ -8,10 +8,20 @@ enum EditPropertyStatus { unknown, loading, failure, success }
 
 enum CarListStatus { unknown, loading, failure, success }
 
+enum CarOperationStatus {
+  unknown,
+  loading,
+  notDeleted,
+  deleted,
+  notAdded,
+  added
+}
+
 class AccountSettingsState extends Equatable {
   final LoadAccountSettingsStatus status;
   final EditPropertyStatus editPropertyStatus;
   final CarListStatus carListStatus;
+  final CarOperationStatus carOperationStatus;
 
   final AccountEntity? accountEntity;
   final List<CarEntity>? carList;
@@ -21,6 +31,7 @@ class AccountSettingsState extends Equatable {
     required this.status,
     this.editPropertyStatus = EditPropertyStatus.unknown,
     this.carListStatus = CarListStatus.unknown,
+    this.carOperationStatus = CarOperationStatus.unknown,
     this.accountEntity,
     this.carList,
     this.exception,
@@ -29,13 +40,19 @@ class AccountSettingsState extends Equatable {
   AccountSettingsState copyWith({
     LoadAccountSettingsStatus? status,
     EditPropertyStatus? editPropertyStatus,
+    CarListStatus? carListStatus,
+    CarOperationStatus? carOperationStatus,
     AccountEntity? accountEntity,
+    List<CarEntity>? carList,
     Exception? exception,
   }) =>
       AccountSettingsState(
         status: status ?? this.status,
         editPropertyStatus: editPropertyStatus ?? this.editPropertyStatus,
+        carListStatus: carListStatus ?? this.carListStatus,
+        carOperationStatus: carOperationStatus ?? this.carOperationStatus,
         accountEntity: accountEntity ?? this.accountEntity,
+        carList: carList ?? this.carList,
         exception: exception ?? this.exception,
       );
 
@@ -43,7 +60,10 @@ class AccountSettingsState extends Equatable {
   List<Object?> get props => [
         status,
         editPropertyStatus,
+        carListStatus,
+        carOperationStatus,
         accountEntity,
+        carList,
         exception,
       ];
 }

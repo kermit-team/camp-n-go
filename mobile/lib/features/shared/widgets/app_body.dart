@@ -1,33 +1,42 @@
 import 'package:campngo/config/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AppBody extends StatelessWidget {
   final Widget child;
-  // final bool showBackIcon;
 
   const AppBody({
     super.key,
     required this.child,
-    // this.showBackIcon = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: Constants.spaceL,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-      ),
-      extendBodyBehindAppBar: true,
+      floatingActionButton: ModalRoute.of(context)!.canPop
+          ? IconButton(
+              onPressed: context.pop,
+              icon: Icon(
+                Icons.arrow_back_outlined,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.09,
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.09,
+              right: MediaQuery.of(context).size.width * 0.09,
+              top: Constants.spaceL,
             ),
-            child: SafeArea(child: child),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: child,
+              ),
+            ),
           ),
         ],
       ),

@@ -26,7 +26,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
   @override
   void initState() {
     super.initState();
-    _selectedNumber = widget.initialValue ?? 0;
+    _selectedNumber = widget.initialValue;
     controller = TextEditingController(
       text: "$_selectedNumber",
     );

@@ -82,12 +82,24 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
               IconButton(
                 icon: const Icon(Icons.remove),
                 color: Theme.of(context).colorScheme.onSurface,
-                onPressed: () {},
+                onPressed: () {
+                  if (_selectedNumber > 0) {
+                    setState(() {
+                      _selectedNumber--;
+                    });
+                  }
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.add),
                 color: Theme.of(context).colorScheme.onSurface,
-                onPressed: () {},
+                onPressed: () {
+                  if (_selectedNumber < 99) {
+                    setState(() {
+                      _selectedNumber++;
+                    });
+                  }
+                },
               ),
             ],
           ),

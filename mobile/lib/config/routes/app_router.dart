@@ -23,7 +23,7 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    initialLocation: "/searchParcel",
+    initialLocation: "/",
     routes: <GoRoute>[
       GoRoute(
         path: "/",
@@ -54,6 +54,17 @@ class AppRouter {
                     IconButton(
                       onPressed: () {
                         serviceLocator<GoRouter>().push("/accountSettings");
+                      },
+                      icon: const Icon(Icons.login),
+                    ),
+                    const SizedBox(height: Constants.spaceM),
+                    Text(
+                      "Przejdź do wyszukiwania parceli.",
+                      style: AppTextStyles.mainTextStyle(),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        serviceLocator<GoRouter>().push("/searchParcel");
                       },
                       icon: const Icon(Icons.login),
                     ),

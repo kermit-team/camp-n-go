@@ -1,29 +1,22 @@
 from rest_framework import status
+from rest_framework.generics import GenericAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from server.apps.car.messages.car import CarMessagesEnum
 from server.apps.car.models import Car
-from server.apps.car.serializers import CarRemoveDriverSerializer
-from server.business_logic.car import CarRemoveDriverBL
+from server.datastore.commands.car import CarCommand
 
 
-class CarRemoveDriverView(APIView):
-    serializer_class = CarRemoveDriverSerializer
+class CarRemoveDriverView(GenericAPIView):
     queryset = Car.objects.all()
+    lookup_field = 'registration_plate'
 
-    def post(self, request: Request) -> Response:
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
+    def delete(self, request: Request, registration_plate: str) -> Response:
+        car = self.get_object()
         driver = request.user
-        registration_plate = serializer.validated_data['registration_plate']
 
-        CarRemoveDriverBL.process(
-            registration_plate=registration_plate,
-            driver=driver,
-        )
+        CarCommand.remove_driver(car=car, driver=driver)
 
         return Response(
             data={

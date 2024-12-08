@@ -37,6 +37,20 @@ class AppTextStyles {
         color: _lightColorScheme.onSurface,
       );
 
+  static TextStyle subtitleTextStyle({
+    Color? color,
+    bool isUnderlined = false,
+  }) =>
+      GoogleFonts.playfairDisplay(
+        fontSize: Constants.textSizeM,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        color: color ?? _lightColorScheme.onSurface,
+        decoration: isUnderlined ? TextDecoration.underline : null,
+        decorationColor: _lightColorScheme.primary,
+        decorationThickness: 2,
+      );
+
   static TextStyle mainTextStyle() => GoogleFonts.montserrat(
         fontSize: Constants.textSizeS,
         fontStyle: FontStyle.normal,
@@ -48,11 +62,12 @@ class AppTextStyles {
         color: _lightColorScheme.onSurfaceVariant,
       );
 
-  static TextStyle customTextStyle({Color? color}) {
+  static TextStyle customTextStyle({Color? color, bool isBold = false}) {
     return GoogleFonts.montserrat(
       fontSize: Constants.textSizeS,
       fontStyle: FontStyle.normal,
-      color: color ?? Colors.black,
+      fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
+      color: color ?? _lightColorScheme.onSurface,
     );
   }
 }

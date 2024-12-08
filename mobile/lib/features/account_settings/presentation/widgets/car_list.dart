@@ -4,17 +4,17 @@ import 'package:campngo/features/account_settings/presentation/cubit/account_set
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CarListWidget extends StatelessWidget {
+class CarList extends StatelessWidget {
   final void Function(CarEntity) onListTilePressed;
   final void Function() onAddButtonPressed;
 
-  const CarListWidget({
+  const CarList({
     super.key,
     required this.onListTilePressed,
     required this.onAddButtonPressed,

@@ -46,5 +46,12 @@
   "endDate": "Data końca",
   "numberOfAdults": "Ilość dorosłych",
   "numberOfChildren": "Ilość dzieci",
-  "invalidNumber": "Błędna ilość"
+  "invalidNumber": "Błędna ilość",
+  "searchParcel": "Szukaj parceli",
+  "parcelList": "Lista parceli",
+  "pickParcelForYou": "Wybierz parcelę dla siebie",
+  "parcelNumber": "Parcela numer",
+  "pricePerDay": "Cena za dobę",
+  "description": "Opis",
+  "reserve": "Zarezerwuj"
 }

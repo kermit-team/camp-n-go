@@ -11,6 +11,7 @@ import 'package:campngo/features/register/presentation/pages/confirm_aacount_pag
 import 'package:campngo/features/register/presentation/pages/forgot_password_page.dart';
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
+import 'package:campngo/features/reservations/presentations/pages/parcel_list_page.dart';
 import 'package:campngo/features/reservations/presentations/pages/search_parcel_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -141,7 +142,15 @@ class AppRouter {
             child: SearchParcelPage(),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: "/parcelList",
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            child: ParcelListPage(),
+          );
+        },
+      ),
     ],
   );
 }

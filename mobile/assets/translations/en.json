@@ -45,5 +45,12 @@
   "endDate": "End date",
   "numberOfAdults": "Number of adults",
   "numberOfChildren": "Number of children",
-  "invalidNumber": "Invalid number"
+  "invalidNumber": "Invalid number",
+  "searchParcel": "Search parcel",
+  "parcelList": "Parcel list",
+  "pickParcelForYou": "Pick parcel for you",
+  "parcelNumber": "Parcel number",
+  "pricePerDay": "Price per day",
+  "description": "Description",
+  "reserve": "Reserve"
 }

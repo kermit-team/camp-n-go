@@ -48,5 +48,12 @@ abstract class  LocaleKeys {
   static const numberOfAdults = 'numberOfAdults';
   static const numberOfChildren = 'numberOfChildren';
   static const invalidNumber = 'invalidNumber';
+  static const searchParcel = 'searchParcel';
+  static const parcelList = 'parcelList';
+  static const pickParcelForYou = 'pickParcelForYou';
+  static const parcelNumber = 'parcelNumber';
+  static const pricePerDay = 'pricePerDay';
+  static const description = 'description';
+  static const reserve = 'reserve';
 
 }

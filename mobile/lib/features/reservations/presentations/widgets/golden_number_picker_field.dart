@@ -86,6 +86,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
                   if (_selectedNumber > 0) {
                     setState(() {
                       _selectedNumber--;
+                      widget.onChanged(_selectedNumber);
                     });
                   }
                 },
@@ -97,6 +98,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
                   if (_selectedNumber < 99) {
                     setState(() {
                       _selectedNumber++;
+                      widget.onChanged(_selectedNumber);
                     });
                   }
                 },
@@ -106,48 +108,5 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
         ),
       ],
     );
-
-    // return TextFormField(
-    //   enabled: true,
-    //   controller: controller,
-    //   keyboardType: TextInputType.number,
-    //   cursorColor: goldenColor,
-    //   style: AppTextStyles.mainTextStyle()
-    //       .copyWith(color: Theme.of(context).colorScheme.onSurface),
-    //   textAlign: TextAlign.left,
-    //   validator: Validator.apply(context: context, validations: [
-    //     const RequiredValidation(),
-    //     const NumberValidation(),
-    //   ]),
-    //   decoration: InputDecoration(
-    //     hintStyle: AppTextStyles.hintTextStyle().copyWith(),
-    //     label: Text(
-    //       widget.showedText,
-    //     ),
-    //     labelStyle: AppTextStyles.hintTextStyle()
-    //         .copyWith(fontSize: Constants.textSizeMS),
-    //     disabledBorder: UnderlineInputBorder(
-    //       borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
-    //     ),
-    //     enabledBorder: UnderlineInputBorder(
-    //       borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
-    //     ),
-    //     focusedBorder: UnderlineInputBorder(
-    //       borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
-    //     ),
-    //     suffixIcon: Row(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: [
-    //         IconButton(
-    //           onPressed: () {
-    //             log("test");
-    //           },
-    //           icon: const Icon(Icons.add),
-    //         ),
-    //       ],
-    //     ),
-    //     errorMaxLines: 2,
-    //   ),
-    // );
   }
 }

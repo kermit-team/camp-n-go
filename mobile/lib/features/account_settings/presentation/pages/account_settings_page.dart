@@ -11,8 +11,8 @@ import 'package:campngo/features/account_settings/presentation/widgets/display_t
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
-import 'package:campngo/features/shared/widgets/title_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -185,7 +185,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             child: const StandardText("Your cars"),
                           ),
                           const SizedBox(height: Constants.spaceM),
-                          CarListWidget(
+                          CarList(
                             onListTilePressed: (CarEntity car) {
                               showCarDetailsDialog(
                                   context: context,

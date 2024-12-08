@@ -2,7 +2,7 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/edit_property_dialog.dart';
 import 'package:campngo/features/shared/widgets/golden_text_field.dart';
-import 'package:campngo/features/shared/widgets/hyperlink_text.dart';
+import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:flutter/material.dart';
 
 class DisplayTextField extends StatelessWidget {

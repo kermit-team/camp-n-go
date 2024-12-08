@@ -12,7 +12,7 @@ class AccountEmailVerificationResendView(APIView):
     permission_classes = [AllowAny]
     serializer_class = AccountEmailSerializer
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

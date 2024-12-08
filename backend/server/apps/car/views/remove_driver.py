@@ -13,7 +13,7 @@ class CarRemoveDriverView(APIView):
     serializer_class = CarRemoveDriverSerializer
     queryset = Car.objects.all()
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

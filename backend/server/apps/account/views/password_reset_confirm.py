@@ -12,7 +12,7 @@ class AccountPasswordResetConfirmView(APIView):
     permission_classes = [AllowAny]
     serializer_class = AccountPasswordResetSerializer
 
-    def post(self, request: Request, uidb64: str, token: str):
+    def post(self, request: Request, uidb64: str, token: str) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

@@ -13,7 +13,7 @@ class AccountRegisterView(APIView):
     serializer_class = AccountRegisterSerializer
     queryset = Account.objects.all()
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

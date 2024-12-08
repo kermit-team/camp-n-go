@@ -11,7 +11,7 @@ class CarAddView(APIView):
     serializer_class = CarAddSerializer
     queryset = Car.objects.all()
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         serializer.save()

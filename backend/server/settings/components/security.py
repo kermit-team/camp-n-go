@@ -40,6 +40,9 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(
         seconds=int(os.getenv('REFRESH_TOKEN_LIFETIME_IN_SECONDS', 60 * 60 * 24)),
     ),
+    'USER_ID_FIELD': 'identifier',
+    'USER_ID_CLAIM': 'user_identifier',
 }
+
 
 PASSWORD_RESET_TIMEOUT = int(os.getenv('REFRESH_TOKEN_LIFETIME_IN_SECONDS', 60 * 60 * 24))

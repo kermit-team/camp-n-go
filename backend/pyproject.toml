@@ -29,6 +29,7 @@ django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
 celery = "^5.4.0"
 flower = "^2.0.1"
 pydantic = "^2.9.2"
+django-cid = "^3.0"
 
 [tool.poetry.group.dev.dependencies]
 django-silk = "^5.1.0"

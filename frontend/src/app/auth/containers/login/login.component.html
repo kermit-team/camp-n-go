@@ -1,0 +1,20 @@
+<div class="container">
+  <main class="login">
+    <a [routerLink]="['/']" class="login__link-wrapper"
+      ><img
+        src="assets/logo.svg"
+        alt="logo"
+        class="logo"
+        height="16"
+        width="16"
+    /></a>
+    <div class="login__container">
+      <h1 class="login__greeting">Witaj ponownie!</h1>
+      <h3 class="login__phrase">
+        Zaloguj się za pomocą Google lub wpisz dane poniżej
+      </h3>
+      <app-login-form (loginFired)="login($event)"></app-login-form>
+    </div>
+  </main>
+  <aside class="picture"></aside>
+</div>

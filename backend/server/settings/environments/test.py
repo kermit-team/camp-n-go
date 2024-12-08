@@ -1,5 +1,8 @@
+import logging
+
 import django
 
+from server.settings.components.logging import LOGGING
 from server.utils.tests.baker_generators import generate_phone_number
 
 ALLOWED_HOSTS = ('*',)
@@ -12,6 +15,12 @@ DEBUG = False
 
 DJANGO_SILK_ON = 0
 DRF_SPECTACULAR_ON = 0
+
+LOGGING['loggers']['']['level'] = logging.DEBUG
+LOGGING['loggers']['django']['level'] = logging.DEBUG
+LOGGING['loggers']['security']['level'] = logging.DEBUG
+LOGGING['loggers']['server.utils.api.exception_handler']['level'] = logging.DEBUG
+LOGGING['loggers']['celery']['level'] = logging.DEBUG
 
 # Django must be setup before model bakery can access any Model
 django.setup()

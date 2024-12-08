@@ -36,5 +36,5 @@ class AccountEmailVerificationBL(AbstractBL):
     def _get_account(cls, identifier: uuid.UUID) -> Account:
         try:
             return AccountQuery.get_by_identifier(identifier=identifier)
-        except (Account.DoesNotExist):
+        except Account.DoesNotExist:
             raise AccountIdentifierNotExistsError(identifier=identifier)

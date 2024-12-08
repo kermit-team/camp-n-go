@@ -3,7 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from server.apps.account.messages import AccountMessagesEnum
+from server.apps.account.messages.account import AccountMessagesEnum
 from server.apps.account.serializers import AccountPasswordResetSerializer
 from server.business_logic.account import AccountPasswordResetConfirmBL
 

@@ -1,5 +1,5 @@
 {
-  "fistName": "Imię",
+  "firstName": "Imię",
   "lastName": "Nazwisko",
   "email": "Email",
   "password": "Hasło",
@@ -27,5 +27,17 @@
   "returnToLogin": "Wróc do logowania",
   "passwordRules": "Hasło musi mieć co najmniej 9 znaków i zawierać co najmniej jedną małą literę, jedną wielką literę, jedną cyfrę i jeden znak specjalny",
   "invalidEmail": "Email nie jest poprawny",
-  "resetPasswordEmailSent": "Email"
+  "resetPasswordEmailSent": "Email",
+  "accountSettings": "Ustawienia konta",
+  "updateUserData": "Zaktualizuj dane osobowe",
+  "phoneNumber": "Numer telefonu",
+  "idNumber": "Number dowodu osobistego",
+  "edit": "Edytuj",
+  "cancel": "Anuluj",
+  "save": "Zapisz",
+  "add": "Dodaj",
+  "delete": "Usuń",
+  "addCar": "Dodaj samochód",
+  "editCar": "Edytuj samochód",
+  "carDetails": "Dane samochodu"
 }

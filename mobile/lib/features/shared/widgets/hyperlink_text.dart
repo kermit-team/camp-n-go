@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 class HyperlinkText extends StatelessWidget {
   final String text;
   final bool isUnderlined;
+  final TextAlign? textAlign;
   final VoidCallback onTap;
 
   const HyperlinkText({
     super.key,
     required this.text,
     this.isUnderlined = false,
+    this.textAlign,
     required this.onTap,
   });
 
@@ -27,6 +29,7 @@ class HyperlinkText extends StatelessWidget {
               isUnderlined ? TextDecoration.underline : TextDecoration.none,
           decorationColor: goldenColor,
         ),
+        textAlign: textAlign,
       ),
     );
   }

@@ -1,4 +1,9 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
+import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
@@ -17,6 +22,7 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
+    initialLocation: "/login",
     routes: <GoRoute>[
       GoRoute(
         path: "/",
@@ -29,12 +35,24 @@ class AppRouter {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      "Cześć anon, przejdź do logowania!",
-                      style: mainTextStyle(),
+                      "Cześć anon, przejdź nazot do logowania!",
+                      style: AppTextStyles.mainTextStyle(),
                     ),
                     IconButton(
                       onPressed: () {
+                        context.read<AuthBloc>().add(DeleteCredentials());
                         serviceLocator<GoRouter>().go("/login");
+                      },
+                      icon: const Icon(Icons.login),
+                    ),
+                    const SizedBox(height: Constants.spaceM),
+                    Text(
+                      "Przejdź do edycji swojego konta.",
+                      style: AppTextStyles.mainTextStyle(),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        serviceLocator<GoRouter>().push("/accountSettings");
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -90,7 +108,20 @@ class AppRouter {
             child: ResetPasswordInfoPage(),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: "/accountSettings",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: BlocProvider(
+              create: (context) => serviceLocator<AccountSettingsCubit>()
+                ..getAccountData()
+                ..getCarList(),
+              child: const AccountSettingsPage(),
+            ),
+          );
+        },
+      ),
     ],
   );
 }

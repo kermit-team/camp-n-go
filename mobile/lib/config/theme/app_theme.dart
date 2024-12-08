@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData theme({bool isDarkTheme = false}) => ThemeData.from(
-      colorScheme: lightColorScheme,
+      colorScheme: _lightColorScheme,
     ).copyWith(
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(
@@ -12,25 +12,9 @@ ThemeData theme({bool isDarkTheme = false}) => ThemeData.from(
       ),
     );
 
-TextStyle titleTextStyle() {
-  return GoogleFonts.playfairDisplay(
-    fontSize: Constants.textSizeL,
-    fontStyle: FontStyle.normal,
-    color: Colors.black,
-  );
-}
-
-TextStyle mainTextStyle({Color? color}) {
-  return GoogleFonts.montserrat(
-    fontSize: Constants.textSizeS,
-    fontStyle: FontStyle.normal,
-    color: color ?? Colors.black,
-  );
-}
-
 const goldenColor = Color(0xFFAE9560);
 
-ColorScheme lightColorScheme = const ColorScheme(
+ColorScheme _lightColorScheme = const ColorScheme(
   brightness: Brightness.light,
   primary: Color(0XFFAE9560),
   onPrimary: Colors.white,
@@ -42,4 +26,33 @@ ColorScheme lightColorScheme = const ColorScheme(
   onError: Colors.white,
   surface: Colors.white,
   onSurface: Colors.black,
+  onSurfaceVariant: Colors.grey,
 );
+
+class AppTextStyles {
+  //todo: dodać obsługę context i pobieranie na podstawie ustawienia urządzenia
+  static TextStyle titleTextStyle() => GoogleFonts.playfairDisplay(
+        fontSize: Constants.textSizeL,
+        fontStyle: FontStyle.normal,
+        color: _lightColorScheme.onSurface,
+      );
+
+  static TextStyle mainTextStyle() => GoogleFonts.montserrat(
+        fontSize: Constants.textSizeS,
+        fontStyle: FontStyle.normal,
+      );
+
+  static TextStyle hintTextStyle() => GoogleFonts.montserrat(
+        fontSize: Constants.textSizeS,
+        fontStyle: FontStyle.normal,
+        color: _lightColorScheme.onSurfaceVariant,
+      );
+
+  static TextStyle customTextStyle({Color? color}) {
+    return GoogleFonts.montserrat(
+      fontSize: Constants.textSizeS,
+      fontStyle: FontStyle.normal,
+      color: color ?? Colors.black,
+    );
+  }
+}

@@ -1,15 +1,15 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/validation/validations.dart';
-import 'package:campngo/features/auth/presentation/widgets/custom_buttons.dart';
-import 'package:campngo/features/auth/presentation/widgets/golden_text_field.dart';
-import 'package:campngo/features/auth/presentation/widgets/icon_app_bar.dart';
-import 'package:campngo/features/auth/presentation/widgets/standard_text.dart';
-import 'package:campngo/features/auth/presentation/widgets/title_text.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_event.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_state.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/custom_buttons.dart';
+import 'package:campngo/features/shared/widgets/golden_text_field.dart';
+import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
+import 'package:campngo/features/shared/widgets/standard_text.dart';
+import 'package:campngo/features/shared/widgets/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
@@ -32,34 +32,36 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      children: [
-        const IconAppBar(),
-        TitleText(LocaleKeys.forgotPassword.tr()),
-        const SizedBox(height: Constants.spaceS),
-        StandardText(LocaleKeys.weWillSendYouEmail.tr()),
-        const SizedBox(height: Constants.spaceL),
-        Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              GoldenTextField(
-                controller: emailController,
-                hintText: LocaleKeys.email.tr(),
-                validations: const [
-                  RequiredValidation(),
-                  EmailValidation(),
-                ],
-              ),
-              const SizedBox(height: Constants.spaceML),
-              _getButtons(
-                context,
-                _formKey,
-                emailController,
-              ),
-            ],
+      child: Column(
+        children: [
+          const IconAppBar(),
+          TitleText(LocaleKeys.forgotPassword.tr()),
+          const SizedBox(height: Constants.spaceS),
+          StandardText(LocaleKeys.weWillSendYouEmail.tr()),
+          const SizedBox(height: Constants.spaceL),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                GoldenTextField(
+                  controller: emailController,
+                  hintText: LocaleKeys.email.tr(),
+                  validations: const [
+                    RequiredValidation(),
+                    EmailValidation(),
+                  ],
+                ),
+                const SizedBox(height: Constants.spaceML),
+                _getButtons(
+                  context,
+                  _formKey,
+                  emailController,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

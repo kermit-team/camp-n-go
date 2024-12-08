@@ -6,7 +6,7 @@ from server.apps.account.views import (
     AccountEmailVerificationView,
     AccountPasswordResetConfirmView,
     AccountPasswordResetView,
-    AccountRegisterView,
+    AccountRegisterView, AccountDetailsView,
 )
 
 urlpatterns = [
@@ -32,5 +32,10 @@ urlpatterns = [
         'password-reset/confirm/<str:uidb64>/<str:token>/',
         AccountPasswordResetConfirmView.as_view(),
         name='password_reset_confirm',
+    ),
+    path(
+        'details/<str:identifier>/',
+        AccountDetailsView.as_view(),
+        name='details',
     ),
 ]

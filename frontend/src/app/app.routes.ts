@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/containers/login/login.component';
 import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgot-password.component';
 import { EmailVerificationComponent } from './auth/containers/email-verifivation/email-verification.component';
 import { emailVerificationResolver } from './auth/resolvers/email-verification.resolver';
+import { PasswordResetComponent } from './auth/containers/password-reset/password-reset.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
     resolve: {
       emailVerification: emailVerificationResolver,
     },
+  },
+  {
+    path: AppRoutes.PasswordReset,
+    component: PasswordResetComponent,
   },
   {
     path: '',

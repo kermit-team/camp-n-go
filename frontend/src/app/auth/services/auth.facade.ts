@@ -101,7 +101,36 @@ export class AuthFacade {
       });
   }
 
+  resetEmail(email: string) {
+    this.authApi
+      .resetPassword(email)
+      .pipe(first())
+      .subscribe({
+        next: (email: string) => {
+          this.alertService.showDialog(
+            'Wysłano email z linkiem do resetu',
+            'success',
+          );
+        },
+        error: () =>
+          this.alertService.showDialog('Nie udało się wysłać emaila', 'error'),
+      });
+  }
+
   selectAuthenticated$(): Observable<AuthUser> {
     return this.authState.selectAuthenticatedUser$();
+  }
+
+  resetPasswordChange(uid64: string, token: string, password: string) {
+    return this.authApi
+      .resetPasswordRequest(uid64, token, password)
+      .pipe(first())
+      .subscribe({
+        next: (email: string) => {
+          this.alertService.showDialog('Pomyślnie zmieniono hasło', 'success');
+        },
+        error: () =>
+          this.alertService.showDialog('Coś poszło nie tak', 'error'),
+      });
   }
 }

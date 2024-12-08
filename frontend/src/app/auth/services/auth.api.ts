@@ -53,4 +53,18 @@ export class AuthApi {
       isAdmin: true,
     });
   }
+
+  resetPassword(email: string) {
+    return this.httpClient.post<string>(
+      `http://localhost:8000/api/accounts/password-reset/`,
+      email,
+    );
+  }
+
+  resetPasswordRequest(uid64: string, token: string, password: string) {
+    return this.httpClient.post<string>(
+      `http://localhost:8000/api/accounts/password-reset/confirm/${uid64}/${token}/`,
+      { password },
+    );
+  }
 }

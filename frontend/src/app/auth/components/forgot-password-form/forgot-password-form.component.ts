@@ -5,7 +5,6 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { FormHelperComponent } from '../../../shared/classes/form-helper.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
-import { ForgotPasswordRequest } from '../../models/auth.interface';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -24,7 +23,7 @@ export class ForgotPasswordFormComponent
   extends FormHelperComponent
   implements OnInit
 {
-  @Output() forgotFired = new EventEmitter<ForgotPasswordRequest>();
+  @Output() forgotFired = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.form = this.fb.group({

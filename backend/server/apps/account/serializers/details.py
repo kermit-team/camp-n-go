@@ -2,14 +2,17 @@ from rest_framework import serializers
 
 from server.apps.account.models import Account
 from server.apps.account.serializers.profile import AccountProfileSerializer
+from server.apps.car.serializers import CarDetailSerializer
 
 
 class AccountDetailsSerializer(serializers.ModelSerializer):
     profile = AccountProfileSerializer()
+    cars = CarDetailSerializer(many=True)
 
     class Meta:
         model = Account
         fields = [
             'email',
             'profile',
+            'cars',
         ]

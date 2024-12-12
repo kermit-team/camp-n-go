@@ -13,4 +13,9 @@ abstract class AuthApiService {
   Future<HttpResponse<AuthResponseDTO>> login({
     @Body() required Map<String, dynamic> credentials,
   });
+
+  @POST("/api/accounts/token/refresh/")
+  Future<HttpResponse<String>> refreshAccessToken({
+    @Body() required Map<String, dynamic> refreshToken,
+  });
 }

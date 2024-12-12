@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_api_service.dart';
+part of 'account_settings_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,13 +8,13 @@ part of 'auth_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations
 
-class _AuthApiService implements AuthApiService {
-  _AuthApiService(
+class _AccountSettingsApiService implements AccountSettingsApiService {
+  _AccountSettingsApiService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://10.0.2.2:8000/api';
+    baseUrl ??= 'http://10.0.2.2:8000/api/accounts';
   }
 
   final Dio _dio;
@@ -24,21 +24,19 @@ class _AuthApiService implements AuthApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<AuthResponseDTO>> login(
-      {required Map<String, dynamic> credentials}) async {
+  Future<HttpResponse<AccountDto>> getAccountDetails(String identifier) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(credentials);
-    final _options = _setStreamType<HttpResponse<AuthResponseDTO>>(Options(
-      method: 'POST',
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<HttpResponse<AccountDto>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/accounts/token/',
+          '/details/${identifier}/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -48,9 +46,9 @@ class _AuthApiService implements AuthApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseDTO _value;
+    late AccountDto _value;
     try {
-      _value = AuthResponseDTO.fromJson(_result.data!);
+      _value = AccountDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

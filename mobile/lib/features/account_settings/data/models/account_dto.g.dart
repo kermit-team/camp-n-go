@@ -1,21 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'register_dto.dart';
+part of 'account_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RegisterDTO _$RegisterDTOFromJson(Map<String, dynamic> json) => RegisterDTO(
-      password: json['password'] as String?,
+AccountDto _$AccountDtoFromJson(Map<String, dynamic> json) => AccountDto(
       email: json['email'] as String,
       profile:
           AccountProfileDto.fromJson(json['profile'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$RegisterDTOToJson(RegisterDTO instance) =>
+Map<String, dynamic> _$AccountDtoToJson(AccountDto instance) =>
     <String, dynamic>{
       'email': instance.email,
-      'password': instance.password,
       'profile': instance.profile,
     };

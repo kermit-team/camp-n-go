@@ -40,7 +40,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
     required String email,
   }) async {
     try {
-      final httpResponse = await _registerApiService.forgotPassword(
+      final httpResponse = await _registerApiService.passwordReset(
         email: {"email": email},
       );
 

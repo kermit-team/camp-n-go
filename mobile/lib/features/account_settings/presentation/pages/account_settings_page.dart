@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/validation/validations.dart';
-import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
@@ -105,7 +105,8 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                           children: [
                             DisplayTextField(
                               label: LocaleKeys.firstName.tr(),
-                              text: state.accountEntity?.firstName ?? '',
+                              text:
+                                  state.accountEntity?.profile.firstName ?? '',
                               validations: const [RequiredValidation()],
                               onHyperlinkPressed: (String newValue) {
                                 context
@@ -119,7 +120,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.lastName.tr(),
-                              text: state.accountEntity?.lastName ?? '',
+                              text: state.accountEntity?.profile.lastName ?? '',
                               validations: const [RequiredValidation()],
                               onHyperlinkPressed: (String newValue) {
                                 context
@@ -150,7 +151,8 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.phoneNumber.tr(),
-                              text: state.accountEntity?.phoneNumber ?? '',
+                              text: state.accountEntity?.profile.phoneNumber ??
+                                  '',
                               validations: const [RequiredValidation()],
                               onHyperlinkPressed: (String newValue) {
                                 context
@@ -164,7 +166,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.idNumber.tr(),
-                              text: state.accountEntity?.idNumber ?? '',
+                              text: state.accountEntity?.profile.idCard ?? '',
                               validations: const [RequiredValidation()],
                               onHyperlinkPressed: (String newValue) {
                                 context
@@ -176,21 +178,21 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 log("New value for firstName: $newValue");
                               },
                             ),
-                            DisplayTextField(
-                              label: LocaleKeys.password.tr(),
-                              text: state.accountEntity?.password ?? '',
-                              isPassword: true,
-                              validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
-                                context
-                                    .read<AccountSettingsCubit>()
-                                    .editProperty(
-                                      property: AccountProperty.password,
-                                      newValue: newValue,
-                                    );
-                                log("New value for firstName: $newValue");
-                              },
-                            ),
+                            // DisplayTextField(
+                            //   label: LocaleKeys.password.tr(),
+                            //   text: state.accountEntity?.password ?? '',
+                            //   isPassword: true,
+                            //   validations: const [RequiredValidation()],
+                            //   onHyperlinkPressed: (String newValue) {
+                            //     context
+                            //         .read<AccountSettingsCubit>()
+                            //         .editProperty(
+                            //           property: AccountProperty.password,
+                            //           newValue: newValue,
+                            //         );
+                            //     log("New value for firstName: $newValue");
+                            //   },
+                            // ),
                             const SizedBox(height: Constants.spaceS),
                             TextButton(
                               onPressed: context
@@ -200,7 +202,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             const SizedBox(height: Constants.spaceM),
                             CarListWidget(
-                              onListTilePressed: (CarEntity car) {
+                              onListTilePressed: (Car car) {
                                 showCarDetailsDialog(
                                     context: context,
                                     registrationPlate: car.registrationPlate,

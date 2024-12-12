@@ -60,7 +60,7 @@ class _RegisterApiService implements RegisterApiService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> forgotPassword(
+  Future<HttpResponse<dynamic>> passwordReset(
       {required Map<String, dynamic> email}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

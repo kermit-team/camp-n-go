@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class CarEntity extends Equatable {
+class Car extends Equatable {
   final String identifier;
   final String registrationPlate;
 
-  const CarEntity({
+  const Car({
     required this.identifier,
     required this.registrationPlate,
   });

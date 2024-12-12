@@ -1,5 +1,5 @@
-import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:equatable/equatable.dart';
 
 enum LoadAccountSettingsStatus { initial, loading, failure, success }
@@ -23,8 +23,8 @@ class AccountSettingsState extends Equatable {
   final CarListStatus carListStatus;
   final CarOperationStatus carOperationStatus;
 
-  final AccountEntity? accountEntity;
-  final List<CarEntity>? carList;
+  final Account? accountEntity;
+  final List<Car>? carList;
   final Exception? exception;
 
   const AccountSettingsState({
@@ -42,8 +42,8 @@ class AccountSettingsState extends Equatable {
     EditPropertyStatus? editPropertyStatus,
     CarListStatus? carListStatus,
     CarOperationStatus? carOperationStatus,
-    AccountEntity? accountEntity,
-    List<CarEntity>? carList,
+    Account? accountEntity,
+    List<Car>? carList,
     Exception? exception,
   }) =>
       AccountSettingsState(

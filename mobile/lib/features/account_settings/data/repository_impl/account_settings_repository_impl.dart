@@ -1,43 +1,50 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:campngo/core/resources/data_result.dart';
-import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
+import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
+import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:dio/dio.dart';
 
 class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
-  // final AccountSettingsApiService _accountSettingsApiService;
+  final AccountSettingsApiService _accountSettingsApiService;
 
-  // AccountSettingsRepositoryImpl(this._accountSettingsApiService);
+  AccountSettingsRepositoryImpl(this._accountSettingsApiService);
 
   @override
-  Future<Result<AccountEntity, Exception>> getAccountData() async {
-    // try {
-    //   final httpResponse = await _accountSettingsApiService.getAccountData();
-    //
-    //   if (httpResponse.response.statusCode == 200) {
-    //     final AccountEntity accountEntity = httpResponse.data.toEntity();
-    //     return Success(accountEntity);
-    //   }
-    //
-    //   final errorResponse = json.decode(httpResponse.response.data);
-    //   log("Get account data error: $errorResponse");
-    //   return Failure(Exception(errorResponse));
-    // } on DioException catch (dioException) {
-    //   return Failure(handleApiError(dioException));
-    // } on Exception catch (exception) {
-    //   return Failure(exception);
-    // }
+  Future<Result<Account, Exception>> getAccountData({
+    required String identifier,
+  }) async {
+    try {
+      final httpResponse =
+          await _accountSettingsApiService.getAccountDetails(identifier);
 
-    final accountEntity = await const AccountEntity(
-      firstName: "Kamil",
-      lastName: "Gajczak",
-      email: "kamil.gajczak@gmail.com",
-      phoneNumber: "+48606857193",
-      idNumber: "12349876501",
-      password: "123qwe!@#QWE",
-    );
-    return Success(accountEntity);
+      if (httpResponse.response.statusCode == 200) {
+        final Account account = httpResponse.data.toEntity();
+        return Success(account);
+      }
+
+      final errorResponse = json.decode(httpResponse.response.data);
+      log("Get account data error: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    } on Exception catch (exception) {
+      return Failure(exception);
+    }
+
+    // final account = await const Account(
+    //   email: "kamil.gajczak@gmail.com",
+    //   profile: AccountProfile(
+    //     firstName: "Kamil",
+    //     lastName: "Gajczak",
+    //     phoneNumber: "123456789",
+    //     avatar: "avatar",
+    //     idCard: "id_card",
+    //   ),
+    // );
+    // return Success(account);
   }
 
   @override

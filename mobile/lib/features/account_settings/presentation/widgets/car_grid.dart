@@ -1,5 +1,5 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CarGridWidget extends StatelessWidget {
-  final void Function(CarEntity) onActionIconPressed;
+  final void Function(Car) onActionIconPressed;
   final void Function() onAddButtonPressed;
 
   const CarGridWidget({
@@ -87,8 +87,8 @@ class CarGridWidget extends StatelessWidget {
 }
 
 class CarTileItem extends StatelessWidget {
-  final CarEntity car;
-  final void Function(CarEntity) onActionIconPressed;
+  final Car car;
+  final void Function(Car) onActionIconPressed;
 
   const CarTileItem({
     super.key,

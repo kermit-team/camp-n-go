@@ -1,8 +1,11 @@
 import 'package:campngo/core/resources/data_result.dart';
-import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/core/token_storage.dart';
+import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
+import 'package:campngo/features/shared/token_decoder.dart';
+import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,27 +25,35 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     emit(const AccountSettingsState(status: LoadAccountSettingsStatus.loading));
 
     try {
-      final Result<AccountEntity, Exception> result =
-          await accountSettingsRepository.getAccountData();
+      final token = await serviceLocator<TokenStorage>().getAccessToken();
 
-      switch (result) {
-        case Success<AccountEntity, Exception>(
-            value: AccountEntity accountEntity,
-          ):
-          {
-            emit(state.copyWith(
-              status: LoadAccountSettingsStatus.success,
-              accountEntity: accountEntity,
-            ));
-            break;
-          }
-        case Failure<AccountEntity, Exception>(exception: final exception):
-          {
-            emit(state.copyWith(
-              status: LoadAccountSettingsStatus.failure,
-              exception: exception,
-            ));
-          }
+      if (token != null) {
+        final userId = TokenDecoder.getUserId(
+          token: token,
+        );
+
+        final Result<Account, Exception> result =
+            await accountSettingsRepository.getAccountData(identifier: userId);
+
+        switch (result) {
+          case Success<Account, Exception>(
+              value: Account accountEntity,
+            ):
+            {
+              emit(state.copyWith(
+                status: LoadAccountSettingsStatus.success,
+                accountEntity: accountEntity,
+              ));
+              break;
+            }
+          case Failure<Account, Exception>(exception: final exception):
+            {
+              emit(state.copyWith(
+                status: LoadAccountSettingsStatus.failure,
+                exception: exception,
+              ));
+            }
+        }
       }
     } on DioException catch (dioException) {
       emit(state.copyWith(
@@ -65,14 +76,14 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     emit(state.copyWith(
       carListStatus: CarListStatus.success,
       carList: [
-        const CarEntity(identifier: "1", registrationPlate: "SPS93049"),
-        const CarEntity(identifier: "2", registrationPlate: "SPS59986"),
-        const CarEntity(identifier: "3", registrationPlate: "ABC"),
+        const Car(identifier: "1", registrationPlate: "SPS93049"),
+        const Car(identifier: "2", registrationPlate: "SPS59986"),
+        const Car(identifier: "3", registrationPlate: "ABC"),
       ],
     ));
   }
 
-  addCar({required CarEntity car}) {
+  addCar({required Car car}) {
     emit(state.copyWith(
       carOperationStatus: CarOperationStatus.loading,
     ));
@@ -82,7 +93,7 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
         carOperationStatus: CarOperationStatus.notAdded));
   }
 
-  deleteCar({required CarEntity car}) {
+  deleteCar({required Car car}) {
     emit(state.copyWith(
       carOperationStatus: CarOperationStatus.loading,
     ));

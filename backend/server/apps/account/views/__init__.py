@@ -1,3 +1,4 @@
+from server.apps.account.views.details import AccountDetailsView
 from server.apps.account.views.email_verification import AccountEmailVerificationView
 from server.apps.account.views.email_verification_resend import AccountEmailVerificationResendView
 from server.apps.account.views.password_reset import AccountPasswordResetView

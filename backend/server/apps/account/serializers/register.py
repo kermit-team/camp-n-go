@@ -24,7 +24,7 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data: Any) -> Account:
-        profile_data = validated_data.get('profile')
+        profile_data = validated_data.get('profile', {})
 
         return AccountRegisterBL.process(
             email=validated_data.get('email'),

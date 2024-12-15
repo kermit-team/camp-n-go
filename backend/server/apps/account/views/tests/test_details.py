@@ -33,7 +33,7 @@ class AccountDetailsViewTestCase(APITestCase):
         force_authenticate(req, user=self.account)
         res = self.view.as_view()(req, **parameters)
 
-        expected_data = AccountDetailsView.serializer_class(
+        expected_data = self.view.serializer_class(
             instance=self.account,
             context={'request': req},
         ).data

@@ -76,9 +76,18 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     emit(state.copyWith(
       carListStatus: CarListStatus.success,
       carList: [
-        const Car(identifier: "1", registrationPlate: "SPS93049"),
-        const Car(identifier: "2", registrationPlate: "SPS59986"),
-        const Car(identifier: "3", registrationPlate: "ABC"),
+        const Car(
+          // identifier: "1",
+          registrationPlate: "SPS93049",
+        ),
+        const Car(
+          // identifier: "2",
+          registrationPlate: "SPS59986",
+        ),
+        const Car(
+          // identifier: "3",
+          registrationPlate: "ABC",
+        ),
       ],
     ));
   }

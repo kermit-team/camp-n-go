@@ -41,7 +41,7 @@ urlpatterns = [
         name='details',
     ),
     path(
-        '<str:identifier>/',
+        '<str:identifier>/modify/',
         AccountModifyView.as_view(),
         name='modify',
     ),

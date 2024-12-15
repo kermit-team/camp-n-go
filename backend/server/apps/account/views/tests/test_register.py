@@ -18,14 +18,15 @@ class AccountRegisterViewTestCase(APITestCase):
         cls.view = AccountRegisterView
 
     def setUp(self):
-        self.account = baker.prepare(_model=Account, password=generate_password(), _fill_optional=True)
+        self.password = generate_password()
+        self.account = baker.prepare(_model=Account, _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
     @mock.patch.object(AccountRegisterBL, 'process')
     def test_request(self, register_account_mock):
         request_data = {
             'email': self.account.email,
-            'password': self.account.password,
+            'password': self.password,
             'profile': {
                 'first_name': self.account_profile.first_name,
                 'last_name': self.account_profile.last_name,
@@ -49,7 +50,7 @@ class AccountRegisterViewTestCase(APITestCase):
 
         register_account_mock.assert_called_once_with(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             phone_number=None,

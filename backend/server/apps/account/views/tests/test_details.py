@@ -7,6 +7,7 @@ from rest_framework.test import APIRequestFactory, APITestCase, force_authentica
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.views.details import AccountDetailsView
+from server.apps.car.models import Car
 
 
 class AccountDetailsViewTestCase(APITestCase):
@@ -18,6 +19,9 @@ class AccountDetailsViewTestCase(APITestCase):
     def setUp(self):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
+        self.cars = baker.make(_model=Car, _quantity=2)
+        for car in self.cars:
+            car.drivers.add(self.account)
 
     def test_request(self):
         parameters = {
@@ -29,7 +33,7 @@ class AccountDetailsViewTestCase(APITestCase):
         force_authenticate(req, user=self.account)
         res = self.view.as_view()(req, **parameters)
 
-        expected_data = AccountDetailsView.serializer_class(
+        expected_data = self.view.serializer_class(
             instance=self.account,
             context={'request': req},
         ).data

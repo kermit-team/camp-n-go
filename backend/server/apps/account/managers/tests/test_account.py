@@ -1,23 +1,24 @@
 from unittest import mock
 
-from django.contrib.auth.hashers import check_password
 from django.test import TestCase
 from model_bakery import baker
 
 from server.apps.account.managers import AccountManager
 from server.apps.account.models import Account, AccountProfile
+from server.utils.tests.baker_generators import generate_password
 
 
 class AccountManagerTestCase(TestCase):
 
     def setUp(self):
+        self.password = generate_password()
         self.account = baker.prepare(_model=Account, _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
     def test_create_account(self):
         account = Account.objects.create_account(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -28,7 +29,7 @@ class AccountManagerTestCase(TestCase):
         )
 
         assert account.email == self.account.email
-        assert check_password(password=self.account.password, encoded=account.password)
+        assert account.check_password(raw_password=self.password)
         assert account.is_superuser == self.account.is_superuser
         assert account.is_active == self.account.is_active
         assert account.profile.first_name == self.account_profile.first_name
@@ -46,7 +47,7 @@ class AccountManagerTestCase(TestCase):
         with self.assertRaises(ValueError, msg=exception_message):
             Account.objects.create_account(
                 email=self.account.email,
-                password=self.account.password,
+                password=self.password,
                 first_name=self.account_profile.first_name,
                 last_name=self.account_profile.last_name,
                 is_superuser=self.account.is_superuser,
@@ -62,7 +63,7 @@ class AccountManagerTestCase(TestCase):
     def test_create_superuser_account(self):
         account = Account.objects.create_superuser_account(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_active=self.account.is_active,
@@ -72,7 +73,7 @@ class AccountManagerTestCase(TestCase):
         )
 
         assert account.email == self.account.email
-        assert check_password(password=self.account.password, encoded=account.password)
+        assert account.check_password(raw_password=self.password)
         assert account.is_superuser is True
         assert account.is_active == self.account.is_active
         assert account.profile.first_name == self.account_profile.first_name
@@ -90,7 +91,7 @@ class AccountManagerTestCase(TestCase):
         with self.assertRaises(ValueError, msg=exception_message):
             Account.objects.create_superuser_account(
                 email=self.account.email,
-                password=self.account.password,
+                password=self.password,
                 first_name=self.account_profile.first_name,
                 last_name=self.account_profile.last_name,
                 is_active=self.account.is_active,

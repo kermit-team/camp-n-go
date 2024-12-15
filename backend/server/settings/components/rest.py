@@ -9,7 +9,8 @@ from server.settings.components.common import DATETIME_INPUT_FORMATS
 REST_FRAMEWORK = {
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_PERMISSION_CLASSES': [
-        'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
+        # 'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',

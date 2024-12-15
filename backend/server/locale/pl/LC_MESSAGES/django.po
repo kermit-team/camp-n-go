@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-01 16:08+0100\n"
+"POT-Creation-Date: 2024-12-15 17:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,6 +56,18 @@ msgstr ""
 "Podany token jest niewłaściwy lub stracił ważność dla użytkownika "
 "{identifier}."
 
+#: server/apps/account/errors/account.py:12
+msgid "Old password is required for password change."
+msgstr "Do zmiany hasła wymagane jest stare hasło."
+
+#: server/apps/account/errors/account.py:13
+msgid "New password is required for password change."
+msgstr "Do zmiany hasła wymagane jest nowe hasło."
+
+#: server/apps/account/errors/account.py:14
+msgid "Password is incorrect."
+msgstr "Nieprawidłowe hasło."
+
 #: server/apps/account/errors/group.py:7
 #, python-brace-format
 msgid "Group {name} does not exist."
@@ -74,13 +86,16 @@ msgstr "Użytkownik o uidb64 {uidb64} zostało pomyślnie aktywowany."
 #: server/apps/account/messages/account.py:8
 #, python-brace-format
 msgid "Activation process for account with e-mail {email} has been started."
-msgstr "Proces aktywacji dla użytkownika o adresie e-mail {email} został ropoczęty."
+msgstr ""
+"Proces aktywacji dla użytkownika o adresie e-mail {email} został ropoczęty."
 
 #: server/apps/account/messages/account.py:9
 #, python-brace-format
 msgid ""
 "Password reset process for account with e-mail {email} has been started."
-msgstr "Proces resetowania hasła dla użytkownika o adresie e-mail {email} został ropoczęty."
+msgstr ""
+"Proces resetowania hasła dla użytkownika o adresie e-mail {email} został "
+"ropoczęty."
 
 #: server/apps/account/messages/account.py:10
 #, python-brace-format
@@ -159,6 +174,31 @@ msgstr "Hasło musi zawierać co najmniej 1 wielką literę, A-Z."
 msgid "Your password must contain at least 1 uppercase letter, A-Z."
 msgstr "Twoje hasło musi zawierać co najmniej 1 wielką literę, A-Z."
 
+#: server/apps/car/apps.py:8
+msgid "Car"
+msgstr "Samochód"
+
+#: server/apps/car/apps.py:9
+msgid "Cars"
+msgstr "Samochody"
+
+#: server/apps/car/messages/car.py:7
+#, python-brace-format
+msgid ""
+"Successfully removed driver {driver_identifier} from car "
+"{registration_plate}."
+msgstr ""
+"Pomyślnie usunięto kierowcę {driver_identifier} z samochodu "
+"{registration_plate}."
+
+#: server/apps/car/models/car.py:11
+msgid "RegistrationPlate"
+msgstr "Tablica rejestracyjna"
+
+#: server/apps/car/models/car.py:20
+msgid "Drivers"
+msgstr "Kierowcy"
+
 #: server/apps/common/models/created_updated.py:6
 msgid "CreatedAt"
 msgstr "Czas utworzenia"
@@ -187,7 +227,7 @@ msgstr "Pracownik"
 msgid "Client"
 msgstr "Klient"
 
-#: server/settings/components/rest.py:31
+#: server/settings/components/rest.py:34
 msgid "Application for camping management"
 msgstr "Aplikacja do zarządzania kempingiem"
 

@@ -9,7 +9,7 @@ urlpatterns = [
         name='car_add',
     ),
     path(
-        'remove-driver/<str:registration_plate>/',
+        '<str:registration_plate>/remove-driver/',
         CarRemoveDriverView.as_view(),
         name='car_remove_driver',
     ),

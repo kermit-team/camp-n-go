@@ -66,6 +66,36 @@ class AccountCommand:
         )
 
     @classmethod
+    def modify(
+        cls,
+        account: Account,
+        password: Optional[str] = None,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+        phone_number: Optional[str] = None,
+        avatar: Optional[str] = None,
+        id_card: Optional[str] = None,
+    ) -> Account:
+        account_profile = account.profile
+        account_profile_fields = {
+            'first_name': first_name,
+            'last_name': last_name,
+            'phone_number': phone_number,
+            'avatar': avatar,
+            'id_card': id_card,
+        }
+
+        for field, value in account_profile_fields.items():
+            if value is not None:
+                setattr(account_profile, field, value)
+
+        if password:
+            cls.change_password(account=account, password=password)
+
+        account_profile.save()
+        return account
+
+    @classmethod
     def activate(cls, account: Account) -> None:
         account.is_active = True
         account.save()

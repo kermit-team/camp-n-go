@@ -9,6 +9,7 @@ from server.apps.account.views import (
     AccountPasswordResetView,
     AccountRegisterView,
 )
+from server.apps.account.views.modify import AccountModifyView
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -35,8 +36,13 @@ urlpatterns = [
         name='password_reset_confirm',
     ),
     path(
-        'details/<str:identifier>/',
+        '<str:identifier>/',
         AccountDetailsView.as_view(),
         name='details',
+    ),
+    path(
+        '<str:identifier>/',
+        AccountModifyView.as_view(),
+        name='modify',
     ),
 ]

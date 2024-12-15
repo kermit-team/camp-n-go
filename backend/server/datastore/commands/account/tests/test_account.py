@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import Group
 from django.test import TestCase
 from model_bakery import baker
@@ -8,6 +9,7 @@ from server.apps.account.exceptions.group import GroupNotExistsError
 from server.apps.account.models import Account, AccountProfile
 from server.datastore.commands.account import AccountCommand
 from server.datastore.queries.account import GroupQuery
+from server.utils.tests.baker_generators import generate_password
 
 
 class AccountCommandTestCase(TestCase):
@@ -19,7 +21,12 @@ class AccountCommandTestCase(TestCase):
     )
 
     def setUp(self):
-        self.account = baker.make(_model=Account, _fill_optional=True)
+        self.password = generate_password()
+        self.account = baker.make(
+            _model=Account,
+            password=make_password(self.password),
+            _fill_optional=True,
+        )
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
         self.group = baker.make(_model=Group)
 
@@ -30,7 +37,7 @@ class AccountCommandTestCase(TestCase):
 
         account = AccountCommand.create(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -42,7 +49,7 @@ class AccountCommandTestCase(TestCase):
 
         create_account_mock.assert_called_once_with(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -72,7 +79,7 @@ class AccountCommandTestCase(TestCase):
 
         account = AccountCommand.create(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -85,7 +92,7 @@ class AccountCommandTestCase(TestCase):
 
         create_account_mock.assert_called_once_with(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -113,7 +120,7 @@ class AccountCommandTestCase(TestCase):
         with self.assertRaises(GroupNotExistsError):
             AccountCommand.create(
                 email=self.account.email,
-                password=self.account.password,
+                password=self.password,
                 first_name=self.account_profile.first_name,
                 last_name=self.account_profile.last_name,
                 is_superuser=self.account.is_superuser,
@@ -126,7 +133,7 @@ class AccountCommandTestCase(TestCase):
 
         create_account_mock.assert_called_once_with(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_superuser=self.account.is_superuser,
@@ -144,7 +151,7 @@ class AccountCommandTestCase(TestCase):
 
         account = AccountCommand.create_superuser(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_active=self.account.is_active,
@@ -155,7 +162,7 @@ class AccountCommandTestCase(TestCase):
 
         create_superuser_account_mock.assert_called_once_with(
             email=self.account.email,
-            password=self.account.password,
+            password=self.password,
             first_name=self.account_profile.first_name,
             last_name=self.account_profile.last_name,
             is_active=self.account.is_active,
@@ -166,6 +173,39 @@ class AccountCommandTestCase(TestCase):
 
         assert account is not None
 
+    @mock.patch.object(AccountCommand, 'change_password')
+    def test_modify_account(self, change_password_mock):
+        new_password = generate_password()
+        new_profile_data = baker.prepare(_model=AccountProfile, _fill_optional=True)
+
+        account = AccountCommand.modify(
+            account=self.account,
+            password=new_password,
+            first_name=new_profile_data.first_name,
+            last_name=new_profile_data.last_name,
+            phone_number=new_profile_data.phone_number,
+            avatar=new_profile_data.avatar,
+            id_card=new_profile_data.id_card,
+        )
+
+        change_password_mock.assert_called_once_with(account=self.account, password=new_password)
+        assert account.profile.first_name == new_profile_data.first_name
+        assert account.profile.last_name == new_profile_data.last_name
+        assert account.profile.phone_number == new_profile_data.phone_number
+        assert account.profile.avatar == new_profile_data.avatar
+        assert account.profile.id_card == new_profile_data.id_card
+
+    @mock.patch.object(AccountCommand, 'change_password')
+    def test_modify_account_without_optional_fields(self, change_password_mock):
+        account = AccountCommand.modify(account=self.account)
+
+        change_password_mock.assert_not_called()
+        assert account.profile.first_name == self.account_profile.first_name
+        assert account.profile.last_name == self.account_profile.last_name
+        assert account.profile.phone_number == self.account_profile.phone_number
+        assert account.profile.avatar == self.account_profile.avatar
+        assert account.profile.id_card == self.account_profile.id_card
+
     def test_activate(self):
         account = baker.make(_model=Account, is_active=False)
 
@@ -175,7 +215,7 @@ class AccountCommandTestCase(TestCase):
 
     def test_change_password(self):
         account = baker.make(_model=Account, is_active=False)
-        password = 'some_password'
+        password = generate_password()
 
         AccountCommand.change_password(account=account, password=password)
 

@@ -88,7 +88,6 @@ class AccountCommand:
         for field, value in account_profile_fields.items():
             if value is not None:
                 setattr(account_profile, field, value)
-
         if password:
             cls.change_password(account=account, password=password)
 
@@ -103,6 +102,7 @@ class AccountCommand:
     @classmethod
     def change_password(cls, account: Account, password: str) -> None:
         account.set_password(raw_password=password)
+        account.save()
 
     @classmethod
     def _add_groups_to_account(cls, account: Account, names: list[str]) -> None:

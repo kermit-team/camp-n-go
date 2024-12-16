@@ -38,5 +38,10 @@
   "delete": "Delete",
   "addCar": "Add car",
   "editCar": "Edit car",
-  "carDetails": "Car details"
+  "carDetails": "Car details",
+  "changePassword": "Change password",
+  "oldPassword": "Old password",
+  "newPassword": "New password",
+  "repeatNewPassword": "Repeat new password",
+  "passwordsMustBeIdentical": "Passwords must be identical"
 }

@@ -14,7 +14,7 @@ abstract class AuthApiService {
     @Body() required Map<String, dynamic> credentials,
   });
 
-  @POST("/api/accounts/token/refresh/")
+  @POST("/accounts/token/refresh/")
   Future<HttpResponse<String>> refreshAccessToken({
     @Body() required Map<String, dynamic> refreshToken,
   });

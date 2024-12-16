@@ -5,7 +5,6 @@ import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
@@ -53,8 +52,20 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 context: context,
                 text: "Nowa wartość pola została ustawiona",
               );
-              context.read<AccountSettingsCubit>().getAccountData();
             }
+        }
+        switch (state.editPasswordStatus) {
+          case EditPasswordStatus.unknown:
+          case EditPasswordStatus.loading:
+            break;
+          case EditPasswordStatus.failure:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: state.exception.toString(),
+            );
+          case EditPasswordStatus.success:
+            AppSnackBar.showSnackBar(
+                context: context, text: "Hasło zostało zmienione");
         }
       },
       builder: (context, state) {
@@ -106,9 +117,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.firstName.tr(),
                               text:
-                                  state.accountEntity?.profile.firstName ?? '',
+                                  state.accountEntity?.profile.firstName ?? ' ',
                               validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -120,9 +131,10 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.lastName.tr(),
-                              text: state.accountEntity?.profile.lastName ?? '',
+                              text:
+                                  state.accountEntity?.profile.lastName ?? ' ',
                               validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -134,12 +146,12 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.email.tr(),
-                              text: state.accountEntity?.email ?? '',
+                              text: state.accountEntity?.email ?? ' ',
                               validations: const [
                                 RequiredValidation(),
                                 EmailValidation()
                               ],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -152,9 +164,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.phoneNumber.tr(),
                               text: state.accountEntity?.profile.phoneNumber ??
-                                  '',
+                                  ' ',
                               validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -166,33 +178,35 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.idNumber.tr(),
-                              text: state.accountEntity?.profile.idCard ?? '',
+                              text: state.accountEntity?.profile.idCard ?? ' ',
                               validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
-                                      property: AccountProperty.idNumber,
+                                      property: AccountProperty.idCard,
                                       newValue: newValue,
                                     );
                                 log("New value for firstName: $newValue");
                               },
                             ),
-                            // DisplayTextField(
-                            //   label: LocaleKeys.password.tr(),
-                            //   text: state.accountEntity?.password ?? '',
-                            //   isPassword: true,
-                            //   validations: const [RequiredValidation()],
-                            //   onHyperlinkPressed: (String newValue) {
-                            //     context
-                            //         .read<AccountSettingsCubit>()
-                            //         .editProperty(
-                            //           property: AccountProperty.password,
-                            //           newValue: newValue,
-                            //         );
-                            //     log("New value for firstName: $newValue");
-                            //   },
-                            // ),
+                            DisplayTextField(
+                              label: LocaleKeys.password.tr(),
+                              text: "·············",
+                              isPassword: true,
+                              validations: const [RequiredValidation()],
+                              onPasswordDialogSavePressed: (
+                                String oldPassword,
+                                String newPassword,
+                              ) {
+                                context
+                                    .read<AccountSettingsCubit>()
+                                    .editPassword(
+                                      oldPassword: oldPassword,
+                                      newPassword: newPassword,
+                                    );
+                              },
+                            ),
                             const SizedBox(height: Constants.spaceS),
                             TextButton(
                               onPressed: context

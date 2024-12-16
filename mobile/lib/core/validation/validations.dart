@@ -54,3 +54,20 @@ class PasswordValidation extends Validation<String> {
     return null;
   }
 }
+
+class PasswordMatchValidation extends Validation<String> {
+  TextEditingController confirmPasswordController;
+
+  PasswordMatchValidation(this.confirmPasswordController);
+
+  @override
+  String? validate(BuildContext context, String? value) {
+    if (value == null) return null;
+
+    if (value != confirmPasswordController.text) {
+      return LocaleKeys.passwordsMustBeIdentical.tr();
+    }
+
+    return null;
+  }
+}

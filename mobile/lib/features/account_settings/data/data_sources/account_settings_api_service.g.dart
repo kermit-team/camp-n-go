@@ -36,7 +36,7 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
     )
         .compose(
           _dio.options,
-          '/accounts/details/${identifier}/',
+          '/accounts/${identifier}/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -49,6 +49,82 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
     late AccountDto _value;
     try {
       _value = AccountDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<ModifiedAccountDto>> updateAccountProperty({
+    required String identifier,
+    required Map<String, dynamic> accountJson,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(accountJson);
+    final _options = _setStreamType<HttpResponse<ModifiedAccountDto>>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/accounts/${identifier}/modify/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ModifiedAccountDto _value;
+    try {
+      _value = ModifiedAccountDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<ModifiedAccountDto>> updateAccountPassword({
+    required String identifier,
+    required Map<String, dynamic> passwordsJson,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(passwordsJson);
+    final _options = _setStreamType<HttpResponse<ModifiedAccountDto>>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/accounts/${identifier}/modify/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ModifiedAccountDto _value;
+    try {
+      _value = ModifiedAccountDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

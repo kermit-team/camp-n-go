@@ -41,5 +41,10 @@ abstract class  LocaleKeys {
   static const addCar = 'addCar';
   static const editCar = 'editCar';
   static const carDetails = 'carDetails';
+  static const changePassword = 'changePassword';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const repeatNewPassword = 'repeatNewPassword';
+  static const passwordsMustBeIdentical = 'passwordsMustBeIdentical';
 
 }

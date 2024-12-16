@@ -148,5 +148,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _deleteCredentials(DeleteCredentials event, Emitter<AuthState> emit) async {
     await secureStorage.delete(key: 'email');
     await secureStorage.delete(key: 'password');
+    await serviceLocator<TokenStorage>().clearTokens();
   }
 }

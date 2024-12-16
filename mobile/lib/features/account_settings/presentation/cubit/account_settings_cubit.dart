@@ -1,14 +1,17 @@
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/shared/token_decoder.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+part "account_settings_state.dart";
 
 class AccountSettingsCubit extends Cubit<AccountSettingsState> {
   final AccountSettingsRepository accountSettingsRepository;
@@ -113,14 +116,127 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     ));
   }
 
+  editPassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      emit(state.copyWith(
+        editPasswordStatus: EditPasswordStatus.loading,
+      ));
+
+      final token = await serviceLocator<TokenStorage>().getAccessToken();
+      if (token != null) {
+        final userId = TokenDecoder.getUserId(
+          token: token,
+        );
+
+        final Result<AccountProfile, Exception> result =
+            await accountSettingsRepository.updateAccountPassword(
+          identifier: userId,
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+        );
+
+        switch (result) {
+          case Success<AccountProfile, Exception>(
+              value: AccountProfile profileEntity,
+            ):
+            {
+              serviceLocator<FlutterSecureStorage>().write(
+                key: 'password',
+                value: newPassword,
+              );
+              emit(state.copyWith(
+                editPasswordStatus: EditPasswordStatus.success,
+                accountEntity: state.accountEntity?.copyWith(
+                  profile: profileEntity,
+                ),
+              ));
+              break;
+            }
+          case Failure<AccountProfile, Exception>(exception: final exception):
+            {
+              emit(state.copyWith(
+                editPasswordStatus: EditPasswordStatus.failure,
+                exception: exception,
+              ));
+            }
+        }
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        status: LoadAccountSettingsStatus.failure,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        status: LoadAccountSettingsStatus.failure,
+        exception: exception,
+      ));
+    }
+  }
+
   editProperty({
     required AccountProperty property,
     required String newValue,
-  }) {
-    emit(state.copyWith(
-      exception: Exception("[account_settings_cubit] Not implemented yet"),
-      editPropertyStatus: EditPropertyStatus.failure,
-    ));
+  }) async {
+    try {
+      emit(state.copyWith(
+        editPropertyStatus: EditPropertyStatus.loading,
+      ));
+
+      final token = await serviceLocator<TokenStorage>().getAccessToken();
+      if (token != null) {
+        final userId = TokenDecoder.getUserId(
+          token: token,
+        );
+
+        final Result<AccountProfile, Exception> result =
+            await accountSettingsRepository.updateAccountProperty(
+          identifier: userId,
+          property: property,
+          newValue: newValue,
+        );
+
+        switch (result) {
+          case Success<AccountProfile, Exception>(
+              value: AccountProfile profileEntity,
+            ):
+            {
+              emit(state.copyWith(
+                editPropertyStatus: EditPropertyStatus.success,
+                accountEntity: state.accountEntity?.copyWith(
+                  profile: profileEntity,
+                ),
+              ));
+              break;
+            }
+          case Failure<AccountProfile, Exception>(exception: final exception):
+            {
+              emit(state.copyWith(
+                editPropertyStatus: EditPropertyStatus.failure,
+                exception: exception,
+              ));
+            }
+        }
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        status: LoadAccountSettingsStatus.failure,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        status: LoadAccountSettingsStatus.failure,
+        exception: exception,
+      ));
+
+      emit(state.copyWith(
+        exception: Exception("[account_settings_cubit] Not implemented yet"),
+        editPropertyStatus: EditPropertyStatus.failure,
+      ));
+    }
   }
 
   setLoading() {

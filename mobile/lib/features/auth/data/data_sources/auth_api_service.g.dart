@@ -74,7 +74,7 @@ class _AuthApiService implements AuthApiService {
     )
         .compose(
           _dio.options,
-          '/api/accounts/token/refresh/',
+          '/accounts/token/refresh/',
           queryParameters: queryParameters,
           data: _data,
         )

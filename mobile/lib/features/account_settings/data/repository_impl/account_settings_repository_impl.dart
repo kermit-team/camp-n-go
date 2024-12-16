@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:dio/dio.dart';
@@ -35,27 +36,73 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
     } on Exception catch (exception) {
       return Failure(exception);
     }
-
-    // final account = await const Account(
-    //   email: "kamil.gajczak@gmail.com",
-    //   profile: AccountProfile(
-    //     firstName: "Kamil",
-    //     lastName: "Gajczak",
-    //     phoneNumber: "123456789",
-    //     avatar: "avatar",
-    //     idCard: "id_card",
-    //   ),
-    // );
-    // return Success(account);
   }
 
   @override
-  Future<Result<dynamic, Exception>> updateAccountProperty({
+  Future<Result<AccountProfile, Exception>> updateAccountProperty({
+    required String identifier,
     required AccountProperty property,
     required String newValue,
   }) async {
-    final failure = await Failure(Exception(newValue));
-    return failure;
+    try {
+      Map<String, dynamic> accountJson = {
+        "profile": {
+          if (property == AccountProperty.firstName) "first_name": newValue,
+          if (property == AccountProperty.lastName) "last_name": newValue,
+          if (property == AccountProperty.phoneNumber) "phone_number": newValue,
+          if (property == AccountProperty.avatar) "avatar": newValue,
+          if (property == AccountProperty.idCard) "id_card": newValue,
+        }
+      };
+
+      final httpResponse =
+          await _accountSettingsApiService.updateAccountProperty(
+        identifier: identifier,
+        accountJson: accountJson,
+      );
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final AccountProfile profile = httpResponse.data.profile!.toEntity();
+        return Success(profile);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[AccountSettingsRepositoryImpl>AddCar]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
+
+  @override
+  Future<Result<AccountProfile, Exception>> updateAccountPassword({
+    required String identifier,
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final httpResponse =
+          await _accountSettingsApiService.updateAccountPassword(
+        identifier: identifier,
+        passwordsJson: {
+          "old_password": oldPassword,
+          "new_password": newPassword,
+        },
+      );
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final AccountProfile profile = httpResponse.data.profile!.toEntity();
+        return Success(profile);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[AccountSettingsRepositoryImpl>AddCar]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
   }
 
   @override

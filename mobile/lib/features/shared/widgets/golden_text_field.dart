@@ -10,6 +10,7 @@ class GoldenTextField extends StatefulWidget {
   final String? hintText;
   final List<Validation<String>>? validations;
   final bool enabled;
+  final bool autofocus;
   final String? label;
 
   const GoldenTextField({
@@ -19,6 +20,7 @@ class GoldenTextField extends StatefulWidget {
     this.hintText,
     this.validations,
     this.enabled = true,
+    this.autofocus = false,
     this.label,
   });
 
@@ -34,6 +36,7 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
     return TextFormField(
       enabled: widget.enabled,
       controller: widget.controller,
+      autofocus: widget.autofocus,
       obscureText: widget.isPassword ? _obscureText : false,
       cursorColor: goldenColor,
       style: AppTextStyles.mainTextStyle()

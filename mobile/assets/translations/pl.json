@@ -39,5 +39,10 @@
   "delete": "Usuń",
   "addCar": "Dodaj samochód",
   "editCar": "Edytuj samochód",
-  "carDetails": "Dane samochodu"
+  "carDetails": "Dane samochodu",
+  "changePassword": "Zmień hasło",
+  "oldPassword": "Stare hasło",
+  "newPassword": "Nowe hasło",
+  "repeatNewPassword": "Powtórz nowe hasło",
+  "passwordsMustBeIdentical": "Hasła muszą być jednakowe"
 }

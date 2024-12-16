@@ -1,10 +1,10 @@
-import 'package:campngo/features/account_settings/domain/entities/account.dart';
-import 'package:campngo/features/account_settings/domain/entities/car.dart';
-import 'package:equatable/equatable.dart';
+part of 'account_settings_cubit.dart';
 
 enum LoadAccountSettingsStatus { initial, loading, failure, success }
 
 enum EditPropertyStatus { unknown, loading, failure, success }
+
+enum EditPasswordStatus { unknown, loading, failure, success }
 
 enum CarListStatus { unknown, loading, failure, success }
 
@@ -20,6 +20,7 @@ enum CarOperationStatus {
 class AccountSettingsState extends Equatable {
   final LoadAccountSettingsStatus status;
   final EditPropertyStatus editPropertyStatus;
+  final EditPasswordStatus editPasswordStatus;
   final CarListStatus carListStatus;
   final CarOperationStatus carOperationStatus;
 
@@ -30,6 +31,7 @@ class AccountSettingsState extends Equatable {
   const AccountSettingsState({
     required this.status,
     this.editPropertyStatus = EditPropertyStatus.unknown,
+    this.editPasswordStatus = EditPasswordStatus.unknown,
     this.carListStatus = CarListStatus.unknown,
     this.carOperationStatus = CarOperationStatus.unknown,
     this.accountEntity,
@@ -40,6 +42,7 @@ class AccountSettingsState extends Equatable {
   AccountSettingsState copyWith({
     LoadAccountSettingsStatus? status,
     EditPropertyStatus? editPropertyStatus,
+    EditPasswordStatus? editPasswordStatus,
     CarListStatus? carListStatus,
     CarOperationStatus? carOperationStatus,
     Account? accountEntity,
@@ -49,6 +52,7 @@ class AccountSettingsState extends Equatable {
       AccountSettingsState(
         status: status ?? this.status,
         editPropertyStatus: editPropertyStatus ?? this.editPropertyStatus,
+        editPasswordStatus: editPasswordStatus ?? this.editPasswordStatus,
         carListStatus: carListStatus ?? this.carListStatus,
         carOperationStatus: carOperationStatus ?? this.carOperationStatus,
         accountEntity: accountEntity ?? this.accountEntity,
@@ -60,6 +64,7 @@ class AccountSettingsState extends Equatable {
   List<Object?> get props => [
         status,
         editPropertyStatus,
+        editPasswordStatus,
         carListStatus,
         carOperationStatus,
         accountEntity,

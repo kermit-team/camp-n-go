@@ -6,8 +6,8 @@ enum AccountProperty {
   lastName,
   email,
   phoneNumber,
-  idNumber,
-  password,
+  idCard,
+  avatar,
 }
 
 class Account extends Equatable {

@@ -1,6 +1,7 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/account_settings/data/models/account_dto.dart';
 import 'package:campngo/features/account_settings/data/models/car_dto.dart';
+import 'package:campngo/features/account_settings/data/models/modified_account_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -10,10 +11,22 @@ part 'account_settings_api_service.g.dart';
 abstract class AccountSettingsApiService {
   factory AccountSettingsApiService(Dio dio) = _AccountSettingsApiService;
 
-  @GET("/accounts/details/{identifier}/")
+  @GET("/accounts/{identifier}/")
   Future<HttpResponse<AccountDto>> getAccountDetails(
     @Path("identifier") String identifier,
   );
+
+  @PATCH("/accounts/{identifier}/modify/")
+  Future<HttpResponse<ModifiedAccountDto>> updateAccountProperty({
+    @Path("identifier") required String identifier,
+    @Body() required Map<String, dynamic> accountJson,
+  });
+
+  @PATCH("/accounts/{identifier}/modify/")
+  Future<HttpResponse<ModifiedAccountDto>> updateAccountPassword({
+    @Path("identifier") required String identifier,
+    @Body() required Map<String, dynamic> passwordsJson,
+  });
 
   @POST("/cars/add/")
   Future<HttpResponse<CarDto>> addCar({

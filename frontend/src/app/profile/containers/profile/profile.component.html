@@ -1,0 +1,20 @@
+<div class="profile-wrapper">
+  <div class="profile-container">
+    <h1 class="profile-header">Dane osobowe</h1>
+    <h2 class="profile-subheader">Zaktualizuj swoje dane</h2>
+    <img src="assets/squares.png" alt="squares" class="profile-squares" />
+    <app-profile-content
+      [user]="userData$ | async"
+      (userChanged)="userChanged($event)"
+    ></app-profile-content>
+    <h1 class="profile-header">Samochody</h1>
+    <h2 class="profile-subheader">
+      Zarządzaj danymi samochodów przypisanych do konta
+    </h2>
+    <img src="assets/squares.png" alt="squares" class="profile-squares" />
+    <app-profile-cars
+      [cars]="(userData$ | async).cars"
+      (carAdded)="carAdded($event)"
+    ></app-profile-cars>
+  </div>
+</div>

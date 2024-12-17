@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { RegisterRequest } from '../models/register.interface';
 import { AuthApi } from './auth.api';
 import { AlertService } from '../../shared/services/alert.service';
-import { catchError, first, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, first, map, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthState } from '../state/auth.state';
 import {
   AuthUser,
@@ -51,7 +51,7 @@ export class AuthFacade {
         switchMap((tokens: LoginTokensResponse) => {
           this.saveTokens(tokens);
           const decoded = jwtDecode<UserJwt>(tokens.access);
-          return this.authApi.getUserInfo(decoded.user_id);
+          return this.authApi.getUserInfo(decoded.user_identifier);
         }),
       )
       .subscribe({
@@ -64,8 +64,16 @@ export class AuthFacade {
       });
   }
 
+  setAuthenticatedUser(user: AuthUser) {
+    this.authState.setAuthenticatedUser(user);
+  }
+
   getToken(): string {
     return this.authState.getToken();
+  }
+
+  getTokenFromStorage(): string {
+    return localStorage.getItem(ACCESS_KEY);
   }
 
   saveTokens(tokens: LoginTokensResponse) {
@@ -75,9 +83,9 @@ export class AuthFacade {
     localStorage.setItem(REFRESH_KEY, tokens.refresh);
   }
 
-  removeTokens() {
-    localStorage.removeItem(ACCESS_KEY);
-    localStorage.removeItem(REFRESH_KEY);
+  saveAccessTokenToStorage(access: string) {
+    this.authState.setToken(access);
+    localStorage.setItem(ACCESS_KEY, access);
   }
 
   verifyEmail(uid64: string, token: string): Observable<{ verified: boolean }> {
@@ -121,6 +129,12 @@ export class AuthFacade {
     return this.authState.selectAuthenticatedUser$();
   }
 
+  getAuthenticatedId(): string {
+    const token = this.getTokenFromStorage();
+    const decoded = jwtDecode<UserJwt>(token);
+    return decoded.user_identifier;
+  }
+
   resetPasswordChange(uid64: string, token: string, password: string) {
     return this.authApi
       .resetPasswordRequest(uid64, token, password)
@@ -132,5 +146,30 @@ export class AuthFacade {
         error: () =>
           this.alertService.showDialog('Coś poszło nie tak', 'error'),
       });
+  }
+
+  getUserInfo(userId: string) {
+    return this.authApi.getUserInfo(userId).pipe(
+      first(),
+      tap((user: AuthUser) => {
+        this.authState.setAuthenticatedUser(user);
+      }),
+    );
+  }
+
+  refreshToken(): Observable<{ access: string }> {
+    const refreshToken = localStorage.getItem(REFRESH_KEY);
+    if (!refreshToken) {
+      throw new Error('No refresh token available.');
+    }
+
+    return this.authApi.getRefreshToken(refreshToken);
+  }
+
+  logout(): void {
+    localStorage.removeItem(ACCESS_KEY);
+    localStorage.removeItem(REFRESH_KEY);
+    this.authState.setAuthenticatedUser(null);
+    this.router.navigate(['/']);
   }
 }

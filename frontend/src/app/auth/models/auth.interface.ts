@@ -10,12 +10,24 @@ export interface LoginTokensResponse {
 
 export interface UserJwt {
   exp: number;
-  user_id: number;
+  user_identifier: string;
 }
 
 export interface AuthUser {
   email: string;
-  name: string;
-  surname: string;
-  isAdmin: boolean;
+  profile: Profile;
+  cars: Array<Car>;
+  is_superuser: boolean;
+}
+
+export interface Profile {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  avatar: string;
+  id_card: string;
+}
+
+export interface Car {
+  registration_plate: string;
 }

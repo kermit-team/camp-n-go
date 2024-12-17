@@ -1,0 +1,23 @@
+.profile-base-form {
+  width: 100%;
+  display: flex;
+  padding: 24px 15px;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+
+  .profile-base-form-content-wrapper {
+    display: flex;
+    gap: 40px;
+
+    .profile-base-form-title {
+      min-width: 140px;
+    }
+  }
+
+  .profile-base-form-action {
+    border: none;
+    background: none;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+}

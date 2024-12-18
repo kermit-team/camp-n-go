@@ -9,3 +9,6 @@ class AccountErrorMessagesEnum(Enum):
     ALREADY_ACTIVE = _('Account {identifier} is already active.')
     NOT_ACTIVE = _('Account {identifier} is not active.')
     INVALID_TOKEN = _('Given token is invalid or expired for account {identifier}.')  # noqa: S105
+    MISSING_OLD_PASSWORD = _('Old password is required for password change.')
+    MISSING_NEW_PASSWORD = _('New password is required for password change.')
+    INVALID_PASSWORD = _('Password is incorrect.')

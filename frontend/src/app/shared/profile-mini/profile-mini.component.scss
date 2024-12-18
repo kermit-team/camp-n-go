@@ -28,6 +28,10 @@
       flex-direction: column;
       font-family: Montserrat;
       margin-left: 1em;
+
+      &.menu-item-black {
+        color: black;
+      }
     }
   }
   .dropdown {

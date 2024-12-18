@@ -27,12 +27,6 @@ class RegisterRepositoryImpl implements RegisterRepository {
         return Success(registerEntity);
       }
 
-      Map<String, dynamic> responseData =
-          jsonDecode(httpResponse.response.data);
-      responseData.forEach((key, value) {
-        log('Response ---> $key: $value');
-      });
-
       final errorResponse = json.decode(httpResponse.response.data);
       log('Register error: $errorResponse');
       return Failure(Exception(errorResponse));

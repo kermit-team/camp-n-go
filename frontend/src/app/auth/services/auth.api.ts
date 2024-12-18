@@ -6,7 +6,7 @@ import {
   LoginRequest,
   LoginTokensResponse,
 } from '../models/auth.interface';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,13 +45,10 @@ export class AuthApi {
     );
   }
 
-  getUserInfo(id: number): Observable<AuthUser> {
-    return of({
-      name: 'Andrzej',
-      surname: 'Pimpusiowy',
-      email: 'Andrzej@gmail.com',
-      isAdmin: true,
-    });
+  getUserInfo(id: string): Observable<AuthUser> {
+    return this.httpClient.get<AuthUser>(
+      `http://localhost:8000/api/accounts/${id}/`,
+    );
   }
 
   resetPassword(email: string) {
@@ -65,6 +62,13 @@ export class AuthApi {
     return this.httpClient.post<string>(
       `http://localhost:8000/api/accounts/password-reset/confirm/${uid64}/${token}/`,
       { password },
+    );
+  }
+
+  getRefreshToken(refresh: string): Observable<{ access: string }> {
+    return this.httpClient.post<{ access: string }>(
+      `http://localhost:8000/api/accounts/token/refresh/`,
+      { refresh: refresh },
     );
   }
 }

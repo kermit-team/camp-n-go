@@ -1,0 +1,8 @@
+<div class="profile-cars">
+  @for (car of cars; track car) {
+    <lib-car [car]="car"></lib-car>
+  }
+</div>
+<div class="profile-cars-button-wrapper">
+  <lib-button (click)="addCar()">Dodaj samochód</lib-button>
+</div>

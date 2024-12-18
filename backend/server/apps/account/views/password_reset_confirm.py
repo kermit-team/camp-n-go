@@ -3,7 +3,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from server.apps.account.messages import AccountMessagesEnum
+from server.apps.account.messages.account import AccountMessagesEnum
 from server.apps.account.serializers import AccountPasswordResetSerializer
 from server.business_logic.account import AccountPasswordResetConfirmBL
 
@@ -12,7 +12,7 @@ class AccountPasswordResetConfirmView(APIView):
     permission_classes = [AllowAny]
     serializer_class = AccountPasswordResetSerializer
 
-    def post(self, request: Request, uidb64: str, token: str):
+    def post(self, request: Request, uidb64: str, token: str) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 

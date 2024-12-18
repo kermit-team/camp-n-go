@@ -27,5 +27,5 @@ class AccountPasswordResetBL(AbstractBL):
     def _get_account(cls, email: str) -> Account:
         try:
             return AccountQuery.get_by_email(email=email)
-        except (Account.DoesNotExist):
+        except Account.DoesNotExist:
             raise AccountEmailNotExistsError(email=email)

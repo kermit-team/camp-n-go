@@ -1,0 +1,23 @@
+<div class="profile-base-dialog">
+  @if (data.titleCustom) {
+    <h2 mat-dialog-title>{{ data.titleCustom }}</h2>
+  } @else {
+    <h2 mat-dialog-title>Zmień {{ data.title }}</h2>
+  }
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      <lib-input
+        id="profile-data-to-edit"
+        placeholder="Pole wymagane"
+        [formControlName]="'dataToEdit'"
+        [fieldHasError]="controlHasError('dataToEdit')"
+        [fieldRequired]="true"
+      ></lib-input>
+      <lib-error-message [field]="form.get('dataToEdit')"></lib-error-message>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <lib-button [type]="'secondary'" (click)="onCancel()">Odrzuć</lib-button>
+    <lib-button (click)="onEdit()">Zapisz</lib-button>
+  </mat-dialog-actions>
+</div>

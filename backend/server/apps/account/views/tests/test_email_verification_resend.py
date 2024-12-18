@@ -4,7 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase
 
-from server.apps.account.messages import AccountMessagesEnum
+from server.apps.account.messages.account import AccountMessagesEnum
 from server.apps.account.views import AccountEmailVerificationResendView
 from server.business_logic.account import AccountEmailVerificationResendBL
 

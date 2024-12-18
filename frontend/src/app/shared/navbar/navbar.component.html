@@ -6,47 +6,98 @@
       <div></div>
       <div></div>
     </label>
-    <ul class="menu-items">
+    <ul class="menu-items" [ngClass]="{ 'menu-items-black': isBlack }">
       <li class="menu-item logo-mobile">
         <a routerLink="/hotel" class="menu-item-link"
           ><img [routerLink]="['/']" src="assets/logo.svg" alt="logo"
         /></a>
       </li>
       <li class="active menu-item">
-        <a routerLink="/hotel" class="menu-item-link">HOTEL</a>
+        <a
+          routerLink="/hotel"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >HOTEL</a
+        >
       </li>
       <li class="menu-item">
-        <a routerLink="/restauracja" class="menu-item-link">RESTAURACJA</a>
+        <a
+          routerLink="/restauracja"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >RESTAURACJA</a
+        >
       </li>
       <li class="menu-item">
-        <a routerLink="/biznes" class="menu-item-link">BIZNES</a>
+        <a
+          routerLink="/biznes"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >BIZNES</a
+        >
+      </li>
+      <li class="menu-item" [ngClass]="{ 'menu-item-black': isBlack }">
+        <a
+          routerLink="/wesela"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >WESELA</a
+        >
+      </li>
+      <img
+        [routerLink]="['/']"
+        src="assets/logo.svg"
+        alt="logo"
+        class="logo"
+        [ngClass]="{ 'black-logo': isBlack }"
+      />
+      <li class="menu-item">
+        <a
+          routerLink="/zatoka"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >ZATOKA</a
+        >
       </li>
       <li class="menu-item">
-        <a routerLink="/wesela" class="menu-item-link">WESELA</a>
-      </li>
-      <img [routerLink]="['/']" src="assets/logo.svg" alt="logo" class="logo" />
-      <li class="menu-item">
-        <a routerLink="/zatoka" class="menu-item-link">ZATOKA</a>
-      </li>
-      <li class="menu-item">
-        <a routerLink="/camping" class="menu-item-link">CAMPING</a>
+        <a
+          routerLink="/camping"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >CAMPING</a
+        >
       </li>
       <li class="menu-item">
-        <a routerLink="/galeria" class="menu-item-link">GALERIA</a>
+        <a
+          routerLink="/galeria"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >GALERIA</a
+        >
       </li>
       <li class="menu-item">
-        <a routerLink="/kontakt" class="menu-item-link">KONTAKT</a>
+        <a
+          routerLink="/kontakt"
+          class="menu-item-link"
+          [ngClass]="{ 'menu-item-black': isBlack }"
+          >KONTAKT</a
+        >
       </li>
     </ul>
   </div>
   <div class="user-info">
     @if (authUser) {
-      <app-profile-mini [user]="authUser"></app-profile-mini>
+      <app-profile-mini
+        [user]="authUser"
+        [isBlack]="isBlack"
+      ></app-profile-mini>
     } @else {
-      <a routerLink="/login" class="login-link">Zaloguj się</a>
+      <a
+        routerLink="/login"
+        class="login-link"
+        [ngClass]="{ 'menu-item-black': isBlack }"
+        >Zaloguj się</a
+      >
     }
   </div>
 </nav>
-
-
-

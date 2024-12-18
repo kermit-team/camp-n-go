@@ -1,9 +1,12 @@
 <div class="profile-mini-container">
   <button class="profile-mini-button" (click)="toggleDropdown()">
-    <div class="circle">{{ user.name.slice(0,1) }}{{ user.surname.slice(0,1) }}</div>
-    <div class="user-data-profile">
-      <span>{{ user.name }}</span>
-      <span>{{ user.surname }}</span>
+    <div class="circle">
+      {{ user.profile.first_name.slice(0, 1)
+      }}{{ user.profile.last_name.slice(0, 1) }}
+    </div>
+    <div class="user-data-profile" [ngClass]="{ 'menu-item-black': isBlack }">
+      <span>{{ user.profile.first_name }}</span>
+      <span>{{ user.profile.last_name }}</span>
     </div>
   </button>
   <div class="dropdown" [class.show]="showDropdown">
@@ -13,7 +16,7 @@
       Moje Rezerwacje
     </p>
     <p class="dropdown-option" [routerLink]="['/']">Strona Główna</p>
-    <p class="dropdown-option">Wyloguj się</p>
+    <p class="dropdown-option" (click)="logout()">Wyloguj się</p>
     <!-- Dropdown content goes here -->
   </div>
 </div>

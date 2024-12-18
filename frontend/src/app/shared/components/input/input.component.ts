@@ -23,7 +23,7 @@ import { errorMessages } from '../../models/error-message.interface';
   ],
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input() id: number;
+  @Input() id: string;
   @Input() fieldHasError: boolean;
   @Input() fieldRequired: boolean;
   @Input() placeholder: string;
@@ -72,6 +72,4 @@ export class InputComponent implements ControlValueAccessor {
     this.onTouched();
     this.controlFocused = false;
   }
-
-  protected readonly errorMessages = errorMessages;
 }

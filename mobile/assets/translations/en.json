@@ -26,5 +26,17 @@
   "confirmationEmailSent": "We sent confirmation link to entered email address",
   "returnToLogin": "Return to login",
   "passwordRules": "Hasło musi mieć co najmniej 9 znaków i posiadać min. 1 wielką literę, 1 małą literę, 1 znak specjalny, 1 cyfrę",
-  "invalidEmail": "Email is not valid"
+  "invalidEmail": "Email is not valid",
+  "accountSettings": "Account settings",
+  "updateUserData": "Update user data",
+  "phoneNumber": "Phone number",
+  "idNumber": "ID card number",
+  "edit": "Edit",
+  "cancel": "Cancel",
+  "save": "Save",
+  "add": "Add",
+  "delete": "Delete",
+  "addCar": "Add car",
+  "editCar": "Edit car",
+  "carDetails": "Car details"
 }

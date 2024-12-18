@@ -53,8 +53,6 @@ $camping-theme: mat.define-theme(
 
 html,
 body {
-  @include mat.core-theme(m3-theme.$light-theme);
-  @include mat.button-theme(m3-theme.$light-theme);
   height: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -135,4 +133,9 @@ body {
   padding: 0;
   font-family: "Montserrat";
   font-weight: 500;
+}
+
+.mat-mdc-dialog-surface {
+  background-color: white !important;
+  border-radius: 5px !important;
 }

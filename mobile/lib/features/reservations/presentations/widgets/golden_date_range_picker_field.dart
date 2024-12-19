@@ -7,49 +7,52 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GoldenDatePickerField extends StatefulWidget {
+class GoldenDateRangePickerField extends StatefulWidget {
   final String labelText;
-  final DateTime? initialValue;
-  final ValueChanged<DateTime?> onChanged;
+  final DateTime? initialEndDateTime;
+  final DateTime? initialStartDateTime;
+  final ValueChanged<DateTimeRange?> onChanged;
 
-  const GoldenDatePickerField({
+  const GoldenDateRangePickerField({
     super.key,
     required this.labelText,
-    this.initialValue,
+    this.initialStartDateTime,
+    this.initialEndDateTime,
     required this.onChanged,
   });
 
   @override
-  State<GoldenDatePickerField> createState() => _GoldenDatePickerFieldState();
+  State<GoldenDateRangePickerField> createState() =>
+      _GoldenDateRangePickerFieldState();
 }
 
-class _GoldenDatePickerFieldState extends State<GoldenDatePickerField> {
-  DateTime? _selectedDateTime;
+class _GoldenDateRangePickerFieldState
+    extends State<GoldenDateRangePickerField> {
+  late DateTimeRange _dateRange;
 
   @override
   void initState() {
     super.initState();
-    _selectedDateTime = widget.initialValue ?? DateTime.now();
+    _dateRange = DateTimeRange(
+      start: widget.initialStartDateTime ?? DateTime.now(),
+      end: widget.initialEndDateTime ?? DateTime.now(),
+    );
   }
 
   Future<void> _selectDateTime(BuildContext context) async {
     if (Platform.isAndroid) {
-      final DateTime? pickedDate = await showDatePicker(
+      final DateTimeRange? pickedDateRange = await showDateRangePicker(
         context: context,
-        initialDate: _selectedDateTime ?? DateTime.now(),
+        initialDateRange: _dateRange,
         firstDate: DateTime(2000),
         lastDate: DateTime(2101),
         cancelText: LocaleKeys.cancel.tr(),
         confirmText: LocaleKeys.save.tr(),
       );
-      if (pickedDate != null && pickedDate != _selectedDateTime) {
+      if (pickedDateRange != null) {
         setState(() {
-          _selectedDateTime = DateTime(
-            pickedDate.year,
-            pickedDate.month,
-            pickedDate.day,
-          );
-          widget.onChanged(_selectedDateTime);
+          _dateRange = pickedDateRange;
+          widget.onChanged(_dateRange);
         });
       }
     } else if (Platform.isIOS) {
@@ -69,11 +72,28 @@ class _GoldenDatePickerFieldState extends State<GoldenDatePickerField> {
                     child: CupertinoDatePicker(
                       use24hFormat: true,
                       mode: CupertinoDatePickerMode.date,
-                      initialDateTime: _selectedDateTime ?? DateTime.now(),
+                      initialDateTime: _dateRange.start,
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
-                          _selectedDateTime = newDateTime;
-                          widget.onChanged(_selectedDateTime);
+                          _dateRange = DateTimeRange(
+                              start: newDateTime, end: _dateRange.end);
+                          widget.onChanged(_dateRange);
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height:
+                        200, // Set a fixed height for the date picker if necessary
+                    child: CupertinoDatePicker(
+                      use24hFormat: true,
+                      mode: CupertinoDatePickerMode.date,
+                      initialDateTime: _dateRange.start,
+                      onDateTimeChanged: (DateTime newDateTime) {
+                        setState(() {
+                          _dateRange = DateTimeRange(
+                              start: _dateRange.start, end: newDateTime);
+                          widget.onChanged(_dateRange);
                         });
                       },
                     ),
@@ -130,9 +150,49 @@ class _GoldenDatePickerFieldState extends State<GoldenDatePickerField> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      _selectedDateTime != null
-                          ? DateFormat('yyyy-MM-dd').format(_selectedDateTime!)
-                          : widget.labelText,
+                      DateFormat('yyyy-MM-dd').format(_dateRange.start),
+                      textAlign: TextAlign.left,
+                      style: AppTextStyles.mainTextStyle(),
+                    ),
+                  ),
+                  Icon(
+                    Icons.calendar_month,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: Constants.spaceM + Constants.spaceXXS),
+          Row(
+            children: [
+              Text(
+                widget.labelText,
+                style: AppTextStyles.hintTextStyle().copyWith(
+                  fontSize: Constants.spaceMS,
+                ),
+              ),
+              const Spacer(),
+            ],
+          ),
+          const SizedBox(height: Constants.spaceXXS),
+          Container(
+            decoration: BoxDecoration(
+              border: BorderDirectional(
+                bottom:
+                    BorderSide(color: Theme.of(context).colorScheme.primary),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 7,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      DateFormat('yyyy-MM-dd').format(_dateRange.end),
                       textAlign: TextAlign.left,
                       style: AppTextStyles.mainTextStyle(),
                     ),

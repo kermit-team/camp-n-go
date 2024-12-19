@@ -18,6 +18,7 @@ class ParcelDetailsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: const Border(),
       insetPadding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
           vertical: MediaQuery.of(context).size.width * 0.05),

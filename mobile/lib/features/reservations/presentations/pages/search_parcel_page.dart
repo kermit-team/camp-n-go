@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/features/reservations/presentations/widgets/golden_date_picker_field.dart';
+import 'package:campngo/features/reservations/presentations/widgets/golden_date_range_picker_field.dart';
 import 'package:campngo/features/reservations/presentations/widgets/golden_number_picker_field.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
@@ -46,17 +46,9 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
           const SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterRequiredData.tr()),
           const SizedBox(height: Constants.spaceL),
-          GoldenDatePickerField(
+          GoldenDateRangePickerField(
             labelText: LocaleKeys.startDate.tr(),
-            onChanged: (value) {
-              //TODO: add edited date submit
-            },
-          ),
-          const SizedBox(height: Constants.spaceM),
-
-          GoldenDatePickerField(
-            labelText: LocaleKeys.endDate.tr(),
-            onChanged: (value) {
+            onChanged: (dateRange) {
               //TODO: add edited date submit
             },
           ),

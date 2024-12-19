@@ -71,32 +71,6 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     }
   }
 
-  // getCarList() {
-  //   emit(state.copyWith(
-  //     carListStatus: CarListStatus.loading,
-  //   ));
-  //
-  //
-  //   //TODO: implement getting car list from API
-  //   emit(state.copyWith(
-  //     carListStatus: CarListStatus.success,
-  //     carList: [
-  //       const Car(
-  //         // identifier: "1",
-  //         registrationPlate: "SPS93049",
-  //       ),
-  //       const Car(
-  //         // identifier: "2",
-  //         registrationPlate: "SPS59986",
-  //       ),
-  //       const Car(
-  //         // identifier: "3",
-  //         registrationPlate: "ABC",
-  //       ),
-  //     ],
-  //   ));
-  // }
-
   addCar({required Car car}) async {
     try {
       emit(state.copyWith(

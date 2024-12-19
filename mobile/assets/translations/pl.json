@@ -44,5 +44,12 @@
   "oldPassword": "Stare hasło",
   "newPassword": "Nowe hasło",
   "repeatNewPassword": "Powtórz nowe hasło",
-  "passwordsMustBeIdentical": "Hasła muszą być jednakowe"
+  "passwordsMustBeIdentical": "Hasła muszą być jednakowe",
+  "registrationPlate": "Tablica rejestracyjna",
+  "carNotAdded": "Samochód nie został dodany :(",
+  "carAddedSuccessfully": "Samochód został dodany :)",
+  "carNotDeleted": "Samochód nie został usunięty :(",
+  "carDeletedSuccessfully": "Samochód został usunięty :)",
+  "carAlreadyExists": "Samochód już istnieje w bazie",
+  "empty": "brak"
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
+import 'package:campngo/features/account_settings/data/models/car_dto.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
@@ -107,16 +108,16 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
 
   @override
   Future<Result<Car, Exception>> addCar({
-    required String registrationPlate,
+    required Car car,
   }) async {
     try {
+      final registrationPlateJson = CarDto.fromEntity(car).toJson();
       final httpResponse = await _accountSettingsApiService.addCar(
-        registrationPlate: registrationPlate,
-        // registrationPlate: {"registration_plate": registrationPlate},
+        registrationPlateJson: registrationPlateJson,
       );
 
-      if (httpResponse.response.statusCode == HttpStatus.ok ||
-          httpResponse.response.statusCode == 200) {
+      if (httpResponse.response.statusCode == HttpStatus.created ||
+          httpResponse.response.statusCode == 201) {
         final Car car = httpResponse.data.toEntity();
         return Success(car);
       }
@@ -129,18 +130,16 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
   }
 
   @override
-  Future<Result<Car, Exception>> deleteCar({
-    required String registrationPlate,
+  Future<Result<void, Exception>> deleteCar({
+    required Car car,
   }) async {
     try {
       final httpResponse = await _accountSettingsApiService.deleteCar(
-        registrationPlate: registrationPlate,
+        registrationPlate: car.registrationPlate,
       );
 
-      // if (httpResponse.response.statusCode == HttpStatus.204 ||
       if (httpResponse.response.statusCode == 204) {
-        final Car car = httpResponse.data.toEntity();
-        return Success(car);
+        return const Success(null);
       }
 
       final errorResponse = handleError(httpResponse.response);

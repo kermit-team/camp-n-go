@@ -43,5 +43,12 @@
   "oldPassword": "Old password",
   "newPassword": "New password",
   "repeatNewPassword": "Repeat new password",
-  "passwordsMustBeIdentical": "Passwords must be identical"
+  "passwordsMustBeIdentical": "Passwords must be identical",
+  "registrationPlate": "Registration plate",
+  "carNotAdded": "Car was not added :(",
+  "carAddedSuccessfully": "Car added successfully :)",
+  "carNotDeleted": "Car was not deleted :(",
+  "carDeletedSuccessfully": "Car deleted successfully :)",
+  "carAlreadyExists": "Car already exists in database",
+  "empty": "Empty"
 }

@@ -5,7 +5,7 @@ part "car_dto.g.dart";
 
 @JsonSerializable()
 class CarDto {
-  // final String identifier;
+  @JsonKey(name: 'registration_plate')
   final String registrationPlate;
 
   CarDto({

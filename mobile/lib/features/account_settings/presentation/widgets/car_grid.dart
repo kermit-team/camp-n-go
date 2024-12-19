@@ -1,7 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
@@ -23,46 +22,11 @@ class CarGridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AccountSettingsCubit, AccountSettingsState>(
       builder: (context, state) {
-        switch (state.carListStatus) {
-          case CarListStatus.failure:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: state.exception!.toString(),
-            );
-            return const SizedBox();
-
-          case CarListStatus.unknown:
-            return const Text("Brak samochodów");
-
-          case CarListStatus.loading:
-            return CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.onSurface,
-            );
-
-          case CarListStatus.success:
-            final carList = state.carList!;
+        if (state.accountEntity != null) {
+          if (state.accountEntity!.carList.isEmpty) {
             return Column(
               children: [
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Two tiles per row
-                    childAspectRatio: 1.5, // Square tiles
-                    crossAxisSpacing: Constants.spaceS,
-                    mainAxisSpacing: Constants.spaceS,
-                  ),
-                  itemCount: carList.length,
-                  itemBuilder: (context, index) {
-                    final car = carList[index];
-                    return CarTileItem(
-                      car: car,
-                      onActionIconPressed: onActionIconPressed,
-                    );
-                  },
-                ),
-                const SizedBox(height: Constants.spaceS),
+                const Text("Brak samochodów"),
                 CustomButton(
                   text: LocaleKeys.addCar.tr(),
                   onPressed: onAddButtonPressed,
@@ -70,16 +34,40 @@ class CarGridWidget extends StatelessWidget {
                 ),
               ],
             );
+          }
 
-          default:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: "Something went wrong",
-            );
-            return const CircularProgressIndicator(
-              color: Colors.red,
-            );
+          final carList = state.accountEntity!.carList;
+          return Column(
+            children: [
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Two tiles per row
+                  childAspectRatio: 1.5, // Square tiles
+                  crossAxisSpacing: Constants.spaceS,
+                  mainAxisSpacing: Constants.spaceS,
+                ),
+                itemCount: carList.length,
+                itemBuilder: (context, index) {
+                  final car = carList[index];
+                  return CarTileItem(
+                    car: car,
+                    onActionIconPressed: onActionIconPressed,
+                  );
+                },
+              ),
+              const SizedBox(height: Constants.spaceS),
+              CustomButton(
+                text: LocaleKeys.addCar.tr(),
+                onPressed: onAddButtonPressed,
+                prefixIcon: Icons.add,
+              ),
+            ],
+          );
         }
+        return const SizedBox.shrink();
       },
     );
   }

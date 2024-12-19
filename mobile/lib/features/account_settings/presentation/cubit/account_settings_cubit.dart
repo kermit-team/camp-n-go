@@ -71,49 +71,96 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     }
   }
 
-  getCarList() {
-    emit(state.copyWith(
-      carListStatus: CarListStatus.loading,
-    ));
-    //TODO: implement getting car list from API
-    emit(state.copyWith(
-      carListStatus: CarListStatus.success,
-      carList: [
-        const Car(
-          // identifier: "1",
-          registrationPlate: "SPS93049",
-        ),
-        const Car(
-          // identifier: "2",
-          registrationPlate: "SPS59986",
-        ),
-        const Car(
-          // identifier: "3",
-          registrationPlate: "ABC",
-        ),
-      ],
-    ));
+  // getCarList() {
+  //   emit(state.copyWith(
+  //     carListStatus: CarListStatus.loading,
+  //   ));
+  //
+  //
+  //   //TODO: implement getting car list from API
+  //   emit(state.copyWith(
+  //     carListStatus: CarListStatus.success,
+  //     carList: [
+  //       const Car(
+  //         // identifier: "1",
+  //         registrationPlate: "SPS93049",
+  //       ),
+  //       const Car(
+  //         // identifier: "2",
+  //         registrationPlate: "SPS59986",
+  //       ),
+  //       const Car(
+  //         // identifier: "3",
+  //         registrationPlate: "ABC",
+  //       ),
+  //     ],
+  //   ));
+  // }
+
+  addCar({required Car car}) async {
+    try {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.loading,
+      ));
+
+      final Result<Car, Exception> result =
+          await accountSettingsRepository.addCar(car: car);
+
+      switch (result) {
+        case Success<Car, Exception>():
+          emit(state.copyWith(
+            carOperationStatus: CarOperationStatus.added,
+          ));
+          getAccountData();
+        case Failure<Car, Exception>():
+          emit(state.copyWith(
+            carOperationStatus: CarOperationStatus.notAdded,
+          ));
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.notAdded,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.notAdded,
+        exception: exception,
+      ));
+    }
   }
 
-  addCar({required Car car}) {
-    emit(state.copyWith(
-      carOperationStatus: CarOperationStatus.loading,
-    ));
+  deleteCar({required Car car}) async {
+    try {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.loading,
+      ));
 
-    emit(state.copyWith(
-        exception: Exception("[account_settings_cubit] Not implemented yet"),
-        carOperationStatus: CarOperationStatus.notAdded));
-  }
+      final Result<void, Exception> result =
+          await accountSettingsRepository.deleteCar(car: car);
 
-  deleteCar({required Car car}) {
-    emit(state.copyWith(
-      carOperationStatus: CarOperationStatus.loading,
-    ));
-
-    emit(state.copyWith(
-      exception: Exception("[account_settings_cubit] Not implemented yet"),
-      carOperationStatus: CarOperationStatus.notDeleted,
-    ));
+      switch (result) {
+        case Success<void, Exception>():
+          emit(state.copyWith(
+            carOperationStatus: CarOperationStatus.deleted,
+          ));
+          getAccountData();
+        case Failure<void, Exception>():
+          emit(state.copyWith(
+            carOperationStatus: CarOperationStatus.notDeleted,
+          ));
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.notDeleted,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        carOperationStatus: CarOperationStatus.notDeleted,
+        exception: exception,
+      ));
+    }
   }
 
   editPassword({

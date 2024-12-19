@@ -30,11 +30,11 @@ abstract class AccountSettingsApiService {
 
   @POST("/cars/add/")
   Future<HttpResponse<CarDto>> addCar({
-    @Body() required String registrationPlate,
+    @Body() required Map<String, dynamic> registrationPlateJson,
   });
 
-  @DELETE("/cars/remote-driver/{registration_plate}/")
-  Future<HttpResponse<CarDto>> deleteCar({
+  @DELETE("/cars/{registration_plate}/remove-driver/")
+  Future<HttpResponse<void>> deleteCar({
     @Path("registration_plate") required String registrationPlate,
   });
 }

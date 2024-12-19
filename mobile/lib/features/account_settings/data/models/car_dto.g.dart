@@ -7,9 +7,9 @@ part of 'car_dto.dart';
 // **************************************************************************
 
 CarDto _$CarDtoFromJson(Map<String, dynamic> json) => CarDto(
-      registrationPlate: json['registrationPlate'] as String,
+      registrationPlate: json['registration_plate'] as String,
     );
 
 Map<String, dynamic> _$CarDtoToJson(CarDto instance) => <String, dynamic>{
-      'registrationPlate': instance.registrationPlate,
+      'registration_plate': instance.registrationPlate,
     };

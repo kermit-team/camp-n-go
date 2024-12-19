@@ -7,6 +7,7 @@ import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
+import 'package:campngo/features/account_settings/presentation/widgets/show_add_car_dialog.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
@@ -37,6 +38,36 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AccountSettingsCubit, AccountSettingsState>(
       listener: (context, state) {
+        switch (state.carOperationStatus) {
+          case CarOperationStatus.unknown:
+          case CarOperationStatus.loading:
+            break;
+          case CarOperationStatus.notDeleted:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: "${LocaleKeys.carNotDeleted.tr()}: ${state.exception}",
+            );
+          case CarOperationStatus.deleted:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.carDeletedSuccessfully.tr(),
+            );
+          case CarOperationStatus.notAdded:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: "${LocaleKeys.carNotAdded.tr()}: ${state.exception}",
+            );
+          case CarOperationStatus.added:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.carAddedSuccessfully.tr(),
+            );
+          case CarOperationStatus.alreadyExists:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: LocaleKeys.carAlreadyExists.tr(),
+            );
+        }
         switch (state.editPropertyStatus) {
           case EditPropertyStatus.unknown:
           case EditPropertyStatus.loading:
@@ -208,12 +239,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               },
                             ),
                             const SizedBox(height: Constants.spaceS),
-                            TextButton(
-                              onPressed: context
-                                  .read<AccountSettingsCubit>()
-                                  .getCarList,
-                              child: const StandardText("Your cars"),
-                            ),
+                            const StandardText("Your cars"),
                             const SizedBox(height: Constants.spaceM),
                             CarListWidget(
                               onListTilePressed: (Car car) {
@@ -227,9 +253,19 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                     });
                               },
                               onAddButtonPressed: () {
-                                AppSnackBar.showSnackBar(
+                                showAddCarDialog(
                                   context: context,
-                                  text: "Dodawanie nowego samochodu",
+                                  validations: [
+                                    const RequiredValidation(),
+                                  ],
+                                  onSubmit: (registrationPlate) {
+                                    context.read<AccountSettingsCubit>().addCar(
+                                          car: Car(
+                                            registrationPlate:
+                                                registrationPlate,
+                                          ),
+                                        );
+                                  },
                                 );
                               },
                             ),

@@ -1,6 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel_entity.dart';
-import 'package:campngo/features/reservations/presentations/widgets/parcel_details_dialog.dart';
+import 'package:campngo/features/reservations/presentation/widgets/parcel_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/subtitle_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';

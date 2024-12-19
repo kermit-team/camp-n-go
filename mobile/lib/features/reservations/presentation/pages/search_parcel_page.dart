@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/features/reservations/presentations/widgets/golden_date_range_picker_field.dart';
-import 'package:campngo/features/reservations/presentations/widgets/golden_number_picker_field.dart';
+import 'package:campngo/features/reservations/presentation/widgets/golden_date_range_picker_field.dart';
+import 'package:campngo/features/reservations/presentation/widgets/golden_number_picker_field.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';

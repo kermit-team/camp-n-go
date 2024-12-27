@@ -15,8 +15,12 @@ class InitialLogin extends AuthEvent {}
 class SaveCredentials extends AuthEvent {
   final String email;
   final String password;
+  final String accessToken;
+  final String refreshToken;
 
   SaveCredentials({
+    required this.accessToken,
+    required this.refreshToken,
     required this.email,
     required this.password,
   });

@@ -65,7 +65,10 @@ class TokenInterceptor extends Interceptor {
       final newAccessToken = response.data['access'];
       // final newRefreshToken = response.data['refresh_token'];
 
-      await tokenStorage.saveTokens(newAccessToken, refreshToken);
+      await tokenStorage.saveTokens(
+        accessToken: newAccessToken,
+        refreshToken: refreshToken,
+      );
       return true;
     } catch (e) {
       await tokenStorage.clearTokens();

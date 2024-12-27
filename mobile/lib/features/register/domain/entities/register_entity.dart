@@ -1,10 +1,10 @@
-import 'package:campngo/features/register/domain/entities/profile_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:equatable/equatable.dart';
 
 class RegisterEntity extends Equatable {
   final String email;
   final String password;
-  final ProfileEntity profile;
+  final AccountProfile profile;
 
   const RegisterEntity({
     required this.email,

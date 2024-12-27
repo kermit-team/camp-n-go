@@ -4,24 +4,13 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
-from server.apps.account.models import Account, AccountProfile
+from server.apps.account.models import Account
+from server.apps.account.serializers.profile import AccountProfileSerializer
 from server.business_logic.account import AccountRegisterBL
 
 
-class AccountProfileRegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = AccountProfile
-        fields = [
-            'first_name',
-            'last_name',
-            'phone_number',
-            'avatar',
-            'id_card',
-        ]
-
-
 class AccountRegisterSerializer(serializers.ModelSerializer):
-    profile = AccountProfileRegisterSerializer()
+    profile = AccountProfileSerializer()
 
     class Meta:
         model = Account
@@ -30,10 +19,12 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
             'password',
             'profile',
         ]
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+        }
 
     def create(self, validated_data: Any) -> Account:
-        profile_data = validated_data.get('profile')
+        profile_data = validated_data.get('profile', {})
 
         return AccountRegisterBL.process(
             email=validated_data.get('email'),

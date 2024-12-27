@@ -1,0 +1,20 @@
+<div
+  class="input-control-wrapper"
+  [ngClass]="{
+    'control-focus': !!controlFocused,
+    'control-invalid': !!fieldHasError,
+    'control-valid': !fieldHasError,
+  }"
+>
+  <input
+    class="input-control"
+    [type]="type"
+    [ngModel]="value"
+    (ngModelChange)="valueChanged($event)"
+    (focus)="doFocus()"
+    (blur)="onBlur()"
+    [id]="id"
+    [disabled]="disabled"
+    [placeholder]="inputPlaceholder"
+  />
+</div>

@@ -1,5 +1,5 @@
 import 'package:campngo/core/resources/data_result.dart';
-import 'package:campngo/features/register/domain/entities/profile_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/register/domain/entities/register_entity.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
@@ -48,7 +48,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         params: RegisterEntity(
           email: event.email,
           password: event.password,
-          profile: ProfileEntity(
+          profile: AccountProfile(
             firstName: event.firstName,
             lastName: event.lastName,
           ),

@@ -10,7 +10,8 @@ class DisplayTextField extends StatelessWidget {
   final String text;
   final String hyperlinkText;
   final List<Validation<String>>? validations;
-  final void Function(String) onHyperlinkPressed;
+  final void Function(String)? onDialogSavePressed;
+  final void Function(String, String)? onPasswordDialogSavePressed;
   final bool isPassword;
 
   const DisplayTextField({
@@ -19,7 +20,8 @@ class DisplayTextField extends StatelessWidget {
     required this.text,
     this.hyperlinkText = 'Edit',
     this.validations,
-    required this.onHyperlinkPressed,
+    this.onDialogSavePressed,
+    this.onPasswordDialogSavePressed,
     this.isPassword = false,
   });
 
@@ -41,15 +43,31 @@ class DisplayTextField extends StatelessWidget {
             HyperlinkText(
               text: hyperlinkText,
               onTap: () {
-                showEditPropertyDialog(
-                  context: context,
-                  label: label,
-                  initialValue: text,
-                  validations: validations,
-                  onSave: (newValue) {
-                    onHyperlinkPressed(newValue);
-                  },
-                );
+                if (onDialogSavePressed != null) {
+                  showEditPropertyDialog(
+                    context: context,
+                    label: label,
+                    initialValue: text,
+                    validations: validations,
+                    onSave: (newValue) {
+                      onDialogSavePressed != null
+                          ? onDialogSavePressed!(newValue)
+                          : () {};
+                    },
+                  );
+                } else if (onPasswordDialogSavePressed != null) {
+                  showEditPasswordDialog(
+                    context: context,
+                    onSave: (oldPassword, newPassword) {
+                      onPasswordDialogSavePressed != null
+                          ? onPasswordDialogSavePressed!(
+                              oldPassword,
+                              newPassword,
+                            )
+                          : () {};
+                    },
+                  );
+                }
               },
               textAlign: TextAlign.end,
             ),

@@ -41,19 +41,5 @@ abstract class  LocaleKeys {
   static const addCar = 'addCar';
   static const editCar = 'editCar';
   static const carDetails = 'carDetails';
-  static const selectPlace = 'selectPlace';
-  static const enterRequiredData = 'enterRequiredData';
-  static const startDate = 'startDate';
-  static const endDate = 'endDate';
-  static const numberOfAdults = 'numberOfAdults';
-  static const numberOfChildren = 'numberOfChildren';
-  static const invalidNumber = 'invalidNumber';
-  static const searchParcel = 'searchParcel';
-  static const parcelList = 'parcelList';
-  static const pickParcelForYou = 'pickParcelForYou';
-  static const parcelNumber = 'parcelNumber';
-  static const pricePerDay = 'pricePerDay';
-  static const description = 'description';
-  static const reserve = 'reserve';
 
 }

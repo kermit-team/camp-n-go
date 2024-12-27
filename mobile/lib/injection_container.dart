@@ -1,6 +1,7 @@
 import 'package:campngo/config/routes/app_router.dart';
 import 'package:campngo/core/interceptors/token_interceptor.dart';
 import 'package:campngo/core/token_storage.dart';
+import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
 import 'package:campngo/features/account_settings/data/repository_impl/account_settings_repository_impl.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
@@ -32,8 +33,9 @@ Future<void> initializeDependencies() async {
   final registerApiService = RegisterApiService(dio);
   final registerRepository = RegisterRepositoryImpl(registerApiService);
   final registerUseCase = RegisterUseCase(registerRepository);
-  // final accountSettingsApiService = AccountSettingsApiService(dio);
-  final accountSettingsRepository = AccountSettingsRepositoryImpl();
+  final accountSettingsApiService = AccountSettingsApiService(dio);
+  final accountSettingsRepository =
+      AccountSettingsRepositoryImpl(accountSettingsApiService);
 
   // Register dependencies
   serviceLocator.registerSingleton<Dio>(dio);

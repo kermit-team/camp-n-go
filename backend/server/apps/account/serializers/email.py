@@ -7,3 +7,6 @@ class AccountEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ['email']
+        extra_kwargs = {
+            'email': {'validators': []},
+        }

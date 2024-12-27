@@ -1,4 +1,5 @@
 import 'package:campngo/core/resources/data_result.dart';
+import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/auth/domain/entities/auth_credentials.dart';
 import 'package:campngo/features/auth/domain/entities/auth_entity.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
@@ -52,6 +53,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             add(SaveCredentials(
               email: event.email,
               password: event.password,
+              accessToken: authEntity.accessToken,
+              refreshToken: authEntity.refreshToken,
             ));
             emit(AuthSuccess(authEntity));
             serviceLocator<GoRouter>().go("/");
@@ -95,6 +98,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         switch (result) {
           case Success<AuthEntity, Exception>(value: AuthEntity authEntity):
             {
+              add(
+                SaveCredentials(
+                  accessToken: authEntity.accessToken,
+                  refreshToken: authEntity.refreshToken,
+                  email: storageEmail,
+                  password: storagePassword,
+                ),
+              );
               emit(AuthSuccess(authEntity));
               serviceLocator<GoRouter>().go("/");
               emit(const AuthInitial());
@@ -112,10 +123,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  _saveCredentials(SaveCredentials event, Emitter<AuthState> emit) {
+  _saveCredentials(SaveCredentials event, Emitter<AuthState> emit) async {
     if (event.email.trim().isNotEmpty && event.password.trim().isNotEmpty) {
       secureStorage.write(key: 'email', value: event.email);
       secureStorage.write(key: 'password', value: event.password);
+      await serviceLocator<TokenStorage>().saveTokens(
+        accessToken: event.accessToken,
+        refreshToken: event.refreshToken,
+      );
     }
   }
 
@@ -133,5 +148,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _deleteCredentials(DeleteCredentials event, Emitter<AuthState> emit) async {
     await secureStorage.delete(key: 'email');
     await secureStorage.delete(key: 'password');
+    await serviceLocator<TokenStorage>().clearTokens();
   }
 }

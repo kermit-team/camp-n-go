@@ -4,6 +4,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase
 
+from server.apps.account.messages.account import AccountMessagesEnum
 from server.apps.account.views import AccountEmailVerificationView
 from server.business_logic.account import AccountEmailVerificationBL
 
@@ -24,6 +25,9 @@ class AccountEmailVerificationViewTestCase(APITestCase):
             'email_verification',
             kwargs=parameters,
         )
+        expected_message = {
+            'message': AccountMessagesEnum.EMAIL_VERIFICATION_SUCCESS.value.format(uidb64=parameters['uidb64']),
+        }
 
         req = self.factory.get(url)
         res = self.view.as_view()(req, **parameters)
@@ -33,3 +37,4 @@ class AccountEmailVerificationViewTestCase(APITestCase):
             token=self.token,
         )
         assert res.status_code == status.HTTP_200_OK
+        assert res.data == expected_message

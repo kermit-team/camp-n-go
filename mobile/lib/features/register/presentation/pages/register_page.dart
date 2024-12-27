@@ -41,9 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.createAccount.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.toPlanYourVacation.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: lastNameController,
                   hintText: LocaleKeys.lastName.tr(),
@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: emailController,
                   hintText: LocaleKeys.email.tr(),
@@ -72,7 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     EmailValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: passwordController,
                   hintText: LocaleKeys.password.tr(),
@@ -82,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     PasswordValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: confirmPasswordController,
                   hintText: LocaleKeys.repeatPassword.tr(),
@@ -92,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     PasswordValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 _getButtons(
                   context,
                   _formKey,
@@ -102,19 +102,19 @@ class _RegisterPageState extends State<RegisterPage> {
                   passwordController,
                   confirmPasswordController,
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 // CustomButtonInverted(
                 //   text: "GOOGLE Zaloguj się przez Google",
                 //   onPressed: () {},
                 // ),
-                // const SizedBox(height: Constants.spaceS),
+                // SizedBox(height: Constants.spaceS),
                 Wrap(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StandardText("${LocaleKeys.alreadyHaveAccount.tr()}?"),
-                        const SizedBox(width: Constants.spaceXS),
+                        SizedBox(width: Constants.spaceXS),
                         HyperlinkText(
                             text: LocaleKeys.login.tr(),
                             onTap: () {
@@ -127,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: Constants.spaceL,
           ),
         ],

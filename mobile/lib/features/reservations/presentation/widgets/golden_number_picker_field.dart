@@ -38,7 +38,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
       children: [
         Column(
           children: [
-            const SizedBox(height: Constants.spaceXXS),
+            SizedBox(height: Constants.spaceXXS),
             Row(
               children: [
                 Text(
@@ -50,7 +50,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
                 const Spacer(),
               ],
             ),
-            const SizedBox(height: Constants.spaceXXS),
+            SizedBox(height: Constants.spaceXXS),
             Container(
               width: double.maxFinite,
               decoration: BoxDecoration(
@@ -73,7 +73,7 @@ class _GoldenNumberPickerFieldState extends State<GoldenNumberPickerField> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: Constants.spaceS),
+          padding: EdgeInsets.only(top: Constants.spaceS),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,

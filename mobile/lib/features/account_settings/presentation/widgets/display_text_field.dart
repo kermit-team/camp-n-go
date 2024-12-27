@@ -36,7 +36,7 @@ class DisplayTextField extends StatelessWidget {
           enabled: false,
           isPassword: isPassword,
         ),
-        const SizedBox(height: Constants.spaceS),
+        SizedBox(height: Constants.spaceS),
         Row(
           children: [
             const Spacer(),
@@ -71,7 +71,7 @@ class DisplayTextField extends StatelessWidget {
               },
               textAlign: TextAlign.end,
             ),
-            const SizedBox(width: Constants.spaceS),
+            SizedBox(width: Constants.spaceS),
           ],
         ),
       ],

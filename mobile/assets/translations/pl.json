@@ -52,7 +52,6 @@
   "carDeletedSuccessfully": "Samochód został usunięty :)",
   "carAlreadyExists": "Samochód już istnieje w bazie",
   "empty": "brak",
-  "carDetails": "Dane samochodu",
   "selectPlace": "Wybierz miejsce",
   "enterRequiredData": "Podaj wymagane dane",
   "startDate": "Data początku",

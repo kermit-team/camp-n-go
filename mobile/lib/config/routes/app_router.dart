@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
@@ -29,6 +31,7 @@ class AppRouter {
       GoRoute(
         path: "/",
         pageBuilder: (context, state) {
+          log(MediaQuery.of(context).size.height.toString());
           return MaterialPage(
             child: Scaffold(
               body: Center(
@@ -47,7 +50,7 @@ class AppRouter {
                       },
                       icon: const Icon(Icons.login),
                     ),
-                    const SizedBox(height: Constants.spaceM),
+                    SizedBox(height: Constants.spaceM),
                     Text(
                       "Przejdź do edycji swojego konta.",
                       style: AppTextStyles.mainTextStyle(),
@@ -58,7 +61,7 @@ class AppRouter {
                       },
                       icon: const Icon(Icons.login),
                     ),
-                    const SizedBox(height: Constants.spaceM),
+                    SizedBox(height: Constants.spaceM),
                     Text(
                       "Przejdź do wyszukiwania parceli.",
                       style: AppTextStyles.mainTextStyle(),

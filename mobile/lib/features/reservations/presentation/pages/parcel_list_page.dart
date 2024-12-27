@@ -17,7 +17,7 @@ class ParcelListPage extends StatelessWidget {
       child: Column(
         children: [
           TitleText(LocaleKeys.parcelList.tr()),
-          const SizedBox(
+          SizedBox(
             height: Constants.spaceM,
             width: double.maxFinite,
           ),

@@ -108,9 +108,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: Column(
                   children: [
                     TitleText(LocaleKeys.accountSettings.tr()),
-                    const SizedBox(height: Constants.spaceS),
+                    SizedBox(height: Constants.spaceS),
                     StandardText(LocaleKeys.updateUserData.tr()),
-                    const SizedBox(height: Constants.spaceL),
+                    SizedBox(height: Constants.spaceL),
                     const CircularProgressIndicator()
                   ],
                 ),
@@ -122,9 +122,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: Column(
                   children: [
                     TitleText(LocaleKeys.accountSettings.tr()),
-                    const SizedBox(height: Constants.spaceS),
+                    SizedBox(height: Constants.spaceS),
                     StandardText(LocaleKeys.updateUserData.tr()),
-                    const SizedBox(height: Constants.spaceL),
+                    SizedBox(height: Constants.spaceL),
                     const StandardText(
                         "Dane nie zostały załadowane prawidłowo"),
                   ],
@@ -137,10 +137,11 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: Constants.spaceL),
                       TitleText(LocaleKeys.accountSettings.tr()),
-                      const SizedBox(height: Constants.spaceS),
+                      SizedBox(height: Constants.spaceS),
                       StandardText(LocaleKeys.updateUserData.tr()),
-                      const SizedBox(height: Constants.spaceL),
+                      SizedBox(height: Constants.spaceL),
                       Form(
                         key: _formKey,
                         child: Column(
@@ -238,9 +239,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                     );
                               },
                             ),
-                            const SizedBox(height: Constants.spaceS),
+                            SizedBox(height: Constants.spaceS),
                             const StandardText("Your cars"),
-                            const SizedBox(height: Constants.spaceM),
+                            SizedBox(height: Constants.spaceM),
                             CarListWidget(
                               onListTilePressed: (Car car) {
                                 showCarDetailsDialog(
@@ -269,7 +270,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 );
                               },
                             ),
-                            const SizedBox(height: Constants.spaceL),
+                            SizedBox(height: Constants.spaceL),
                           ],
                         ),
                       ),

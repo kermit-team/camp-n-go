@@ -85,7 +85,7 @@ Future<void> showEditPasswordDialog({
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 GoldenTextField(
                   controller: newPasswordController,
                   hintText: LocaleKeys.newPassword.tr(),
@@ -96,7 +96,7 @@ Future<void> showEditPasswordDialog({
                     PasswordMatchValidation(confirmNewPasswordController),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 GoldenTextField(
                   controller: confirmNewPasswordController,
                   hintText: LocaleKeys.repeatNewPassword.tr(),

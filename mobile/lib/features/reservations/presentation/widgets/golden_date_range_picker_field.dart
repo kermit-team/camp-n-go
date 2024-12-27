@@ -121,7 +121,7 @@ class _GoldenDateRangePickerFieldState
       onTap: () => _selectDateTime(context),
       child: Column(
         children: [
-          const SizedBox(height: Constants.spaceXXS),
+          SizedBox(height: Constants.spaceXXS),
           Row(
             children: [
               Text(
@@ -133,7 +133,7 @@ class _GoldenDateRangePickerFieldState
               const Spacer(),
             ],
           ),
-          const SizedBox(height: Constants.spaceXXS),
+          SizedBox(height: Constants.spaceXXS),
           Container(
             decoration: BoxDecoration(
               border: BorderDirectional(
@@ -163,7 +163,7 @@ class _GoldenDateRangePickerFieldState
               ),
             ),
           ),
-          const SizedBox(height: Constants.spaceM + Constants.spaceXXS),
+          SizedBox(height: Constants.spaceM + Constants.spaceXXS),
           Row(
             children: [
               Text(
@@ -175,7 +175,7 @@ class _GoldenDateRangePickerFieldState
               const Spacer(),
             ],
           ),
-          const SizedBox(height: Constants.spaceXXS),
+          SizedBox(height: Constants.spaceXXS),
           Container(
             decoration: BoxDecoration(
               border: BorderDirectional(

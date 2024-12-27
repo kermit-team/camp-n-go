@@ -51,11 +51,12 @@ class _LoginPageState extends State<LoginPage> {
     return AppBody(
       child: Column(
         children: [
+          SizedBox(height: Constants.spaceL),
           const IconAppBar(),
           TitleText('${LocaleKeys.welcomeAgain.tr()}!'),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterCredentialsBelow.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: passwordController,
                   hintText: LocaleKeys.password.tr(),
@@ -76,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: HyperlinkText(
@@ -87,20 +88,20 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 _getButtons(
                   context,
                   emailController,
                   passwordController,
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 Wrap(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StandardText("${LocaleKeys.dontHaveAccount.tr()}?"),
-                        const SizedBox(width: Constants.spaceXS),
+                        SizedBox(width: Constants.spaceXS),
                         HyperlinkText(
                           text: LocaleKeys.registerForFree.tr(),
                           onTap: () {
@@ -114,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: Constants.spaceL,
           ),
         ],

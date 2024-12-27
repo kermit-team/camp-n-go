@@ -43,7 +43,7 @@ class CarGridWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Two tiles per row
                   childAspectRatio: 1.5, // Square tiles
                   crossAxisSpacing: Constants.spaceS,
@@ -58,7 +58,7 @@ class CarGridWidget extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: Constants.spaceS),
+              SizedBox(height: Constants.spaceS),
               CustomButton(
                 text: LocaleKeys.addCar.tr(),
                 onPressed: onAddButtonPressed,
@@ -104,7 +104,7 @@ class CarTileItem extends StatelessWidget {
               color: Theme.of(context).colorScheme.onSurface,
               size: Constants.spaceL,
             ),
-            const SizedBox(height: Constants.spaceS),
+            SizedBox(height: Constants.spaceS),
             StandardText(
               car.registrationPlate,
               textAlign: TextAlign.left,

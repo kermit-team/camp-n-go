@@ -79,13 +79,13 @@ class CarListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: Constants.spaceS),
+      padding: EdgeInsets.only(bottom: Constants.spaceS),
       child: InkWell(
         onTap: () {
           onListTilePressed(car);
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: Constants.spaceMS,
             vertical: Constants.spaceM,
           ),
@@ -106,7 +106,7 @@ class CarListItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
                 size: Constants.textSizeM,
               ),
-              const SizedBox(width: Constants.spaceM),
+              SizedBox(width: Constants.spaceM),
               StandardText(
                 car.registrationPlate,
                 textAlign: TextAlign.center,

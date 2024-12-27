@@ -7,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 //generate translations command:
 //flutter pub run easy_localization:generate -S "assets/translations" -O "lib/generated" -f keys -o locale_keys.g.dart
@@ -30,9 +31,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    return Sizer(
+      builder: (p0, p1, p2) {
+        return const MaterialApp(
+          title: 'Flutter Demo',
+          home: MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+      },
     );
   }
 }

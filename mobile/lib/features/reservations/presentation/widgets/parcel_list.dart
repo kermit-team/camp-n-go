@@ -53,7 +53,7 @@ class ParcelListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(
+      margin: EdgeInsets.only(
         bottom: Constants.spaceM,
       ),
       color: Theme.of(context).colorScheme.surface,
@@ -75,7 +75,7 @@ class ParcelListItem extends StatelessWidget {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             vertical: Constants.spaceM,
             horizontal: Constants.spaceM,
           ),
@@ -90,7 +90,7 @@ class ParcelListItem extends StatelessWidget {
                   isUnderlined: true,
                 ),
               ),
-              const SizedBox(height: Constants.spaceS),
+              SizedBox(height: Constants.spaceS),
               KeyValueText(
                 keyText: "Price per day (USD)",
                 valueText: "${parcel.pricePerDay}",

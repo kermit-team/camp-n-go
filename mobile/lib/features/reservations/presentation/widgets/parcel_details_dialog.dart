@@ -33,24 +33,24 @@ class ParcelDetailsDialog extends StatelessWidget {
                 isUnderlined: true,
               ),
             ),
-            const SizedBox(height: Constants.spaceS),
+            SizedBox(height: Constants.spaceS),
             Image.asset(
               'assets/images/parcel_example.png',
             ),
-            const SizedBox(height: Constants.spaceS),
+            SizedBox(height: Constants.spaceS),
             KeyValueText(
               keyText: LocaleKeys.pricePerDay.tr(),
               valueText: parcel.pricePerDay.toString(),
             ),
-            const SizedBox(height: Constants.spaceXS),
+            SizedBox(height: Constants.spaceXS),
             KeyValueText(
               keyText: LocaleKeys.description.tr(),
               valueText: parcel.description,
             ),
-            const SizedBox(height: Constants.spaceXS),
+            SizedBox(height: Constants.spaceXS),
             ...parcel.generalInfo.entries.map((entry) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: Constants.spaceXS),
+                padding: EdgeInsets.only(bottom: Constants.spaceXS),
                 child: KeyValueText(
                   keyText: entry.key,
                   valueText: entry.value,
@@ -60,7 +60,7 @@ class ParcelDetailsDialog extends StatelessWidget {
           ],
         ),
       ),
-      contentPadding: const EdgeInsets.only(
+      contentPadding: EdgeInsets.only(
         top: Constants.spaceM,
         left: Constants.spaceM,
         right: Constants.spaceM,
@@ -77,7 +77,7 @@ class ParcelDetailsDialog extends StatelessWidget {
                 width: double.minPositive,
               ),
             ),
-            const SizedBox(width: Constants.spaceS),
+            SizedBox(width: Constants.spaceS),
             Expanded(
               child: CustomButton(
                 text: LocaleKeys.reserve.tr(),

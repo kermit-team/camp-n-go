@@ -51,7 +51,6 @@
   "carDeletedSuccessfully": "Car deleted successfully :)",
   "carAlreadyExists": "Car already exists in database",
   "empty": "Empty",
-  "carDetails": "Car details",
   "selectPlace": "Select place",
   "enterRequiredData": "Enter required data",
   "startDate": "Start date",

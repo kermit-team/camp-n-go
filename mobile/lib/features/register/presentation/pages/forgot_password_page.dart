@@ -36,9 +36,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.forgotPassword.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.weWillSendYouEmail.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -51,7 +51,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     EmailValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 _getButtons(
                   context,
                   _formKey,

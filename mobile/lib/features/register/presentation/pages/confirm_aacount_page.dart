@@ -20,9 +20,9 @@ class ConfirmAccountPage extends StatelessWidget {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.confirmAccount.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.emailToResetPasswordSent.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           CustomButton(
             text: LocaleKeys.returnToLogin.tr(),
             onPressed: () {

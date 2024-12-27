@@ -7,7 +7,7 @@ class IconAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
+      padding: EdgeInsets.only(
         bottom: Constants.spaceM,
       ),
       child: Image.asset(

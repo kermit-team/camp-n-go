@@ -20,9 +20,9 @@ class ResetPasswordInfoPage extends StatelessWidget {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.forgotPassword.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.emailSent.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           CustomButton(
             text: LocaleKeys.returnToLogin.tr(),
             onPressed: () {

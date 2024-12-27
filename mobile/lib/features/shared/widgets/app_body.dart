@@ -1,6 +1,6 @@
-import 'package:campngo/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 class AppBody extends StatelessWidget {
   final Widget child;
@@ -28,9 +28,8 @@ class AppBody extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width * 0.09,
-              right: MediaQuery.of(context).size.width * 0.09,
-              top: Constants.spaceL,
+              left: 9.w, // Use 9.w for left padding
+              right: 9.w, // Use 9.w for right padding
             ),
             child: SafeArea(
               child: SingleChildScrollView(

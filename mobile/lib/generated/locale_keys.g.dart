@@ -41,5 +41,31 @@ abstract class  LocaleKeys {
   static const addCar = 'addCar';
   static const editCar = 'editCar';
   static const carDetails = 'carDetails';
+  static const changePassword = 'changePassword';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const repeatNewPassword = 'repeatNewPassword';
+  static const passwordsMustBeIdentical = 'passwordsMustBeIdentical';
+  static const registrationPlate = 'registrationPlate';
+  static const carNotAdded = 'carNotAdded';
+  static const carAddedSuccessfully = 'carAddedSuccessfully';
+  static const carNotDeleted = 'carNotDeleted';
+  static const carDeletedSuccessfully = 'carDeletedSuccessfully';
+  static const carAlreadyExists = 'carAlreadyExists';
+  static const empty = 'empty';
+  static const selectPlace = 'selectPlace';
+  static const enterRequiredData = 'enterRequiredData';
+  static const startDate = 'startDate';
+  static const endDate = 'endDate';
+  static const numberOfAdults = 'numberOfAdults';
+  static const numberOfChildren = 'numberOfChildren';
+  static const invalidNumber = 'invalidNumber';
+  static const searchParcel = 'searchParcel';
+  static const parcelList = 'parcelList';
+  static const pickParcelForYou = 'pickParcelForYou';
+  static const parcelNumber = 'parcelNumber';
+  static const pricePerDay = 'pricePerDay';
+  static const description = 'description';
+  static const reserve = 'reserve';
 
 }

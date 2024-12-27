@@ -43,16 +43,16 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
         children: [
           TitleText(LocaleKeys.selectPlace.tr()),
           //TODO: translate
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterRequiredData.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           GoldenDateRangePickerField(
             labelText: LocaleKeys.startDate.tr(),
             onChanged: (dateRange) {
               //TODO: add edited date submit
             },
           ),
-          const SizedBox(height: Constants.spaceM),
+          SizedBox(height: Constants.spaceM),
 
           GoldenNumberPickerField(
             labelText: LocaleKeys.numberOfAdults.tr(),
@@ -64,7 +64,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
               });
             },
           ),
-          const SizedBox(height: Constants.spaceM),
+          SizedBox(height: Constants.spaceM),
 
           GoldenNumberPickerField(
             labelText: LocaleKeys.numberOfChildren.tr(),
@@ -74,7 +74,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
               log("Number of children: $numberOfChildren");
             },
           ),
-          const SizedBox(height: Constants.spaceM),
+          SizedBox(height: Constants.spaceM),
 
           CustomButton(
             text: LocaleKeys.searchParcel.tr(),

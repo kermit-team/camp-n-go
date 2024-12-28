@@ -14,6 +14,10 @@ import 'package:campngo/features/register/domain/repository/register_repository.
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
+import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
+import 'package:campngo/features/reservations/data/repository_impl/ReservationRepositoryImpl.dart';
+import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -36,6 +40,9 @@ Future<void> initializeDependencies() async {
   final accountSettingsApiService = AccountSettingsApiService(dio);
   final accountSettingsRepository =
       AccountSettingsRepositoryImpl(accountSettingsApiService);
+  final reservationApiService = ReservationApiService(dio);
+  final reservationRepository =
+      ReservationRepositoryImpl(reservationApiService);
 
   // Register dependencies
   serviceLocator.registerSingleton<Dio>(dio);
@@ -69,6 +76,16 @@ Future<void> initializeDependencies() async {
     () => AccountSettingsCubit(
       accountSettingsRepository: accountSettingsRepository,
       storage: secureStorage,
+    ),
+  );
+  serviceLocator
+      .registerSingleton<ReservationApiService>(reservationApiService);
+  serviceLocator
+      .registerSingleton<ReservationRepository>(reservationRepository);
+  serviceLocator.registerFactory(
+    () => ReservationReviewCubit(
+      accountSettingsRepository: accountSettingsRepository,
+      reservationRepository: reservationRepository,
     ),
   );
 }

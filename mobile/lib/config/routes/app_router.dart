@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
@@ -13,7 +14,10 @@ import 'package:campngo/features/register/presentation/pages/confirm_aacount_pag
 import 'package:campngo/features/register/presentation/pages/forgot_password_page.dart';
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
+import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/reservation_review_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/search_parcel_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -153,6 +157,24 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        path: '/reservationDetails/:reservationId',
+        pageBuilder: (context, state) {
+          final reservationId = state.pathParameters['reservationId'];
+          return MaterialPage(
+            child: BlocProvider(
+              create: (context) => ReservationReviewCubit(
+                reservationRepository: serviceLocator<ReservationRepository>(),
+                accountSettingsRepository:
+                    serviceLocator<AccountSettingsRepository>(),
+              ),
+              child: ReservationReviewPage(
+                reservationId: reservationId!,
+              ),
+            ),
+          );
+        },
+      )
     ],
   );
 }

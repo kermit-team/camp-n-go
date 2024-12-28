@@ -22,11 +22,11 @@ class KeyValueText extends StatelessWidget {
         children: [
           TextSpan(
             text: '$keyText: ',
-            style: AppTextStyles.customTextStyle(isBold: true),
+            style: AppTextStyles.customTextStyle(),
           ),
           TextSpan(
             text: valueText,
-            style: AppTextStyles.customTextStyle(),
+            style: AppTextStyles.customTextStyle(isBold: true),
           ),
         ],
       ),

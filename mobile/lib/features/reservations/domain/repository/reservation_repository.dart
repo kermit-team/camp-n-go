@@ -2,7 +2,7 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel_entity.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation_entity.dart';
 
-abstract class ReservationsRepository {
+abstract class ReservationRepository {
   Future<Result<List<ParcelEntity>, Exception>> getParcelList({
     required DateTime startDate,
     required DateTime endDate,

@@ -4,7 +4,7 @@ import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_list_widget.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
-import 'package:campngo/features/shared/widgets/texts/subtitle_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _ParcelListPageState extends State<ParcelListPage> {
       child: Column(
         children: [
           SizedBox(height: Constants.spaceL, width: 100.w),
-          SubtitleText(LocaleKeys.parcelList.tr()),
+          TitleText(LocaleKeys.parcelList.tr()),
           SizedBox(height: Constants.spaceM),
           Divider(
             color: Theme.of(context).colorScheme.primary,

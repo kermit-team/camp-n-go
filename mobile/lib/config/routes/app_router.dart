@@ -15,11 +15,13 @@ import 'package:campngo/features/register/presentation/pages/forgot_password_pag
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/reservation_summary_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/search_parcel_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -179,7 +181,21 @@ class AppRouter {
           );
         },
       ),
-      GoRoute(path: '/parcelDetails'),
+      GoRoute(
+        path: '/reservationSummary',
+        pageBuilder: (context, state) {
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>;
+          final parcel = extra['parcel'] as Parcel;
+          final params = extra['params'] as GetParcelListParams;
+          return MaterialPage(
+            child: ReservationSummaryPage(
+              parcel: parcel,
+              params: params,
+            ),
+          );
+        },
+      ),
       GoRoute(
         path: '/reservationDetails/:reservationId',
         pageBuilder: (context, state) {

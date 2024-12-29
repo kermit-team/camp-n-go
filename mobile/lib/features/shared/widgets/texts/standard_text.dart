@@ -49,6 +49,7 @@ class StandardText extends StatelessWidget {
           AppTextStyles.customTextStyle(
             color: color,
             isBold: isBold,
+            isUnderlined: isUnderlined,
           ),
       textAlign: textAlign ?? TextAlign.center,
     );

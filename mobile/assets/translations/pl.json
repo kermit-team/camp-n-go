@@ -56,8 +56,9 @@
   "enterRequiredData": "Podaj wymagane dane",
   "startDate": "Data początku",
   "endDate": "Data końca",
-  "numberOfAdults": "Ilość dorosłych",
-  "numberOfChildren": "Ilość dzieci",
+  "numberOfAdults": "Liczba dorosłych",
+  "numberOfChildren": "Liczba dzieci",
+  "numberOfNights": "Liczba nocy",
   "invalidNumber": "Błędna ilość",
   "searchParcel": "Szukaj parceli",
   "parcelList": "Lista parceli",
@@ -78,5 +79,15 @@
   "isShaded": "Zacieniona",
   "pricePerParcel": "Kwota za parcelę",
   "pricePerAdult": "Kwota za dorosłego",
-  "pricePerChild": "Kwota za dziecko"
+  "pricePerChild": "Kwota za dziecko",
+  "from": "od",
+  "to": "do",
+  "and": "i",
+  "parcelDetails": "Detale parceli",
+  "reservationSummary": "Podsumowanie rezerwacji",
+  "parcelData": "Dane parceli",
+  "userData": "Dane użytkownika",
+  "reservationData": "Dane rezerwacji",
+  "stayingPeriod": "Okres pobytu",
+  "cars": "Samochody"
 }

@@ -7,9 +7,12 @@ part "car_dto.g.dart";
 class CarDto {
   @JsonKey(name: 'registration_plate')
   final String registrationPlate;
+  @JsonKey(name: 'assigned_to_reservation')
+  final bool assignedToReservation;
 
   CarDto({
     required this.registrationPlate,
+    this.assignedToReservation = false,
   });
 
   factory CarDto.fromJson(Map<String, dynamic> json) => _$CarDtoFromJson(json);
@@ -17,12 +20,12 @@ class CarDto {
   Map<String, dynamic> toJson() => _$CarDtoToJson(this);
 
   factory CarDto.fromEntity(Car car) => CarDto(
-        // identifier: car.identifier,
         registrationPlate: car.registrationPlate,
+        assignedToReservation: car.assignedToReservation,
       );
 
   Car toEntity() => Car(
-        // identifier: identifier,
         registrationPlate: registrationPlate,
+        assignedToReservation: assignedToReservation,
       );
 }

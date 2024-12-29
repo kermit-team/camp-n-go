@@ -59,6 +59,7 @@ abstract class  LocaleKeys {
   static const endDate = 'endDate';
   static const numberOfAdults = 'numberOfAdults';
   static const numberOfChildren = 'numberOfChildren';
+  static const numberOfNights = 'numberOfNights';
   static const invalidNumber = 'invalidNumber';
   static const searchParcel = 'searchParcel';
   static const parcelList = 'parcelList';
@@ -80,5 +81,15 @@ abstract class  LocaleKeys {
   static const pricePerParcel = 'pricePerParcel';
   static const pricePerAdult = 'pricePerAdult';
   static const pricePerChild = 'pricePerChild';
+  static const from = 'from';
+  static const to = 'to';
+  static const and = 'and';
+  static const parcelDetails = 'parcelDetails';
+  static const reservationSummary = 'reservationSummary';
+  static const parcelData = 'parcelData';
+  static const userData = 'userData';
+  static const reservationData = 'reservationData';
+  static const stayingPeriod = 'stayingPeriod';
+  static const cars = 'cars';
 
 }

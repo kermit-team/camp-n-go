@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
-import 'package:campngo/features/account_settings/data/models/car_dto.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
@@ -111,7 +110,9 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
     required Car car,
   }) async {
     try {
-      final registrationPlateJson = CarDto.fromEntity(car).toJson();
+      final registrationPlateJson = {
+        "registration_plate": car.registrationPlate
+      };
       final httpResponse = await _accountSettingsApiService.addCar(
         registrationPlateJson: registrationPlateJson,
       );

@@ -2,6 +2,7 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
+import 'package:campngo/features/reservations/presentation/widgets/parcel_details_dialog.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_list_tile.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -86,7 +87,17 @@ class _ParcelListWidgetState extends State<ParcelListWidget> {
                 }
                 return ParcelListTile(
                   parcel: state.parcels![index],
-                  onListTilePressed: (Parcel parcel) {},
+                  onListTilePressed: (Parcel parcel) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ParcelDetailsDialog(
+                          parcel: parcel,
+                          params: state.params!,
+                        );
+                      },
+                    );
+                  },
                 );
               },
             ),

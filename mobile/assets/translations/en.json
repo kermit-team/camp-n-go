@@ -57,6 +57,7 @@
   "endDate": "End date",
   "numberOfAdults": "Number of adults",
   "numberOfChildren": "Number of children",
+  "numberOfNights": "Number of nights",
   "invalidNumber": "Invalid number",
   "searchParcel": "Search parcel",
   "parcelList": "Parcel list",
@@ -77,5 +78,15 @@
   "isShaded": "Shaded",
   "pricePerParcel": "Price per parcel",
   "pricePerAdult": "Price per adult",
-  "pricePerChild": "Price per child"
+  "pricePerChild": "Price per child",
+  "from": "from",
+  "to": "to",
+  "and": "and",
+  "parcelDetails": "Parcel details",
+  "reservationSummary": "Reservation summary",
+  "parcelData": "Parcel data",
+  "userData": "User data",
+  "reservationData": "Reservation data",
+  "stayingPeriod": "Staying period",
+  "cars": "Cars"
 }

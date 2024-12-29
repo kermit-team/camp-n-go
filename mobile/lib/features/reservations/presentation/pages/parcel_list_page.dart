@@ -20,8 +20,6 @@ class ParcelListPage extends StatefulWidget {
 }
 
 class _ParcelListPageState extends State<ParcelListPage> {
-  static const int _pageSize = 10;
-
   final PagingController<int, Parcel> _pagingController =
       PagingController(firstPageKey: 1);
 

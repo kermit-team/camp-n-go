@@ -67,5 +67,18 @@ abstract class  LocaleKeys {
   static const pricePerDay = 'pricePerDay';
   static const description = 'description';
   static const reserve = 'reserve';
+  static const somethingWentWrong = 'somethingWentWrong';
+  static const yes = 'yes';
+  static const no = 'no';
+  static const maxPeople = 'maxPeople';
+  static const parcelLength = 'parcelLength';
+  static const parcelWidth = 'parcelWidth';
+  static const hasElectricity = 'hasElectricity';
+  static const hasWater = 'hasWater';
+  static const hasGreyWaterDisposal = 'hasGreyWaterDisposal';
+  static const isShaded = 'isShaded';
+  static const pricePerParcel = 'pricePerParcel';
+  static const pricePerAdult = 'pricePerAdult';
+  static const pricePerChild = 'pricePerChild';
 
 }

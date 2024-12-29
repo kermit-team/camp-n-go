@@ -4,10 +4,12 @@ import 'package:sizer/sizer.dart';
 
 class AppBody extends StatelessWidget {
   final Widget child;
+  final bool scrollable;
 
   const AppBody({
     super.key,
     required this.child,
+    this.scrollable = true,
   });
 
   @override
@@ -32,9 +34,11 @@ class AppBody extends StatelessWidget {
               right: 9.w, // Use 9.w for right padding
             ),
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: child,
-              ),
+              child: scrollable
+                  ? SingleChildScrollView(
+                      child: child,
+                    )
+                  : child,
             ),
           ),
         ],

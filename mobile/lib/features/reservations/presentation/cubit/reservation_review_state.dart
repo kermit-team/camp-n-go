@@ -1,16 +1,9 @@
 part of 'reservation_review_cubit.dart';
 
-enum SubmissionStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
-
 class ReservationReviewState extends Equatable {
   final SubmissionStatus reservationStatus; // Status pobierania rezerwacji
   final SubmissionStatus userStatus; // Status pobierania danych użytkownika
-  final ReservationEntity? reservation; // Dane rezerwacji
+  final Reservation? reservation; // Dane rezerwacji
   final Account? user; // Dane użytkownika
   final Exception? exception; // Błędy podczas pobierania danych
 
@@ -25,7 +18,7 @@ class ReservationReviewState extends Equatable {
   ReservationReviewState copyWith({
     SubmissionStatus? reservationStatus,
     SubmissionStatus? userStatus,
-    ReservationEntity? reservation,
+    Reservation? reservation,
     Account? user,
     Exception? exception,
   }) {

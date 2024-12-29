@@ -62,12 +62,20 @@ class AppTextStyles {
         color: _lightColorScheme.onSurfaceVariant,
       );
 
-  static TextStyle customTextStyle({Color? color, bool isBold = false}) {
+  static TextStyle customTextStyle({
+    Color? color,
+    double? fontSize,
+    bool isBold = false,
+    bool isUnderlined = false,
+  }) {
     return GoogleFonts.montserrat(
-      fontSize: Constants.textSizeS,
+      fontSize: fontSize ?? Constants.textSizeS,
       fontStyle: FontStyle.normal,
       fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
       color: color ?? _lightColorScheme.onSurface,
+      decoration: isUnderlined ? TextDecoration.underline : null,
+      decorationColor: _lightColorScheme.primary,
+      decorationThickness: 1,
     );
   }
 }

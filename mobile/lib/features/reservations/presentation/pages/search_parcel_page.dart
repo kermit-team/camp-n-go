@@ -4,7 +4,6 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_date_range_picker_field.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_number_picker_field.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
-import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
@@ -41,6 +40,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
     return AppBody(
       child: Column(
         children: [
+          SizedBox(height: Constants.spaceL),
           TitleText(LocaleKeys.selectPlace.tr()),
           //TODO: translate
           SizedBox(height: Constants.spaceS),
@@ -79,11 +79,16 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
           CustomButton(
             text: LocaleKeys.searchParcel.tr(),
             onPressed: () {
-              AppSnackBar.showSnackBar(
-                context: context,
-                text: "Szukaj parceli",
+              serviceLocator<GoRouter>().push(
+                "/parcelList",
+                extra: {
+                  'startDate': startDateTime,
+                  'endDate': endDateTime,
+                  'adults': numberOfAdults,
+                  'children': numberOfChildren,
+                  'page': 1,
+                },
               );
-              serviceLocator<GoRouter>().push("/parcelList");
             },
           ),
         ],

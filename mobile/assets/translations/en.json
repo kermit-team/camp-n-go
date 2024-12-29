@@ -51,7 +51,7 @@
   "carDeletedSuccessfully": "Car deleted successfully :)",
   "carAlreadyExists": "Car already exists in database",
   "empty": "Empty",
-  "selectPlace": "Select place",
+    "selectPlace": "Select place",
   "enterRequiredData": "Enter required data",
   "startDate": "Start date",
   "endDate": "End date",
@@ -64,5 +64,18 @@
   "parcelNumber": "Parcel number",
   "pricePerDay": "Price per day",
   "description": "Description",
-  "reserve": "Reserve"
+  "reserve": "Reserve",
+  "somethingWentWrong": "Something went wrong...",
+  "yes": "Yes",
+  "no": "No",
+  "maxPeople": "Maximum number of people",
+  "parcelLength": "Parcel length",
+  "parcelWidth": "Parcel width",
+  "hasElectricity": "Electricity connection",
+  "hasWater": "Water connection",
+  "hasGreyWaterDisposal": "Grey water disposal",
+  "isShaded": "Shaded",
+  "pricePerParcel": "Price per parcel",
+  "pricePerAdult": "Price per adult",
+  "pricePerChild": "Price per child"
 }

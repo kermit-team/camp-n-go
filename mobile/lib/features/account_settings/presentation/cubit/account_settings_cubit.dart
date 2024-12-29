@@ -57,7 +57,7 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
               ));
             }
         }
-      }
+      } else {}
     } on DioException catch (dioException) {
       emit(state.copyWith(
         status: LoadAccountSettingsStatus.failure,

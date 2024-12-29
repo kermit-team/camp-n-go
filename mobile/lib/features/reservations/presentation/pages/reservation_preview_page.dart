@@ -1,6 +1,6 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
-import 'package:campngo/features/reservations/presentation/widgets/parcel_details.dart';
 import 'package:campngo/features/reservations/presentation/widgets/personal_data.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/lines.dart';
@@ -35,22 +35,6 @@ class ReservationReviewPage extends StatelessWidget {
           SizedBox(height: Constants.spaceS),
           Lines.lineGoldThin,
           SizedBox(height: Constants.spaceM),
-          BlocBuilder<ReservationReviewCubit, ReservationReviewState>(
-            builder: (context, state) {
-              if (state.reservationStatus == SubmissionStatus.loading) {
-                return CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.primary,
-                );
-              } else if (state.reservationStatus == SubmissionStatus.success) {
-                if (state.reservation != null) {
-                  return ParcelDetails(parcel: state.reservation!.parcel);
-                } else {
-                  Text(LocaleKeys.empty.tr());
-                }
-              }
-              return const Text('Parcel loading error');
-            },
-          ),
 
           // SubtitleText(LocaleKeys.personalData.tr()),
           const SubtitleText("Dane osobowe"),

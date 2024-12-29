@@ -11,6 +11,7 @@ class Constants {
   static double spaceM = 2.5.h; // Adjusted to 2.5.h
   static double spaceML = 3.5.h; // Adjusted to 3.5.h
   static double spaceL = 4.5.h; // Adjusted to 4.5.h
+  static double spaceXL = 5.5.h; // Adjusted to 4.5.h
 
   // static const double spaceXXS = 3;
   // static const double spaceXS = 5;

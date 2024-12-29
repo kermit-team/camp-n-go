@@ -14,10 +14,12 @@ import 'package:campngo/features/register/presentation/pages/confirm_aacount_pag
 import 'package:campngo/features/register/presentation/pages/forgot_password_page.dart';
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
+import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
+import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
-import 'package:campngo/features/reservations/presentation/pages/reservation_review_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/search_parcel_page.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    initialLocation: "/",
+    initialLocation: "/login",
     routes: <GoRoute>[
       GoRoute(
         path: "/",
@@ -152,11 +154,32 @@ class AppRouter {
       GoRoute(
         path: "/parcelList",
         pageBuilder: (context, state) {
-          return const MaterialPage(
-            child: ParcelListPage(),
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>;
+          final startDate = extra['startDate'] as DateTime;
+          final endDate = extra['endDate'] as DateTime;
+          final adults = extra['adults'] as int;
+          final children = extra['children'] as int;
+          final page = extra['page'] as int;
+
+          return MaterialPage(
+            child: BlocProvider<ParcelListCubit>(
+              create: (context) => ParcelListCubit(
+                reservationRepository: serviceLocator<ReservationRepository>(),
+              )..getParcelList(
+                  params: GetParcelListParams(
+                    startDate: startDate,
+                    endDate: endDate,
+                    adults: adults,
+                    children: children,
+                  ),
+                  page: page),
+              child: const ParcelListPage(),
+            ),
           );
         },
       ),
+      GoRoute(path: '/parcelDetails'),
       GoRoute(
         path: '/reservationDetails/:reservationId',
         pageBuilder: (context, state) {

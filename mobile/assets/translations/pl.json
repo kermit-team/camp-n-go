@@ -65,5 +65,18 @@
   "parcelNumber": "Parcela numer",
   "pricePerDay": "Cena za dobę",
   "description": "Opis",
-  "reserve": "Zarezerwuj"
+  "reserve": "Zarezerwuj",
+  "somethingWentWrong": "Coś poszło nie tak...",
+  "yes": "Tak",
+  "no": "Nie",
+  "maxPeople": "Maksymalna ilość osób",
+  "parcelLength": "Długość parceli",
+  "parcelWidth": "Szerokość parceli",
+  "hasElectricity": "Podłączenie do prądu",
+  "hasWater": "Podłączenie do wody",
+  "hasGreyWaterDisposal": "Zrzut szarej wody",
+  "isShaded": "Zacieniona",
+  "pricePerParcel": "Kwota za parcelę",
+  "pricePerAdult": "Kwota za dorosłego",
+  "pricePerChild": "Kwota za dziecko"
 }

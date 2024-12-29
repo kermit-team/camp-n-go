@@ -9,7 +9,6 @@ class CarDto {
   final String registrationPlate;
 
   CarDto({
-    // required this.identifier,
     required this.registrationPlate,
   });
 

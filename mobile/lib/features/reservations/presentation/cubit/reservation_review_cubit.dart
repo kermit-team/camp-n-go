@@ -1,8 +1,9 @@
 import 'package:campngo/core/resources/data_result.dart';
+import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
-import 'package:campngo/features/reservations/domain/entities/reservation_entity.dart';
+import 'package:campngo/features/reservations/domain/entities/reservation.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/shared/token_decoder.dart';
 import 'package:campngo/injection_container.dart';
@@ -30,7 +31,7 @@ class ReservationReviewCubit extends Cubit<ReservationReviewState> {
           await reservationRepository.getReservationDetails(
         reservationId: reservationId,
       );
-      if (reservationResult is Success<ReservationEntity, Exception>) {
+      if (reservationResult is Success<Reservation, Exception>) {
         emit(state.copyWith(
           reservationStatus: SubmissionStatus.success,
           reservation: reservationResult.value,

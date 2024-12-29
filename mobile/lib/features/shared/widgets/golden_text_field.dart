@@ -61,11 +61,13 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
+        suffixIconConstraints: const BoxConstraints(),
         suffixIcon: widget.isPassword && widget.enabled
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility : Icons.visibility_off,
                   color: goldenColor,
+                  size: Constants.textSizeMS,
                 ),
                 onPressed: () {
                   setState(() {

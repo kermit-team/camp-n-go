@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
@@ -19,6 +20,7 @@ import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_summary_page.dart';
@@ -29,15 +31,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  // final AuthBloc authBloc;
-
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    initialLocation: "/login",
+    initialLocation: AppRoutes.login.route,
     routes: <GoRoute>[
       GoRoute(
-        path: "/",
+        path: AppRoutes.home.route,
         pageBuilder: (context, state) {
           log(MediaQuery.of(context).size.height.toString());
           return MaterialPage(
@@ -54,7 +54,7 @@ class AppRouter {
                     IconButton(
                       onPressed: () {
                         context.read<AuthBloc>().add(DeleteCredentials());
-                        serviceLocator<GoRouter>().go("/login");
+                        serviceLocator<GoRouter>().go(AppRoutes.login.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -65,7 +65,8 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        serviceLocator<GoRouter>().push("/accountSettings");
+                        serviceLocator<GoRouter>()
+                            .push(AppRoutes.accountSettings.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -76,7 +77,8 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        serviceLocator<GoRouter>().push("/searchParcel");
+                        serviceLocator<GoRouter>()
+                            .push(AppRoutes.searchParcel.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -88,7 +90,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/login",
+        path: AppRoutes.login.route,
         pageBuilder: (context, state) {
           return const MaterialPage(
             child: LoginPage(),
@@ -96,7 +98,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/register",
+        path: AppRoutes.register.route,
         pageBuilder: (context, state) {
           return MaterialPage(
             child: BlocProvider<RegisterBloc>(
@@ -107,7 +109,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/forgotPassword",
+        path: AppRoutes.forgotPassword.route,
         pageBuilder: (context, state) {
           return MaterialPage(
             child: BlocProvider<ForgotPasswordBloc>(
@@ -118,7 +120,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/confirmAccount",
+        path: AppRoutes.confirmAccount.route,
         pageBuilder: (context, state) {
           return const MaterialPage(
             child: ConfirmAccountPage(),
@@ -126,7 +128,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/resetPasswordInfo",
+        path: AppRoutes.resetPasswordInfo.route,
         pageBuilder: (context, state) {
           return const MaterialPage(
             child: ResetPasswordInfoPage(),
@@ -134,7 +136,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/accountSettings",
+        path: AppRoutes.accountSettings.route,
         pageBuilder: (context, state) {
           return MaterialPage(
             child: BlocProvider(
@@ -146,7 +148,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/searchParcel",
+        path: AppRoutes.searchParcel.route,
         pageBuilder: (context, state) {
           return const MaterialPage(
             child: SearchParcelPage(),
@@ -154,7 +156,7 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: "/parcelList",
+        path: AppRoutes.parcelList.route,
         pageBuilder: (context, state) {
           final Map<String, dynamic> extra =
               state.extra as Map<String, dynamic>;
@@ -182,22 +184,29 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: '/reservationSummary',
+        path: AppRoutes.reservationSummary.route,
         pageBuilder: (context, state) {
           final Map<String, dynamic> extra =
               state.extra as Map<String, dynamic>;
           final parcel = extra['parcel'] as Parcel;
           final params = extra['params'] as GetParcelListParams;
           return MaterialPage(
-            child: ReservationSummaryPage(
-              parcel: parcel,
-              params: params,
+            child: BlocProvider<ReservationSummaryCubit>(
+              create: (context) => ReservationSummaryCubit(
+                reservationRepository: serviceLocator<ReservationRepository>(),
+                accountSettingsRepository:
+                    serviceLocator<AccountSettingsRepository>(),
+              )..getAccountData(),
+              child: ReservationSummaryPage(
+                parcel: parcel,
+                params: params,
+              ),
             ),
           );
         },
       ),
       GoRoute(
-        path: '/reservationDetails/:reservationId',
+        path: AppRoutes.reservationDetails.route,
         pageBuilder: (context, state) {
           final reservationId = state.pathParameters['reservationId'];
           return MaterialPage(

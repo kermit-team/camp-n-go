@@ -88,5 +88,8 @@
   "userData": "User data",
   "reservationData": "Reservation data",
   "stayingPeriod": "Staying period",
-  "cars": "Cars"
+  "cars": "Cars",
+  "loadingDataError": "Loading data error",
+  "assignCarToReservation": "Assign car to reservation",
+  "addCarToFinalize": "Add a car in account settings to complete the reservation"
 }

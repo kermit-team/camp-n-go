@@ -3,6 +3,7 @@ import 'package:campngo/core/interceptors/token_interceptor.dart';
 import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/account_settings/data/data_sources/account_settings_api_service.dart';
 import 'package:campngo/features/account_settings/data/repository_impl/account_settings_repository_impl.dart';
+import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
 import 'package:campngo/features/auth/data/repository_impl/auth_repository_impl.dart';
@@ -74,6 +75,10 @@ Future<void> initializeDependencies() async {
       secureStorage: secureStorage,
     ),
   );
+  serviceLocator
+      .registerSingleton<AccountSettingsApiService>(accountSettingsApiService);
+  serviceLocator
+      .registerSingleton<AccountSettingsRepository>(accountSettingsRepository);
   serviceLocator.registerFactory(
     () => AccountSettingsCubit(
       accountSettingsRepository: accountSettingsRepository,

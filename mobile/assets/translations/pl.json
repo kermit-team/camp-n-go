@@ -89,5 +89,8 @@
   "userData": "Dane użytkownika",
   "reservationData": "Dane rezerwacji",
   "stayingPeriod": "Okres pobytu",
-  "cars": "Samochody"
+  "cars": "Samochody",
+  "loadingDataError": "Błąd ładowania danych",
+  "assignCarToReservation": "Przypisz samochód do rezerwacji",
+  "addCarToFinalize": "Dodaj samochód w ustawieniach konta, aby dokończyć proces rezerwacji"
 }

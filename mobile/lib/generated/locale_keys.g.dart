@@ -91,5 +91,8 @@ abstract class  LocaleKeys {
   static const reservationData = 'reservationData';
   static const stayingPeriod = 'stayingPeriod';
   static const cars = 'cars';
+  static const loadingDataError = 'loadingDataError';
+  static const assignCarToReservation = 'assignCarToReservation';
+  static const addCarToFinalize = 'addCarToFinalize';
 
 }

@@ -69,11 +69,15 @@ class CarListWidget extends StatelessWidget {
 class CarListItem extends StatelessWidget {
   final Car car;
   final void Function(Car) onListTilePressed;
+  final bool isAssigned;
+  final bool showDots;
 
   const CarListItem({
     super.key,
     required this.car,
     required this.onListTilePressed,
+    this.isAssigned = false,
+    this.showDots = true,
   });
 
   @override
@@ -90,6 +94,7 @@ class CarListItem extends StatelessWidget {
             vertical: Constants.spaceM,
           ),
           decoration: BoxDecoration(
+            color: isAssigned ? Theme.of(context).colorScheme.primary : null,
             border: Border.fromBorderSide(
               BorderSide(
                 color: Theme.of(context).colorScheme.primary,
@@ -112,10 +117,12 @@ class CarListItem extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
-              Icon(
-                Icons.more_horiz,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              showDots
+                  ? Icon(
+                      Icons.more_horiz,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

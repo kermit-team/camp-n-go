@@ -9,6 +9,7 @@ ThemeData theme({bool isDarkTheme = false}) => ThemeData.from(
       appBarTheme: const AppBarTheme(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
     );
 

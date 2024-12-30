@@ -49,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
+      showDrawer: false,
       child: Column(
         children: [
-          SizedBox(height: Constants.spaceL),
           const IconAppBar(),
           TitleText('${LocaleKeys.welcomeAgain.tr()}!'),
           SizedBox(height: Constants.spaceS),

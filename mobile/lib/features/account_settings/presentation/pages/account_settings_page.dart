@@ -137,7 +137,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: Constants.spaceL),
                       TitleText(LocaleKeys.accountSettings.tr()),
                       SizedBox(height: Constants.spaceS),
                       StandardText(LocaleKeys.updateUserData.tr()),

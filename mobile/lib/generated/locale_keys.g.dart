@@ -6,6 +6,7 @@ abstract class  LocaleKeys {
   static const email = 'email';
   static const password = 'password';
   static const login = 'login';
+  static const logout = 'logout';
   static const resetPassword = 'resetPassword';
   static const repeatPassword = 'repeatPassword';
   static const createAccount = 'createAccount';
@@ -58,7 +59,9 @@ abstract class  LocaleKeys {
   static const startDate = 'startDate';
   static const endDate = 'endDate';
   static const numberOfAdults = 'numberOfAdults';
+  static const adults = 'adults';
   static const numberOfChildren = 'numberOfChildren';
+  static const children = 'children';
   static const numberOfNights = 'numberOfNights';
   static const invalidNumber = 'invalidNumber';
   static const searchParcel = 'searchParcel';

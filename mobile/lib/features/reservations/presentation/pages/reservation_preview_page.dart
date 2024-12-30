@@ -24,7 +24,6 @@ class ReservationReviewPage extends StatelessWidget {
     return AppBody(
       child: Column(
         children: [
-          // TitleText(LocaleKeys.reservationReview.tr()),
           const TitleText("Przegląd rezerwacji"),
           SizedBox(height: Constants.spaceS),
           Lines.lineGoldNormal,

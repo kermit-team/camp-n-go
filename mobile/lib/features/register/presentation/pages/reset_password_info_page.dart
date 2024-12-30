@@ -16,6 +16,7 @@ class ResetPasswordInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
+      showDrawer: false,
       child: Column(
         children: [
           const IconAppBar(),

@@ -19,7 +19,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sizer/sizer.dart';
 
 class ReservationSummaryPage extends StatelessWidget {
   final Parcel parcel;
@@ -37,7 +36,6 @@ class ReservationSummaryPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: Constants.spaceL, width: 100.w),
           TitleText(LocaleKeys.reservationSummary.tr()),
           SizedBox(height: Constants.spaceL),
           _ReservationData(
@@ -157,7 +155,7 @@ class _UserData extends StatelessWidget {
                     isBold: true,
                   ),
                   CustomButton(
-                    text: LocaleKeys.accountSettings,
+                    text: LocaleKeys.accountSettings.tr(),
                     onPressed: () {
                       serviceLocator<GoRouter>()
                           .push(AppRoutes.accountSettings.route)

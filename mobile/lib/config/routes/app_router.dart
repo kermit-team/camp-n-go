@@ -160,25 +160,17 @@ class AppRouter {
         pageBuilder: (context, state) {
           final Map<String, dynamic> extra =
               state.extra as Map<String, dynamic>;
-          final startDate = extra['startDate'] as DateTime;
-          final endDate = extra['endDate'] as DateTime;
-          final adults = extra['adults'] as int;
-          final children = extra['children'] as int;
           final page = extra['page'] as int;
+          final params = extra['params'] as GetParcelListParams;
 
           return MaterialPage(
             child: BlocProvider<ParcelListCubit>(
               create: (context) => ParcelListCubit(
                 reservationRepository: serviceLocator<ReservationRepository>(),
-              )..getParcelList(
-                  params: GetParcelListParams(
-                    startDate: startDate,
-                    endDate: endDate,
-                    adults: adults,
-                    children: children,
-                  ),
-                  page: page),
-              child: const ParcelListPage(),
+              )..getParcelList(params: params, page: page),
+              child: ParcelListPage(
+                params: params,
+              ),
             ),
           );
         },

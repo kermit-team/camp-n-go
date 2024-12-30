@@ -29,5 +29,5 @@ class Constants {
   static double textSizeS = 16.sp;
   static double textSizeMS = 20.sp;
   static double textSizeM = 25.sp;
-  static double textSizeL = 28.sp;
+  static double textSizeL = 27.sp;
 }

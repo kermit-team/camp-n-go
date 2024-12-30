@@ -13,6 +13,7 @@ class DisplayTextField extends StatelessWidget {
   final void Function(String)? onDialogSavePressed;
   final void Function(String, String)? onPasswordDialogSavePressed;
   final bool isPassword;
+  final bool canBeModified;
 
   const DisplayTextField({
     super.key,
@@ -23,6 +24,7 @@ class DisplayTextField extends StatelessWidget {
     this.onDialogSavePressed,
     this.onPasswordDialogSavePressed,
     this.isPassword = false,
+    this.canBeModified = true,
   });
 
   @override
@@ -37,43 +39,48 @@ class DisplayTextField extends StatelessWidget {
           isPassword: isPassword,
         ),
         SizedBox(height: Constants.spaceS),
-        Row(
-          children: [
-            const Spacer(),
-            HyperlinkText(
-              text: hyperlinkText,
-              onTap: () {
-                if (onDialogSavePressed != null) {
-                  showEditPropertyDialog(
-                    context: context,
-                    label: label,
-                    initialValue: text,
-                    validations: validations,
-                    onSave: (newValue) {
-                      onDialogSavePressed != null
-                          ? onDialogSavePressed!(newValue)
-                          : () {};
+        canBeModified
+            ? Row(
+                children: [
+                  const Spacer(),
+                  HyperlinkText(
+                    text: hyperlinkText,
+                    onTap: () {
+                      if (onDialogSavePressed != null) {
+                        showEditPropertyDialog(
+                          context: context,
+                          label: label,
+                          initialValue: text,
+                          validations: validations,
+                          onSave: (newValue) {
+                            onDialogSavePressed != null
+                                ? onDialogSavePressed!(newValue)
+                                : () {};
+                          },
+                        );
+                      } else if (onPasswordDialogSavePressed != null) {
+                        showEditPasswordDialog(
+                          context: context,
+                          onSave: (oldPassword, newPassword) {
+                            onPasswordDialogSavePressed != null
+                                ? onPasswordDialogSavePressed!(
+                                    oldPassword,
+                                    newPassword,
+                                  )
+                                : () {};
+                          },
+                        );
+                      }
                     },
-                  );
-                } else if (onPasswordDialogSavePressed != null) {
-                  showEditPasswordDialog(
-                    context: context,
-                    onSave: (oldPassword, newPassword) {
-                      onPasswordDialogSavePressed != null
-                          ? onPasswordDialogSavePressed!(
-                              oldPassword,
-                              newPassword,
-                            )
-                          : () {};
-                    },
-                  );
-                }
-              },
-              textAlign: TextAlign.end,
-            ),
-            SizedBox(width: Constants.spaceS),
-          ],
-        ),
+                    textAlign: TextAlign.end,
+                  ),
+                  SizedBox(width: Constants.spaceS),
+                ],
+              )
+            : HyperlinkText(
+                text: '',
+                onTap: () {},
+              ),
       ],
     );
   }

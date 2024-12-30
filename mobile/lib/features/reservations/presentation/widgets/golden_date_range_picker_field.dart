@@ -44,7 +44,7 @@ class _GoldenDateRangePickerFieldState
       final DateTimeRange? pickedDateRange = await showDateRangePicker(
         context: context,
         initialDateRange: _dateRange,
-        firstDate: DateTime(2000),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101),
         cancelText: LocaleKeys.cancel.tr(),
         confirmText: LocaleKeys.save.tr(),

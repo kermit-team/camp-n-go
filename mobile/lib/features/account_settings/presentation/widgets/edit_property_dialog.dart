@@ -104,7 +104,7 @@ Future<void> showEditPasswordDialog({
                   validations: [
                     const RequiredValidation(),
                     const PasswordValidation(),
-                    PasswordMatchValidation(confirmNewPasswordController),
+                    PasswordMatchValidation(newPasswordController),
                   ],
                 ),
               ],

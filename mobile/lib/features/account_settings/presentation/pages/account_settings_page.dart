@@ -178,6 +178,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.email.tr(),
+                              canBeModified: false,
                               text: state.accountEntity?.email ?? ' ',
                               validations: const [
                                 RequiredValidation(),

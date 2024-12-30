@@ -20,7 +20,7 @@ class ParcelDetailsWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: Constants.spaceXS),
+          SizedBox(height: Constants.spaceS),
           KeyValueText(
             keyText: LocaleKeys.pricePerParcel.tr(),
             valueText: parcel.pricePerParcel.toString(),

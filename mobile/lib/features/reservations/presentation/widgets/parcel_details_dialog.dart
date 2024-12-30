@@ -47,18 +47,18 @@ class ParcelDetailsDialog extends StatelessWidget {
           ),
           Divider(
             color: Theme.of(context).colorScheme.primary,
-            height: 2,
-            thickness: 2,
+            height: 1,
+            thickness: 1,
           ),
-          SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceMS),
           Image.asset(
             'assets/images/parcel_example.png',
           ),
-          SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceMS),
           Divider(
             color: Theme.of(context).colorScheme.primary,
-            height: 2,
-            thickness: 2,
+            height: 1,
+            thickness: 1,
           ),
         ],
       ),
@@ -73,10 +73,10 @@ class ParcelDetailsDialog extends StatelessWidget {
           children: [
             Divider(
               color: Theme.of(context).colorScheme.primary,
-              height: 2,
-              thickness: 2,
+              height: 1,
+              thickness: 1,
             ),
-            SizedBox(height: Constants.spaceS),
+            SizedBox(height: Constants.spaceMS),
             Row(
               children: [
                 Icon(
@@ -115,7 +115,7 @@ class ParcelDetailsDialog extends StatelessWidget {
                     '${LocaleKeys.numberOfChildren.tr()}: ${params.children}'),
               ],
             ),
-            SizedBox(height: Constants.spaceS),
+            SizedBox(height: Constants.spaceMS),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [

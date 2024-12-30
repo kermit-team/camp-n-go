@@ -85,7 +85,6 @@ class _UserData extends StatelessWidget {
   final List<Car> carList;
 
   const _UserData({
-    super.key,
     required this.account,
     required this.carList,
   });
@@ -183,7 +182,6 @@ class _ReservationData extends StatelessWidget {
   final GetParcelListParams params;
 
   const _ReservationData({
-    super.key,
     required this.params,
     required this.parcel,
   });

@@ -95,5 +95,10 @@
   "cars": "Samochody",
   "loadingDataError": "Błąd ładowania danych",
   "assignCarToReservation": "Przypisz samochód do rezerwacji",
-  "addCarToFinalize": "Dodaj samochód w ustawieniach konta, aby dokończyć proces rezerwacji"
+  "addCarToFinalize": "Dodaj samochód w ustawieniach konta, aby dokończyć proces rezerwacji",
+  "contact": "Kontakt",
+  "sendMessageToUs": "Wyślij do nas wiadomość",
+  "content": "Treść",
+  "send": "Wyślij",
+  "sendingEmailError": "Problem z wysyłaniem maila"
 }

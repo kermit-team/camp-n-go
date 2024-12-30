@@ -150,6 +150,30 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
       return Failure(handleApiError(dioException));
     }
   }
+
+  @override
+  Future<Result<void, Exception>> sendContactEmail({
+    required String email,
+    required String content,
+  }) async {
+    try {
+      final httpResponse = await _accountSettingsApiService.sendContactEmail(
+        email: email,
+        content: {"content": content},
+      );
+
+      if (httpResponse.response.statusCode == 200 ||
+          httpResponse.response.statusCode == HttpStatus.ok) {
+        return const Success(null);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[AccountSettingsRepositoryImpl>SendContactEmail]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
 }
 
 Exception handleError(Response response) {

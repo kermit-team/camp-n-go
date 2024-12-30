@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final double width;
   final double height;
   final IconData? prefixIcon;
+  final bool isLoading;
 
   const CustomButton({
     super.key,
@@ -17,12 +18,13 @@ class CustomButton extends StatelessWidget {
     this.width = double.maxFinite,
     this.height = double.minPositive,
     this.prefixIcon,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: !isLoading ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
@@ -41,7 +43,11 @@ class CustomButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: prefixIcon == null
-            ? Text(text, style: AppTextStyles.mainTextStyle())
+            ? isLoading
+                ? CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  )
+                : Text(text, style: AppTextStyles.mainTextStyle())
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -50,7 +56,11 @@ class CustomButton extends StatelessWidget {
                     size: Constants.textSizeMS,
                   ),
                   SizedBox(width: Constants.spaceXS),
-                  Text(text, style: AppTextStyles.mainTextStyle()),
+                  isLoading
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        )
+                      : Text(text, style: AppTextStyles.mainTextStyle()),
                 ],
               ),
       ),
@@ -66,12 +76,13 @@ class CustomButtonInverted extends CustomButton {
     super.width,
     super.height,
     super.prefixIcon,
+    super.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: !isLoading ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.secondary,
         // backgroundColor: Colors.white,
@@ -90,7 +101,11 @@ class CustomButtonInverted extends CustomButton {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: prefixIcon == null
-            ? Text(text, style: AppTextStyles.mainTextStyle())
+            ? isLoading
+                ? CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                : Text(text, style: AppTextStyles.mainTextStyle())
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -99,7 +114,11 @@ class CustomButtonInverted extends CustomButton {
                     size: Constants.textSizeMS,
                   ),
                   SizedBox(width: Constants.spaceXS),
-                  Text(text, style: AppTextStyles.mainTextStyle()),
+                  isLoading
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                      : Text(text, style: AppTextStyles.mainTextStyle()),
                 ],
               ),
       ),

@@ -48,6 +48,20 @@ class AppDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          // ListTile(
+          //   leading: Icon(
+          //     Icons.email_outlined,
+          //     color: Theme.of(context).colorScheme.onSurface,
+          //   ),
+          //   title: StandardText(
+          //     LocaleKeys.contact.tr(),
+          //     textAlign: TextAlign.start,
+          //   ),
+          //   onTap: () {
+          //     serviceLocator<GoRouter>().push(AppRoutes.contactForm.route);
+          //     Navigator.pop(context); // Close the drawer
+          //   },
+          // ),
           ListTile(
             leading: Icon(
               Icons.logout,

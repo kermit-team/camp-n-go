@@ -94,5 +94,10 @@
   "cars": "Cars",
   "loadingDataError": "Loading data error",
   "assignCarToReservation": "Assign car to reservation",
-  "addCarToFinalize": "Add a car in account settings to complete the reservation"
+  "addCarToFinalize": "Add a car in account settings to complete the reservation",
+  "contact": "Contact",
+  "sendMessageToUs": "Send message to us",
+  "content": "Content",
+  "send": "Send",
+  "sendingEmailError": "Sending email error"
 }

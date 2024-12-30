@@ -28,4 +28,9 @@ abstract class AccountSettingsRepository {
   Future<Result<void, Exception>> deleteCar({
     required Car car,
   });
+
+  Future<Result<void, Exception>> sendContactEmail({
+    required String email,
+    required String content,
+  });
 }

@@ -5,7 +5,9 @@ import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
+import 'package:campngo/features/account_settings/presentation/cubit/contact_form_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
+import 'package:campngo/features/account_settings/presentation/pages/contact_form_page.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
@@ -214,7 +216,19 @@ class AppRouter {
             ),
           );
         },
-      )
+      ),
+      GoRoute(
+        path: AppRoutes.contactForm.route,
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: BlocProvider(
+                create: (context) => ContactFormCubit(
+                    accountSettingsRepository:
+                        serviceLocator<AccountSettingsRepository>()),
+                child: const ContactFormPage()),
+          );
+        },
+      ),
     ],
   );
 }

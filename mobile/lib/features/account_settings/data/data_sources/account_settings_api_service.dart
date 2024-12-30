@@ -37,4 +37,10 @@ abstract class AccountSettingsApiService {
   Future<HttpResponse<void>> deleteCar({
     @Path("registration_plate") required String registrationPlate,
   });
+
+  @POST("/contact/{email}")
+  Future<HttpResponse<void>> sendContactEmail({
+    @Path("email") required String email,
+    @Body() required Map<String, dynamic> content,
+  });
 }

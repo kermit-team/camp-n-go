@@ -97,5 +97,10 @@ abstract class  LocaleKeys {
   static const loadingDataError = 'loadingDataError';
   static const assignCarToReservation = 'assignCarToReservation';
   static const addCarToFinalize = 'addCarToFinalize';
+  static const contact = 'contact';
+  static const sendMessageToUs = 'sendMessageToUs';
+  static const content = 'content';
+  static const send = 'send';
+  static const sendingEmailError = 'sendingEmailError';
 
 }

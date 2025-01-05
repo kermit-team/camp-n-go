@@ -92,7 +92,11 @@ class ReservationSummaryCubit extends Cubit<ReservationSummaryState> {
           registrationPlate: car.registrationPlate,
           assignedToReservation: true);
       cars[index] = updatedCar;
-      emit(state.copyWith(carList: cars));
+
+      emit(state.copyWith(
+        carList: cars,
+        assignedCar: carToAssign,
+      ));
     }
   }
 }

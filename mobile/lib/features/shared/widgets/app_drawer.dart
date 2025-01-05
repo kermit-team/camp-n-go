@@ -8,6 +8,7 @@ import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -48,20 +49,26 @@ class AppDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          // ListTile(
-          //   leading: Icon(
-          //     Icons.email_outlined,
-          //     color: Theme.of(context).colorScheme.onSurface,
-          //   ),
-          //   title: StandardText(
-          //     LocaleKeys.contact.tr(),
-          //     textAlign: TextAlign.start,
-          //   ),
-          //   onTap: () {
-          //     serviceLocator<GoRouter>().push(AppRoutes.contactForm.route);
-          //     Navigator.pop(context); // Close the drawer
-          //   },
-          // ),
+          ListTile(
+            leading: Icon(
+              Icons.email_outlined,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            title: StandardText(
+              LocaleKeys.contact.tr(),
+              textAlign: TextAlign.start,
+            ),
+            onTap: () {
+              final String email = serviceLocator<FlutterSecureStorage>()
+                  .read(key: 'email')
+                  .toString();
+              serviceLocator<GoRouter>().push(
+                AppRoutes.contactForm.route,
+                extra: {'email': email},
+              );
+              Navigator.pop(context); // Close the drawer
+            },
+          ),
           ListTile(
             leading: Icon(
               Icons.logout,

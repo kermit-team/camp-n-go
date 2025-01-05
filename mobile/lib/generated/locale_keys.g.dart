@@ -83,7 +83,9 @@ abstract class  LocaleKeys {
   static const isShaded = 'isShaded';
   static const pricePerParcel = 'pricePerParcel';
   static const pricePerAdult = 'pricePerAdult';
+  static const priceForAdults = 'priceForAdults';
   static const pricePerChild = 'pricePerChild';
+  static const priceForChildren = 'priceForChildren';
   static const from = 'from';
   static const to = 'to';
   static const and = 'and';
@@ -102,5 +104,8 @@ abstract class  LocaleKeys {
   static const content = 'content';
   static const send = 'send';
   static const sendingEmailError = 'sendingEmailError';
+  static const selectCar = 'selectCar';
+  static const payment = 'payment';
+  static const totalAmount = 'totalAmount';
 
 }

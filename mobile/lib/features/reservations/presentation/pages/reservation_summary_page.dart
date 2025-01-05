@@ -2,14 +2,16 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/submission_status.dart';
+import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
-import 'package:campngo/features/account_settings/domain/entities/car.dart';
-import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
+import 'package:campngo/features/reservations/presentation/widgets/golden_car_dropdown.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
+import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
+import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
@@ -20,7 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class ReservationSummaryPage extends StatelessWidget {
+class ReservationSummaryPage extends StatefulWidget {
   final Parcel parcel;
   final GetParcelListParams params;
 
@@ -31,6 +33,25 @@ class ReservationSummaryPage extends StatelessWidget {
   });
 
   @override
+  State<ReservationSummaryPage> createState() => _ReservationSummaryPageState();
+}
+
+class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
+  final formKey = GlobalKey<FormState>();
+  late double priceForAdults;
+  late double priceForChildren;
+  late double priceForParcel;
+
+  @override
+  void initState() {
+    super.initState();
+    priceForParcel = widget.parcel.pricePerParcel *
+        widget.params.endDate.difference(widget.params.startDate).inDays;
+    priceForAdults = widget.parcel.pricePerAdult * widget.params.adults;
+    priceForChildren = widget.parcel.pricePerChild * widget.params.children;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppBody(
       child: Column(
@@ -39,14 +60,18 @@ class ReservationSummaryPage extends StatelessWidget {
           TitleText(LocaleKeys.reservationSummary.tr()),
           SizedBox(height: Constants.spaceL),
           _ReservationData(
-            params: params,
-            parcel: parcel,
+            params: widget.params,
+            parcel: widget.parcel,
           ),
           SizedBox(height: Constants.spaceML),
           BlocBuilder<ReservationSummaryCubit, ReservationSummaryState>(
             builder: (context, state) {
               switch (state.getUserDataStatus) {
                 case SubmissionStatus.initial:
+                  context.read<ReservationSummaryCubit>().getAccountData();
+                  return CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.primary,
+                  );
                 case SubmissionStatus.loading:
                   return CircularProgressIndicator(
                     color: Theme.of(context).colorScheme.primary,
@@ -55,7 +80,8 @@ class ReservationSummaryPage extends StatelessWidget {
                   if (state.account != null && state.carList != null) {
                     return _UserData(
                       account: state.account!,
-                      carList: state.carList!,
+                      formKey: formKey,
+                      // carList: state.carList!,
                     );
                   }
                   return Center(
@@ -72,6 +98,52 @@ class ReservationSummaryPage extends StatelessWidget {
               }
             },
           ),
+          SizedBox(height: Constants.spaceML),
+          StandardText(
+            LocaleKeys.payment.tr(),
+            isBold: true,
+          ),
+          Divider(color: Theme.of(context).colorScheme.primary),
+          KeyValueText(
+            keyText: LocaleKeys.pricePerParcel.tr(),
+            valueText: priceForParcel.toString(),
+          ),
+          SizedBox(height: Constants.spaceXS),
+          KeyValueText(
+            keyText: LocaleKeys.priceForAdults.tr(),
+            valueText: '$priceForAdults zł',
+          ),
+          SizedBox(height: Constants.spaceXS),
+          KeyValueText(
+            keyText: LocaleKeys.priceForChildren.tr(),
+            valueText: '$priceForChildren zł',
+          ),
+          Divider(color: Theme.of(context).colorScheme.primary),
+          Row(
+            children: [
+              StandardText(
+                '${LocaleKeys.totalAmount.tr()}: ',
+                isBold: true,
+              ),
+              StandardText(
+                '${priceForParcel + priceForAdults + priceForChildren} zł',
+                isBold: true,
+              ),
+            ],
+          ),
+          SizedBox(height: Constants.spaceXS),
+          CustomButton(
+            text: LocaleKeys.reserve.tr(),
+            onPressed: () {
+              if (formKey.currentState?.validate() == true) {
+                AppSnackBar.showSnackBar(
+                  context: context,
+                  text: LocaleKeys.reservationData.tr(),
+                );
+              }
+            },
+          ),
+          SizedBox(height: Constants.spaceL),
         ],
       ),
     );
@@ -80,98 +152,111 @@ class ReservationSummaryPage extends StatelessWidget {
 
 class _UserData extends StatelessWidget {
   final Account account;
-  final List<Car> carList;
 
   const _UserData({
     required this.account,
-    required this.carList,
+    required this.formKey,
   });
+
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        StandardText(
-          LocaleKeys.userData.tr(),
-          isBold: true,
-        ),
-        Divider(color: Theme.of(context).colorScheme.primary),
-        KeyValueText(
-          keyText: LocaleKeys.firstName.tr(),
-          valueText: account.profile.firstName,
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.lastName.tr(),
-          valueText: account.profile.lastName,
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.email.tr(),
-          valueText: account.email,
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.phoneNumber.tr(),
-          valueText: account.profile.phoneNumber != null
-              ? account.profile.phoneNumber.toString()
-              : '---',
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.idNumber.tr(),
-          valueText: account.profile.idCard != null
-              ? account.profile.idCard.toString()
-              : '---',
-        ),
-        SizedBox(height: Constants.spaceXS),
-        StandardText('${LocaleKeys.assignCarToReservation.tr()}:'),
-        SizedBox(height: Constants.spaceXS),
-        carList.isNotEmpty
-            ? ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(0),
-                itemCount: carList.length,
-                itemBuilder: (context, index) {
-                  return CarListItem(
-                    car: carList[index],
-                    isAssigned: carList[index].assignedToReservation,
-                    showDots: false,
-                    onListTilePressed: (Car car) {
-                      context
-                          .read<ReservationSummaryCubit>()
-                          .assignCarToReservation(carToAssign: car);
-                    },
-                  );
-                },
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  StandardText(
-                    LocaleKeys.addCarToFinalize.tr(),
-                    isBold: true,
+    return BlocBuilder<ReservationSummaryCubit, ReservationSummaryState>(
+        builder: (context, state) {
+      return Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                StandardText(
+                  LocaleKeys.userData.tr(),
+                  isBold: true,
+                ),
+                const Spacer(),
+                HyperlinkText(
+                  text: LocaleKeys.edit.tr(),
+                  onTap: () async {
+                    await serviceLocator<GoRouter>().push(
+                      AppRoutes.accountSettings.route,
+                    );
+                    // .then(
+                    if (context.mounted) {
+                      context.read<ReservationSummaryCubit>().getAccountData();
+                    }
+                    // );
+                  },
+                ),
+                // SizedBox(width: Constants.spaceXS),
+              ],
+            ),
+            Divider(color: Theme.of(context).colorScheme.primary),
+            KeyValueText(
+              keyText: LocaleKeys.firstName.tr(),
+              valueText: account.profile.firstName,
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.lastName.tr(),
+              valueText: account.profile.lastName,
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.email.tr(),
+              valueText: account.email,
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.phoneNumber.tr(),
+              valueText: account.profile.phoneNumber != null
+                  ? account.profile.phoneNumber.toString()
+                  : '---',
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.idNumber.tr(),
+              valueText: account.profile.idCard != null
+                  ? account.profile.idCard.toString()
+                  : '---',
+            ),
+            SizedBox(height: Constants.spaceXS),
+            StandardText('${LocaleKeys.assignCarToReservation.tr()}:'),
+            state.carList != null
+                ? GoldenCarDropdown(
+                    cars: state.carList!,
+                    hintText: LocaleKeys.selectCar.tr(),
+                    validations: const [RequiredValidation()],
+                    selectedCar: state.assignedCar,
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      StandardText(
+                        LocaleKeys.addCarToFinalize.tr(),
+                        isBold: true,
+                      ),
+                      CustomButton(
+                        text: LocaleKeys.accountSettings.tr(),
+                        onPressed: () {
+                          serviceLocator<GoRouter>()
+                              .push(AppRoutes.accountSettings.route)
+                              .then((value) {
+                            if (context.mounted) {
+                              context
+                                  .read<ReservationSummaryCubit>()
+                                  .getAccountData();
+                            }
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  CustomButton(
-                    text: LocaleKeys.accountSettings.tr(),
-                    onPressed: () {
-                      serviceLocator<GoRouter>()
-                          .push(AppRoutes.accountSettings.route)
-                          .then((value) {
-                        if (context.mounted) {
-                          context
-                              .read<ReservationSummaryCubit>()
-                              .getAccountData();
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
-      ],
-    );
+          ],
+        ),
+      );
+    });
   }
 }
 

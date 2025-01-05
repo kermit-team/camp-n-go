@@ -190,7 +190,7 @@ class AppRouter {
                 reservationRepository: serviceLocator<ReservationRepository>(),
                 accountSettingsRepository:
                     serviceLocator<AccountSettingsRepository>(),
-              )..getAccountData(),
+              ),
               child: ReservationSummaryPage(
                 parcel: parcel,
                 params: params,

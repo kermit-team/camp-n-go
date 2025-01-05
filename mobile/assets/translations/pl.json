@@ -82,7 +82,9 @@
   "isShaded": "Zacieniona",
   "pricePerParcel": "Kwota za parcelę",
   "pricePerAdult": "Kwota za dorosłego",
+  "priceForAdults": "Kwota za dorosłych",
   "pricePerChild": "Kwota za dziecko",
+  "priceForChildren": "Kwota za dzieci",
   "from": "od",
   "to": "do",
   "and": "i",
@@ -100,5 +102,8 @@
   "sendMessageToUs": "Wyślij do nas wiadomość",
   "content": "Treść",
   "send": "Wyślij",
-  "sendingEmailError": "Problem z wysyłaniem maila"
+  "sendingEmailError": "Problem z wysyłaniem maila",
+  "selectCar": "Wybierz samochód",
+  "payment": "Płatność",
+  "totalAmount": "Łączna kwota"
 }

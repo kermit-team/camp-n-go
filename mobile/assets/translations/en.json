@@ -81,7 +81,9 @@
   "isShaded": "Shaded",
   "pricePerParcel": "Price per parcel",
   "pricePerAdult": "Price per adult",
+  "priceForAdults": "Price for adults",
   "pricePerChild": "Price per child",
+  "priceForChildren": "Price for children",
   "from": "from",
   "to": "to",
   "and": "and",
@@ -99,5 +101,8 @@
   "sendMessageToUs": "Send message to us",
   "content": "Content",
   "send": "Send",
-  "sendingEmailError": "Sending email error"
+  "sendingEmailError": "Sending email error",
+  "selectCar": "Select car",
+  "payment": "Payment",
+  "totalAmount": "Total amount"
 }

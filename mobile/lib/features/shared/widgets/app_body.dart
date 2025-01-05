@@ -17,26 +17,11 @@ class AppBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: ModalRoute.of(context)!.canPop
-      //     ? IconButton(
-      //         onPressed: context.pop,
-      //         icon: Icon(
-      //           Icons.arrow_back_outlined,
-      //           color: Theme.of(context).colorScheme.onSurface,
-      //         ),
-      //       )
-      //     : null,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        // bottom: PreferredSize(
-        //   preferredSize: const Size.fromHeight(1),
-        //   child: Container(
-        //     color: Theme.of(context).colorScheme.primary,
-        //     height: 1,
-        //   ),
-        // ),
+        elevation: 0,
       ),
+      extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).colorScheme.surface,
       endDrawer: showDrawer ? const AppDrawer() : null,
       endDrawerEnableOpenDragGesture: false,

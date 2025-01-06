@@ -39,6 +39,25 @@ class AccountManagerTestCase(TestCase):
         assert account.profile.id_card == self.account_profile.id_card
         assert not account.groups.exists()
 
+    def test_create_account_without_optional_fields(self):
+        account = Account.objects.create_account(
+            email=self.account.email,
+            password=self.password,
+            first_name=self.account_profile.first_name,
+            last_name=self.account_profile.last_name,
+        )
+
+        assert account.email == self.account.email
+        assert account.check_password(raw_password=self.password)
+        assert account.is_superuser is False
+        assert account.is_active is True
+        assert account.profile.first_name == self.account_profile.first_name
+        assert account.profile.last_name == self.account_profile.last_name
+        assert account.profile.phone_number is None
+        assert account.profile.avatar == AccountProfile._meta.get_field('avatar').default
+        assert account.profile.id_card is None
+        assert not account.groups.exists()
+
     @mock.patch.object(AccountManager, '_create_account_profile')
     def test_create_account_failed(self, create_account_profile_mock):
         exception_message = 'Some exception message'
@@ -81,6 +100,25 @@ class AccountManagerTestCase(TestCase):
         assert account.profile.phone_number == self.account_profile.phone_number
         assert account.profile.avatar == self.account_profile.avatar
         assert account.profile.id_card == self.account_profile.id_card
+        assert not account.groups.exists()
+
+    def test_create_superuser_account_without_optional_fields(self):
+        account = Account.objects.create_superuser_account(
+            email=self.account.email,
+            password=self.password,
+            first_name=self.account_profile.first_name,
+            last_name=self.account_profile.last_name,
+        )
+
+        assert account.email == self.account.email
+        assert account.check_password(raw_password=self.password)
+        assert account.is_superuser is True
+        assert account.is_active is True
+        assert account.profile.first_name == self.account_profile.first_name
+        assert account.profile.last_name == self.account_profile.last_name
+        assert account.profile.phone_number is None
+        assert account.profile.avatar == AccountProfile._meta.get_field('avatar').default
+        assert account.profile.id_card is None
         assert not account.groups.exists()
 
     @mock.patch.object(AccountManager, '_create_account_profile')

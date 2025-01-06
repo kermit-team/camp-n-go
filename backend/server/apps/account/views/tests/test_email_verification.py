@@ -22,7 +22,7 @@ class AccountEmailVerificationViewTestCase(APITestCase):
     def test_request(self, account_email_verification_mock):
         parameters = {'uidb64': self.uidb64, 'token': self.token}
         url = reverse(
-            'email_verification',
+            'account_email_verification',
             kwargs=parameters,
         )
         expected_message = {

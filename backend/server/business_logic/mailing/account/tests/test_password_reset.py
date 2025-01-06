@@ -32,7 +32,7 @@ class AccountPasswordResetMailTestCase(TestCase):
         subject = str(AccountPasswordResetMail._subject_template)
         token = 'some_token_example'
         uidb64 = urlsafe_base64_encode(force_bytes(self.account.identifier))
-        url_path = reverse(viewname='password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
+        url_path = reverse(viewname='account_password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
         password_reset_url = get_frontend_url(backend_url_path=url_path)
 
         ctx = {

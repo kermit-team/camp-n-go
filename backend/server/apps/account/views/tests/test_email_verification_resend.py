@@ -18,7 +18,7 @@ class AccountEmailVerificationResendViewTestCase(APITestCase):
     @mock.patch.object(AccountEmailVerificationResendBL, 'process')
     def test_request(self, account_email_verification_resend_mock):
         request_data = {'email': 'admin@example.com'}
-        url = reverse('email_verification_resend')
+        url = reverse('account_email_verification_resend')
         expected_message = {
             'message': AccountMessagesEnum.EMAIL_VERIFICATION_RESEND_SUCCESS.value.format(email=request_data['email']),
         }

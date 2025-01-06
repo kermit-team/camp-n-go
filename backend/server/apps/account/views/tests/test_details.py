@@ -19,6 +19,7 @@ class AccountDetailsViewTestCase(APITestCase):
     def setUp(self):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
+
         self.cars = baker.make(_model=Car, _quantity=2)
         for car in self.cars:
             car.drivers.add(self.account)
@@ -27,7 +28,7 @@ class AccountDetailsViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('details', kwargs=parameters)
+        url = reverse('account_details', kwargs=parameters)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)
@@ -45,7 +46,7 @@ class AccountDetailsViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('details', kwargs=parameters)
+        url = reverse('account_details', kwargs=parameters)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)

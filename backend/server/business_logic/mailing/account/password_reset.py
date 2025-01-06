@@ -19,7 +19,7 @@ class AccountPasswordResetMail(AbstractMailBL):
     def send(cls, account: Account, token: str) -> None:
         uidb64 = urlsafe_base64_encode(force_bytes(account.identifier))
 
-        url_path = reverse(viewname='password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
+        url_path = reverse(viewname='account_password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
         password_reset_url = get_frontend_url(backend_url_path=url_path)
 
         subject = str(cls._subject_template)

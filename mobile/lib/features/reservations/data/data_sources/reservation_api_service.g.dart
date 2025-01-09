@@ -101,7 +101,8 @@ class _ReservationApiService implements ReservationApiService {
   }
 
   @override
-  Future<HttpResponse<MyReservationsResponseDto>> getMyReservations({
+  Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
+      getMyReservations({
     required int page,
     required String userId,
   }) async {
@@ -113,26 +114,30 @@ class _ReservationApiService implements ReservationApiService {
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<HttpResponse<MyReservationsResponseDto>>(Options(
+        _setStreamType<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>(
+            Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/reservations/user/',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
+                .compose(
+                  _dio.options,
+                  '/reservations/user/',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late MyReservationsResponseDto _value;
+    late PaginatedResponse<ReservationPreviewDto> _value;
     try {
-      _value = MyReservationsResponseDto.fromJson(_result.data!);
+      _value = PaginatedResponse<ReservationPreviewDto>.fromJson(
+        _result.data!,
+        (json) => ReservationPreviewDto.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

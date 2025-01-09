@@ -11,6 +11,7 @@ import 'package:campngo/features/reservations/presentation/widgets/golden_car_dr
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
+import 'package:campngo/features/shared/widgets/lines.dart';
 import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
@@ -103,7 +104,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
             LocaleKeys.payment.tr(),
             isBold: true,
           ),
-          Divider(color: Theme.of(context).colorScheme.primary),
+          Lines.goldenDivider,
           KeyValueText(
             keyText: LocaleKeys.pricePerParcel.tr(),
             valueText: priceForParcel.toString(),
@@ -118,7 +119,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
             keyText: LocaleKeys.priceForChildren.tr(),
             valueText: '$priceForChildren zł',
           ),
-          Divider(color: Theme.of(context).colorScheme.primary),
+          Lines.goldenDivider,
           Row(
             children: [
               StandardText(
@@ -192,7 +193,7 @@ class _UserData extends StatelessWidget {
                 // SizedBox(width: Constants.spaceXS),
               ],
             ),
-            Divider(color: Theme.of(context).colorScheme.primary),
+            Lines.goldenDivider,
             KeyValueText(
               keyText: LocaleKeys.firstName.tr(),
               valueText: account.profile.firstName,
@@ -278,7 +279,7 @@ class _ReservationData extends StatelessWidget {
           LocaleKeys.reservationData.tr(),
           isBold: true,
         ),
-        Divider(color: Theme.of(context).colorScheme.primary),
+        Lines.goldenDivider,
         KeyValueText(
           keyText: LocaleKeys.parcelNumber.tr(),
           valueText: parcel.parcelNumber.toString(),

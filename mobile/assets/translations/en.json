@@ -104,5 +104,9 @@
   "sendingEmailError": "Sending email error",
   "selectCar": "Select car",
   "payment": "Payment",
-  "totalAmount": "Total amount"
+  "totalAmount": "Total amount",
+  "status": "Status",
+  "sector": "Sector",
+  "reservationList": "Reservation list",
+  "price": "Price"
 }

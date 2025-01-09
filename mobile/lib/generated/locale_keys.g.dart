@@ -107,5 +107,9 @@ abstract class  LocaleKeys {
   static const selectCar = 'selectCar';
   static const payment = 'payment';
   static const totalAmount = 'totalAmount';
+  static const status = 'status';
+  static const sector = 'sector';
+  static const reservationList = 'reservationList';
+  static const price = 'price';
 
 }

@@ -21,9 +21,11 @@ import 'package:campngo/features/reservations/domain/entities/get_parcel_list_pa
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/reservation_list_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_summary_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/search_parcel_page.dart';
@@ -81,6 +83,17 @@ class AppRouter {
                       onPressed: () {
                         serviceLocator<GoRouter>()
                             .push(AppRoutes.searchParcel.route);
+                      },
+                      icon: const Icon(Icons.login),
+                    ),
+                    Text(
+                      "Lista rezerwacji.",
+                      style: AppTextStyles.mainTextStyle(),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        serviceLocator<GoRouter>()
+                            .push(AppRoutes.reservationList.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -227,6 +240,18 @@ class AppRouter {
                         serviceLocator<AccountSettingsRepository>()),
                 child: const ContactFormPage()),
           );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.reservationList.route,
+        pageBuilder: (context, state) {
+          return MaterialPage(
+              child: BlocProvider(
+            create: (context) => ReservationListCubit(
+              reservationRepository: serviceLocator<ReservationRepository>(),
+            ),
+            child: const ReservationListPage(),
+          ));
         },
       ),
     ],

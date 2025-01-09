@@ -24,14 +24,14 @@ class _AuthApiService implements AuthApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<AuthResponseDTO>> login(
+  Future<HttpResponse<AuthResponseDto>> login(
       {required Map<String, dynamic> credentials}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(credentials);
-    final _options = _setStreamType<HttpResponse<AuthResponseDTO>>(Options(
+    final _options = _setStreamType<HttpResponse<AuthResponseDto>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -48,9 +48,9 @@ class _AuthApiService implements AuthApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late AuthResponseDTO _value;
+    late AuthResponseDto _value;
     try {
-      _value = AuthResponseDTO.fromJson(_result.data!);
+      _value = AuthResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

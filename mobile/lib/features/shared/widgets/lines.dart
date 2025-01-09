@@ -16,4 +16,7 @@ abstract class Lines {
     width: double.maxFinite,
     color: const Color(0XFFAE9560),
   );
+  static Divider goldenDivider = const Divider(
+    color: Color(0XFFAE9560),
+  );
 }

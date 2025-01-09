@@ -21,7 +21,8 @@ abstract class ReservationRepository {
     required String reservationId,
   });
 
-  Future<Result<List<ReservationPreview>, Exception>> getReservationList({
+  Future<Result<PaginatedResponse<ReservationPreview>, Exception>>
+      getReservationList({
     required String userId,
     required int page,
   });

@@ -18,6 +18,7 @@ class KeyValueText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textAlign: textAlign ?? TextAlign.start,
       text: TextSpan(
         children: [
           TextSpan(

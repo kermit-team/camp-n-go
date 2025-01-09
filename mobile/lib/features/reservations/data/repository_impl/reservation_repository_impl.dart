@@ -126,8 +126,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
   }
 
   @override
-  Future<Result<List<ReservationPreview>, Exception>> getReservationList(
-      {required String userId, required int page}) async {
+  Future<Result<PaginatedResponse<ReservationPreview>, Exception>>
+      getReservationList({required String userId, required int page}) async {
     if (useMocks) {
       return _reservationRepositoryMock.getReservationList(
         userId: userId,
@@ -141,11 +141,15 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
         if (httpResponse.response.statusCode == HttpStatus.ok ||
             httpResponse.response.statusCode == 200) {
-          final List<ReservationPreview> reservations = httpResponse
-              .data.reservations
-              .map((reservationPreviewDto) => reservationPreviewDto.toEntity())
-              .toList();
-          return Success(reservations);
+          final PaginatedResponse<ReservationPreview> paginatedResponse =
+              PaginatedResponse<ReservationPreview>(
+            currentPage: httpResponse.data.currentPage,
+            totalItems: httpResponse.data.totalItems,
+            itemsPerPage: httpResponse.data.itemsPerPage,
+            items:
+                httpResponse.data.items.map((dto) => dto.toEntity()).toList(),
+          );
+          return Success(paginatedResponse);
         }
 
         final errorResponse = handleError(httpResponse.response);

@@ -105,5 +105,9 @@
   "sendingEmailError": "Problem z wysyłaniem maila",
   "selectCar": "Wybierz samochód",
   "payment": "Płatność",
-  "totalAmount": "Łączna kwota"
+  "totalAmount": "Łączna kwota",
+  "status": "Status",
+  "sector": "Sektor",
+  "reservationList": "Lista rezerwacji",
+  "price": "Cena"
 }

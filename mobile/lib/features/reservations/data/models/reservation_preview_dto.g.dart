@@ -9,6 +9,7 @@ part of 'reservation_preview_dto.dart';
 ReservationPreviewDto _$ReservationPreviewDtoFromJson(
         Map<String, dynamic> json) =>
     ReservationPreviewDto(
+      reservationId: json['reservationId'] as String,
       parcelNumber: (json['parcelNumber'] as num).toInt(),
       reservationPrice: (json['reservationPrice'] as num).toDouble(),
       startDate: DateTime.parse(json['startDate'] as String),
@@ -21,6 +22,7 @@ ReservationPreviewDto _$ReservationPreviewDtoFromJson(
 Map<String, dynamic> _$ReservationPreviewDtoToJson(
         ReservationPreviewDto instance) =>
     <String, dynamic>{
+      'reservationId': instance.reservationId,
       'parcelNumber': instance.parcelNumber,
       'reservationPrice': instance.reservationPrice,
       'startDate': instance.startDate.toIso8601String(),

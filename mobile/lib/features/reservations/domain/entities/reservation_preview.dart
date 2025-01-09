@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class ReservationPreview extends Equatable {
+  final String reservationId;
   final int parcelNumber;
   final double reservationPrice;
   final DateTime startDate;
@@ -10,6 +11,7 @@ class ReservationPreview extends Equatable {
   final bool canCancel;
 
   const ReservationPreview({
+    required this.reservationId,
     required this.parcelNumber,
     required this.reservationPrice,
     required this.startDate,
@@ -20,6 +22,7 @@ class ReservationPreview extends Equatable {
   });
 
   copyWith({
+    String? reservationId,
     int? parcelNumber,
     double? reservationPrice,
     DateTime? startDate,
@@ -29,6 +32,7 @@ class ReservationPreview extends Equatable {
     bool? canCancel,
   }) =>
       ReservationPreview(
+        reservationId: reservationId ?? this.reservationId,
         parcelNumber: parcelNumber ?? this.parcelNumber,
         reservationPrice: reservationPrice ?? this.reservationPrice,
         startDate: startDate ?? this.startDate,
@@ -40,6 +44,7 @@ class ReservationPreview extends Equatable {
 
   @override
   List<Object?> get props => [
+        reservationId,
         parcelNumber,
         reservationPrice,
         startDate,

@@ -5,6 +5,7 @@ part 'reservation_preview_dto.g.dart';
 
 @JsonSerializable()
 class ReservationPreviewDto {
+  final String reservationId;
   final int parcelNumber;
   final double reservationPrice;
   final DateTime startDate;
@@ -14,6 +15,7 @@ class ReservationPreviewDto {
   final bool canCancel;
 
   ReservationPreviewDto({
+    required this.reservationId,
     required this.parcelNumber,
     required this.reservationPrice,
     required this.startDate,
@@ -30,6 +32,7 @@ class ReservationPreviewDto {
 
   factory ReservationPreviewDto.fromEntity(ReservationPreview entity) =>
       ReservationPreviewDto(
+        reservationId: entity.reservationId,
         parcelNumber: entity.parcelNumber,
         reservationPrice: entity.reservationPrice,
         startDate: entity.startDate,
@@ -40,6 +43,7 @@ class ReservationPreviewDto {
       );
 
   ReservationPreview toEntity() => ReservationPreview(
+        reservationId: reservationId,
         parcelNumber: parcelNumber,
         reservationPrice: reservationPrice,
         startDate: startDate,

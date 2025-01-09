@@ -109,5 +109,11 @@
   "status": "Status",
   "sector": "Sektor",
   "reservationList": "Lista rezerwacji",
-  "price": "Cena"
+  "price": "Cena",
+  "reservationCancelConfirmation": "Czy chcesz anulować rezerwację dla parceli nr ",
+  "areYouSure": "Jesteś pewien?",
+  "returnFrom": "Powrót",
+  "reservationCancelled": "Rezerwacja została anulowana",
+  "reservationNotLoadedCorrectly": "Rezerwacja nie została poprawnie załadowana",
+  "selectedCar": "Wybrany samochód"
 }

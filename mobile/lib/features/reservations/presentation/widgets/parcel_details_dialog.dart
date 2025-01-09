@@ -68,6 +68,7 @@ class ParcelDetailsDialog extends StatelessWidget {
         vertical: 0,
         horizontal: Constants.spaceM,
       ),
+      actionsAlignment: MainAxisAlignment.spaceBetween,
       actions: [
         Column(
           children: [

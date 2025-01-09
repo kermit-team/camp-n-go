@@ -43,4 +43,8 @@ abstract class ReservationRepository {
     String? phoneNumber,
     String? carRegistration,
   });
+
+  Future<Result<void, Exception>> cancelReservation({
+    required String reservationId,
+  });
 }

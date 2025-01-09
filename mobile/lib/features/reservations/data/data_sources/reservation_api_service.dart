@@ -2,7 +2,6 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/models/available_parcels_response_dto.dart';
 import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
-import 'package:campngo/features/reservations/data/models/my_reservations_response_dto.dart';
 import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
 import 'package:campngo/features/reservations/data/models/reservation_dto.dart';
 import 'package:campngo/features/reservations/data/models/reservation_preview_dto.dart';
@@ -57,5 +56,10 @@ abstract class ReservationApiService {
   Future<HttpResponse<void>> updateReservation({
     @Path("reservation_id") required String reservationId,
     @Body() required UpdateReservationRequestDto updateReservationRequestDto,
+  });
+
+  @DELETE("/reservations/{reservation_id}/")
+  Future<HttpResponse<void>> cancelReservation({
+    @Path('reservationId') required String reservationId,
   });
 }

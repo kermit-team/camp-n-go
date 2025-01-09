@@ -20,7 +20,7 @@ import 'package:campngo/features/reservations/data/data_sources/reservation_api_
 import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_mock.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
-import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_preview_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -96,8 +96,7 @@ Future<void> initializeDependencies() async {
   serviceLocator
       .registerSingleton<ReservationRepository>(reservationRepository);
   serviceLocator.registerFactory(
-    () => ReservationReviewCubit(
-      accountSettingsRepository: accountSettingsRepository,
+    () => ReservationPreviewCubit(
       reservationRepository: reservationRepository,
     ),
   );

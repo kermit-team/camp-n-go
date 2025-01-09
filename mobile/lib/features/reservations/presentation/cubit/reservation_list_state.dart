@@ -1,7 +1,10 @@
 part of 'reservation_list_cubit.dart';
 
+enum SubmissionStatus { initial, loading, success, failure }
+
 class ReservationListState extends Equatable {
   final SubmissionStatus getReservationListStatus;
+  final SubmissionStatus cancelReservationStatus;
   final List<ReservationPreview>? reservations;
   final int? currentPage;
   final int? itemsPerPage;
@@ -11,6 +14,7 @@ class ReservationListState extends Equatable {
 
   const ReservationListState({
     this.getReservationListStatus = SubmissionStatus.initial,
+    this.cancelReservationStatus = SubmissionStatus.initial,
     this.reservations,
     this.currentPage,
     this.itemsPerPage,
@@ -19,8 +23,9 @@ class ReservationListState extends Equatable {
     this.exception,
   });
 
-  copyWith({
+  ReservationListState copyWith({
     SubmissionStatus? getReservationListStatus,
+    SubmissionStatus? cancelReservationStatus,
     List<ReservationPreview>? reservations,
     int? currentPage,
     int? itemsPerPage,
@@ -31,6 +36,8 @@ class ReservationListState extends Equatable {
       ReservationListState(
         getReservationListStatus:
             getReservationListStatus ?? this.getReservationListStatus,
+        cancelReservationStatus:
+            cancelReservationStatus ?? this.cancelReservationStatus,
         reservations: reservations ?? this.reservations,
         currentPage: currentPage ?? this.currentPage,
         itemsPerPage: itemsPerPage ?? this.itemsPerPage,
@@ -42,6 +49,7 @@ class ReservationListState extends Equatable {
   @override
   List<Object?> get props => [
         getReservationListStatus,
+        cancelReservationStatus,
         reservations,
         currentPage,
         itemsPerPage,

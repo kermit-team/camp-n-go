@@ -108,5 +108,11 @@
   "status": "Status",
   "sector": "Sector",
   "reservationList": "Reservation list",
-  "price": "Price"
+  "price": "Price",
+  "reservationCancelConfirmation": "Do you want to cancel reservation for parcel no. ",
+  "areYouSure": "Are you sure?",
+  "returnFrom": "Return",
+  "reservationCancelled": "Reservation cancelled successfully",
+  "reservationNotLoadedCorrectly": "Reservation not loaded correctly",
+  "selectedCar": "Selected car"
 }

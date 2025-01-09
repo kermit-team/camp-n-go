@@ -111,5 +111,11 @@ abstract class  LocaleKeys {
   static const sector = 'sector';
   static const reservationList = 'reservationList';
   static const price = 'price';
+  static const reservationCancelConfirmation = 'reservationCancelConfirmation';
+  static const areYouSure = 'areYouSure';
+  static const returnFrom = 'returnFrom';
+  static const reservationCancelled = 'reservationCancelled';
+  static const reservationNotLoadedCorrectly = 'reservationNotLoadedCorrectly';
+  static const selectedCar = 'selectedCar';
 
 }

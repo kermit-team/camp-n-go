@@ -25,6 +25,7 @@ Future<void> showAddCarDialog({
               hintText: LocaleKeys.registrationPlate.tr(),
             ),
           ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: <Widget>[
             TextButton(
               onPressed: () {

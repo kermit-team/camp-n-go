@@ -220,6 +220,32 @@ class ReservationRepositoryImpl implements ReservationRepository {
       return Failure(handleApiError(dioException));
     }
   }
+
+  @override
+  Future<Result<void, Exception>> cancelReservation(
+      {required String reservationId}) async {
+    if (useMocks) {
+      return _reservationRepositoryMock.cancelReservation(
+          reservationId: reservationId);
+    } else {
+      try {
+        final httpResponse = await _reservationApiService.cancelReservation(
+          reservationId: reservationId,
+        );
+
+        if (httpResponse.response.statusCode == HttpStatus.ok ||
+            httpResponse.response.statusCode == 200) {
+          return const Success(null);
+        }
+
+        final errorResponse = handleError(httpResponse.response);
+        log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
+        return Failure(Exception(errorResponse));
+      } on DioException catch (dioException) {
+        return Failure(handleApiError(dioException));
+      }
+    }
+  }
 }
 
 Exception handleError(Response response) {

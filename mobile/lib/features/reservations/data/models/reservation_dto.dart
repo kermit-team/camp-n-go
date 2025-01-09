@@ -1,4 +1,6 @@
+import 'package:campngo/features/account_settings/data/models/account_dto.dart';
 import 'package:campngo/features/account_settings/data/models/car_dto.dart';
+import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -6,34 +8,26 @@ part 'reservation_dto.g.dart';
 
 @JsonSerializable()
 class ReservationDto {
-  final int parcelNumber;
-  final String sector;
+  final String id;
+  final ParcelDto parcel;
+  final AccountDto account;
   final int numberOfNights;
   final int adults;
   final int children;
   final DateTime startDate;
   final DateTime endDate;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String phoneNumber;
-  final String idCard;
-  final List<CarDto> cars;
+  final CarDto car;
 
   ReservationDto({
-    required this.parcelNumber,
-    required this.sector,
+    required this.id,
+    required this.parcel,
+    required this.account,
     required this.numberOfNights,
     required this.adults,
     required this.children,
     required this.startDate,
     required this.endDate,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phoneNumber,
-    required this.idCard,
-    required this.cars,
+    required this.car,
   });
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) =>
@@ -42,34 +36,26 @@ class ReservationDto {
   Map<String, dynamic> toJson() => _$ReservationDtoToJson(this);
 
   factory ReservationDto.fromEntity(Reservation reservation) => ReservationDto(
-        parcelNumber: reservation.parcelNumber,
-        sector: reservation.sector,
+        id: reservation.id,
+        parcel: ParcelDto.fromEntity(reservation.parcel),
+        account: AccountDto.fromEntity(reservation.account, null),
         numberOfNights: reservation.numberOfNights,
         adults: reservation.adults,
         children: reservation.children,
         startDate: reservation.startDate,
         endDate: reservation.endDate,
-        firstName: reservation.firstName,
-        lastName: reservation.lastName,
-        email: reservation.email,
-        phoneNumber: reservation.phoneNumber,
-        idCard: reservation.idCard,
-        cars: reservation.cars.map((car) => CarDto.fromEntity(car)).toList(),
+        car: CarDto.fromEntity(reservation.car),
       );
 
   Reservation toEntity() => Reservation(
-        parcelNumber: parcelNumber,
-        sector: sector,
+        id: id,
+        parcel: parcel.toEntity(),
+        account: account.toEntity(),
         numberOfNights: numberOfNights,
         adults: adults,
         children: children,
         startDate: startDate,
         endDate: endDate,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phoneNumber: phoneNumber,
-        idCard: idCard,
-        cars: cars.map((carDto) => carDto.toEntity()).toList(),
+        car: car.toEntity(),
       );
 }

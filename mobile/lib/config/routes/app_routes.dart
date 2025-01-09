@@ -9,9 +9,9 @@ enum AppRoutes {
   searchParcel('/searchParcel'),
   parcelList('/parcelList'),
   reservationSummary('/reservationSummary'),
-  reservationDetails('/reservationDetails/:reservationId'),
   contactForm('/contactForm'),
-  reservationList('/reservationList');
+  reservationList('/reservationList'),
+  reservationPreview('/reservationPreview');
 
   const AppRoutes(this.route);
   final String route;

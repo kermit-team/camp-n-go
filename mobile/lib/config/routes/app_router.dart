@@ -22,7 +22,7 @@ import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_list_cubit.dart';
-import 'package:campngo/features/reservations/presentation/cubit/reservation_review_cubit.dart';
+import 'package:campngo/features/reservations/presentation/cubit/reservation_preview_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_list_page.dart';
@@ -86,6 +86,7 @@ class AppRouter {
                       },
                       icon: const Icon(Icons.login),
                     ),
+                    SizedBox(height: Constants.spaceM),
                     Text(
                       "Lista rezerwacji.",
                       style: AppTextStyles.mainTextStyle(),
@@ -213,18 +214,18 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: AppRoutes.reservationDetails.route,
+        path: AppRoutes.reservationPreview.route,
         pageBuilder: (context, state) {
-          final reservationId = state.pathParameters['reservationId'];
+          final Map<String, dynamic> extra =
+              state.extra as Map<String, dynamic>;
+          final reservationId = extra['reservationId'] as String;
           return MaterialPage(
             child: BlocProvider(
-              create: (context) => ReservationReviewCubit(
-                reservationRepository: serviceLocator<ReservationRepository>(),
-                accountSettingsRepository:
-                    serviceLocator<AccountSettingsRepository>(),
-              ),
-              child: ReservationReviewPage(
-                reservationId: reservationId!,
+              create: (context) => ReservationPreviewCubit(
+                  reservationRepository:
+                      serviceLocator<ReservationRepository>()),
+              child: ReservationPreviewPage(
+                reservationId: reservationId,
               ),
             ),
           );
@@ -246,12 +247,13 @@ class AppRouter {
         path: AppRoutes.reservationList.route,
         pageBuilder: (context, state) {
           return MaterialPage(
-              child: BlocProvider(
-            create: (context) => ReservationListCubit(
-              reservationRepository: serviceLocator<ReservationRepository>(),
+            child: BlocProvider(
+              create: (context) => ReservationListCubit(
+                reservationRepository: serviceLocator<ReservationRepository>(),
+              ),
+              child: const ReservationListPage(),
             ),
-            child: const ReservationListPage(),
-          ));
+          );
         },
       ),
     ],

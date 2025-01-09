@@ -111,6 +111,7 @@ Future<void> showEditPasswordDialog({
             ),
           ),
         ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: <Widget>[
           TextButton(
             onPressed: () {

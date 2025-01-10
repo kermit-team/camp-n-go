@@ -7,7 +7,6 @@ class CampingSectionDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CampingSection
         fields = [
-            'id',
             'name',
             'base_price',
             'price_per_adult',

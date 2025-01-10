@@ -57,6 +57,9 @@ MEDIA_URL = '/media/'
 APPEND_SLASH = False
 
 DATETIME_INPUT_FORMATS = [
-    '%Y:%m:%d %H:%M:%S',
-    '%Y:%m:%d %H:%M:%S.%f',
+    '%Y-%m-%d %H:%M:%S',
+    '%Y-%m-%d %H:%M:%S.%f',
+]
+DATE_INPUT_FORMATS = [
+    '%Y-%m-%d',
 ]

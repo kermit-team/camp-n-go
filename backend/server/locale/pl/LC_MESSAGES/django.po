@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 17:53+0100\n"
+"POT-Creation-Date: 2025-01-10 15:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,9 +174,146 @@ msgstr "Hasło musi zawierać co najmniej 1 wielką literę, A-Z."
 msgid "Your password must contain at least 1 uppercase letter, A-Z."
 msgstr "Twoje hasło musi zawierać co najmniej 1 wielką literę, A-Z."
 
-#: server/apps/car/apps.py:8
+#: server/apps/camping/apps.py:8
+msgid "Camping"
+msgstr "Kemping"
+
+#: server/apps/camping/apps.py:9
+msgid "Campings"
+msgstr "Kempingi"
+
+#: server/apps/camping/errors/section.py:7
+#, python-brace-format
+msgid "Camping section {name} does not exist."
+msgstr "Sekcja kempingowa {name} nie istnieje."
+
+#: server/apps/camping/models/payment.py:10
+msgid "WaitingForPayment"
+msgstr "Oczekiwanie na płatność"
+
+#: server/apps/camping/models/payment.py:11
+msgid "Canceled"
+msgstr "Anulowana"
+
+#: server/apps/camping/models/payment.py:12
+msgid "Unpaid"
+msgstr "Nieopłacona"
+
+#: server/apps/camping/models/payment.py:13
+msgid "Paid"
+msgstr "Opłacona"
+
+#: server/apps/camping/models/payment.py:14
+msgid "Returned"
+msgstr "Zwrócona"
+
+#: server/apps/camping/models/payment.py:25
+msgid "StripeCheckoutId"
+msgstr "Identyfikator transakcji Stripe"
+
+#: server/apps/camping/models/payment.py:29
+msgid "Price"
+msgstr "Cena"
+
+#: server/apps/camping/models/plot.py:14
+msgid "Position"
+msgstr "Pozycja"
+
+#: server/apps/camping/models/plot.py:17
+msgid "MaximumNumberOfPeople"
+msgstr "Maksymalna liczba osób"
+
+#: server/apps/camping/models/plot.py:19
+msgid "Width"
+msgstr "Szerokość"
+
+#: server/apps/camping/models/plot.py:20
+msgid "PlotWidthHelpText"
+msgstr "Szerokość parceli podawana w [m]"
+
+#: server/apps/camping/models/plot.py:26
+msgid "Length"
+msgstr "Długość"
+
+#: server/apps/camping/models/plot.py:27
+msgid "PlotLengthHelpText"
+msgstr "Długość parceli podawana w [m]"
+
+#: server/apps/camping/models/plot.py:33
+msgid "WaterConnection"
+msgstr "Podłączenie do wody"
+
+#: server/apps/camping/models/plot.py:37
+msgid "ElectricityConnection"
+msgstr "Podłączenie do prądu"
+
+#: server/apps/camping/models/plot.py:41
+msgid "IsShaded"
+msgstr "Zacieniona"
+
+#: server/apps/camping/models/plot.py:45
+msgid "GreyWaterDischarge"
+msgstr "Zrzut szarej wody"
+
+#: server/apps/camping/models/plot.py:49
+msgid "Description"
+msgstr "Opis"
+
+#: server/apps/camping/models/plot.py:56
+msgid "CampingSection"
+msgstr "Sekcja kempingowa"
+
+#: server/apps/camping/models/reservation.py:14
+msgid "DateFrom"
+msgstr "Data rozpoczęcia"
+
+#: server/apps/camping/models/reservation.py:15
+msgid "DateTo"
+msgstr "Data zakończenia"
+
+#: server/apps/camping/models/reservation.py:16
+msgid "NumberOfAdults"
+msgstr "Liczba dorosłych"
+
+#: server/apps/camping/models/reservation.py:17
+msgid "NumberOfChildren"
+msgstr "Liczba dzieci"
+
+#: server/apps/camping/models/reservation.py:19
+msgid "Comments"
+msgstr "Uwagi"
+
+#: server/apps/camping/models/reservation.py:26
+msgid "User"
+msgstr "Użytkownik"
+
+#: server/apps/camping/models/reservation.py:32 server/apps/car/apps.py:8
 msgid "Car"
 msgstr "Samochód"
+
+#: server/apps/camping/models/reservation.py:38
+msgid "CampingPlot"
+msgstr "Parcela"
+
+#: server/apps/camping/models/reservation.py:44
+msgid "Payment"
+msgstr "Płatność"
+
+#: server/apps/camping/models/section.py:11
+msgid "Name"
+msgstr "Nazwa"
+
+#: server/apps/camping/models/section.py:18
+msgid "BasePrice"
+msgstr "Cena bazowa"
+
+#: server/apps/camping/models/section.py:24
+msgid "PricePerAdult"
+msgstr "Cena za osobę dorosła"
+
+#: server/apps/camping/models/section.py:30
+msgid "PricePerChild"
+msgstr "Cena za dziecko"
 
 #: server/apps/car/apps.py:9
 msgid "Cars"
@@ -227,7 +364,7 @@ msgstr "Pracownik"
 msgid "Client"
 msgstr "Klient"
 
-#: server/settings/components/rest.py:34
+#: server/settings/components/rest.py:36
 msgid "Application for camping management"
 msgstr "Aplikacja do zarządzania kempingiem"
 

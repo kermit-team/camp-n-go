@@ -7,9 +7,12 @@ from server.datastore.commands.camping import CampingSectionCommand
 
 
 class CampingSectionModifySerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+
     class Meta:
         model = CampingSection
         fields = [
+            'name',
             'base_price',
             'price_per_adult',
             'price_per_child',

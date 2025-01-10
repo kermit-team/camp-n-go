@@ -1,30 +1,30 @@
 from django.urls import path
 
 from server.apps.camping.views import (
+    CampingPlotAvailabilityListView,
     CampingPlotDetailsView,
-    CampingPlotListView,
     CampingSectionDetailsView,
     CampingSectionModifyView,
 )
 
 urlpatterns = [
     path(
-        '/',
-        CampingPlotListView.as_view(),
-        name='camping_plot_list',
+        'plots/available/',
+        CampingPlotAvailabilityListView.as_view(),
+        name='camping_plot_availability_list',
     ),
     path(
-        '<str:camping_section__name>/<str:position>/',
+        'sections/<str:camping_section__name>/plots/<str:position>/',
         CampingPlotDetailsView.as_view(),
         name='camping_plot_details',
     ),
     path(
-        '<str:name>/',
+        'sections/<str:name>/',
         CampingSectionDetailsView.as_view(),
         name='camping_section_details',
     ),
     path(
-        '<str:name>/modify/',
+        'sections/<str:name>/modify/',
         CampingSectionModifyView.as_view(),
         name='camping_section_modify',
     ),

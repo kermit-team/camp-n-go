@@ -17,6 +17,7 @@ INSTALLED_APPS = [
 
     # apps
     'server.apps.account',
+    'server.apps.camping',
     'server.apps.car',
     'server.apps.common',
 ]

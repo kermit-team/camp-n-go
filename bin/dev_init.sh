@@ -24,3 +24,9 @@ bin/manage.sh load_groups
 
 echo "Creating users..."
 bin/create_users.sh
+
+echo "Creating camping sections..."
+bin/create_camping_sections.sh
+
+echo "Creating camping plots..."
+bin/create_camping_plots.sh

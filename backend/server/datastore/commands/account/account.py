@@ -1,5 +1,3 @@
-from typing import Optional
-
 from django.contrib.auth.models import Group
 from django.db import transaction
 
@@ -18,23 +16,16 @@ class AccountCommand:
         password: str,
         first_name: str,
         last_name: str,
-        is_superuser: Optional[bool] = False,
-        is_active: Optional[bool] = True,
-        phone_number: Optional[str] = None,
-        avatar: Optional[str] = None,
-        id_card: Optional[str] = None,
-        group_names: Optional[list[str]] = None,
+        **kwargs,
     ) -> Account:
+        group_names = kwargs.pop('group_names', [])
+
         account = Account.objects.create_account(
             email=email,
             password=password,
             first_name=first_name,
             last_name=last_name,
-            is_superuser=is_superuser,
-            is_active=is_active,
-            phone_number=phone_number,
-            avatar=avatar,
-            id_card=id_card,
+            **kwargs,
         )
 
         if group_names:
@@ -49,47 +40,28 @@ class AccountCommand:
         password: str,
         first_name: str,
         last_name: str,
-        is_active: Optional[bool] = True,
-        phone_number: Optional[str] = None,
-        avatar: Optional[str] = None,
-        id_card: Optional[str] = None,
+        **kwargs,
     ) -> Account:
         return Account.objects.create_superuser_account(
             email=email,
             password=password,
             first_name=first_name,
             last_name=last_name,
-            is_active=is_active,
-            phone_number=phone_number,
-            avatar=avatar,
-            id_card=id_card,
+            **kwargs,
         )
 
     @classmethod
     def modify(
         cls,
         account: Account,
-        password: Optional[str] = None,
-        first_name: Optional[str] = None,
-        last_name: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        avatar: Optional[str] = None,
-        id_card: Optional[str] = None,
+        **kwargs,
     ) -> Account:
-        account_profile = account.profile
-        account_profile_fields = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'phone_number': phone_number,
-            'avatar': avatar,
-            'id_card': id_card,
-        }
-
-        for field, value in account_profile_fields.items():
-            if value is not None:
-                setattr(account_profile, field, value)
-        if password:
+        if password := kwargs.pop('password', None):
             cls.change_password(account=account, password=password)
+
+        account_profile = account.profile
+        for field_name, value in kwargs.items():
+            setattr(account_profile, field_name, value)
 
         account_profile.save()
         return account

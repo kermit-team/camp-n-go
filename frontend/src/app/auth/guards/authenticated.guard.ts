@@ -33,11 +33,13 @@ export class AuthenticatedGuard {
       return false;
     }
 
-    if (isAdmin && isAdmin === authUser.isAdmin) {
-      return true;
-    } else {
-      return false;
-    }
+    return true; // todo if property isAdmin is implemented
+
+    // if (isAdmin && isAdmin === authUser.isAdmin) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
   }
 }
 

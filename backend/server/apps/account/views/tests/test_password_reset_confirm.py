@@ -25,7 +25,7 @@ class AccountPasswordResetConfirmViewTestCase(APITestCase):
         parameters = {'uidb64': self.uidb64, 'token': self.token}
         request_data = {'password': password}
         url = reverse(
-            'password_reset_confirm',
+            'account_password_reset_confirm',
             kwargs=parameters,
         )
         expected_message = {

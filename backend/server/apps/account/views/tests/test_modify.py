@@ -43,7 +43,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('modify', kwargs=parameters)
+        url = reverse('account_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -79,7 +79,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('modify', kwargs=parameters)
+        url = reverse('account_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -102,7 +102,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('modify', kwargs=parameters)
+        url = reverse('account_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -136,7 +136,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('modify', kwargs=parameters)
+        url = reverse('account_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)

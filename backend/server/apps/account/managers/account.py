@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
@@ -16,25 +16,19 @@ class AccountManager(BaseUserManager):
         password: str,
         first_name: str,
         last_name: str,
-        is_superuser: Optional[bool] = False,
-        is_active: Optional[bool] = True,
-        phone_number: Optional[str] = None,
-        avatar: Optional[str] = None,
-        id_card: Optional[str] = None,
+        **kwargs,
     ) -> settings.AUTH_USER_MODEL:
         account = self._create_account(
             email=email,
             password=password,
-            is_superuser=is_superuser,
-            is_active=is_active,
+            is_superuser=kwargs.pop('is_superuser', False),
+            is_active=kwargs.pop('is_active', True),
         )
         self._create_account_profile(
             account=account,
             first_name=first_name,
             last_name=last_name,
-            phone_number=phone_number,
-            avatar=avatar,
-            id_card=id_card,
+            **kwargs,
         )
 
         return account
@@ -46,10 +40,7 @@ class AccountManager(BaseUserManager):
         password: str,
         first_name: str,
         last_name: str,
-        is_active: Optional[bool] = True,
-        phone_number: Optional[str] = None,
-        avatar: Optional[str] = None,
-        id_card: Optional[str] = None,
+        **kwargs,
     ) -> settings.AUTH_USER_MODEL:
         is_superuser = True
 
@@ -57,15 +48,13 @@ class AccountManager(BaseUserManager):
             email=email,
             password=password,
             is_superuser=is_superuser,
-            is_active=is_active,
+            is_active=kwargs.pop('is_active', True),
         )
         self._create_account_profile(
             account=account,
             first_name=first_name,
             last_name=last_name,
-            phone_number=phone_number,
-            avatar=avatar,
-            id_card=id_card,
+            **kwargs,
         )
 
         return account

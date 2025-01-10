@@ -18,7 +18,7 @@ class AccountPasswordResetViewTestCase(APITestCase):
     @mock.patch.object(AccountPasswordResetBL, 'process')
     def test_request(self, account_password_reset_mock):
         request_data = {'email': 'admin@example.com'}
-        url = reverse('password_reset')
+        url = reverse('account_password_reset')
         expected_message = {
             'message': AccountMessagesEnum.PASSWORD_RESET_SUCCESS.value.format(email=request_data['email']),
         }

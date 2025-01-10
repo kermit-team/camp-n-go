@@ -32,7 +32,7 @@ class AccountEmailVerificationMailTestCase(TestCase):
         subject = str(AccountEmailVerificationMail._subject_template)
         token = 'some_token_example'
         uidb64 = urlsafe_base64_encode(force_bytes(self.account.identifier))
-        url_path = reverse(viewname='email_verification', kwargs={'uidb64': uidb64, 'token': token})
+        url_path = reverse(viewname='account_email_verification', kwargs={'uidb64': uidb64, 'token': token})
         email_verification_url = get_frontend_url(backend_url_path=url_path)
 
         ctx = {

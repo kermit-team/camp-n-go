@@ -1,0 +1,24 @@
+.profile-wrapper {
+  padding: 200px 15px 15px 15px;
+  width: 100%;
+
+  .profile-container {
+    margin: auto;
+    max-width: 765px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .profile-squares {
+      max-width: 200px;
+    }
+
+    .profile-header {
+      font-size: 36px;
+    }
+
+    .profile-subheader {
+      font-size: 20px;
+    }
+  }
+}

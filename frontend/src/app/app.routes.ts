@@ -7,6 +7,7 @@ import { ForgotPasswordComponent } from './auth/containers/forgot-password/forgo
 import { EmailVerificationComponent } from './auth/containers/email-verifivation/email-verification.component';
 import { emailVerificationResolver } from './auth/resolvers/email-verification.resolver';
 import { PasswordResetComponent } from './auth/containers/password-reset/password-reset.component';
+import { ProfileComponent } from './profile/containers/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,15 @@ export const routes: Routes = [
     component: PasswordResetComponent,
   },
   {
+    path: AppRoutes.Profile,
+    component: ProfileComponent,
+  },
+  {
     path: '',
     component: LandingPageComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/',
   },
 ];

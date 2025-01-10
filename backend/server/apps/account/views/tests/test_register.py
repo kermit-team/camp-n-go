@@ -32,7 +32,7 @@ class AccountRegisterViewTestCase(APITestCase):
                 'last_name': self.account_profile.last_name,
             },
         }
-        url = reverse('register')
+        url = reverse('account_register')
 
         req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req)

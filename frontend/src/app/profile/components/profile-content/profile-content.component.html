@@ -1,0 +1,28 @@
+<div class="profile-form-wrapper">
+  <app-profile-base-form
+    [data]="user.profile.first_name"
+    [title]="'Imię'"
+    (valueChanged)="dataEdited('profile.first_name', $event)"
+  ></app-profile-base-form>
+  <app-profile-base-form
+    [data]="user.profile.last_name"
+    [title]="'Nazwisko'"
+    (valueChanged)="dataEdited('profile.last_name', $event)"
+  ></app-profile-base-form>
+  <app-profile-base-form
+    [data]="user.profile.phone_number"
+    [title]="'Numer telefonu'"
+    (valueChanged)="dataEdited('profile.phone_number', $event)"
+  ></app-profile-base-form>
+  <app-profile-base-form
+    [data]="maskIdCard(user.profile.id_card)"
+    [title]="'Dowód osobisty'"
+    (valueChanged)="dataEdited('profile.id_card', $event)"
+  ></app-profile-base-form>
+  <app-profile-base-form
+    [data]="'**********'"
+    [title]="'Hasło'"
+    [isPassword]="true"
+    (valueChanged)="passwordChanged($event)"
+  ></app-profile-base-form>
+</div>

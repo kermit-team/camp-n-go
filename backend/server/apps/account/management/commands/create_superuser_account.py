@@ -7,57 +7,64 @@ from server.datastore.commands.account import AccountCommand
 
 class Command(BaseCommand):
     help = 'Create superuser account based on the given details.'
+    _command_args = [
+        'email',
+        'password',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'id_card',
+        'is_active',
+    ]
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--email',
             type=str,
+            required=True,
             help="Account's email",
         )
         parser.add_argument(
             '--password',
             type=str,
+            required=True,
             help='Password assigned to Account',
         )
         parser.add_argument(
             '--first_name',
             type=str,
+            required=True,
             help="Account's first name",
         )
         parser.add_argument(
             '--last_name',
             type=str,
+            required=True,
             help="Account's last name",
         )
         parser.add_argument(
             '--phone_number',
             type=str,
-            required=False,
             help="Account's phone number",
         )
         parser.add_argument(
             '--id_card',
             type=str,
-            required=False,
             help="Account's ID Card",
         )
         parser.add_argument(
-            '--active',
+            '--is_active',
             action=BooleanOptionalAction,
-            default=False,
             help='Determines if Account is active',
         )
 
     def handle(self, *args, **kwargs):
-        account = AccountCommand.create_superuser(
-            email=kwargs.get('email'),
-            password=kwargs.get('password'),
-            first_name=kwargs.get('first_name'),
-            last_name=kwargs.get('last_name'),
-            phone_number=kwargs.get('phone_number'),
-            id_card=kwargs.get('id_card'),
-            is_active=kwargs.get('active'),
-        )
+        command_kwargs = {
+            arg: value for arg, value in kwargs.items()
+            if value is not None and arg in self._command_args
+        }
+
+        account = AccountCommand.create_superuser(**command_kwargs)
         self.stdout.write(
             'Successfully created superuser account with identifier: {identifier}.'.format(
                 identifier=account.identifier,

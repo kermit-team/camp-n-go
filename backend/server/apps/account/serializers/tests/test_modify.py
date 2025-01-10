@@ -40,7 +40,6 @@ class AccountModifySerializerTestCase(TestCase):
                     'id_card': self.new_profile_data.id_card,
                 },
             },
-            partial=True,
         )
 
         assert serializer.is_valid()
@@ -56,7 +55,8 @@ class AccountModifySerializerTestCase(TestCase):
             id_card=self.new_profile_data.id_card,
         )
 
-    def test_update_without_required_fields(self):
+    @mock.patch.object(AccountCommand, 'modify')
+    def test_update_without_required_fields(self, modify_account_mock):
         new_password = generate_password()
 
         serializer = AccountModifySerializer(
@@ -68,6 +68,7 @@ class AccountModifySerializerTestCase(TestCase):
         )
 
         assert not serializer.is_valid()
+        modify_account_mock.assert_not_called()
 
     @mock.patch.object(AccountCommand, 'modify')
     def test_partial_update(self, modify_account_mock):

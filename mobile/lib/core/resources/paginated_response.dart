@@ -6,18 +6,17 @@ part 'paginated_response.g.dart';
 class PaginatedResponse<T> {
   @JsonKey(name: 'results')
   final List<T> items;
-  @JsonKey(name: 'current_page')
+  @JsonKey(name: 'page')
   final int currentPage;
-  @JsonKey(name: 'items_per_page')
-  final int itemsPerPage;
   @JsonKey(name: 'count')
   final int totalItems;
+  final Links? links;
 
   PaginatedResponse({
     required this.items,
     required this.currentPage,
-    required this.itemsPerPage,
     required this.totalItems,
+    this.links,
   });
 
   factory PaginatedResponse.fromJson(
@@ -26,4 +25,19 @@ class PaginatedResponse<T> {
 
   Map<String, dynamic> toJson(Object? Function(T value) toJsonT) =>
       _$PaginatedResponseToJson(this, toJsonT);
+}
+
+@JsonSerializable()
+class Links {
+  final String? next;
+  final String? previous;
+
+  Links({
+    this.next,
+    this.previous,
+  });
+
+  factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LinksToJson(this);
 }

@@ -12,9 +12,11 @@ PaginatedResponse<T> _$PaginatedResponseFromJson<T>(
 ) =>
     PaginatedResponse<T>(
       items: (json['results'] as List<dynamic>).map(fromJsonT).toList(),
-      currentPage: (json['current_page'] as num).toInt(),
-      itemsPerPage: (json['items_per_page'] as num).toInt(),
+      currentPage: (json['page'] as num).toInt(),
       totalItems: (json['count'] as num).toInt(),
+      links: json['links'] == null
+          ? null
+          : Links.fromJson(json['links'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PaginatedResponseToJson<T>(
@@ -23,7 +25,17 @@ Map<String, dynamic> _$PaginatedResponseToJson<T>(
 ) =>
     <String, dynamic>{
       'results': instance.items.map(toJsonT).toList(),
-      'current_page': instance.currentPage,
-      'items_per_page': instance.itemsPerPage,
+      'page': instance.currentPage,
       'count': instance.totalItems,
+      'links': instance.links,
+    };
+
+Links _$LinksFromJson(Map<String, dynamic> json) => Links(
+      next: json['next'] as String?,
+      previous: json['previous'] as String?,
+    );
+
+Map<String, dynamic> _$LinksToJson(Links instance) => <String, dynamic>{
+      'next': instance.next,
+      'previous': instance.previous,
     };

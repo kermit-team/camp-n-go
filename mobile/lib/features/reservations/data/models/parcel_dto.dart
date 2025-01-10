@@ -1,3 +1,4 @@
+import 'package:campngo/features/reservations/data/models/camping_section_dto.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -5,34 +6,34 @@ part 'parcel_dto.g.dart';
 
 @JsonSerializable()
 class ParcelDto {
-  final int parcelNumber;
-  final int maxPeople;
-  final String description;
-  final double parcelLength;
-  final double parcelWidth;
-  final bool hasElectricity;
-  final bool hasWater;
-  final bool hasGreyWaterDisposal;
+  final String position;
+  @JsonKey(name: 'max_number_of_people')
+  final int maxNumberOfPeople;
+  final String width;
+  final String length;
+  @JsonKey(name: 'water_connection')
+  final bool waterConnection;
+  @JsonKey(name: 'electricity_connection')
+  final bool electricityConnection;
+  @JsonKey(name: 'is_shaded')
   final bool isShaded;
-  final double pricePerParcel;
-  final double pricePerAdult;
-  final double pricePerChild;
-  final Map<String, dynamic>? additionalNotes;
+  @JsonKey(name: 'grey_water_discharge')
+  final bool greyWaterDischarge;
+  final String description;
+  @JsonKey(name: 'camping_section')
+  final CampingSectionDto campingSection;
 
   ParcelDto({
-    required this.parcelNumber,
-    required this.maxPeople,
-    required this.description,
-    required this.parcelLength,
-    required this.parcelWidth,
-    required this.hasElectricity,
-    required this.hasWater,
-    required this.hasGreyWaterDisposal,
+    required this.position,
+    required this.maxNumberOfPeople,
+    required this.width,
+    required this.length,
+    required this.waterConnection,
+    required this.electricityConnection,
     required this.isShaded,
-    required this.pricePerParcel,
-    required this.pricePerAdult,
-    required this.pricePerChild,
-    this.additionalNotes,
+    required this.greyWaterDischarge,
+    required this.description,
+    required this.campingSection,
   });
 
   factory ParcelDto.fromJson(Map<String, dynamic> json) =>
@@ -41,34 +42,28 @@ class ParcelDto {
   Map<String, dynamic> toJson() => _$ParcelDtoToJson(this);
 
   factory ParcelDto.fromEntity(Parcel parcel) => ParcelDto(
-        parcelNumber: parcel.parcelNumber,
-        maxPeople: parcel.maxPeople,
-        description: parcel.description,
-        parcelLength: parcel.parcelLength,
-        parcelWidth: parcel.parcelWidth,
-        hasElectricity: parcel.hasElectricity,
-        hasWater: parcel.hasWater,
-        hasGreyWaterDisposal: parcel.hasGreyWaterDisposal,
+        position: parcel.position,
+        maxNumberOfPeople: parcel.maxNumberOfPeople,
+        width: parcel.width.toStringAsFixed(2),
+        length: parcel.length.toStringAsFixed(2),
+        waterConnection: parcel.waterConnection,
+        electricityConnection: parcel.electricityConnection,
         isShaded: parcel.isShaded,
-        pricePerParcel: parcel.pricePerParcel,
-        pricePerAdult: parcel.pricePerAdult,
-        pricePerChild: parcel.pricePerChild,
-        additionalNotes: parcel.additionalNotes,
+        greyWaterDischarge: parcel.greyWaterDischarge,
+        description: parcel.description,
+        campingSection: CampingSectionDto.fromEntity(parcel.campingSection),
       );
 
   Parcel toEntity() => Parcel(
-        parcelNumber: parcelNumber,
-        maxPeople: maxPeople,
+        position: position,
+        maxNumberOfPeople: maxNumberOfPeople,
         description: description,
-        parcelLength: parcelLength,
-        parcelWidth: parcelWidth,
-        hasElectricity: hasElectricity,
-        hasWater: hasWater,
-        hasGreyWaterDisposal: hasGreyWaterDisposal,
+        length: double.tryParse(length) ?? 0.0,
+        width: double.tryParse(width) ?? 0.0,
+        electricityConnection: electricityConnection,
+        waterConnection: waterConnection,
+        greyWaterDischarge: greyWaterDischarge,
         isShaded: isShaded,
-        pricePerParcel: pricePerParcel,
-        pricePerAdult: pricePerAdult,
-        pricePerChild: pricePerChild,
-        additionalNotes: additionalNotes,
+        campingSection: campingSection.toEntity(),
       );
 }

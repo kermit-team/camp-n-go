@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/core/resources/submission_status.dart';
@@ -55,10 +56,9 @@ class ParcelListCubit extends Cubit<ParcelListState> {
             getParcelListStatus: SubmissionStatus.success,
             parcels: updatedList,
             currentPage: page,
-            parcelsPerPage: result.value.itemsPerPage,
             totalParcels: result.value.totalItems,
-            hasMoreParcels: page <
-                (result.value.totalItems / result.value.itemsPerPage).ceil(),
+            hasMoreParcels:
+                page < (result.value.totalItems / Constants.pageSize).ceil(),
           ));
           break;
 

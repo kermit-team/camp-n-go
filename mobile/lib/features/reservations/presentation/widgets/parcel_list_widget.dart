@@ -87,6 +87,7 @@ class _ParcelListWidgetState extends State<ParcelListWidget> {
                 }
                 return ParcelListTile(
                   parcel: state.parcels![index],
+                  params: state.params!,
                   onListTilePressed: (Parcel parcel) {
                     showDialog(
                       context: context,

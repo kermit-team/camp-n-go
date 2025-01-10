@@ -5,18 +5,16 @@ part 'available_parcels_response_dto.g.dart';
 
 @JsonSerializable()
 class AvailableParcelsResponseDto {
+  @JsonKey(name: 'results')
   final List<ParcelDto> parcels;
-  @JsonKey(name: 'current_page')
+  @JsonKey(name: 'page')
   final int currentPage;
-  @JsonKey(name: 'items_per_page')
-  final int itemsPerPage;
-  @JsonKey(name: 'total_items')
+  @JsonKey(name: 'count')
   final int totalItems;
 
   AvailableParcelsResponseDto({
     required this.parcels,
     required this.currentPage,
-    required this.itemsPerPage,
     required this.totalItems,
   });
 

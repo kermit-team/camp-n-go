@@ -46,10 +46,12 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
   @override
   void initState() {
     super.initState();
-    priceForParcel = widget.parcel.pricePerParcel *
+    priceForParcel = widget.parcel.campingSection.basePrice *
         widget.params.endDate.difference(widget.params.startDate).inDays;
-    priceForAdults = widget.parcel.pricePerAdult * widget.params.adults;
-    priceForChildren = widget.parcel.pricePerChild * widget.params.children;
+    priceForAdults =
+        widget.parcel.campingSection.pricePerAdult * widget.params.adults;
+    priceForChildren =
+        widget.parcel.campingSection.pricePerChild * widget.params.children;
   }
 
   @override
@@ -281,8 +283,8 @@ class _ReservationData extends StatelessWidget {
         ),
         Lines.goldenDivider,
         KeyValueText(
-          keyText: LocaleKeys.parcelNumber.tr(),
-          valueText: parcel.parcelNumber.toString(),
+          keyText: LocaleKeys.sector.tr(),
+          valueText: parcel.campingSection.name,
         ),
         SizedBox(height: Constants.spaceXS),
         KeyValueText(

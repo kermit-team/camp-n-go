@@ -25,19 +25,21 @@ class _ReservationApiService implements ReservationApiService {
 
   @override
   Future<HttpResponse<AvailableParcelsResponseDto>> getAvailableParcels({
-    required DateTime startDate,
-    required DateTime endDate,
-    required int adults,
-    required int children,
+    required String dateFrom,
+    required String dateTo,
+    required int numberOfAdults,
+    required int numberOfChildren,
     required int page,
+    required int pageSize,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'start_date': startDate.toIso8601String(),
-      r'end_date': endDate.toIso8601String(),
-      r'adults': adults,
-      r'children': children,
+      r'date_from': dateFrom,
+      r'date_to': dateTo,
+      r'number_of_adults': numberOfAdults,
+      r'number_of_children': numberOfChildren,
       r'page': page,
+      r'page_size': pageSize,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
@@ -49,7 +51,7 @@ class _ReservationApiService implements ReservationApiService {
     )
             .compose(
               _dio.options,
-              '/parcels/',
+              '/camping/plots/available/',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -147,8 +149,10 @@ class _ReservationApiService implements ReservationApiService {
   }
 
   @override
-  Future<HttpResponse<ParcelDto>> getParcelDetails(
-      {required int parcelNumber}) async {
+  Future<HttpResponse<ParcelDto>> getParcelDetails({
+    required String campingSectionName,
+    required String position,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -160,7 +164,7 @@ class _ReservationApiService implements ReservationApiService {
     )
         .compose(
           _dio.options,
-          '/parcels/${parcelNumber}/',
+          '/camping/sections/${campingSectionName}/plots/${position}/',
           queryParameters: queryParameters,
           data: _data,
         )

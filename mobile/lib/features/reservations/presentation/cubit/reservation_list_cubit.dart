@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/core/token_storage.dart';
@@ -57,10 +58,9 @@ class ReservationListCubit extends Cubit<ReservationListState> {
               getReservationListStatus: SubmissionStatus.success,
               reservations: updatedList,
               currentPage: page,
-              itemsPerPage: result.value.itemsPerPage,
               totalItems: result.value.totalItems,
-              hasMoreItems: page <
-                  (result.value.totalItems / result.value.itemsPerPage).ceil(),
+              hasMoreItems:
+                  page < (result.value.totalItems / Constants.pageSize).ceil(),
             ));
             break;
 

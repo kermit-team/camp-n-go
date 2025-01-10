@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/data_result.dart';
+import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
 import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
@@ -23,30 +25,28 @@ class ReservationRepositoryImpl implements ReservationRepository {
       {this.useMocks = false});
 
   @override
-  Future<Result<Parcel, Exception>> getParcelDetails(
-      {required String reservationId}) async {
-    if (useMocks) {
-      return _reservationRepositoryMock.getParcelDetails(
-          reservationId: reservationId);
-    } else {
-      // Real API implementation
-      try {
-        //TODO change to parcelNumber
-        final httpResponse = await _reservationApiService.getParcelDetails(
-            parcelNumber: int.parse(reservationId));
+  Future<Result<Parcel, Exception>> getParcelDetails({
+    required String campingSectionName,
+    required String position,
+  }) async {
+    // Real API implementation
+    try {
+      final httpResponse = await _reservationApiService.getParcelDetails(
+        campingSectionName: campingSectionName,
+        position: position,
+      );
 
-        if (httpResponse.response.statusCode == HttpStatus.ok ||
-            httpResponse.response.statusCode == 200) {
-          final Parcel parcel = httpResponse.data.toEntity();
-          return Success(parcel);
-        }
-
-        final errorResponse = handleError(httpResponse.response);
-        log("[ReservationRepositoryImpl>getParcelDetails]: $errorResponse");
-        return Failure(Exception(errorResponse));
-      } on DioException catch (dioException) {
-        return Failure(handleApiError(dioException));
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final Parcel parcel = httpResponse.data.toEntity();
+        return Success(parcel);
       }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>getParcelDetails]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 
@@ -70,11 +70,12 @@ class ReservationRepositoryImpl implements ReservationRepository {
     } else {
       try {
         final httpResponse = await _reservationApiService.getAvailableParcels(
-          startDate: startDate,
-          endDate: endDate,
-          adults: adults,
-          children: children,
+          dateFrom: startDate.toDateString(),
+          dateTo: endDate.toDateString(),
+          numberOfAdults: adults,
+          numberOfChildren: children,
           page: page,
+          pageSize: Constants.pageSize,
         );
 
         if (httpResponse.response.statusCode == HttpStatus.ok) {
@@ -82,7 +83,6 @@ class ReservationRepositoryImpl implements ReservationRepository {
             items:
                 httpResponse.data.parcels.map((dto) => dto.toEntity()).toList(),
             currentPage: httpResponse.data.currentPage,
-            itemsPerPage: httpResponse.data.itemsPerPage,
             totalItems: httpResponse.data.totalItems,
           );
           return Success(response);
@@ -145,7 +145,6 @@ class ReservationRepositoryImpl implements ReservationRepository {
               PaginatedResponse<ReservationPreview>(
             currentPage: httpResponse.data.currentPage,
             totalItems: httpResponse.data.totalItems,
-            itemsPerPage: httpResponse.data.itemsPerPage,
             items:
                 httpResponse.data.items.map((dto) => dto.toEntity()).toList(),
           );

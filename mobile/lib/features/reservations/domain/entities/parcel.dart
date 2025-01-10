@@ -1,82 +1,69 @@
+import 'package:campngo/features/reservations/domain/entities/camping_section.dart';
 import 'package:equatable/equatable.dart';
 
 class Parcel extends Equatable {
-  final int parcelNumber;
-  final int maxPeople; // Maximum number of people
+  final String position;
+  final int maxNumberOfPeople;
+  final double width;
+  final double length;
+  final bool waterConnection;
+  final bool electricityConnection;
+  final bool isShaded;
+  final bool greyWaterDischarge;
   final String description;
-  final double parcelLength; // Parcel length
-  final double parcelWidth; // Parcel width
-  final bool hasElectricity; // Electricity connection
-  final bool hasWater; // Water connection
-  final bool hasGreyWaterDisposal; // Grey water disposal
-  final bool isShaded; // Shaded
-  final double pricePerParcel; // New field: Price per parcel
-  final double pricePerAdult; // New field: Price per adult
-  final double pricePerChild; // New field: Price per child
-  final Map<String, dynamic>?
-      additionalNotes; // Additional notes (optional JSON)
+  final CampingSection campingSection;
 
   const Parcel({
-    required this.parcelNumber,
-    required this.maxPeople,
-    required this.description,
-    required this.parcelLength,
-    required this.parcelWidth,
-    required this.hasElectricity,
-    required this.hasWater,
-    required this.hasGreyWaterDisposal,
+    required this.position,
+    required this.maxNumberOfPeople,
+    required this.width,
+    required this.length,
+    required this.waterConnection,
+    required this.electricityConnection,
     required this.isShaded,
-    required this.pricePerParcel,
-    required this.pricePerAdult,
-    required this.pricePerChild,
-    this.additionalNotes,
+    required this.greyWaterDischarge,
+    required this.description,
+    required this.campingSection,
   });
 
   Parcel copyWith({
-    int? parcelNumber,
-    int? maxPeople,
-    String? description,
-    double? parcelLength,
-    double? parcelWidth,
-    bool? hasElectricity,
-    bool? hasWater,
-    bool? hasGreyWaterDisposal,
+    String? position,
+    int? maxNumberOfPeople,
+    double? width,
+    double? length,
+    bool? waterConnection,
+    bool? electricityConnection,
     bool? isShaded,
-    double? pricePerParcel,
-    double? pricePerAdult,
-    double? pricePerChild,
-    Map<String, dynamic>? additionalNotes,
-  }) =>
-      Parcel(
-        parcelNumber: parcelNumber ?? this.parcelNumber,
-        maxPeople: maxPeople ?? this.maxPeople,
-        description: description ?? this.description,
-        parcelLength: parcelLength ?? this.parcelLength,
-        parcelWidth: parcelWidth ?? this.parcelWidth,
-        hasElectricity: hasElectricity ?? this.hasElectricity,
-        hasWater: hasWater ?? this.hasWater,
-        hasGreyWaterDisposal: hasGreyWaterDisposal ?? this.hasGreyWaterDisposal,
-        isShaded: isShaded ?? this.isShaded,
-        pricePerParcel: pricePerParcel ?? this.pricePerParcel,
-        pricePerAdult: pricePerAdult ?? this.pricePerAdult,
-        pricePerChild: pricePerChild ?? this.pricePerChild,
-        additionalNotes: additionalNotes ?? this.additionalNotes,
-      );
+    bool? greyWaterDischarge,
+    String? description,
+    CampingSection? campingSection,
+  }) {
+    return Parcel(
+      position: position ?? this.position,
+      maxNumberOfPeople: maxNumberOfPeople ?? this.maxNumberOfPeople,
+      width: width ?? this.width,
+      length: length ?? this.length,
+      waterConnection: waterConnection ?? this.waterConnection,
+      electricityConnection:
+          electricityConnection ?? this.electricityConnection,
+      isShaded: isShaded ?? this.isShaded,
+      greyWaterDischarge: greyWaterDischarge ?? this.greyWaterDischarge,
+      description: description ?? this.description,
+      campingSection: campingSection ?? this.campingSection,
+    );
+  }
 
   @override
   List<Object?> get props => [
-        parcelNumber,
-        maxPeople,
-        description,
-        parcelLength,
-        parcelWidth,
-        hasElectricity,
-        hasWater,
-        hasGreyWaterDisposal,
+        position,
+        maxNumberOfPeople,
+        width,
+        length,
+        waterConnection,
+        electricityConnection,
         isShaded,
-        pricePerParcel,
-        pricePerAdult,
-        pricePerChild,
-        additionalNotes,
+        greyWaterDischarge,
+        description,
+        campingSection,
       ];
 }

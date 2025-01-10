@@ -17,7 +17,7 @@ import 'package:campngo/features/register/domain/use_cases/register_use_case.dar
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
-import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_mock.dart';
+import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_impl.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_preview_cubit.dart';
@@ -44,9 +44,8 @@ Future<void> initializeDependencies() async {
   final accountSettingsRepository =
       AccountSettingsRepositoryImpl(accountSettingsApiService);
   final reservationApiService = ReservationApiService(dio);
-  // final reservationRepository =
-  //     ReservationRepositoryImpl(reservationApiService);
-  final reservationRepository = ReservationRepositoryMock();
+  final reservationRepository =
+      ReservationRepositoryImpl(reservationApiService);
 
   // Register dependencies
   serviceLocator.registerSingleton<Dio>(dio);

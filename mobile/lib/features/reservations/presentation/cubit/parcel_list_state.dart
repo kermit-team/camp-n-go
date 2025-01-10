@@ -4,7 +4,6 @@ class ParcelListState extends Equatable {
   final SubmissionStatus getParcelListStatus;
   final List<Parcel>? parcels;
   final int? currentPage;
-  final int? parcelsPerPage;
   final int? totalParcels;
   final bool? hasMoreParcels;
   final Exception? exception;
@@ -15,7 +14,6 @@ class ParcelListState extends Equatable {
     this.getParcelListStatus = SubmissionStatus.initial,
     this.parcels,
     this.currentPage,
-    this.parcelsPerPage,
     this.totalParcels,
     this.hasMoreParcels,
     this.exception,
@@ -26,7 +24,6 @@ class ParcelListState extends Equatable {
     SubmissionStatus? getParcelListStatus,
     List<Parcel>? parcels,
     int? currentPage,
-    int? parcelsPerPage,
     int? totalParcels,
     bool? hasMoreParcels,
     Exception? exception,
@@ -36,7 +33,6 @@ class ParcelListState extends Equatable {
         getParcelListStatus: getParcelListStatus ?? this.getParcelListStatus,
         parcels: parcels ?? this.parcels,
         currentPage: currentPage ?? this.currentPage,
-        parcelsPerPage: parcelsPerPage ?? this.parcelsPerPage,
         totalParcels: totalParcels ?? this.totalParcels,
         hasMoreParcels: hasMoreParcels ?? this.hasMoreParcels,
         exception: exception ?? this.exception,
@@ -48,7 +44,6 @@ class ParcelListState extends Equatable {
         getParcelListStatus,
         parcels,
         currentPage,
-        parcelsPerPage,
         totalParcels,
         hasMoreParcels,
         exception,

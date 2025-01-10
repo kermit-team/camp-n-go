@@ -41,7 +41,7 @@ class ParcelDetailsDialog extends StatelessWidget {
         children: [
           Center(
             child: SubtitleText(
-              "${LocaleKeys.parcelNumber.tr()} ${parcel.parcelNumber}",
+              "${LocaleKeys.sector.tr()} ${parcel.campingSection.name}",
               isUnderlined: false,
             ),
           ),

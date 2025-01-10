@@ -6,7 +6,8 @@ import 'package:campngo/features/reservations/domain/entities/reservation_previe
 
 abstract class ReservationRepository {
   Future<Result<Parcel, Exception>> getParcelDetails({
-    required String reservationId,
+    required String campingSectionName,
+    required String position,
   });
 
   Future<Result<PaginatedResponse<Parcel>, Exception>> getParcelList({

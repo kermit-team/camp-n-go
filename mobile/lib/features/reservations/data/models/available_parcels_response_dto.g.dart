@@ -9,19 +9,17 @@ part of 'available_parcels_response_dto.dart';
 AvailableParcelsResponseDto _$AvailableParcelsResponseDtoFromJson(
         Map<String, dynamic> json) =>
     AvailableParcelsResponseDto(
-      parcels: (json['parcels'] as List<dynamic>)
+      parcels: (json['results'] as List<dynamic>)
           .map((e) => ParcelDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      currentPage: (json['current_page'] as num).toInt(),
-      itemsPerPage: (json['items_per_page'] as num).toInt(),
-      totalItems: (json['total_items'] as num).toInt(),
+      currentPage: (json['page'] as num).toInt(),
+      totalItems: (json['count'] as num).toInt(),
     );
 
 Map<String, dynamic> _$AvailableParcelsResponseDtoToJson(
         AvailableParcelsResponseDto instance) =>
     <String, dynamic>{
-      'parcels': instance.parcels,
-      'current_page': instance.currentPage,
-      'items_per_page': instance.itemsPerPage,
-      'total_items': instance.totalItems,
+      'results': instance.parcels,
+      'page': instance.currentPage,
+      'count': instance.totalItems,
     };

@@ -37,8 +37,8 @@ class _ParcelListPageState extends State<ParcelListPage> {
   Future<void> _fetchPage(int pageKey) async {
     context.read<ParcelListCubit>().getParcelList(
           params: GetParcelListParams(
-            startDate: DateTime.now(),
-            endDate: DateTime.now().add(const Duration(days: 7)),
+            startDate: widget.params.startDate,
+            endDate: widget.params.endDate,
             adults: 2,
             children: 0,
           ),

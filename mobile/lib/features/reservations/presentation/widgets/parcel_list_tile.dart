@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
@@ -9,12 +10,17 @@ import 'package:flutter/material.dart';
 class ParcelListTile extends StatelessWidget {
   final Parcel parcel;
   final void Function(Parcel) onListTilePressed;
+  final GetParcelListParams params;
+  final double pricePerDay;
 
-  const ParcelListTile({
+  ParcelListTile({
     super.key,
     required this.parcel,
     required this.onListTilePressed,
-  });
+    required this.params,
+  }) : pricePerDay = parcel.campingSection.basePrice +
+            parcel.campingSection.pricePerAdult * params.adults +
+            parcel.campingSection.pricePerChild * params.children;
 
   @override
   Widget build(BuildContext context) {
@@ -45,41 +51,48 @@ class ParcelListTile extends StatelessWidget {
             children: [
               Center(
                 child: StandardText.bigger(
-                  "${LocaleKeys.parcelNumber.tr()} ${parcel.parcelNumber}",
+                  "${LocaleKeys.sector.tr()} ${parcel.campingSection.name}",
                   isUnderlined: true,
                 ),
               ),
               SizedBox(height: Constants.spaceS),
               KeyValueText(
-                keyText: "Price per day (USD)",
-                valueText: "${parcel.pricePerParcel}",
+                keyText: LocaleKeys.pricePerDay.tr(),
+                valueText: "$pricePerDay",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: 'Max people',
-                valueText: parcel.maxPeople.toString(),
+                valueText: parcel.maxNumberOfPeople.toString(),
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.parcelLength.tr(),
-                valueText: parcel.parcelLength.toString(),
+                valueText: parcel.length.toString(),
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.parcelWidth.tr(),
-                valueText: parcel.parcelLength.toString(),
+                valueText: parcel.width.toString(),
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.hasElectricity.tr(),
-                valueText: parcel.hasElectricity
+                valueText: parcel.electricityConnection
+                    ? LocaleKeys.yes.tr()
+                    : LocaleKeys.no.tr(),
+              ),
+              SizedBox(height: Constants.spaceXXS),
+              KeyValueText(
+                keyText: LocaleKeys.hasWater.tr(),
+                valueText: parcel.waterConnection
                     ? LocaleKeys.yes.tr()
                     : LocaleKeys.no.tr(),
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.hasGreyWaterDisposal.tr(),
-                valueText: parcel.hasGreyWaterDisposal
+                valueText: parcel.greyWaterDischarge
                     ? LocaleKeys.yes.tr()
                     : LocaleKeys.no.tr(),
               ),

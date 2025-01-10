@@ -230,7 +230,7 @@ class _ReservationData extends StatelessWidget {
         Lines.goldenDivider,
         KeyValueText(
           keyText: LocaleKeys.parcelNumber.tr(),
-          valueText: parcel.parcelNumber.toString(),
+          valueText: parcel.position,
         ),
         SizedBox(height: Constants.spaceXS),
         KeyValueText(

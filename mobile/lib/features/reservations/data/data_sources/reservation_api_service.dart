@@ -15,23 +15,22 @@ part 'reservation_api_service.g.dart';
 abstract class ReservationApiService {
   factory ReservationApiService(Dio dio) = _ReservationApiService;
 
-  // GET EP widok dostępnych parceli
-  @GET("/parcels/")
+  //implemented
+  @GET("/camping/plots/available/")
   Future<HttpResponse<AvailableParcelsResponseDto>> getAvailableParcels({
-    @Query("start_date") required DateTime startDate,
-    @Query("end_date") required DateTime endDate,
-    @Query("adults") required int adults,
-    @Query("children") required int children,
-    @Query("page") required int page,
+    @Query('date_from') required String dateFrom,
+    @Query('date_to') required String dateTo,
+    @Query('number_of_adults') required int numberOfAdults,
+    @Query('number_of_children') required int numberOfChildren,
+    @Query('page') required int page,
+    @Query('page_size') required int pageSize,
   });
 
-  // POST EP Rezerwacja parceli
   @POST("/reservations/")
   Future<HttpResponse<void>> createReservation({
     @Body() required CreateReservationRequestDto createReservationRequestDto,
   });
 
-  // GET EP moje rezerwacje
   @GET("/reservations/user/")
   Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
       getMyReservations({
@@ -39,10 +38,10 @@ abstract class ReservationApiService {
     @Query("user_id") required String userId,
   });
 
-  // GET EP dane parceli
-  @GET("/parcels/{parcel_number}/")
+  @GET("/camping/sections/{camping_section__name}/plots/{position}/")
   Future<HttpResponse<ParcelDto>> getParcelDetails({
-    @Path("parcel_number") required int parcelNumber,
+    @Path("camping_section__name") required String campingSectionName,
+    @Path("position") required String position,
   });
 
   // GET EP dane rezerwacji

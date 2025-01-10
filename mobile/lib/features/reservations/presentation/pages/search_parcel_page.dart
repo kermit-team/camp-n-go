@@ -44,18 +44,19 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.selectPlace.tr()),
-          //TODO: translate
           SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterRequiredData.tr()),
           SizedBox(height: Constants.spaceL),
           GoldenDateRangePickerField(
             labelText: LocaleKeys.startDate.tr(),
             onChanged: (dateRange) {
-              //TODO: add edited date submit
+              setState(() {
+                startDateTime = dateRange?.start ?? DateTime.now();
+                endDateTime = dateRange?.end ?? DateTime.now();
+              });
             },
           ),
           SizedBox(height: Constants.spaceM),
-
           GoldenNumberPickerField(
             labelText: LocaleKeys.numberOfAdults.tr(),
             initialValue: 0,
@@ -67,7 +68,6 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
             },
           ),
           SizedBox(height: Constants.spaceM),
-
           GoldenNumberPickerField(
             labelText: LocaleKeys.numberOfChildren.tr(),
             initialValue: 0,
@@ -77,7 +77,6 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
             },
           ),
           SizedBox(height: Constants.spaceM),
-
           CustomButton(
             text: LocaleKeys.searchParcel.tr(),
             onPressed: () {

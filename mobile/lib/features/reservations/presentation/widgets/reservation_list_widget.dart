@@ -115,10 +115,6 @@ class _ReservationListWidgetState extends State<ReservationListWidget> {
                             state.reservations![index].reservationId,
                       },
                     );
-                    AppSnackBar.showSnackBar(
-                      context: context,
-                      text: reservation.parcelNumber.toString(),
-                    );
                   },
                   onCancelReservationDialogPressed: (reservationId) {
                     context.read<ReservationListCubit>().cancelReservation(

@@ -2,10 +2,12 @@ import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/submission_status.dart';
+import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_preview_cubit.dart';
+import 'package:campngo/features/reservations/presentation/widgets/golden_car_dropdown.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/lines.dart';
@@ -186,41 +188,18 @@ class _UserData extends StatelessWidget {
                   : '---',
             ),
             SizedBox(height: Constants.spaceXS),
-            KeyValueText(
-              keyText: LocaleKeys.selectedCar.tr(),
-              valueText: state.reservation?.car.registrationPlate ?? '',
-            ),
-            // StandardText('${LocaleKeys.assignCarToReservation.tr()}:'),
-            // state.reservation.carList != null
-            //     ? GoldenCarDropdown(
-            //         cars: state.carList!,
-            //         hintText: LocaleKeys.selectCar.tr(),
-            //         validations: const [RequiredValidation()],
-            //         selectedCar: state.assignedCar,
-            //       )
-            //     : Column(
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           StandardText(
-            //             LocaleKeys.addCarToFinalize.tr(),
-            //             isBold: true,
-            //           ),
-            //           CustomButton(
-            //             text: LocaleKeys.accountSettings.tr(),
-            //             onPressed: () {
-            //               serviceLocator<GoRouter>()
-            //                   .push(AppRoutes.accountSettings.route)
-            //                   .then((value) {
-            //                 if (context.mounted) {
-            //                   context
-            //                       .read<ReservationPreviewCubit>()
-            //                       .getAccountData();
-            //                 }
-            //               });
-            //             },
-            //           ),
-            //         ],
-            //       ),
+            state.reservation!.canBeEdited
+                ? GoldenCarDropdown(
+                    cars: state.reservation!.account.carList,
+                    hintText: LocaleKeys.selectCar.tr(),
+                    validations: const [RequiredValidation()],
+                    selectedCar: state.reservation!.car,
+                    //todo: add onCarChanged with cubit
+                  )
+                : KeyValueText(
+                    keyText: LocaleKeys.selectedCar.tr(),
+                    valueText: state.reservation?.car.registrationPlate ?? '',
+                  ),
           ],
         ),
       );
@@ -268,7 +247,7 @@ class _ReservationData extends StatelessWidget {
         KeyValueText(
           keyText: LocaleKeys.numberOfNights.tr(),
           valueText:
-              params.startDate.difference(params.endDate).inDays.toString(),
+              params.endDate.difference(params.startDate).inDays.toString(),
         ),
         SizedBox(height: Constants.spaceXS),
         KeyValueText(

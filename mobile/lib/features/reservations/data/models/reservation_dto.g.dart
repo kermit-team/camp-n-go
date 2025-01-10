@@ -17,6 +17,7 @@ ReservationDto _$ReservationDtoFromJson(Map<String, dynamic> json) =>
       startDate: DateTime.parse(json['startDate'] as String),
       endDate: DateTime.parse(json['endDate'] as String),
       car: CarDto.fromJson(json['car'] as Map<String, dynamic>),
+      canBeEdited: json['canBeEdited'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$ReservationDtoToJson(ReservationDto instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$ReservationDtoToJson(ReservationDto instance) =>
       'startDate': instance.startDate.toIso8601String(),
       'endDate': instance.endDate.toIso8601String(),
       'car': instance.car,
+      'canBeEdited': instance.canBeEdited,
     };

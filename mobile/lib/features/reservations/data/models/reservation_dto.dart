@@ -17,6 +17,7 @@ class ReservationDto {
   final DateTime startDate;
   final DateTime endDate;
   final CarDto car;
+  final bool canBeEdited;
 
   ReservationDto({
     required this.id,
@@ -28,6 +29,7 @@ class ReservationDto {
     required this.startDate,
     required this.endDate,
     required this.car,
+    this.canBeEdited = false,
   });
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) =>
@@ -45,6 +47,7 @@ class ReservationDto {
         startDate: reservation.startDate,
         endDate: reservation.endDate,
         car: CarDto.fromEntity(reservation.car),
+        canBeEdited: reservation.canBeEdited,
       );
 
   Reservation toEntity() => Reservation(
@@ -57,5 +60,6 @@ class ReservationDto {
         startDate: startDate,
         endDate: endDate,
         car: car.toEntity(),
+        canBeEdited: canBeEdited,
       );
 }

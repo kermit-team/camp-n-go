@@ -13,6 +13,7 @@ class Reservation extends Equatable {
   final DateTime startDate;
   final DateTime endDate;
   final Car car;
+  final bool canBeEdited;
 
   const Reservation({
     required this.id,
@@ -24,6 +25,7 @@ class Reservation extends Equatable {
     required this.startDate,
     required this.endDate,
     required this.car,
+    this.canBeEdited = false,
   });
 
   Reservation copyWith({
@@ -35,7 +37,8 @@ class Reservation extends Equatable {
     int? children,
     DateTime? startDate,
     DateTime? endDate,
-    Car? cars,
+    Car? car,
+    bool? canBeEdited,
   }) =>
       Reservation(
         id: id ?? this.id,
@@ -46,7 +49,8 @@ class Reservation extends Equatable {
         children: children ?? this.children,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
-        car: cars ?? this.car,
+        car: car ?? this.car,
+        canBeEdited: canBeEdited ?? this.canBeEdited,
       );
 
   @override
@@ -60,5 +64,6 @@ class Reservation extends Equatable {
         startDate,
         endDate,
         car,
+        canBeEdited,
       ];
 }

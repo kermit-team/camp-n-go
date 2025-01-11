@@ -81,7 +81,7 @@ abstract class  LocaleKeys {
   static const hasWater = 'hasWater';
   static const hasGreyWaterDisposal = 'hasGreyWaterDisposal';
   static const isShaded = 'isShaded';
-  static const pricePerParcel = 'pricePerParcel';
+  static const baseParcelPrice = 'baseParcelPrice';
   static const pricePerAdult = 'pricePerAdult';
   static const priceForAdults = 'priceForAdults';
   static const pricePerChild = 'pricePerChild';

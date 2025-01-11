@@ -108,7 +108,7 @@ class _ReservationListWidgetState extends State<ReservationListWidget> {
                 return ReservationListTile(
                   reservation: state.reservations![index],
                   onListTilePressed: (ReservationPreview reservation) {
-                    serviceLocator<GoRouter>().push(
+                    context.push(
                       AppRoutes.reservationPreview.route,
                       extra: {
                         'reservationId':

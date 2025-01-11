@@ -16,7 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchParcelPage extends StatefulWidget {
-  const SearchParcelPage({super.key});
+  final bool unauthenticated;
+
+  const SearchParcelPage({
+    super.key,
+    this.unauthenticated = false,
+  });
 
   @override
   State<SearchParcelPage> createState() => _SearchParcelPageState();
@@ -86,7 +91,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
                 adults: numberOfAdults,
                 children: numberOfChildren,
               );
-              serviceLocator<GoRouter>().push(
+              context.push(
                 "/parcelList",
                 extra: {
                   'params': params,

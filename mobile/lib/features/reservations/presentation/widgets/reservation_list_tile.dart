@@ -53,20 +53,18 @@ class ReservationListTile extends StatelessWidget {
                   Center(
                     child: StandardText.bigger(
                       "${LocaleKeys.parcelNumber.tr()} ${reservation.parcelNumber}",
+                      isBold: true,
                       isUnderlined: true,
                     ),
                   ),
                   SizedBox(height: Constants.spaceS),
-                  Center(
-                    child: KeyValueText(
-                      keyText: LocaleKeys.stayingPeriod.tr(),
-                      valueText:
-                          '\n${reservation.startDate.toDisplayString(context)}'
-                          ' - ${reservation.endDate.toDisplayString(context)}',
-                      textAlign: TextAlign.center,
-                    ),
+                  KeyValueText(
+                    keyText: LocaleKeys.stayingPeriod.tr(),
+                    valueText: '\n${reservation.startDate.toDateString()}'
+                        ' - ${reservation.endDate.toDateString()}',
+                    textAlign: TextAlign.start,
                   ),
-                  SizedBox(height: Constants.spaceS),
+                  SizedBox(height: Constants.spaceXXS),
                   KeyValueText(
                     keyText: LocaleKeys.price.tr(),
                     valueText:

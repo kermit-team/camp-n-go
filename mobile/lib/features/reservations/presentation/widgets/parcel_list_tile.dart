@@ -52,6 +52,7 @@ class ParcelListTile extends StatelessWidget {
               Center(
                 child: StandardText.bigger(
                   "${LocaleKeys.sector.tr()} ${parcel.campingSection.name}",
+                  isBold: true,
                   isUnderlined: true,
                 ),
               ),

@@ -79,7 +79,7 @@
   "hasWater": "Water connection",
   "hasGreyWaterDisposal": "Grey water disposal",
   "isShaded": "Shaded",
-  "pricePerParcel": "Price per parcel",
+  "baseParcelPrice": "Base price",
   "pricePerAdult": "Price per adult",
   "priceForAdults": "Price for adults",
   "pricePerChild": "Price per child",

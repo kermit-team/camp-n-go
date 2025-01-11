@@ -4,11 +4,9 @@ import 'package:campngo/features/register/domain/entities/register_entity.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUseCase registerUseCase;
@@ -61,8 +59,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           ):
           {
             emit(RegisterSuccess(registerEntity));
-            serviceLocator<GoRouter>().go("/login");
-            emit(const RegisterInitial());
           }
         case Failure<RegisterEntity, Exception>(exception: final exception):
           {

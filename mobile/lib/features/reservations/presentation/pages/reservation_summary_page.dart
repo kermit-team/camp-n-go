@@ -17,7 +17,6 @@ import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +107,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
           ),
           Lines.goldenDivider,
           KeyValueText(
-            keyText: LocaleKeys.pricePerParcel.tr(),
+            keyText: LocaleKeys.baseParcelPrice.tr(),
             valueText: priceForParcel.toString(),
           ),
           SizedBox(height: Constants.spaceXS),
@@ -182,7 +181,7 @@ class _UserData extends StatelessWidget {
                 HyperlinkText(
                   text: LocaleKeys.edit.tr(),
                   onTap: () async {
-                    await serviceLocator<GoRouter>().push(
+                    await context.push(
                       AppRoutes.accountSettings.route,
                     );
                     // .then(
@@ -243,7 +242,7 @@ class _UserData extends StatelessWidget {
                       CustomButton(
                         text: LocaleKeys.accountSettings.tr(),
                         onPressed: () {
-                          serviceLocator<GoRouter>()
+                          context
                               .push(AppRoutes.accountSettings.route)
                               .then((value) {
                             if (context.mounted) {

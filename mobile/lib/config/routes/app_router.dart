@@ -8,8 +8,7 @@ import 'package:campngo/features/account_settings/presentation/cubit/account_set
 import 'package:campngo/features/account_settings/presentation/cubit/contact_form_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
 import 'package:campngo/features/account_settings/presentation/pages/contact_form_page.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
@@ -29,24 +28,50 @@ import 'package:campngo/features/reservations/presentation/pages/reservation_lis
 import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_summary_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/search_parcel_page.dart';
+import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  AppRouter();
+  AppRouter() {
+    _authCubit.stream.listen((_) => _authListenable.notifyListeners());
+    _authCubit.appStarted();
+  }
+
+  final _authCubit = serviceLocator<AuthCubit>();
+  final _authListenable = AuthListenable();
 
   late final GoRouter router = GoRouter(
     initialLocation: AppRoutes.login.route,
+    redirect: (context, state) {
+      final authState = _authCubit.state;
+      final isLoggedIn = authState.status == AuthStatus.authenticated;
+      final currentRoute = AppRoutes.values.firstWhere(
+        (element) => element.route == state.matchedLocation,
+        orElse: () => AppRoutes.home,
+      );
+      final accessLevel = getAccessLevel(currentRoute);
+
+      if (!isLoggedIn && accessLevel == AccessLevel.authenticationRequired) {
+        return AppRoutes.login.route;
+      }
+      if (accessLevel == AccessLevel.unknownRoute) {
+        _authCubit.logout();
+        return AppRoutes.login.route;
+      }
+      return null;
+    },
+    refreshListenable: _authListenable,
     routes: <GoRoute>[
       GoRoute(
         path: AppRoutes.home.route,
         pageBuilder: (context, state) {
           log(MediaQuery.of(context).size.height.toString());
           return MaterialPage(
-            child: Scaffold(
-              body: Center(
+            child: AppBody(
+              child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
@@ -57,8 +82,8 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        context.read<AuthBloc>().add(DeleteCredentials());
-                        serviceLocator<GoRouter>().go(AppRoutes.login.route);
+                        context.read<AuthCubit>().logout();
+                        context.go(AppRoutes.login.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -69,8 +94,7 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        serviceLocator<GoRouter>()
-                            .push(AppRoutes.accountSettings.route);
+                        context.push(AppRoutes.accountSettings.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -81,8 +105,7 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        serviceLocator<GoRouter>()
-                            .push(AppRoutes.searchParcel.route);
+                        context.push(AppRoutes.searchParcel.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -93,8 +116,7 @@ class AppRouter {
                     ),
                     IconButton(
                       onPressed: () {
-                        serviceLocator<GoRouter>()
-                            .push(AppRoutes.reservationList.route);
+                        context.push(AppRoutes.reservationList.route);
                       },
                       icon: const Icon(Icons.login),
                     ),
@@ -239,7 +261,7 @@ class AppRouter {
                 create: (context) => ContactFormCubit(
                     accountSettingsRepository:
                         serviceLocator<AccountSettingsRepository>()),
-                child: const ContactFormPage()),
+                child: const ContactFormPage(unauthenticated: true)),
           );
         },
       ),
@@ -256,6 +278,18 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        path: AppRoutes.searchParcelUnauthenticated.route,
+        pageBuilder: (context, state) {
+          return const MaterialPage(
+            child: SearchParcelPage(unauthenticated: true),
+          );
+        },
+      ),
     ],
   );
+}
+
+class AuthListenable extends ChangeNotifier {
+  AuthListenable();
 }

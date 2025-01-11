@@ -3,7 +3,7 @@ import 'package:sizer/sizer.dart';
 class Constants {
   static const String appName = "Camp'n'go";
   static const String apiUrl = 'http://10.0.2.2:8000/api';
-  static const int pageSize = 10;
+  static const int pageSize = 3;
 
   static double spaceXXS = 0.5.h; // Adjusted to 0.5.h
   static double spaceXS = 1.h; // Adjusted to 1.h

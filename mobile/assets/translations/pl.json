@@ -80,7 +80,7 @@
   "hasWater": "Podłączenie do wody",
   "hasGreyWaterDisposal": "Zrzut szarej wody",
   "isShaded": "Zacieniona",
-  "pricePerParcel": "Kwota za parcelę",
+  "baseParcelPrice": "Kwota podstawowa",
   "pricePerAdult": "Kwota za dorosłego",
   "priceForAdults": "Kwota za dorosłych",
   "pricePerChild": "Kwota za dziecko",

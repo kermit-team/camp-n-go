@@ -133,7 +133,7 @@ class ParcelDetailsDialog extends StatelessWidget {
                     text: LocaleKeys.reserve.tr(),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      serviceLocator<GoRouter>().push(
+                      context.push(
                         '/reservationSummary',
                         extra: {
                           'parcel': parcel,

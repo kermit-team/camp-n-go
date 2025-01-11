@@ -12,7 +12,6 @@ import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      showDrawer: false,
       child: Column(
         children: [
           const IconAppBar(),
@@ -119,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         HyperlinkText(
                             text: LocaleKeys.login.tr(),
                             onTap: () {
-                              serviceLocator<GoRouter>().go("/login");
+                              context.go("/login");
                             }),
                       ],
                     ),
@@ -157,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             text: LocaleKeys.emailToResetPasswordSent.tr(),
           );
-          serviceLocator<GoRouter>().go("/confirmAccount");
+          context.go("/confirmAccount");
         }
       },
       builder: (context, state) {

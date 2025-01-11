@@ -1,6 +1,6 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
@@ -10,82 +10,182 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      shape: const RoundedRectangleBorder(
-        side: BorderSide.none,
-        borderRadius: BorderRadius.zero,
+    return BlocBuilder<AuthCubit, AuthState>(
+      bloc: serviceLocator<AuthCubit>(),
+      builder: (context, state) {
+        final isLoggedIn = state.status == AuthStatus.authenticated;
+        return Drawer(
+          shape: const RoundedRectangleBorder(
+            side: BorderSide.none,
+            borderRadius: BorderRadius.zero,
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(
+                  top: Constants.spaceL,
+                  bottom: Constants.spaceS,
+                ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/logo.png',
+                      color: Theme.of(context).colorScheme.onSurface,
+                      height: 10.h,
+                      width: double.maxFinite,
+                    ),
+                    TitleText(
+                      'Menu',
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ],
+                ),
+              ),
+              _DrawerListTile(
+                icon: Icons.home,
+                title: LocaleKeys.searchParcel.tr(),
+                isVisible: isLoggedIn,
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.searchParcel.route,
+                  );
+                },
+              ),
+              _DrawerListTile(
+                icon: Icons.home,
+                title: LocaleKeys.searchParcel.tr(),
+                isVisible: !isLoggedIn,
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.searchParcelUnauthenticated.route,
+                  );
+                },
+              ),
+              _DrawerListTile(
+                icon: Icons.list,
+                title: LocaleKeys.reservationList.tr(),
+                isVisible: isLoggedIn,
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.reservationList.route,
+                    isPush: true,
+                  );
+                },
+              ),
+              _DrawerListTile(
+                icon: Icons.email_outlined,
+                title: LocaleKeys.contact.tr(),
+                onTap: () {
+                  final String email = serviceLocator<FlutterSecureStorage>()
+                      .read(key: 'email')
+                      .toString();
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.contactForm.route,
+                    isPush: true,
+                    extra: {'email': email},
+                  );
+                },
+              ),
+              const Spacer(),
+              _DrawerListTile(
+                icon: Icons.settings,
+                title: LocaleKeys.accountSettings.tr(),
+                isVisible: isLoggedIn,
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.accountSettings.route,
+                    isPush: true,
+                  );
+                },
+              ),
+              _DrawerListTile(
+                icon: Icons.logout,
+                title: LocaleKeys.logout.tr(),
+                isVisible: isLoggedIn,
+                onTap: () {
+                  serviceLocator<AuthCubit>().logout();
+                  Navigator.pop(context);
+                },
+              ),
+              _DrawerListTile(
+                icon: Icons.login,
+                title: LocaleKeys.login.tr(),
+                isVisible: !isLoggedIn,
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.login.route,
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _navigateToRoute(
+    BuildContext context,
+    String route, {
+    bool isPush = false,
+    Map<String, dynamic>? extra,
+  }) {
+    final currentRoute = GoRouter.of(context).state?.matchedLocation;
+    if (currentRoute != route) {
+      if (isPush) {
+        context.push(route, extra: extra);
+      } else {
+        context.go(route, extra: extra);
+      }
+    }
+    Navigator.pop(context);
+  }
+}
+
+class _DrawerListTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+  final bool isVisible;
+
+  const _DrawerListTile({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.isVisible = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isVisible) {
+      return const SizedBox.shrink();
+    }
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: Theme.of(context).colorScheme.onSurface,
       ),
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            child: TitleText(
-              'Menu',
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: StandardText(
-              LocaleKeys.accountSettings.tr(),
-              textAlign: TextAlign.start,
-            ),
-            onTap: () {
-              serviceLocator<GoRouter>().push(
-                AppRoutes.accountSettings.route,
-              );
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.email_outlined,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: StandardText(
-              LocaleKeys.contact.tr(),
-              textAlign: TextAlign.start,
-            ),
-            onTap: () {
-              final String email = serviceLocator<FlutterSecureStorage>()
-                  .read(key: 'email')
-                  .toString();
-              serviceLocator<GoRouter>().push(
-                AppRoutes.contactForm.route,
-                extra: {'email': email},
-              );
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.logout,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: StandardText(
-              LocaleKeys.logout.tr(),
-              textAlign: TextAlign.start,
-            ),
-            onTap: () {
-              context.read<AuthBloc>().add(DeleteCredentials());
-              serviceLocator<GoRouter>().go(AppRoutes.login.route);
-              Navigator.pop(context); // Close the drawer
-            },
-          ),
-        ],
+      title: StandardText(
+        title,
+        textAlign: TextAlign.start,
       ),
+      onTap: onTap,
     );
   }
 }

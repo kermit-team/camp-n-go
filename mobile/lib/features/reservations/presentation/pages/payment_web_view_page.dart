@@ -34,7 +34,7 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
             log('Navigating to" ${request.url}');
             if (request.url.startsWith('myApp://')) {
               widget.onPaymentResult(request.url);
-              serviceLocator<GoRouter>().pop();
+              context.pop();
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;

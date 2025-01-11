@@ -11,7 +11,6 @@ import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      showDrawer: false,
       child: Column(
         children: [
           const IconAppBar(),
@@ -79,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             text: _getExceptionMessage(forgotPasswordState.exception!),
           );
         } else if (forgotPasswordState is ForgotPasswordSuccess) {
-          serviceLocator<GoRouter>().replace("/resetPasswordInfo");
+          context.replace("/resetPasswordInfo");
         }
       },
       builder: (forgotPasswordContext, forgotPasswordState) {

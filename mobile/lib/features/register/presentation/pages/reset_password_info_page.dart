@@ -5,7 +5,6 @@ import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +15,6 @@ class ResetPasswordInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBody(
-      showDrawer: false,
       child: Column(
         children: [
           const IconAppBar(),
@@ -27,7 +25,7 @@ class ResetPasswordInfoPage extends StatelessWidget {
           CustomButton(
             text: LocaleKeys.returnToLogin.tr(),
             onPressed: () {
-              serviceLocator<GoRouter>().go('/login');
+              context.go('/login');
             },
           ),
         ],

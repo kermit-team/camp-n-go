@@ -27,7 +27,7 @@ class ParcelDetailsWidget extends StatelessWidget {
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
-            keyText: LocaleKeys.pricePerParcel.tr(),
+            keyText: LocaleKeys.baseParcelPrice.tr(),
             valueText: parcel.campingSection.basePrice.toString(),
           ),
           SizedBox(height: Constants.spaceXS),

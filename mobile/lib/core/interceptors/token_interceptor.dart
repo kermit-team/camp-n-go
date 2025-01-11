@@ -1,9 +1,8 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/token_storage.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
-import 'package:go_router/go_router.dart';
 
 class TokenInterceptor extends Interceptor {
   final TokenStorage tokenStorage;
@@ -50,7 +49,7 @@ class TokenInterceptor extends Interceptor {
           return handler.next(err);
         }
       } else {
-        serviceLocator<GoRouter>().go(AppRoutes.login.route);
+        serviceLocator<AuthCubit>().logout();
       }
     }
     handler

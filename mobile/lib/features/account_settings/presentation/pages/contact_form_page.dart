@@ -16,7 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ContactFormPage extends StatefulWidget {
-  const ContactFormPage({super.key});
+  final bool unauthenticated;
+
+  const ContactFormPage({
+    super.key,
+    this.unauthenticated = false,
+  });
 
   @override
   State<ContactFormPage> createState() => _ContactFormPageState();

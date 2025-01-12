@@ -81,7 +81,6 @@ class AppDrawer extends StatelessWidget {
                   _navigateToRoute(
                     context,
                     AppRoutes.reservationList.route,
-                    isPush: true,
                   );
                 },
               ),
@@ -95,7 +94,6 @@ class AppDrawer extends StatelessWidget {
                   _navigateToRoute(
                     context,
                     AppRoutes.contactForm.route,
-                    isPush: true,
                     extra: {'email': email},
                   );
                 },
@@ -109,7 +107,6 @@ class AppDrawer extends StatelessWidget {
                   _navigateToRoute(
                     context,
                     AppRoutes.accountSettings.route,
-                    isPush: true,
                   );
                 },
               ),

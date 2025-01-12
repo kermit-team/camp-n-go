@@ -5,17 +5,21 @@ import { Car } from '../../../auth/models/auth.interface';
 import { switchMap } from 'rxjs';
 import { AuthFacade } from '../../../auth/services/auth.facade';
 import { AlertService } from '../../services/alert.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'lib-car',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, NgClass],
   templateUrl: './car.component.html',
   styleUrl: './car.component.scss',
 })
 export class CarComponent {
   @Input() car: Car;
+  @Input() selectable = false;
+  @Input() selectedCarPlate: string;
   @Output() carDeleted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() selectedFired = new EventEmitter<string>();
 
   private alertService = inject(AlertService);
   private httpClient = inject(HttpClient);
@@ -43,5 +47,9 @@ export class CarComponent {
           );
         },
       });
+  }
+
+  carSelected() {
+    this.selectedFired.emit(this.car.registration_plate);
   }
 }

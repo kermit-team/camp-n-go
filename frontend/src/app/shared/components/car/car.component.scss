@@ -37,3 +37,19 @@ $primary: #ae9560;
   width: 15px;
   height: 15px;
 }
+
+.selected-car {
+  background-color: var(--primary-color);
+  cursor: pointer;
+
+  .car-icon {
+    width: 60px;
+    height: 60px;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7495%)
+      hue-rotate(154deg) brightness(100%) contrast(102%);
+  }
+
+  .car-text {
+    color: white;
+  }
+}

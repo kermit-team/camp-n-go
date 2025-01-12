@@ -8,6 +8,8 @@ import { EmailVerificationComponent } from './auth/containers/email-verifivation
 import { emailVerificationResolver } from './auth/resolvers/email-verification.resolver';
 import { PasswordResetComponent } from './auth/containers/password-reset/password-reset.component';
 import { ProfileComponent } from './profile/containers/profile/profile.component';
+import { ParcelSearchComponent } from './parcels/containers/parcel-search/parcel-search.component';
+import { ReservationCreateComponent } from './parcels/containers/reservation-create/reservation-create.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,14 @@ export const routes: Routes = [
   {
     path: AppRoutes.Profile,
     component: ProfileComponent,
+  },
+  {
+    path: AppRoutes.ParcelSearch,
+    component: ParcelSearchComponent,
+  },
+  {
+    path: AppRoutes.ReservationCreate,
+    component: ReservationCreateComponent,
   },
   {
     path: '',

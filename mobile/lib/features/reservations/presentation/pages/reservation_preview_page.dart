@@ -59,7 +59,7 @@ class _ReservationPreviewPageState extends State<ReservationPreviewPage> {
               ),
             );
           case SubmissionStatus.failure:
-            // context.read<ReservationPreviewCubit>().resetGetReservationStatus();
+            context.read<ReservationPreviewCubit>().resetGetReservationStatus();
             AppSnackBar.showErrorSnackBar(
               context: context,
               text: state.exception.toString(),

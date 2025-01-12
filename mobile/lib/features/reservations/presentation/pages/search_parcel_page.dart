@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_date_range_picker_field.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_number_picker_field.dart';
@@ -11,6 +12,7 @@ import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -100,15 +102,17 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
               );
             },
           ),
-          SizedBox(height: Constants.spaceS),
-          CustomButton(
-            text: LocaleKeys.login.tr(),
-            onPressed: () {
-              context.go(
-                AppRoutes.login.route,
-              );
-            },
-          ),
+          if (!widget.authenticated) SizedBox(height: Constants.spaceS),
+          if (!widget.authenticated)
+            CustomButton(
+              text: LocaleKeys.login.tr(),
+              onPressed: () {
+                serviceLocator<AuthCubit>().logout();
+                context.go(
+                  AppRoutes.login.route,
+                );
+              },
+            ),
         ],
       ),
     );

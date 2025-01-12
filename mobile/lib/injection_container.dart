@@ -48,7 +48,7 @@ Future<void> initializeDependencies() async {
       AccountSettingsRepositoryImpl(accountSettingsApiService);
   final reservationApiService = ReservationApiService(dio);
   final reservationRepository =
-      ReservationRepositoryImpl(reservationApiService, useMocks: false);
+      ReservationRepositoryImpl(reservationApiService, useMocks: true);
 
   // Register dependencies
   serviceLocator.registerSingleton<Dio>(dio);
@@ -57,12 +57,6 @@ Future<void> initializeDependencies() async {
   serviceLocator.registerSingleton<AuthApiService>(authApiService);
   serviceLocator.registerSingleton<AuthRepository>(authRepository);
   serviceLocator.registerSingleton<AuthCubit>(authCubit);
-  // serviceLocator.registerFactory<AuthBloc>(
-  //   () => AuthBloc(
-  //     authRepository: authRepository,
-  //     secureStorage: secureStorage,
-  //   ),
-  // );
   serviceLocator.registerSingleton<RegisterApiService>(registerApiService);
   serviceLocator.registerSingleton<RegisterRepository>(registerRepository);
   serviceLocator.registerSingleton<RegisterUseCase>(registerUseCase);

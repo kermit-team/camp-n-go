@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
@@ -98,6 +100,7 @@ class _ContactFormPageState extends State<ContactFormPage> {
                         text: LocaleKeys.send.tr(),
                         onPressed: () {
                           if (_formKey.currentState?.validate() == true) {
+                            log(_formKey.currentState!.validate().toString());
                             context.read<ContactFormCubit>().sendContactEmail(
                                 email: emailController.text.trim(),
                                 content: textController.text.trim());

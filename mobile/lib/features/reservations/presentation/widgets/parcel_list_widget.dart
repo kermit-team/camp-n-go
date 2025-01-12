@@ -91,10 +91,11 @@ class _ParcelListWidgetState extends State<ParcelListWidget> {
                   onListTilePressed: (Parcel parcel) {
                     showDialog(
                       context: context,
-                      builder: (context) {
+                      builder: (builderContext) {
                         return ParcelDetailsDialog(
                           parcel: parcel,
                           params: state.params!,
+                          appContext: context,
                         );
                       },
                     );

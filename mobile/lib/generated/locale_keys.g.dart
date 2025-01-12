@@ -1,6 +1,7 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
 abstract class  LocaleKeys {
+  static const campngo = 'campngo';
   static const firstName = 'firstName';
   static const lastName = 'lastName';
   static const email = 'email';

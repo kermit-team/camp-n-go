@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_date_range_picker_field.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_number_picker_field.dart';
@@ -10,17 +11,16 @@ import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchParcelPage extends StatefulWidget {
-  final bool unauthenticated;
+  final bool authenticated;
 
   const SearchParcelPage({
     super.key,
-    this.unauthenticated = false,
+    this.authenticated = false,
   });
 
   @override
@@ -48,7 +48,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
       child: Column(
         children: [
           const IconAppBar(),
-          TitleText(LocaleKeys.selectPlace.tr()),
+          TitleText(LocaleKeys.campngo.tr()),
           SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterRequiredData.tr()),
           SizedBox(height: Constants.spaceL),
@@ -92,11 +92,20 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
                 children: numberOfChildren,
               );
               context.push(
-                "/parcelList",
+                AppRoutes.parcelList.route,
                 extra: {
                   'params': params,
                   'page': 1,
                 },
+              );
+            },
+          ),
+          SizedBox(height: Constants.spaceS),
+          CustomButton(
+            text: LocaleKeys.login.tr(),
+            onPressed: () {
+              context.go(
+                AppRoutes.login.route,
               );
             },
           ),

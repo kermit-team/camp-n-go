@@ -1,5 +1,7 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_details.dart';
@@ -15,11 +17,13 @@ import 'package:go_router/go_router.dart';
 class ParcelDetailsDialog extends StatelessWidget {
   final Parcel parcel;
   final GetParcelListParams params;
+  final BuildContext appContext;
 
   const ParcelDetailsDialog({
     super.key,
     required this.parcel,
     required this.params,
+    required this.appContext,
   });
 
   @override
@@ -117,35 +121,61 @@ class ParcelDetailsDialog extends StatelessWidget {
               ],
             ),
             SizedBox(height: Constants.spaceMS),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: CustomButtonInverted(
-                    text: LocaleKeys.cancel.tr(),
-                    onPressed: Navigator.of(context).pop,
-                    width: double.minPositive,
+            serviceLocator<AuthCubit>().state.status == AuthStatus.authenticated
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: CustomButtonInverted(
+                          text: LocaleKeys.cancel.tr(),
+                          onPressed: Navigator.of(context).pop,
+                          width: double.minPositive,
+                        ),
+                      ),
+                      SizedBox(width: Constants.spaceS),
+                      Expanded(
+                        child: CustomButton(
+                          text: LocaleKeys.reserve.tr(),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            appContext.push(
+                              '/reservationSummary',
+                              extra: {
+                                'parcel': parcel,
+                                'params': params,
+                              },
+                            );
+                          },
+                          width: double.minPositive,
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: CustomButtonInverted(
+                          text: LocaleKeys.cancel.tr(),
+                          onPressed: Navigator.of(context).pop,
+                          width: double.minPositive,
+                        ),
+                      ),
+                      SizedBox(width: Constants.spaceS),
+                      Expanded(
+                        child: CustomButton(
+                          text: LocaleKeys.login.tr(),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            appContext.go(
+                              AppRoutes.login.route,
+                            );
+                          },
+                          width: double.minPositive,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(width: Constants.spaceS),
-                Expanded(
-                  child: CustomButton(
-                    text: LocaleKeys.reserve.tr(),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      context.push(
-                        '/reservationSummary',
-                        extra: {
-                          'parcel': parcel,
-                          'params': params,
-                        },
-                      );
-                    },
-                    width: double.minPositive,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ],

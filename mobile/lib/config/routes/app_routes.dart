@@ -26,15 +26,15 @@ enum AccessLevel {
 
 AccessLevel getAccessLevel(AppRoutes route) {
   switch (route) {
-    case AppRoutes.home:
     case AppRoutes.accountSettings:
     case AppRoutes.searchParcel:
-    case AppRoutes.parcelList:
     case AppRoutes.reservationSummary:
     case AppRoutes.reservationList:
     case AppRoutes.reservationPreview:
       return AccessLevel
           .authenticationRequired; // Requires authentication (logged in)
+    case AppRoutes.home:
+    case AppRoutes.parcelList:
     case AppRoutes.login:
     case AppRoutes.register:
     case AppRoutes.forgotPassword:

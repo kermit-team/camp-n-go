@@ -130,10 +130,13 @@ class _LoginPageState extends State<LoginPage> {
           context.go(AppRoutes.home.route);
         }
         if (authState.status == AuthStatus.failure) {
-          AppSnackBar.showErrorSnackBar(
-            context: context,
-            text: _getExceptionMessage(authState.exception!),
-          );
+          final errorText = _getExceptionMessage(authState.exception!);
+          if (errorText != '') {
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: errorText,
+            );
+          }
         }
       },
       builder: (authContext, authState) {
@@ -162,6 +165,9 @@ class _LoginPageState extends State<LoginPage> {
       return exception.message ?? exception.toString();
     }
     String exceptionWithPrefix = exception.toString();
+    if (exceptionWithPrefix == "Exception") {
+      return '';
+    }
     return exceptionWithPrefix.replaceFirst('Exception: ', '');
   }
 }

@@ -71,27 +71,30 @@ class AuthRepositoryImpl implements AuthRepository {
       final storageEmail = await _secureStorage.read(key: 'email');
       final storagePassword = await _secureStorage.read(key: 'password');
 
-      final httpResponse = await _authApiService.login(
-        credentials: {
-          "email": storageEmail,
-          "password": storagePassword,
-        },
-      );
-
-      if (httpResponse.response.statusCode == HttpStatus.ok ||
-          httpResponse.response.statusCode == 200) {
-        final AuthEntity authEntity = httpResponse.data.toEntity();
-        _secureStorage.write(key: 'email', value: storageEmail);
-        _secureStorage.write(key: 'password', value: storagePassword);
-        await _tokenStorage.saveTokens(
-          accessToken: authEntity.accessToken,
-          refreshToken: authEntity.refreshToken,
+      if (storageEmail != null && storagePassword != null) {
+        final httpResponse = await _authApiService.login(
+          credentials: {
+            "email": storageEmail,
+            "password": storagePassword,
+          },
         );
-        return Success(authEntity);
+
+        if (httpResponse.response.statusCode == HttpStatus.ok ||
+            httpResponse.response.statusCode == 200) {
+          final AuthEntity authEntity = httpResponse.data.toEntity();
+          _secureStorage.write(key: 'email', value: storageEmail);
+          _secureStorage.write(key: 'password', value: storagePassword);
+          await _tokenStorage.saveTokens(
+            accessToken: authEntity.accessToken,
+            refreshToken: authEntity.refreshToken,
+          );
+          return Success(authEntity);
+        }
+        final errorResponse = handleError(httpResponse.response);
+        log('${LocaleKeys.loginError.tr()}: $errorResponse');
+        return Failure(Exception(errorResponse));
       }
-      final errorResponse = handleError(httpResponse.response);
-      log('${LocaleKeys.loginError.tr()}: $errorResponse');
-      return Failure(Exception(errorResponse));
+      return Failure(Exception());
     } on DioException catch (dioException) {
       return Failure(handleApiError(dioException));
     }

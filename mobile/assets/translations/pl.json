@@ -116,5 +116,9 @@
   "returnFrom": "Powrót",
   "reservationCancelled": "Rezerwacja została anulowana",
   "reservationNotLoadedCorrectly": "Rezerwacja nie została poprawnie załadowana",
-  "selectedCar": "Wybrany samochód"
+  "selectedCar": "Wybrany samochód",
+  "success": "Sukces",
+  "failure": "Niepowodzenie",
+  "paymentSuccessful": "Płatność zakończyła się sukcesem",
+  "paymentFailure": "Płatność zakończyła się niepowodzeniem"
 }

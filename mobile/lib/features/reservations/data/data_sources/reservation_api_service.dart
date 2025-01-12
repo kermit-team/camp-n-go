@@ -61,4 +61,7 @@ abstract class ReservationApiService {
   Future<HttpResponse<void>> cancelReservation({
     @Path('reservationId') required String reservationId,
   });
+
+  @POST('s')
+  Future<HttpResponse<String>> makeReservation();
 }

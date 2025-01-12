@@ -1,6 +1,7 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
+import 'package:campngo/core/resources/string_extension.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
@@ -40,12 +41,12 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
   final formKey = GlobalKey<FormState>();
   late double priceForAdults;
   late double priceForChildren;
-  late double priceForParcel;
+  late double basePrice;
 
   @override
   void initState() {
     super.initState();
-    priceForParcel = widget.parcel.campingSection.basePrice *
+    basePrice = widget.parcel.campingSection.basePrice *
         widget.params.endDate.difference(widget.params.startDate).inDays;
     priceForAdults =
         widget.parcel.campingSection.pricePerAdult * widget.params.adults;
@@ -108,17 +109,17 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
           Lines.goldenDivider,
           KeyValueText(
             keyText: LocaleKeys.baseParcelPrice.tr(),
-            valueText: priceForParcel.toString(),
+            valueText: basePrice.toStringAsFixed(2).toPlnPrice(),
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.priceForAdults.tr(),
-            valueText: '$priceForAdults zł',
+            valueText: priceForAdults.toStringAsFixed(2).toPlnPrice(),
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.priceForChildren.tr(),
-            valueText: '$priceForChildren zł',
+            valueText: priceForChildren.toStringAsFixed(2).toPlnPrice(),
           ),
           Lines.goldenDivider,
           Row(
@@ -128,7 +129,9 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
                 isBold: true,
               ),
               StandardText(
-                '${priceForParcel + priceForAdults + priceForChildren} zł',
+                (basePrice + priceForAdults + priceForChildren)
+                    .toStringAsFixed(2)
+                    .toPlnPrice(),
                 isBold: true,
               ),
             ],
@@ -138,6 +141,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
             text: LocaleKeys.reserve.tr(),
             onPressed: () {
               if (formKey.currentState?.validate() == true) {
+                context.read<ReservationSummaryCubit>().makeReservation();
                 AppSnackBar.showSnackBar(
                   context: context,
                   text: LocaleKeys.reservationData.tr(),

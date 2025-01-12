@@ -115,5 +115,9 @@
   "returnFrom": "Return",
   "reservationCancelled": "Reservation cancelled successfully",
   "reservationNotLoadedCorrectly": "Reservation not loaded correctly",
-  "selectedCar": "Selected car"
+  "selectedCar": "Selected car",
+  "success": "Success",
+  "failure": "Failure",
+  "paymentSuccessful": "Payment finished successfully",
+  "paymentFailure": "Payment finished with failure"
 }

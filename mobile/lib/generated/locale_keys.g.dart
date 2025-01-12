@@ -118,5 +118,9 @@ abstract class  LocaleKeys {
   static const reservationCancelled = 'reservationCancelled';
   static const reservationNotLoadedCorrectly = 'reservationNotLoadedCorrectly';
   static const selectedCar = 'selectedCar';
+  static const success = 'success';
+  static const failure = 'failure';
+  static const paymentSuccessful = 'paymentSuccessful';
+  static const paymentFailure = 'paymentFailure';
 
 }

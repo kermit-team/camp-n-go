@@ -48,4 +48,6 @@ abstract class ReservationRepository {
   Future<Result<void, Exception>> cancelReservation({
     required String reservationId,
   });
+
+  Future<Result<String, Exception>> makeReservation();
 }

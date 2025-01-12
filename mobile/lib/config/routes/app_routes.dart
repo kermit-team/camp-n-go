@@ -12,7 +12,10 @@ enum AppRoutes {
   contactForm('/contactForm'),
   reservationList('/reservationList'),
   reservationPreview('/reservationPreview'),
-  searchParcelUnauthenticated('/searchParcelUnauthenticated');
+  searchParcelUnauthenticated('/searchParcelUnauthenticated'),
+  payment('/payment'),
+  paymentSuccess('/paymentSuccess'),
+  paymentFailure('/paymentFailure');
 
   const AppRoutes(this.route);
   final String route;
@@ -31,6 +34,9 @@ AccessLevel getAccessLevel(AppRoutes route) {
     case AppRoutes.reservationSummary:
     case AppRoutes.reservationList:
     case AppRoutes.reservationPreview:
+    case AppRoutes.payment:
+    case AppRoutes.paymentSuccess:
+    case AppRoutes.paymentFailure:
       return AccessLevel
           .authenticationRequired; // Requires authentication (logged in)
     case AppRoutes.home:

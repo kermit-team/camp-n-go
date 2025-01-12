@@ -1,4 +1,6 @@
+import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/shared/widgets/app_drawer.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -6,12 +8,14 @@ class AppBody extends StatelessWidget {
   final Widget child;
   final bool scrollable;
   final bool showDrawer;
+  final String? titleText;
 
   const AppBody({
     super.key,
     required this.child,
     this.scrollable = true,
     this.showDrawer = true,
+    this.titleText,
   });
 
   @override
@@ -20,6 +24,13 @@ class AppBody extends StatelessWidget {
       appBar: AppBar(
         forceMaterialTransparency: true,
         elevation: 0,
+        title: titleText != null
+            ? StandardText(
+                titleText!,
+                textAlign: TextAlign.center,
+              )
+            : null,
+        titleSpacing: Constants.spaceXL,
       ),
       extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).colorScheme.surface,

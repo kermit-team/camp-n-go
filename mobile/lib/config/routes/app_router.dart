@@ -20,6 +20,8 @@ import 'package:campngo/features/reservations/presentation/cubit/reservation_lis
 import 'package:campngo/features/reservations/presentation/cubit/reservation_preview_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
 import 'package:campngo/features/reservations/presentation/pages/parcel_list_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/payment_page.dart';
+import 'package:campngo/features/reservations/presentation/pages/payment_success_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_list_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_preview_page.dart';
 import 'package:campngo/features/reservations/presentation/pages/reservation_summary_page.dart';
@@ -229,6 +231,33 @@ class AppRouter {
         pageBuilder: (context, state) {
           return const MaterialPage(
             child: SearchParcelPage(authenticated: false),
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.payment.route,
+        builder: (BuildContext context, GoRouterState state) {
+          final paymentUrl = state.extra! as Map<String, dynamic>;
+          return PaymentPage(paymentUrl: paymentUrl['paymentUrl']);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.paymentSuccess.route,
+        builder: (BuildContext context, GoRouterState state) {
+          final paymentId = state.extra! as Map<String, dynamic>;
+          return PaymentResultPage(
+            isSuccessful: true,
+            paymentId: paymentId['paymentId'],
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.paymentFailure.route,
+        builder: (BuildContext context, GoRouterState state) {
+          final errorCode = state.extra! as Map<String, dynamic>;
+          return PaymentResultPage(
+            isSuccessful: false,
+            errorCode: errorCode['errorCode'],
           );
         },
       ),

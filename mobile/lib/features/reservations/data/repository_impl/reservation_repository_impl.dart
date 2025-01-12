@@ -245,6 +245,26 @@ class ReservationRepositoryImpl implements ReservationRepository {
       }
     }
   }
+
+  @override
+  Future<Result<String, Exception>> makeReservation() async {
+    try {
+      final httpResponse = await _reservationApiService.makeReservation();
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        //todo: zmienić na zwracane
+        return const Success("string");
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+    throw UnimplementedError();
+  }
 }
 
 Exception handleError(Response response) {

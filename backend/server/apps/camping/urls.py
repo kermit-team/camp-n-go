@@ -5,6 +5,8 @@ from server.apps.camping.views import (
     CampingPlotDetailsView,
     CampingSectionDetailsView,
     CampingSectionModifyView,
+    ReservationCreateView,
+    StripePaymentWebhookView,
 )
 
 urlpatterns = [
@@ -14,18 +16,28 @@ urlpatterns = [
         name='camping_plot_availability_list',
     ),
     path(
-        'sections/<str:camping_section__name>/plots/<str:position>/',
+        'plots/<int:pk>/',
         CampingPlotDetailsView.as_view(),
         name='camping_plot_details',
     ),
     path(
-        'sections/<str:name>/',
+        'sections/<int:pk>/',
         CampingSectionDetailsView.as_view(),
         name='camping_section_details',
     ),
     path(
-        'sections/<str:name>/modify/',
+        'sections/<int:pk>/modify/',
         CampingSectionModifyView.as_view(),
         name='camping_section_modify',
+    ),
+    path(
+        'reservations/create/',
+        ReservationCreateView.as_view(),
+        name='reservation_create',
+    ),
+    path(
+        'payments/webhook/',
+        StripePaymentWebhookView.as_view(),
+        name='payment_webhook',
     ),
 ]

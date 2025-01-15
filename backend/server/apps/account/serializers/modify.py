@@ -54,9 +54,5 @@ class AccountModifySerializer(serializers.ModelSerializer):
         return AccountCommand.modify(
             account=instance,
             password=validated_data.get('new_password'),
-            first_name=profile_data.get('first_name'),
-            last_name=profile_data.get('last_name'),
-            phone_number=profile_data.get('phone_number'),
-            avatar=profile_data.get('avatar'),
-            id_card=profile_data.get('id_card'),
+            **profile_data,
         )

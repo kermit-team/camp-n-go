@@ -23,6 +23,7 @@ class CarAddViewTestCase(APITestCase):
 
     @mock.patch.object(CarCommand, 'add')
     def test_request(self, add_car_mock):
+        add_car_mock.return_value = self.car
         request_data = {'registration_plate': self.car.registration_plate}
         url = reverse('car_add')
 
@@ -31,7 +32,8 @@ class CarAddViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = {
-            'registration_plate': str(add_car_mock.return_value.registration_plate),
+            'id': self.car.id,
+            'registration_plate': self.car.registration_plate,
         }
 
         add_car_mock.assert_called_once_with(

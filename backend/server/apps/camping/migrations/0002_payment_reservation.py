@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='CreatedAt')),
                 ('modified_at', models.DateTimeField(auto_now=True, verbose_name='ModifiedAt')),
-                ('status', models.IntegerField(choices=[(0, 'WaitingForPayment'), (1, 'Canceled'), (2, 'Unpaid'), (3, 'Paid'), (4, 'Returned')], default=0)),
+                ('status', models.IntegerField(choices=[(0, 'WaitingForPayment'), (1, 'Cancelled'), (2, 'Unpaid'), (3, 'Paid'), (4, 'Returned')], default=0)),
                 ('stripe_checkout_id', models.CharField(max_length=256, verbose_name='StripeCheckoutId')),
                 ('price', models.DecimalField(decimal_places=2, max_digits=8, validators=[django.core.validators.MinValueValidator(Decimal('0'))], verbose_name='Price')),
             ],

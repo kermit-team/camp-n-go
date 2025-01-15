@@ -8,7 +8,7 @@ from model_bakery import baker
 from server.apps.camping.errors.section import CampingSectionErrorMessagesEnum
 from server.apps.camping.exceptions.section import CampingSectionNotExistsError
 from server.apps.camping.models import CampingPlot, CampingSection
-from server.datastore.commands.camping.plot import CampingPlotCommand
+from server.datastore.commands.camping import CampingPlotCommand
 
 
 class CreateCampingPlotCommandTestCase(TestCase):

@@ -10,15 +10,14 @@ from server.apps.camping.serializers import CampingSectionModifySerializer
 class CampingSectionModifyView(GenericAPIView):
     serializer_class = CampingSectionModifySerializer
     queryset = CampingSection.objects.all()
-    lookup_field = 'name'
 
-    def put(self, request: Request, name: str) -> Response:
-        return self._update(request=request, name=name)
+    def put(self, request: Request, pk: int) -> Response:
+        return self._update(request=request, pk=pk)
 
-    def patch(self, request: Request, name: str) -> Response:
-        return self._update(request=request, name=name, partial=True)
+    def patch(self, request: Request, pk: int) -> Response:
+        return self._update(request=request, pk=pk, partial=True)
 
-    def _update(self, request: Request, name: str, partial: bool = False) -> Response:
+    def _update(self, request: Request, pk: int, partial: bool = False) -> Response:
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)

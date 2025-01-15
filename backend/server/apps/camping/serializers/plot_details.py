@@ -10,6 +10,7 @@ class CampingPlotDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CampingPlot
         fields = [
+            'id',
             'position',
             'max_number_of_people',
             'width',

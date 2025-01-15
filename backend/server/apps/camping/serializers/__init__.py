@@ -1,3 +1,5 @@
 from server.apps.camping.serializers.plot_details import CampingPlotDetailsSerializer
+from server.apps.camping.serializers.reservation_create import ReservationCreateSerializer
+from server.apps.camping.serializers.reservation_details import ReservationDetailsSerializer
 from server.apps.camping.serializers.section_details import CampingSectionDetailsSerializer
 from server.apps.camping.serializers.section_modify import CampingSectionModifySerializer

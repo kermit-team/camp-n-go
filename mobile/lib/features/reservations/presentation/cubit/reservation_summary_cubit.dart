@@ -80,8 +80,8 @@ class ReservationSummaryCubit extends Cubit<ReservationSummaryState> {
       for (final car in state.carList!) {
         cars.add(
           Car(
+            id: car.id,
             registrationPlate: car.registrationPlate,
-            assignedToReservation: false,
           ),
         );
       }
@@ -89,8 +89,9 @@ class ReservationSummaryCubit extends Cubit<ReservationSummaryState> {
           (c) => c.registrationPlate == carToAssign.registrationPlate);
       final index = cars.indexOf(car);
       final updatedCar = Car(
-          registrationPlate: car.registrationPlate,
-          assignedToReservation: true);
+        id: car.id,
+        registrationPlate: car.registrationPlate,
+      );
       cars[index] = updatedCar;
 
       emit(state.copyWith(
@@ -100,36 +101,36 @@ class ReservationSummaryCubit extends Cubit<ReservationSummaryState> {
     }
   }
 
-  Future<void> makeReservation() async {
-    emit(const ReservationSummaryState(
-      getUserDataStatus: SubmissionStatus.loading,
-    ));
-
-    try {
-      final Result<String, Exception> result =
-          await reservationRepository.makeReservation();
-
-      switch (result) {
-        case Success<String, Exception>():
-          emit(
-            state.copyWith(reservationStatus: SubmissionStatus.success),
-          );
-        case Failure<String, Exception>(exception: final exception):
-          emit(state.copyWith(
-            reservationStatus: SubmissionStatus.failure,
-            exception: exception,
-          ));
-      }
-    } on DioException catch (dioException) {
-      emit(state.copyWith(
-        getUserDataStatus: SubmissionStatus.failure,
-        exception: dioException,
-      ));
-    } on Exception catch (exception) {
-      emit(state.copyWith(
-        getUserDataStatus: SubmissionStatus.failure,
-        exception: exception,
-      ));
-    }
-  }
+  // Future<void> makeReservation() async {
+  //   emit(const ReservationSummaryState(
+  //     getUserDataStatus: SubmissionStatus.loading,
+  //   ));
+  //
+  //   try {
+  //     final Result<String, Exception> result =
+  //         await reservationRepository.makeReservation();
+  //
+  //     switch (result) {
+  //       case Success<String, Exception>():
+  //         emit(
+  //           state.copyWith(reservationStatus: SubmissionStatus.success),
+  //         );
+  //       case Failure<String, Exception>(exception: final exception):
+  //         emit(state.copyWith(
+  //           reservationStatus: SubmissionStatus.failure,
+  //           exception: exception,
+  //         ));
+  //     }
+  //   } on DioException catch (dioException) {
+  //     emit(state.copyWith(
+  //       getUserDataStatus: SubmissionStatus.failure,
+  //       exception: dioException,
+  //     ));
+  //   } on Exception catch (exception) {
+  //     emit(state.copyWith(
+  //       getUserDataStatus: SubmissionStatus.failure,
+  //       exception: exception,
+  //     ));
+  //   }
+  // }
 }

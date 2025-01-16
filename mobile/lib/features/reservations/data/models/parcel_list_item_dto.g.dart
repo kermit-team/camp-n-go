@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'parcel_dto.dart';
+part of 'parcel_list_item_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ParcelDto _$ParcelDtoFromJson(Map<String, dynamic> json) => ParcelDto(
-      id: (json['id'] as num).toInt(),
+ParcelListItemDto _$ParcelListItemDtoFromJson(Map<String, dynamic> json) =>
+    ParcelListItemDto(
+      parcelNumber: (json['id'] as num).toInt(),
       position: json['position'] as String,
       maxNumberOfPeople: (json['max_number_of_people'] as num).toInt(),
       width: json['width'] as String,
@@ -19,10 +20,12 @@ ParcelDto _$ParcelDtoFromJson(Map<String, dynamic> json) => ParcelDto(
       description: json['description'] as String,
       campingSection: CampingSectionDto.fromJson(
           json['camping_section'] as Map<String, dynamic>),
+      price: json['price'] as String,
     );
 
-Map<String, dynamic> _$ParcelDtoToJson(ParcelDto instance) => <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$ParcelListItemDtoToJson(ParcelListItemDto instance) =>
+    <String, dynamic>{
+      'id': instance.parcelNumber,
       'position': instance.position,
       'max_number_of_people': instance.maxNumberOfPeople,
       'width': instance.width,
@@ -33,4 +36,5 @@ Map<String, dynamic> _$ParcelDtoToJson(ParcelDto instance) => <String, dynamic>{
       'grey_water_discharge': instance.greyWaterDischarge,
       'description': instance.description,
       'camping_section': instance.campingSection,
+      'price': instance.price,
     };

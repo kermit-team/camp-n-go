@@ -82,8 +82,8 @@ class _ReservationPreviewPageState extends State<ReservationPreviewPage> {
                     params: GetParcelListParams(
                       startDate: state.reservation!.startDate,
                       endDate: state.reservation!.endDate,
-                      adults: state.reservation!.adults,
-                      children: state.reservation!.children,
+                      adults: state.reservation!.numberOfAdults,
+                      children: state.reservation!.numberOfChildren,
                     ),
                     parcel: state.reservation!.parcel,
                   ),
@@ -185,7 +185,7 @@ class _UserData extends StatelessWidget {
                   : '---',
             ),
             SizedBox(height: Constants.spaceXS),
-            state.reservation!.canBeEdited
+            state.reservation!.isCancellable
                 ? GoldenCarDropdown(
                     cars: state.reservation!.account.carList,
                     hintText: LocaleKeys.selectCar.tr(),

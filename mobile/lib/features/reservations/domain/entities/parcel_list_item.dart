@@ -1,8 +1,8 @@
 import 'package:campngo/features/reservations/domain/entities/camping_section.dart';
 import 'package:equatable/equatable.dart';
 
-class Parcel extends Equatable {
-  final int id;
+class ParcelListItem extends Equatable {
+  final int parcelNumber;
   final String position;
   final int maxNumberOfPeople;
   final String width;
@@ -13,9 +13,10 @@ class Parcel extends Equatable {
   final bool greyWaterDischarge;
   final String description;
   final CampingSection campingSection;
+  final double price;
 
-  const Parcel({
-    required this.id,
+  const ParcelListItem({
+    required this.parcelNumber,
     required this.position,
     required this.maxNumberOfPeople,
     required this.width,
@@ -26,9 +27,10 @@ class Parcel extends Equatable {
     required this.greyWaterDischarge,
     required this.description,
     required this.campingSection,
+    required this.price,
   });
 
-  Parcel copyWith({
+  ParcelListItem copyWith({
     int? parcelNumber,
     String? position,
     int? maxNumberOfPeople,
@@ -40,9 +42,10 @@ class Parcel extends Equatable {
     bool? greyWaterDischarge,
     String? description,
     CampingSection? campingSection,
+    double? price,
   }) =>
-      Parcel(
-        id: parcelNumber ?? this.id,
+      ParcelListItem(
+        parcelNumber: parcelNumber ?? this.parcelNumber,
         position: position ?? this.position,
         maxNumberOfPeople: maxNumberOfPeople ?? this.maxNumberOfPeople,
         width: width ?? this.width,
@@ -54,11 +57,12 @@ class Parcel extends Equatable {
         greyWaterDischarge: greyWaterDischarge ?? this.greyWaterDischarge,
         description: description ?? this.description,
         campingSection: campingSection ?? this.campingSection,
+        price: price ?? this.price,
       );
 
   @override
   List<Object?> get props => [
-        id,
+        parcelNumber,
         position,
         maxNumberOfPeople,
         width,
@@ -69,5 +73,6 @@ class Parcel extends Equatable {
         greyWaterDischarge,
         description,
         campingSection,
+        price,
       ];
 }

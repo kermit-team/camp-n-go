@@ -1,13 +1,15 @@
+// parcel_list_item_dto.dart
+
 import 'package:campngo/features/reservations/data/models/camping_section_dto.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'parcel_dto.g.dart';
+part 'parcel_list_item_dto.g.dart';
 
 @JsonSerializable()
-class ParcelDto {
+class ParcelListItemDto {
   @JsonKey(name: 'id')
-  final int id;
+  final int parcelNumber;
   @JsonKey(name: 'position')
   final String position;
   @JsonKey(name: 'max_number_of_people')
@@ -28,9 +30,11 @@ class ParcelDto {
   final String description;
   @JsonKey(name: 'camping_section')
   final CampingSectionDto campingSection;
+  @JsonKey(name: 'price')
+  final String price;
 
-  ParcelDto({
-    required this.id,
+  ParcelListItemDto({
+    required this.parcelNumber,
     required this.position,
     required this.maxNumberOfPeople,
     required this.width,
@@ -41,15 +45,17 @@ class ParcelDto {
     required this.greyWaterDischarge,
     required this.description,
     required this.campingSection,
+    required this.price,
   });
 
-  factory ParcelDto.fromJson(Map<String, dynamic> json) =>
-      _$ParcelDtoFromJson(json);
+  factory ParcelListItemDto.fromJson(Map<String, dynamic> json) =>
+      _$ParcelListItemDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ParcelDtoToJson(this);
+  Map<String, dynamic> toJson() => _$ParcelListItemDtoToJson(this);
 
-  factory ParcelDto.fromEntity(Parcel entity) => ParcelDto(
-        id: entity.id,
+  factory ParcelListItemDto.fromEntity(ParcelListItem entity) =>
+      ParcelListItemDto(
+        parcelNumber: entity.parcelNumber,
         position: entity.position,
         maxNumberOfPeople: entity.maxNumberOfPeople,
         width: entity.width,
@@ -60,10 +66,11 @@ class ParcelDto {
         greyWaterDischarge: entity.greyWaterDischarge,
         description: entity.description,
         campingSection: CampingSectionDto.fromEntity(entity.campingSection),
+        price: entity.price.toString(),
       );
 
-  Parcel toEntity() => Parcel(
-        id: id,
+  ParcelListItem toEntity() => ParcelListItem(
+        parcelNumber: parcelNumber,
         position: position,
         maxNumberOfPeople: maxNumberOfPeople,
         width: width,
@@ -74,5 +81,6 @@ class ParcelDto {
         greyWaterDischarge: greyWaterDischarge,
         description: description,
         campingSection: campingSection.toEntity(),
+        price: double.tryParse(price) ?? 0,
       );
 }

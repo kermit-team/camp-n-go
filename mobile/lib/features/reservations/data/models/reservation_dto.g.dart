@@ -8,28 +8,31 @@ part of 'reservation_dto.dart';
 
 ReservationDto _$ReservationDtoFromJson(Map<String, dynamic> json) =>
     ReservationDto(
-      id: json['id'] as String,
-      parcel: ParcelDto.fromJson(json['parcel'] as Map<String, dynamic>),
-      account: AccountDto.fromJson(json['account'] as Map<String, dynamic>),
-      numberOfNights: (json['numberOfNights'] as num).toInt(),
-      adults: (json['adults'] as num).toInt(),
-      children: (json['children'] as num).toInt(),
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
+      id: (json['id'] as num).toInt(),
+      startDate: DateTime.parse(json['date_from'] as String),
+      endDate: DateTime.parse(json['date_to'] as String),
+      numberOfAdults: (json['number_of_adults'] as num).toInt(),
+      numberOfChildren: (json['number_of_children'] as num).toInt(),
+      comments: json['comments'] as String?,
+      account: AccountDto.fromJson(json['user'] as Map<String, dynamic>),
       car: CarDto.fromJson(json['car'] as Map<String, dynamic>),
-      canBeEdited: json['canBeEdited'] as bool? ?? false,
+      parcelDto:
+          ParcelDto.fromJson(json['camping_plot'] as Map<String, dynamic>),
+      payment: PaymentDto.fromJson(json['payment'] as Map<String, dynamic>),
+      isCancellable: json['is_cancellable'] as bool,
     );
 
 Map<String, dynamic> _$ReservationDtoToJson(ReservationDto instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'parcel': instance.parcel,
-      'account': instance.account,
-      'numberOfNights': instance.numberOfNights,
-      'adults': instance.adults,
-      'children': instance.children,
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
+      'date_from': instance.startDate.toIso8601String(),
+      'date_to': instance.endDate.toIso8601String(),
+      'number_of_adults': instance.numberOfAdults,
+      'number_of_children': instance.numberOfChildren,
+      'comments': instance.comments,
+      'user': instance.account,
       'car': instance.car,
-      'canBeEdited': instance.canBeEdited,
+      'camping_plot': instance.parcelDto,
+      'payment': instance.payment,
+      'is_cancellable': instance.isCancellable,
     };

@@ -1,6 +1,7 @@
 import 'package:campngo/features/account_settings/data/models/account_dto.dart';
 import 'package:campngo/features/account_settings/data/models/car_dto.dart';
 import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
+import 'package:campngo/features/reservations/data/models/payment_dto.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,28 +9,41 @@ part 'reservation_dto.g.dart';
 
 @JsonSerializable()
 class ReservationDto {
-  final String id;
-  final ParcelDto parcel;
-  final AccountDto account;
-  final int numberOfNights;
-  final int adults;
-  final int children;
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'date_from')
   final DateTime startDate;
+  @JsonKey(name: 'date_to')
   final DateTime endDate;
+  @JsonKey(name: 'number_of_adults')
+  final int numberOfAdults;
+  @JsonKey(name: 'number_of_children')
+  final int numberOfChildren;
+  @JsonKey(name: 'comments')
+  final String? comments;
+  @JsonKey(name: 'user')
+  final AccountDto account;
+  @JsonKey(name: 'car')
   final CarDto car;
-  final bool canBeEdited;
+  @JsonKey(name: 'camping_plot')
+  final ParcelDto parcelDto;
+  @JsonKey(name: 'payment')
+  final PaymentDto payment;
+  @JsonKey(name: 'is_cancellable')
+  final bool isCancellable;
 
   ReservationDto({
     required this.id,
-    required this.parcel,
-    required this.account,
-    required this.numberOfNights,
-    required this.adults,
-    required this.children,
     required this.startDate,
     required this.endDate,
+    required this.numberOfAdults,
+    required this.numberOfChildren,
+    this.comments,
+    required this.account,
     required this.car,
-    this.canBeEdited = false,
+    required this.parcelDto,
+    required this.payment,
+    required this.isCancellable,
   });
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) =>
@@ -39,27 +53,29 @@ class ReservationDto {
 
   factory ReservationDto.fromEntity(Reservation reservation) => ReservationDto(
         id: reservation.id,
-        parcel: ParcelDto.fromEntity(reservation.parcel),
-        account: AccountDto.fromEntity(reservation.account, null),
-        numberOfNights: reservation.numberOfNights,
-        adults: reservation.adults,
-        children: reservation.children,
         startDate: reservation.startDate,
         endDate: reservation.endDate,
+        numberOfAdults: reservation.numberOfAdults,
+        numberOfChildren: reservation.numberOfChildren,
+        comments: reservation.comments,
+        account: AccountDto.fromEntity(reservation.account, null),
         car: CarDto.fromEntity(reservation.car),
-        canBeEdited: reservation.canBeEdited,
+        parcelDto: ParcelDto.fromEntity(reservation.parcel),
+        payment: PaymentDto.fromEntity(reservation.payment),
+        isCancellable: reservation.isCancellable,
       );
 
   Reservation toEntity() => Reservation(
         id: id,
-        parcel: parcel.toEntity(),
-        account: account.toEntity(),
-        numberOfNights: numberOfNights,
-        adults: adults,
-        children: children,
         startDate: startDate,
         endDate: endDate,
+        numberOfAdults: numberOfAdults,
+        numberOfChildren: numberOfChildren,
+        comments: comments,
+        account: account.toEntity(),
         car: car.toEntity(),
-        canBeEdited: canBeEdited,
+        parcel: parcelDto.toEntity(),
+        payment: payment.toEntity(),
+        isCancellable: isCancellable,
       );
 }

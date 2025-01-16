@@ -33,9 +33,9 @@ abstract class AccountSettingsApiService {
     @Body() required Map<String, dynamic> registrationPlateJson,
   });
 
-  @DELETE("/cars/{registration_plate}/remove-driver/")
+  @DELETE("/cars/{id}/remove-driver/")
   Future<HttpResponse<void>> deleteCar({
-    @Path("registration_plate") required String registrationPlate,
+    @Path("id") required int id,
   });
 
   @POST("/contact/{email}")

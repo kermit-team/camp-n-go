@@ -1,7 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/models/available_parcels_response_dto.dart';
-import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
 import 'package:campngo/features/reservations/data/models/reservation_dto.dart';
 import 'package:campngo/features/reservations/data/models/reservation_preview_dto.dart';
@@ -15,7 +14,7 @@ part 'reservation_api_service.g.dart';
 abstract class ReservationApiService {
   factory ReservationApiService(Dio dio) = _ReservationApiService;
 
-  //implemented
+  //ready
   @GET("/camping/plots/available/")
   Future<HttpResponse<AvailableParcelsResponseDto>> getAvailableParcels({
     @Query('date_from') required String dateFrom,
@@ -26,42 +25,44 @@ abstract class ReservationApiService {
     @Query('page_size') required int pageSize,
   });
 
-  @POST("/reservations/")
-  Future<HttpResponse<void>> createReservation({
-    @Body() required CreateReservationRequestDto createReservationRequestDto,
-  });
+  // //TODO: create reservation EP
+  // @POST("/reservations/")
+  // Future<HttpResponse<void>> createReservation({
+  //   @Body() required CreateReservationRequestDto createReservationRequestDto,
+  // });
 
-  @GET("/reservations/user/")
+  //to test
+  @GET("/camping/reservations/")
   Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
       getMyReservations({
     @Query("page") required int page,
-    @Query("user_id") required String userId,
   });
 
-  @GET("/camping/sections/{camping_section__name}/plots/{position}/")
+  //to test
+  @GET("/camping/plots/{id}/")
   Future<HttpResponse<ParcelDto>> getParcelDetails({
-    @Path("camping_section__name") required String campingSectionName,
-    @Path("position") required String position,
+    @Path("id") required int id,
   });
 
-  // GET EP dane rezerwacji
-  @GET("/reservations/{reservation_id}/")
+  //to test
+  @GET("/camping/reservations/{id}/details/")
   Future<HttpResponse<ReservationDto>> getReservationDetails({
-    @Path("reservation_id") required String reservationId,
+    @Path("id") required String reservationId,
   });
 
-  // PATCH EP edycja rezeracji
-  @PATCH("/reservations/{reservation_id}/")
+  //to test
+  @PATCH("/camping/reservations/{id}/modify/car/")
   Future<HttpResponse<void>> updateReservation({
-    @Path("reservation_id") required String reservationId,
+    @Path("id") required String reservationId,
     @Body() required UpdateReservationRequestDto updateReservationRequestDto,
   });
 
-  @DELETE("/reservations/{reservation_id}/")
+  //to test
+  @DELETE("/camping/reservations/{id}/cancel/")
   Future<HttpResponse<void>> cancelReservation({
     @Path('reservationId') required String reservationId,
   });
 
-  @POST('s')
-  Future<HttpResponse<String>> makeReservation();
+  // @POST('/camping/reservations/create')
+  // Future<HttpResponse<String>> makeReservation();
 }

@@ -170,8 +170,7 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
   }
 
   @override
-  Future<HttpResponse<void>> deleteCar(
-      {required String registrationPlate}) async {
+  Future<HttpResponse<void>> deleteCar({required int id}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -183,7 +182,7 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
     )
         .compose(
           _dio.options,
-          '/cars/${registrationPlate}/remove-driver/',
+          '/cars/${id}/remove-driver/',
           queryParameters: queryParameters,
           data: _data,
         )

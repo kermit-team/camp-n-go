@@ -3,7 +3,7 @@ import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_details.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ParcelDetailsDialog extends StatelessWidget {
-  final Parcel parcel;
+  final ParcelListItem parcel;
   final GetParcelListParams params;
   final BuildContext appContext;
 

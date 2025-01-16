@@ -7,11 +7,11 @@ part of 'car_dto.dart';
 // **************************************************************************
 
 CarDto _$CarDtoFromJson(Map<String, dynamic> json) => CarDto(
+      id: (json['id'] as num).toInt(),
       registrationPlate: json['registration_plate'] as String,
-      assignedToReservation: json['assigned_to_reservation'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$CarDtoToJson(CarDto instance) => <String, dynamic>{
+      'id': instance.id,
       'registration_plate': instance.registrationPlate,
-      'assigned_to_reservation': instance.assignedToReservation,
     };

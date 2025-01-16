@@ -2,7 +2,7 @@ part of 'parcel_list_cubit.dart';
 
 class ParcelListState extends Equatable {
   final SubmissionStatus getParcelListStatus;
-  final List<Parcel>? parcels;
+  final List<ParcelListItem>? parcels;
   final int? currentPage;
   final int? totalParcels;
   final bool? hasMoreParcels;
@@ -22,7 +22,7 @@ class ParcelListState extends Equatable {
 
   copyWith({
     SubmissionStatus? getParcelListStatus,
-    List<Parcel>? parcels,
+    List<ParcelListItem>? parcels,
     int? currentPage,
     int? totalParcels,
     bool? hasMoreParcels,

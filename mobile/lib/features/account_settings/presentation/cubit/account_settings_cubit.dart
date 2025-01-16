@@ -71,14 +71,14 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
     }
   }
 
-  addCar({required Car car}) async {
+  addCar({required String registrationPlate}) async {
     try {
       emit(state.copyWith(
         carOperationStatus: CarOperationStatus.loading,
       ));
 
-      final Result<Car, Exception> result =
-          await accountSettingsRepository.addCar(car: car);
+      final Result<Car, Exception> result = await accountSettingsRepository
+          .addCar(registrationPlate: registrationPlate);
 
       switch (result) {
         case Success<Car, Exception>():

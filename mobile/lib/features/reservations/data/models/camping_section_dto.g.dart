@@ -8,6 +8,7 @@ part of 'camping_section_dto.dart';
 
 CampingSectionDto _$CampingSectionDtoFromJson(Map<String, dynamic> json) =>
     CampingSectionDto(
+      id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       basePrice: json['base_price'] as String,
       pricePerAdult: json['price_per_adult'] as String,
@@ -16,6 +17,7 @@ CampingSectionDto _$CampingSectionDtoFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CampingSectionDtoToJson(CampingSectionDto instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'base_price': instance.basePrice,
       'price_per_adult': instance.pricePerAdult,

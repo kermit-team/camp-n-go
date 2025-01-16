@@ -6,7 +6,7 @@ import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_summary_cubit.dart';
 import 'package:campngo/features/reservations/presentation/widgets/golden_car_dropdown.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
@@ -24,7 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ReservationSummaryPage extends StatefulWidget {
-  final Parcel parcel;
+  final ParcelListItem parcel;
   final GetParcelListParams params;
 
   const ReservationSummaryPage({
@@ -141,7 +141,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
             text: LocaleKeys.reserve.tr(),
             onPressed: () {
               if (formKey.currentState?.validate() == true) {
-                context.read<ReservationSummaryCubit>().makeReservation();
+                // context.read<ReservationSummaryCubit>().makeReservation();
                 AppSnackBar.showSnackBar(
                   context: context,
                   text: LocaleKeys.reservationData.tr(),
@@ -267,7 +267,7 @@ class _UserData extends StatelessWidget {
 }
 
 class _ReservationData extends StatelessWidget {
-  final Parcel parcel;
+  final ParcelListItem parcel;
   final GetParcelListParams params;
 
   const _ReservationData({

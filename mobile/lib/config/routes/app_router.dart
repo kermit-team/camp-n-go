@@ -13,7 +13,7 @@ import 'package:campngo/features/register/presentation/pages/forgot_password_pag
 import 'package:campngo/features/register/presentation/pages/register_page.dart';
 import 'package:campngo/features/register/presentation/pages/reset_password_info_page.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_list_cubit.dart';
@@ -166,7 +166,7 @@ class AppRouter {
         pageBuilder: (context, state) {
           final Map<String, dynamic> extra =
               state.extra as Map<String, dynamic>;
-          final parcel = extra['parcel'] as Parcel;
+          final parcel = extra['parcel'] as ParcelListItem;
           final params = extra['params'] as GetParcelListParams;
           return MaterialPage(
             child: BlocProvider<ReservationSummaryCubit>(

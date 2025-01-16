@@ -1,4 +1,5 @@
 import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
+import 'package:campngo/features/reservations/data/models/parcel_list_item_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'available_parcels_response_dto.g.dart';
@@ -6,7 +7,7 @@ part 'available_parcels_response_dto.g.dart';
 @JsonSerializable()
 class AvailableParcelsResponseDto {
   @JsonKey(name: 'results')
-  final List<ParcelDto> parcels;
+  final List<ParcelListItemDto> parcels;
   @JsonKey(name: 'page')
   final int currentPage;
   @JsonKey(name: 'count')

@@ -4,15 +4,9 @@ part 'update_reservation_request_dto.g.dart';
 
 @JsonSerializable()
 class UpdateReservationRequestDto {
-  final DateTime? startDate;
-  final DateTime? endDate;
-  final String? phoneNumber;
   final String? carRegistration;
 
   UpdateReservationRequestDto({
-    this.startDate,
-    this.endDate,
-    this.phoneNumber,
     this.carRegistration,
   });
 

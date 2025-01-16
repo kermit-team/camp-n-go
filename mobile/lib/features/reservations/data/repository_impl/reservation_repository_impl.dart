@@ -6,10 +6,10 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
-import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/models/update_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_mock.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation_preview.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
@@ -26,14 +26,12 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   @override
   Future<Result<Parcel, Exception>> getParcelDetails({
-    required String campingSectionName,
-    required String position,
+    required int parcelId,
   }) async {
     // Real API implementation
     try {
       final httpResponse = await _reservationApiService.getParcelDetails(
-        campingSectionName: campingSectionName,
-        position: position,
+        id: parcelId,
       );
 
       if (httpResponse.response.statusCode == HttpStatus.ok ||
@@ -51,49 +49,38 @@ class ReservationRepositoryImpl implements ReservationRepository {
   }
 
   @override
-  Future<Result<PaginatedResponse<Parcel>, Exception>> getParcelList({
+  Future<Result<PaginatedResponse<ParcelListItem>, Exception>> getParcelList({
     required DateTime startDate,
     required DateTime endDate,
     required int adults,
     required int children,
     required int page,
   }) async {
-    if (useMocks) {
-      // Obsługa mocków (przykład dla testów)
-      return _reservationRepositoryMock.getParcelList(
-        startDate: startDate,
-        endDate: endDate,
-        adults: adults,
-        children: children,
+    try {
+      final httpResponse = await _reservationApiService.getAvailableParcels(
+        dateFrom: startDate.toDateString(),
+        dateTo: endDate.toDateString(),
+        numberOfAdults: adults,
+        numberOfChildren: children,
         page: page,
+        pageSize: Constants.pageSize,
       );
-    } else {
-      try {
-        final httpResponse = await _reservationApiService.getAvailableParcels(
-          dateFrom: startDate.toDateString(),
-          dateTo: endDate.toDateString(),
-          numberOfAdults: adults,
-          numberOfChildren: children,
-          page: page,
-          pageSize: Constants.pageSize,
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        final response = PaginatedResponse<ParcelListItem>(
+          items:
+              httpResponse.data.parcels.map((dto) => dto.toEntity()).toList(),
+          currentPage: httpResponse.data.currentPage,
+          totalItems: httpResponse.data.totalItems,
         );
-
-        if (httpResponse.response.statusCode == HttpStatus.ok) {
-          final response = PaginatedResponse<Parcel>(
-            items:
-                httpResponse.data.parcels.map((dto) => dto.toEntity()).toList(),
-            currentPage: httpResponse.data.currentPage,
-            totalItems: httpResponse.data.totalItems,
-          );
-          return Success(response);
-        }
-
-        final errorResponse = handleError(httpResponse.response);
-        log("[ReservationRepositoryImpl>getParcelList]: $errorResponse");
-        return Failure(Exception(errorResponse));
-      } on DioException catch (dioException) {
-        return Failure(handleApiError(dioException));
+        return Success(response);
       }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>getParcelList]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 
@@ -137,7 +124,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
       // Real API implementation
       try {
         final httpResponse = await _reservationApiService.getMyReservations(
-            userId: userId, page: page);
+          page: page,
+        );
 
         if (httpResponse.response.statusCode == HttpStatus.ok ||
             httpResponse.response.statusCode == 200) {
@@ -160,36 +148,36 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
   }
 
-  @override
-  Future<Result<void, Exception>> createReservation(
-      {required int parcelNumber,
-      required int adults,
-      required int children,
-      required DateTime startDate,
-      required DateTime endDate,
-      required String carRegistration}) async {
-    try {
-      final httpResponse = await _reservationApiService.createReservation(
-          createReservationRequestDto: CreateReservationRequestDto(
-              parcelNumber: parcelNumber,
-              adults: adults,
-              children: children,
-              startDate: startDate,
-              endDate: endDate,
-              carRegistration: carRegistration));
-
-      if (httpResponse.response.statusCode == HttpStatus.ok ||
-          httpResponse.response.statusCode == 200) {
-        return const Success(null);
-      }
-
-      final errorResponse = handleError(httpResponse.response);
-      log("[ReservationRepositoryImpl>createReservation]: $errorResponse");
-      return Failure(Exception(errorResponse));
-    } on DioException catch (dioException) {
-      return Failure(handleApiError(dioException));
-    }
-  }
+  // @override
+  // Future<Result<void, Exception>> createReservation(
+  //     {required int parcelNumber,
+  //     required int adults,
+  //     required int children,
+  //     required DateTime startDate,
+  //     required DateTime endDate,
+  //     required String carRegistration}) async {
+  //   try {
+  //     final httpResponse = await _reservationApiService.createReservation(
+  //         createReservationRequestDto: CreateReservationRequestDto(
+  //             parcelNumber: parcelNumber,
+  //             adults: adults,
+  //             children: children,
+  //             startDate: startDate,
+  //             endDate: endDate,
+  //             carRegistration: carRegistration));
+  //
+  //     if (httpResponse.response.statusCode == HttpStatus.ok ||
+  //         httpResponse.response.statusCode == 200) {
+  //       return const Success(null);
+  //     }
+  //
+  //     final errorResponse = handleError(httpResponse.response);
+  //     log("[ReservationRepositoryImpl>createReservation]: $errorResponse");
+  //     return Failure(Exception(errorResponse));
+  //   } on DioException catch (dioException) {
+  //     return Failure(handleApiError(dioException));
+  //   }
+  // }
 
   @override
   Future<Result<void, Exception>> updateReservation(
@@ -202,10 +190,8 @@ class ReservationRepositoryImpl implements ReservationRepository {
       final httpResponse = await _reservationApiService.updateReservation(
           reservationId: reservationId,
           updateReservationRequestDto: UpdateReservationRequestDto(
-              startDate: startDate,
-              endDate: endDate,
-              phoneNumber: phoneNumber,
-              carRegistration: carRegistration));
+            carRegistration: carRegistration,
+          ));
 
       if (httpResponse.response.statusCode == HttpStatus.ok ||
           httpResponse.response.statusCode == 200) {
@@ -246,65 +232,66 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
   }
 
-  @override
-  Future<Result<String, Exception>> makeReservation() async {
-    try {
-      final httpResponse = await _reservationApiService.makeReservation();
+//   @override
+//   Future<Result<String, Exception>> makeReservation() async {
+//     try {
+//       final httpResponse = await _reservationApiService.makeReservation();
+//
+//       if (httpResponse.response.statusCode == HttpStatus.ok ||
+//           httpResponse.response.statusCode == 200) {
+//         //todo: zmienić na zwracane
+//         return const Success("string");
+//       }
+//
+//       final errorResponse = handleError(httpResponse.response);
+//       log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
+//       return Failure(Exception(errorResponse));
+//     } on DioException catch (dioException) {
+//       return Failure(handleApiError(dioException));
+//     }
+//     throw UnimplementedError();
+//   }
+// }
 
-      if (httpResponse.response.statusCode == HttpStatus.ok ||
-          httpResponse.response.statusCode == 200) {
-        //todo: zmienić na zwracane
-        return const Success("string");
-      }
-
-      final errorResponse = handleError(httpResponse.response);
-      log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
-      return Failure(Exception(errorResponse));
-    } on DioException catch (dioException) {
-      return Failure(handleApiError(dioException));
-    }
-    throw UnimplementedError();
-  }
-}
-
-Exception handleError(Response response) {
-  String errorText = "";
-  if (response.data is Map) {
-    response.data.forEach((key, value) {
-      errorText += "$value";
-      log('Key: $key');
-      log('Value: $value');
-    });
-  } else {
-    errorText = response.data.toString();
-  }
-
-  log('Dio Register error details: ${response.data}');
-  return Exception(errorText);
-}
-
-Exception handleApiError(DioException dioException) {
-  if (dioException.response != null) {
+  Exception handleError(Response response) {
     String errorText = "";
-    if (dioException.response!.data is Map) {
-      dioException.response!.data.forEach((key, value) {
+    if (response.data is Map) {
+      response.data.forEach((key, value) {
         errorText += "$value";
         log('Key: $key');
         log('Value: $value');
       });
     } else {
-      errorText = dioException.response!.data.toString();
+      errorText = response.data.toString();
     }
 
-    log('Dio Register error details: ${dioException.response!.data}');
-    return DioException(
-      message: errorText,
-      requestOptions: dioException.requestOptions,
-    );
-  } else if (dioException.message != null) {
-    log('Dio Register error details: ${dioException.message}');
-    return Exception(dioException.message);
+    log('Dio Register error details: ${response.data}');
+    return Exception(errorText);
   }
 
-  return Exception(dioException.message);
+  Exception handleApiError(DioException dioException) {
+    if (dioException.response != null) {
+      String errorText = "";
+      if (dioException.response!.data is Map) {
+        dioException.response!.data.forEach((key, value) {
+          errorText += "$value";
+          log('Key: $key');
+          log('Value: $value');
+        });
+      } else {
+        errorText = dioException.response!.data.toString();
+      }
+
+      log('Dio Register error details: ${dioException.response!.data}');
+      return DioException(
+        message: errorText,
+        requestOptions: dioException.requestOptions,
+      );
+    } else if (dioException.message != null) {
+      log('Dio Register error details: ${dioException.message}');
+      return Exception(dioException.message);
+    }
+
+    return Exception(dioException.message);
+  }
 }

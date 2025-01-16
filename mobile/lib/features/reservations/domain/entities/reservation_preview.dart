@@ -1,56 +1,48 @@
+import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/payment.dart';
 import 'package:equatable/equatable.dart';
 
 class ReservationPreview extends Equatable {
-  final String reservationId;
-  final int parcelNumber;
-  final double reservationPrice;
+  final String id;
   final DateTime startDate;
   final DateTime endDate;
-  final String sector;
-  final String reservationStatus;
+  final Parcel parcel;
+  final Payment payment;
   final bool canCancel;
 
   const ReservationPreview({
-    required this.reservationId,
-    required this.parcelNumber,
-    required this.reservationPrice,
+    required this.id,
     required this.startDate,
     required this.endDate,
-    required this.sector,
-    required this.reservationStatus,
+    required this.parcel,
+    required this.payment,
     required this.canCancel,
   });
 
-  copyWith({
+  ReservationPreview copyWith({
     String? reservationId,
-    int? parcelNumber,
-    double? reservationPrice,
     DateTime? startDate,
     DateTime? endDate,
-    String? sector,
-    String? reservationStatus,
+    Parcel? parcel,
+    Payment? payment,
     bool? canCancel,
   }) =>
       ReservationPreview(
-        reservationId: reservationId ?? this.reservationId,
-        parcelNumber: parcelNumber ?? this.parcelNumber,
-        reservationPrice: reservationPrice ?? this.reservationPrice,
+        id: reservationId ?? this.id,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
-        sector: sector ?? this.sector,
-        reservationStatus: reservationStatus ?? this.reservationStatus,
+        parcel: parcel ?? this.parcel,
+        payment: payment ?? this.payment,
         canCancel: canCancel ?? this.canCancel,
       );
 
   @override
   List<Object?> get props => [
-        reservationId,
-        parcelNumber,
-        reservationPrice,
+        id,
         startDate,
         endDate,
-        sector,
-        reservationStatus,
+        parcel,
+        payment,
         canCancel,
       ];
 }

@@ -73,46 +73,10 @@ class _ReservationApiService implements ReservationApiService {
   }
 
   @override
-  Future<HttpResponse<void>> createReservation(
-      {required CreateReservationRequestDto
-          createReservationRequestDto}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(createReservationRequestDto.toJson());
-    final _options = _setStreamType<HttpResponse<void>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/reservations/',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<void>(_options);
-    final httpResponse = HttpResponse(null, _result);
-    return httpResponse;
-  }
-
-  @override
   Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
-      getMyReservations({
-    required int page,
-    required String userId,
-  }) async {
+      getMyReservations({required int page}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'page': page,
-      r'user_id': userId,
-    };
+    final queryParameters = <String, dynamic>{r'page': page};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options =
@@ -124,7 +88,7 @@ class _ReservationApiService implements ReservationApiService {
     )
                 .compose(
                   _dio.options,
-                  '/reservations/user/',
+                  '/camping/reservations/',
                   queryParameters: queryParameters,
                   data: _data,
                 )
@@ -149,10 +113,7 @@ class _ReservationApiService implements ReservationApiService {
   }
 
   @override
-  Future<HttpResponse<ParcelDto>> getParcelDetails({
-    required String campingSectionName,
-    required String position,
-  }) async {
+  Future<HttpResponse<ParcelDto>> getParcelDetails({required int id}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -164,7 +125,7 @@ class _ReservationApiService implements ReservationApiService {
     )
         .compose(
           _dio.options,
-          '/camping/sections/${campingSectionName}/plots/${position}/',
+          '/camping/plots/${id}/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -199,7 +160,7 @@ class _ReservationApiService implements ReservationApiService {
     )
         .compose(
           _dio.options,
-          '/reservations/${reservationId}/',
+          '/camping/reservations/${reservationId}/details/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -237,7 +198,7 @@ class _ReservationApiService implements ReservationApiService {
     )
         .compose(
           _dio.options,
-          '/reservations/${reservationId}/',
+          '/camping/reservations/${reservationId}/modify/car/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -265,7 +226,7 @@ class _ReservationApiService implements ReservationApiService {
     )
         .compose(
           _dio.options,
-          '/reservations/{reservation_id}/',
+          '/camping/reservations/{id}/cancel/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -276,40 +237,6 @@ class _ReservationApiService implements ReservationApiService {
         )));
     final _result = await _dio.fetch<void>(_options);
     final httpResponse = HttpResponse(null, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<String>> makeReservation() async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<HttpResponse<String>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          's',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<String>(_options);
-    late String _value;
-    try {
-      _value = _result.data!;
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }
 

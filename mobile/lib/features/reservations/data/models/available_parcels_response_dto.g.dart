@@ -10,7 +10,7 @@ AvailableParcelsResponseDto _$AvailableParcelsResponseDtoFromJson(
         Map<String, dynamic> json) =>
     AvailableParcelsResponseDto(
       parcels: (json['results'] as List<dynamic>)
-          .map((e) => ParcelDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => ParcelListItemDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       currentPage: (json['page'] as num).toInt(),
       totalItems: (json['count'] as num).toInt(),

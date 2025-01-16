@@ -1,6 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
@@ -8,8 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ParcelListTile extends StatelessWidget {
-  final Parcel parcel;
-  final void Function(Parcel) onListTilePressed;
+  final ParcelListItem parcel;
+  final void Function(ParcelListItem) onListTilePressed;
   final GetParcelListParams params;
   final double pricePerDay;
 

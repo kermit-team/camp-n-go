@@ -52,7 +52,7 @@ class ReservationListTile extends StatelessWidget {
                 children: [
                   Center(
                     child: StandardText.bigger(
-                      "${LocaleKeys.parcelNumber.tr()} ${reservation.parcelNumber}",
+                      "${LocaleKeys.parcelNumber.tr()} ${reservation.parcel.id}",
                       isBold: true,
                       isUnderlined: true,
                     ),
@@ -68,12 +68,12 @@ class ReservationListTile extends StatelessWidget {
                   KeyValueText(
                     keyText: LocaleKeys.price.tr(),
                     valueText:
-                        '${reservation.reservationPrice.toStringAsFixed(2)} zł',
+                        '${reservation.payment.price.toStringAsFixed(2)} zł',
                   ),
                   SizedBox(height: Constants.spaceXXS),
                   KeyValueText(
                     keyText: LocaleKeys.sector.tr(),
-                    valueText: reservation.sector,
+                    valueText: reservation.parcel.campingSection.name,
                   ),
                   SizedBox(height: Constants.spaceXXS),
                   SizedBox(
@@ -83,7 +83,7 @@ class ReservationListTile extends StatelessWidget {
                       children: [
                         KeyValueText(
                           keyText: LocaleKeys.status.tr(),
-                          valueText: reservation.reservationStatus,
+                          valueText: reservation.payment.status.name,
                         ),
                         if (reservation.canCancel)
                           HyperlinkText(
@@ -103,7 +103,7 @@ class ReservationListTile extends StatelessWidget {
                                       width: double.maxFinite,
                                       child: StandardText(
                                         '${LocaleKeys.reservationCancelConfirmation.tr()}'
-                                        '${reservation.parcelNumber}?',
+                                        '${reservation.id}?',
                                         // textAlign: TextAlign.start,
                                       ),
                                     ),

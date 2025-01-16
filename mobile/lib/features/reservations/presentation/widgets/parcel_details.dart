@@ -1,12 +1,12 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ParcelDetailsWidget extends StatelessWidget {
-  final Parcel parcel;
+  final ParcelListItem parcel;
 
   const ParcelDetailsWidget({
     super.key,

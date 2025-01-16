@@ -1,6 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/submission_status.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_details_dialog.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_list_tile.dart';
@@ -88,7 +88,7 @@ class _ParcelListWidgetState extends State<ParcelListWidget> {
                 return ParcelListTile(
                   parcel: state.parcels![index],
                   params: state.params!,
-                  onListTilePressed: (Parcel parcel) {
+                  onListTilePressed: (ParcelListItem parcel) {
                     showDialog(
                       context: context,
                       builder: (builderContext) {

@@ -22,7 +22,7 @@ abstract class AccountSettingsRepository {
 
   //TODO: check if tha car entity is given from backend
   Future<Result<Car, Exception>> addCar({
-    required Car car,
+    required String registrationPlate,
   });
 
   Future<Result<void, Exception>> deleteCar({

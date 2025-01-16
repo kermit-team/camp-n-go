@@ -5,7 +5,7 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/features/reservations/domain/entities/get_parcel_list_params.dart';
-import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/domain/repository/reservation_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -34,7 +34,7 @@ class ParcelListCubit extends Cubit<ParcelListState> {
     }
 
     try {
-      final Result<PaginatedResponse<Parcel>, Exception> result =
+      final Result<PaginatedResponse<ParcelListItem>, Exception> result =
           await reservationRepository.getParcelList(
         page: page,
         startDate: params.startDate,
@@ -44,8 +44,8 @@ class ParcelListCubit extends Cubit<ParcelListState> {
       );
 
       switch (result) {
-        case Success<PaginatedResponse<Parcel>, Exception>():
-          List<Parcel> updatedList = List.of(state.parcels ?? []);
+        case Success<PaginatedResponse<ParcelListItem>, Exception>():
+          List<ParcelListItem> updatedList = List.of(state.parcels ?? []);
           if (page > 1) {
             updatedList.addAll(result.value.items);
           } else {
@@ -62,7 +62,7 @@ class ParcelListCubit extends Cubit<ParcelListState> {
           ));
           break;
 
-        case Failure<PaginatedResponse<Parcel>, Exception>():
+        case Failure<PaginatedResponse<ParcelListItem>, Exception>():
           log('[getParcelList bloc error result]: ${result.exception.toString()}');
           emit(state.copyWith(
             getParcelListStatus: SubmissionStatus.failure,

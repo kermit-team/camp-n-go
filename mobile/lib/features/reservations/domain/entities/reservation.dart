@@ -1,69 +1,75 @@
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/payment.dart';
 import 'package:equatable/equatable.dart';
 
 class Reservation extends Equatable {
-  final String id;
-  final Parcel parcel;
-  final Account account;
-  final int numberOfNights;
-  final int adults;
-  final int children;
+  final int id;
   final DateTime startDate;
   final DateTime endDate;
+  final int numberOfAdults;
+  final int numberOfChildren;
+  final String? comments;
+  final Account account;
   final Car car;
-  final bool canBeEdited;
+  final Parcel parcel;
+  final Payment payment;
+  final bool isCancellable;
 
   const Reservation({
     required this.id,
-    required this.parcel,
-    required this.account,
-    required this.numberOfNights,
-    required this.adults,
-    required this.children,
     required this.startDate,
     required this.endDate,
+    required this.numberOfAdults,
+    required this.numberOfChildren,
+    this.comments,
+    required this.account,
     required this.car,
-    this.canBeEdited = false,
+    required this.parcel,
+    required this.payment,
+    required this.isCancellable,
   });
 
   Reservation copyWith({
-    String? id,
-    Parcel? parcel,
-    Account? account,
-    int? numberOfNights,
-    int? adults,
-    int? children,
+    int? id,
     DateTime? startDate,
     DateTime? endDate,
+    int? numberOfAdults,
+    int? numberOfChildren,
+    String? comments,
+    Account? account,
     Car? car,
-    bool? canBeEdited,
+    Parcel? parcel,
+    Payment? payment,
+    bool? isCancellable,
   }) =>
       Reservation(
         id: id ?? this.id,
-        parcel: parcel ?? this.parcel,
-        account: account ?? this.account,
-        numberOfNights: numberOfNights ?? this.numberOfNights,
-        adults: adults ?? this.adults,
-        children: children ?? this.children,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
+        numberOfAdults: numberOfAdults ?? this.numberOfAdults,
+        numberOfChildren: numberOfChildren ?? this.numberOfChildren,
+        comments: comments ?? this.comments,
+        account: account ?? this.account,
         car: car ?? this.car,
-        canBeEdited: canBeEdited ?? this.canBeEdited,
+        parcel: parcel ?? this.parcel,
+        payment: payment ?? this.payment,
+        isCancellable: isCancellable ?? this.isCancellable,
       );
 
   @override
   List<Object?> get props => [
         id,
-        parcel,
-        account,
-        numberOfNights,
-        adults,
-        children,
         startDate,
         endDate,
+        numberOfAdults,
+        numberOfChildren,
+        comments,
+        account,
         car,
-        canBeEdited,
+        parcel,
+        payment,
+        isCancellable,
       ];
 }

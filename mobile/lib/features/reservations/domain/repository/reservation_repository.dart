@@ -1,16 +1,16 @@
 import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
+import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation_preview.dart';
 
 abstract class ReservationRepository {
   Future<Result<Parcel, Exception>> getParcelDetails({
-    required String campingSectionName,
-    required String position,
+    required int parcelId,
   });
 
-  Future<Result<PaginatedResponse<Parcel>, Exception>> getParcelList({
+  Future<Result<PaginatedResponse<ParcelListItem>, Exception>> getParcelList({
     required DateTime startDate,
     required DateTime endDate,
     required int adults,
@@ -28,14 +28,14 @@ abstract class ReservationRepository {
     required int page,
   });
 
-  Future<Result<void, Exception>> createReservation({
-    required int parcelNumber,
-    required int adults,
-    required int children,
-    required DateTime startDate,
-    required DateTime endDate,
-    required String carRegistration,
-  });
+  // Future<Result<void, Exception>> createReservation({
+  //   required int parcelNumber,
+  //   required int adults,
+  //   required int children,
+  //   required DateTime startDate,
+  //   required DateTime endDate,
+  //   required String carRegistration,
+  // });
 
   Future<Result<void, Exception>> updateReservation({
     required String reservationId,
@@ -48,6 +48,4 @@ abstract class ReservationRepository {
   Future<Result<void, Exception>> cancelReservation({
     required String reservationId,
   });
-
-  Future<Result<String, Exception>> makeReservation();
 }

@@ -107,12 +107,10 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
 
   @override
   Future<Result<Car, Exception>> addCar({
-    required Car car,
+    required String registrationPlate,
   }) async {
     try {
-      final registrationPlateJson = {
-        "registration_plate": car.registrationPlate
-      };
+      final registrationPlateJson = {"registration_plate": registrationPlate};
       final httpResponse = await _accountSettingsApiService.addCar(
         registrationPlateJson: registrationPlateJson,
       );
@@ -136,7 +134,7 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
   }) async {
     try {
       final httpResponse = await _accountSettingsApiService.deleteCar(
-        registrationPlate: car.registrationPlate,
+        id: car.id,
       );
 
       if (httpResponse.response.statusCode == 204) {

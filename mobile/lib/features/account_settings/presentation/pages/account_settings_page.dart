@@ -261,10 +261,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                   ],
                                   onSubmit: (registrationPlate) {
                                     context.read<AccountSettingsCubit>().addCar(
-                                          car: Car(
-                                            registrationPlate:
-                                                registrationPlate,
-                                          ),
+                                          registrationPlate: registrationPlate,
                                         );
                                   },
                                 );

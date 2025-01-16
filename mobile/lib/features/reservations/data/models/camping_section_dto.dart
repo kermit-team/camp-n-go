@@ -5,6 +5,9 @@ part 'camping_section_dto.g.dart';
 
 @JsonSerializable()
 class CampingSectionDto {
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'name')
   final String name;
   @JsonKey(name: 'base_price')
   final String basePrice;
@@ -14,6 +17,7 @@ class CampingSectionDto {
   final String pricePerChild;
 
   CampingSectionDto({
+    required this.id,
     required this.name,
     required this.basePrice,
     required this.pricePerAdult,
@@ -22,17 +26,20 @@ class CampingSectionDto {
 
   factory CampingSectionDto.fromJson(Map<String, dynamic> json) =>
       _$CampingSectionDtoFromJson(json);
+
   Map<String, dynamic> toJson() => _$CampingSectionDtoToJson(this);
 
-  factory CampingSectionDto.fromEntity(CampingSection section) =>
+  factory CampingSectionDto.fromEntity(CampingSection entity) =>
       CampingSectionDto(
-        name: section.name,
-        basePrice: section.basePrice.toString(),
-        pricePerAdult: section.pricePerAdult.toString(),
-        pricePerChild: section.pricePerChild.toString(),
+        id: entity.id,
+        name: entity.name,
+        basePrice: entity.basePrice.toString(),
+        pricePerAdult: entity.pricePerAdult.toString(),
+        pricePerChild: entity.pricePerChild.toString(),
       );
 
   CampingSection toEntity() => CampingSection(
+        id: id,
         name: name,
         basePrice: double.tryParse(basePrice) ?? 0,
         pricePerAdult: double.tryParse(pricePerAdult) ?? 0,

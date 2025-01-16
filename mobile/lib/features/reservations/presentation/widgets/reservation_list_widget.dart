@@ -5,7 +5,6 @@ import 'package:campngo/features/reservations/presentation/cubit/reservation_lis
 import 'package:campngo/features/reservations/presentation/widgets/reservation_list_tile.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -111,8 +110,7 @@ class _ReservationListWidgetState extends State<ReservationListWidget> {
                     context.push(
                       AppRoutes.reservationPreview.route,
                       extra: {
-                        'reservationId':
-                            state.reservations![index].reservationId,
+                        'reservationId': state.reservations![index].id,
                       },
                     );
                   },

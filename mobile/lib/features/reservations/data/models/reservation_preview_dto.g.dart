@@ -9,25 +9,21 @@ part of 'reservation_preview_dto.dart';
 ReservationPreviewDto _$ReservationPreviewDtoFromJson(
         Map<String, dynamic> json) =>
     ReservationPreviewDto(
-      reservationId: json['reservationId'] as String,
-      parcelNumber: (json['parcelNumber'] as num).toInt(),
-      reservationPrice: (json['reservationPrice'] as num).toDouble(),
-      startDate: DateTime.parse(json['startDate'] as String),
-      endDate: DateTime.parse(json['endDate'] as String),
-      sector: json['sector'] as String,
-      reservationStatus: json['reservationStatus'] as String,
-      canCancel: json['canCancel'] as bool,
+      reservationId: (json['id'] as num).toInt(),
+      startDate: DateTime.parse(json['date_from'] as String),
+      endDate: DateTime.parse(json['date_to'] as String),
+      parcel: ParcelDto.fromJson(json['camping_plot'] as Map<String, dynamic>),
+      payment: PaymentDto.fromJson(json['payment'] as Map<String, dynamic>),
+      canCancel: json['is_cancellable'] as bool,
     );
 
 Map<String, dynamic> _$ReservationPreviewDtoToJson(
         ReservationPreviewDto instance) =>
     <String, dynamic>{
-      'reservationId': instance.reservationId,
-      'parcelNumber': instance.parcelNumber,
-      'reservationPrice': instance.reservationPrice,
-      'startDate': instance.startDate.toIso8601String(),
-      'endDate': instance.endDate.toIso8601String(),
-      'sector': instance.sector,
-      'reservationStatus': instance.reservationStatus,
-      'canCancel': instance.canCancel,
+      'id': instance.reservationId,
+      'date_from': instance.startDate.toIso8601String(),
+      'date_to': instance.endDate.toIso8601String(),
+      'camping_plot': instance.parcel,
+      'payment': instance.payment,
+      'is_cancellable': instance.canCancel,
     };

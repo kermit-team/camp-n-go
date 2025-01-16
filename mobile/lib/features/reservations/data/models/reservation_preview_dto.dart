@@ -1,3 +1,5 @@
+import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
+import 'package:campngo/features/reservations/data/models/payment_dto.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation_preview.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -5,23 +7,25 @@ part 'reservation_preview_dto.g.dart';
 
 @JsonSerializable()
 class ReservationPreviewDto {
-  final String reservationId;
-  final int parcelNumber;
-  final double reservationPrice;
+  @JsonKey(name: 'id')
+  final int reservationId;
+  @JsonKey(name: 'date_from')
   final DateTime startDate;
+  @JsonKey(name: 'date_to')
   final DateTime endDate;
-  final String sector;
-  final String reservationStatus;
+  @JsonKey(name: 'camping_plot')
+  final ParcelDto parcel;
+  @JsonKey(name: 'payment')
+  final PaymentDto payment;
+  @JsonKey(name: 'is_cancellable')
   final bool canCancel;
 
   ReservationPreviewDto({
     required this.reservationId,
-    required this.parcelNumber,
-    required this.reservationPrice,
     required this.startDate,
     required this.endDate,
-    required this.sector,
-    required this.reservationStatus,
+    required this.parcel,
+    required this.payment,
     required this.canCancel,
   });
 
@@ -32,24 +36,20 @@ class ReservationPreviewDto {
 
   factory ReservationPreviewDto.fromEntity(ReservationPreview entity) =>
       ReservationPreviewDto(
-        reservationId: entity.reservationId,
-        parcelNumber: entity.parcelNumber,
-        reservationPrice: entity.reservationPrice,
+        reservationId: int.parse(entity.id),
         startDate: entity.startDate,
         endDate: entity.endDate,
-        sector: entity.sector,
-        reservationStatus: entity.reservationStatus,
+        parcel: ParcelDto.fromEntity(entity.parcel),
+        payment: PaymentDto.fromEntity(entity.payment),
         canCancel: entity.canCancel,
       );
 
   ReservationPreview toEntity() => ReservationPreview(
-        reservationId: reservationId,
-        parcelNumber: parcelNumber,
-        reservationPrice: reservationPrice,
+        id: reservationId.toString(),
         startDate: startDate,
         endDate: endDate,
-        sector: sector,
-        reservationStatus: reservationStatus,
+        parcel: parcel.toEntity(),
+        payment: payment.toEntity(),
         canCancel: canCancel,
       );
 }

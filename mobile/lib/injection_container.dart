@@ -48,7 +48,7 @@ Future<void> initializeDependencies() async {
       AccountSettingsRepositoryImpl(accountSettingsApiService);
   final reservationApiService = ReservationApiService(dio);
   final reservationRepository =
-      ReservationRepositoryImpl(reservationApiService, useMocks: true);
+      ReservationRepositoryImpl(reservationApiService, useMocks: false);
 
   // Register dependencies
   serviceLocator.registerSingleton<Dio>(dio);

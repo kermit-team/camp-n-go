@@ -194,7 +194,7 @@ msgid ""
 "was given for reservation."
 msgstr ""
 "Parcela {camping_plot_section_name}_{camping_plot_position} może pomieścić "
-"maksymalnie {max_liczba_osób} osób, podczas gdy {liczba_osób} osób została "
+"maksymalnie {max_number_of_people} osób, podczas gdy {number_of_people} osób została "
 "podana dla rezerwacji."
 
 #: server/apps/camping/errors/reservation.py:13
@@ -215,8 +215,8 @@ msgid ""
 "available during the period of {date_from} - {date_to} for "
 "{number_of_people} people."
 msgstr ""
-"Parcela {camping_plot_section_name}_{camping_plot_position} nie jestdostępna "
-"w okresie {date_from} - {date_to} dla{number_of_preople} osób."
+"Parcela {camping_plot_section_name}_{camping_plot_position} nie jest dostępna "
+"w okresie {date_from} - {date_to} dla{number_of_people} osób."
 
 #: server/apps/camping/errors/reservation.py:19
 #, python-brace-format

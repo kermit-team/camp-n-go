@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from server.apps.camping.filters import CampingPlotAvailabilityFilter
 from server.apps.camping.models import CampingPlot
-from server.apps.camping.serializers.plot_availability_details import CampingPlotAvailabilityDetailsSerializer
+from server.apps.camping.serializers.plot_availability_list_element import CampingPlotAvailabilityListElementSerializer
 
 
 @extend_schema(
@@ -52,14 +52,14 @@ from server.apps.camping.serializers.plot_availability_details import CampingPlo
     ],
     responses={
         200: OpenApiResponse(
-            response=CampingPlotAvailabilityDetailsSerializer(many=True),
+            response=CampingPlotAvailabilityListElementSerializer(many=True),
         ),
     },
 )
 class CampingPlotAvailabilityListView(GenericAPIView):
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     queryset = CampingPlot.objects.order_by('camping_section__name', 'position')
-    serializer_class = CampingPlotAvailabilityDetailsSerializer
+    serializer_class = CampingPlotAvailabilityListElementSerializer
     filterset_class = CampingPlotAvailabilityFilter
 
     def get(self, request: Request) -> Response:

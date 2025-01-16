@@ -5,8 +5,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from server.apps.camping.models import CampingPlot, CampingSection, PaymentStatus, Reservation
-from server.datastore.commands.camping.reservation import ReservationCommand
-from server.datastore.queries.camping import CampingPlotQuery
+from server.datastore.queries.camping import CampingPlotQuery, ReservationQuery
 
 
 class CampingPlotQueryTestCase(TestCase):
@@ -119,7 +118,7 @@ class CampingPlotQueryTestCase(TestCase):
             date_from=date_from + timedelta(days=1),
             date_to=date_to - timedelta(days=1),
             camping_plot=self.camping_plots[3],
-            payment__status=PaymentStatus.RETURNED,
+            payment__status=PaymentStatus.REFUNDED,
         )
 
         result = CampingPlotQuery.get_available(
@@ -140,28 +139,28 @@ class CampingPlotQueryTestCase(TestCase):
             date_from=date_from - timedelta(days=7),
             date_to=date_from - timedelta(days=4),
             camping_plot=self.camping_plots[0],
-            payment__status=ReservationCommand.cancellable_payments_statuses[0],
+            payment__status=ReservationQuery.cancellable_payments_statuses[0],
         )
         _reservation_at_arrival_date = baker.make(
             _model=Reservation,
             date_from=date_from - timedelta(days=7),
             date_to=date_from,
             camping_plot=self.camping_plots[1],
-            payment__status=ReservationCommand.cancellable_payments_statuses[0],
+            payment__status=ReservationQuery.cancellable_payments_statuses[0],
         )
         _reservation_after_date = baker.make(
             _model=Reservation,
             date_from=date_to + timedelta(days=4),
             date_to=date_to + timedelta(days=7),
             camping_plot=self.camping_plots[2],
-            payment__status=ReservationCommand.cancellable_payments_statuses[1],
+            payment__status=ReservationQuery.cancellable_payments_statuses[1],
         )
         _reservation_at_leaving_date = baker.make(
             _model=Reservation,
             date_from=date_to,
             date_to=date_to + timedelta(days=7),
             camping_plot=self.camping_plots[3],
-            payment__status=ReservationCommand.cancellable_payments_statuses[1],
+            payment__status=ReservationQuery.cancellable_payments_statuses[1],
         )
 
         result = CampingPlotQuery.get_available(

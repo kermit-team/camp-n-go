@@ -58,7 +58,7 @@ from server.apps.camping.serializers.plot_availability_details import CampingPlo
 )
 class CampingPlotAvailabilityListView(GenericAPIView):
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
-    queryset = CampingPlot.objects.all()
+    queryset = CampingPlot.objects.order_by('camping_section__name', 'position')
     serializer_class = CampingPlotAvailabilityDetailsSerializer
     filterset_class = CampingPlotAvailabilityFilter
 

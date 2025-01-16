@@ -6,7 +6,7 @@ from model_bakery import baker
 from rest_framework.exceptions import ErrorDetail
 
 from server.apps.account.models import Account, AccountProfile
-from server.apps.camping.models import CampingPlot, CampingSection
+from server.apps.camping.models import CampingPlot, CampingSection, Reservation
 from server.apps.camping.serializers import ReservationCreateSerializer
 from server.apps.car.models import Car
 from server.apps.common.errors.common import CommonErrorMessagesEnum
@@ -36,11 +36,19 @@ class ReservationCreateSerializerTestCase(TestCase):
             camping_section=self.camping_section,
             _fill_optional=True,
         )
+        self.reservation = baker.make(
+            _model=Reservation,
+            user=self.account,
+            car=self.car,
+            camping_plot=self.camping_plot,
+            _fill_optional=True,
+        )
         self.request = mock.MagicMock(user=self.account)
 
     @mock.patch(mock_stripe)
     @mock.patch.object(ReservationCreateBL, 'process')
     def test_create(self, create_reservation_mock, stripe_mock):
+        create_reservation_mock.return_value = self.reservation
         serializer = ReservationCreateSerializer(
             data={
                 'date_from': self.date_from,
@@ -70,13 +78,14 @@ class ReservationCreateSerializerTestCase(TestCase):
         serializer_data = serializer.data
 
         stripe_mock.checkout.Session.retrieve.assert_called_once_with(
-            id=create_reservation_mock.return_value.payment.stripe_checkout_id,
+            id=self.reservation.payment.stripe_checkout_id,
         )
         assert serializer_data['checkout_url'] == stripe_mock.checkout.Session.retrieve.return_value.url
 
     @mock.patch(mock_stripe)
     @mock.patch.object(ReservationCreateBL, 'process')
     def test_create_without_optional_fields(self, create_reservation_mock, stripe_mock):
+        create_reservation_mock.return_value = self.reservation
         serializer = ReservationCreateSerializer(
             data={
                 'date_from': self.date_from,
@@ -105,7 +114,7 @@ class ReservationCreateSerializerTestCase(TestCase):
         serializer_data = serializer.data
 
         stripe_mock.checkout.Session.retrieve.assert_called_once_with(
-            id=create_reservation_mock.return_value.payment.stripe_checkout_id,
+            id=self.reservation.payment.stripe_checkout_id,
         )
         assert serializer_data['checkout_url'] == stripe_mock.checkout.Session.retrieve.return_value.url
 

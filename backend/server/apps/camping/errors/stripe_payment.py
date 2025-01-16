@@ -3,6 +3,7 @@ from enum import Enum
 from django.utils.translation import gettext_lazy as _
 
 
-class StripePaymentErrorMessagesEnum(Enum):
-    INVALID_PAYLOAD = _('Strie payment payload is invalid.')
-    UNEXPECTED_EVENT = _('Strie payment payment event type {event_type} is unexpected.')
+class StripeErrorMessagesEnum(Enum):
+    INVALID_EVENT_PAYLOAD = _('Stripe event payload is invalid.')
+    UNEXPECTED_EVENT = _('Stripe event type {event_type} is unexpected.')
+    CHECKOUT_SESSION_NOT_FOUND = _('Stripe checkout session not found for payment intent {payment_intent}.')

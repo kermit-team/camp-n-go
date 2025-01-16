@@ -6,7 +6,7 @@ from model_bakery import baker
 
 from server.apps.camping.models import CampingPlot
 from server.apps.camping.serializers.plot_availability_details import CampingPlotAvailabilityDetailsSerializer
-from server.datastore.commands.camping.reservation import ReservationCommand
+from server.datastore.queries.camping import ReservationQuery
 
 
 class CampingPlotAvailabilityDetailsSerializerTestCase(TestCase):
@@ -19,7 +19,7 @@ class CampingPlotAvailabilityDetailsSerializerTestCase(TestCase):
     def setUp(self):
         self.camping_plot = baker.make(_model=CampingPlot, _fill_optional=True)
 
-    @mock.patch.object(ReservationCommand, 'calculate_overall_price')
+    @mock.patch.object(ReservationQuery, 'calculate_overall_price')
     def test_get_is_cancellable(self, calculate_reservation_overall_price_mock):
         serializer = CampingPlotAvailabilityDetailsSerializer(
             self.camping_plot,

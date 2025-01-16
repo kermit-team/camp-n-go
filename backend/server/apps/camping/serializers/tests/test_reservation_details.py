@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from server.apps.camping.models import Reservation
 from server.apps.camping.serializers import ReservationDetailsSerializer
-from server.datastore.commands.camping.reservation import ReservationCommand
+from server.datastore.queries.camping import ReservationQuery
 
 
 class ReservationDetailsSerializerTestCase(TestCase):
@@ -13,7 +13,7 @@ class ReservationDetailsSerializerTestCase(TestCase):
     def setUp(self):
         self.reservation = baker.make(_model=Reservation, _fill_optional=True)
 
-    @mock.patch.object(ReservationCommand, 'is_reservation_cancellable')
+    @mock.patch.object(ReservationQuery, 'is_reservation_cancellable')
     def test_get_is_cancellable(self, is_reservation_cancellable_mock):
         serializer = ReservationDetailsSerializer(self.reservation)
         serializer_data = serializer.data

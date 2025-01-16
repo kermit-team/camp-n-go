@@ -13,8 +13,10 @@ from server.apps.camping.models import CampingPlot, Reservation
 from server.apps.car.models import Car
 from server.apps.common.exceptions.common import DateInThePastError, InvalidDateValuesError
 from server.business_logic.abstract import AbstractBL
+from server.business_logic.mailing.camping import ReservationCreateMail
 from server.datastore.commands.camping.reservation import ReservationCommand
 from server.datastore.queries.camping import CampingPlotQuery
+from server.datastore.queries.car import CarQuery
 
 
 class ReservationCreateBL(AbstractBL):
@@ -46,7 +48,7 @@ class ReservationCreateBL(AbstractBL):
             camping_plot=camping_plot,
         )
 
-        return ReservationCommand.create(
+        reservation = ReservationCommand.create(
             date_from=date_from,
             date_to=date_to,
             number_of_adults=number_of_adults,
@@ -56,6 +58,9 @@ class ReservationCreateBL(AbstractBL):
             camping_plot=camping_plot,
             comments=comments,
         )
+        ReservationCreateMail.send(reservation=reservation)
+
+        return reservation
 
     @classmethod
     def _validate_reservation_date(cls, date_from: date, date_to: date) -> None:
@@ -89,7 +94,7 @@ class ReservationCreateBL(AbstractBL):
         if not user.profile.id_card:
             raise IdCardMissingForReservationError()
 
-        if not user.cars.filter(id=car.id).exists():
+        if not CarQuery.car_belongs_to_user(car=car, user=user):
             raise CarNotBelongsToAccountError(
                 registration_plate=car.registration_plate,
                 account_identifier=user.identifier,

@@ -29,7 +29,7 @@ class CarCommandTestCase(TestCase):
         )
 
         assert car
-        assert self.car.drivers.filter(identifier=self.account.identifier).exists()
+        assert car.drivers.filter(identifier=self.account.identifier).exists()
 
     def test_remove_driver_from_car(self):
         self.car.save()

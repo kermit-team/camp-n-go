@@ -1,9 +1,7 @@
-from datetime import date, timedelta
+from datetime import date
 from unittest import mock
 
-from django.conf import settings
 from django.test import TestCase
-from freezegun import freeze_time
 from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
@@ -11,6 +9,7 @@ from server.apps.camping.models import CampingPlot, CampingSection, PaymentStatu
 from server.apps.car.models import Car
 from server.business_logic.camping.stripe_payment import StripePaymentCreateCheckoutBL
 from server.datastore.commands.camping.reservation import ReservationCommand
+from server.datastore.queries.camping import ReservationQuery
 from server.utils.tests.baker_generators import generate_password
 
 
@@ -70,7 +69,7 @@ class ReservationCommandTestCase(TestCase):
 
         assert reservation.payment
         assert reservation.payment.stripe_checkout_id == stripe_payment_create_checkout_mock.return_value.id
-        assert reservation.payment.price == ReservationCommand.calculate_overall_price(
+        assert reservation.payment.price == ReservationQuery.calculate_overall_price(
             number_of_adults=self.number_of_adults,
             number_of_children=self.number_of_children,
             date_from=date_from,
@@ -116,7 +115,7 @@ class ReservationCommandTestCase(TestCase):
 
         assert reservation.payment
         assert reservation.payment.stripe_checkout_id == stripe_payment_create_checkout_mock.return_value.id
-        assert reservation.payment.price == ReservationCommand.calculate_overall_price(
+        assert reservation.payment.price == ReservationQuery.calculate_overall_price(
             number_of_adults=self.number_of_adults,
             number_of_children=self.number_of_children,
             date_from=date_from,
@@ -125,125 +124,10 @@ class ReservationCommandTestCase(TestCase):
         )
         assert reservation.payment.status == PaymentStatus.WAITING_FOR_PAYMENT
 
-    def test_calculate_overall_price(self):
-        date_from = date(2020, 1, 1)
-        date_to = date(2020, 1, 8)
+    def test_modify(self):
+        reservation = baker.make(_model=Reservation, car=self.car, _fill_optional=True)
+        new_car = baker.make(_model=Car)
 
-        number_of_days = (date_to - date_from).days
-        expected_price = number_of_days * (
-            self.camping_section.base_price +
-            (self.number_of_adults * self.camping_section.price_per_adult) +
-            (self.number_of_children * self.camping_section.price_per_child)
-        )
+        reservation = ReservationCommand.modify(reservation=reservation, car=new_car)
 
-        calculated_price = ReservationCommand.calculate_overall_price(
-            number_of_adults=self.number_of_adults,
-            number_of_children=self.number_of_children,
-            date_from=date_from,
-            date_to=date_to,
-            camping_section=self.camping_section,
-        )
-
-        assert calculated_price == expected_price
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_payment_status_is_waiting_for_payment(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date
-        date_to = cancellable_date + timedelta(days=3)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.WAITING_FOR_PAYMENT,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is True
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_payment_status_is_paid(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date
-        date_to = cancellable_date + timedelta(days=3)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.PAID,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is True
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_payment_status_is_unpaid(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date
-        date_to = cancellable_date + timedelta(days=3)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.UNPAID,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is False
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_payment_status_is_cancelled(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date
-        date_to = cancellable_date + timedelta(days=3)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.CANCELLED,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is False
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_payment_status_is_returned(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date
-        date_to = cancellable_date + timedelta(days=3)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.RETURNED,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is False
-
-    @freeze_time(given_date)
-    def test_is_reservation_cancellable_when_reservation_cancellation_period_passed(self):
-        cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
-        date_from = cancellable_date - timedelta(days=1)
-        date_to = cancellable_date + timedelta(days=2)
-
-        reservation = baker.make(
-            _model=Reservation,
-            date_from=date_from,
-            date_to=date_to,
-            payment__status=PaymentStatus.WAITING_FOR_PAYMENT,
-            _fill_optional=True,
-        )
-
-        is_reservation_cancellable = ReservationCommand.is_reservation_cancellable(reservation=reservation)
-        assert is_reservation_cancellable is False
+        assert reservation.car == new_car

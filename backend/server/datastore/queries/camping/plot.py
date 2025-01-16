@@ -33,4 +33,4 @@ class CampingPlotQuery:
             max_number_of_people__gte=number_of_people,
         ).exclude(
             id__in=Subquery(unavailable_camping_plot_ids),
-        ).order_by('id')
+        )

@@ -11,7 +11,7 @@ class PaymentStatus(models.IntegerChoices):
     CANCELLED = 1, _('Cancelled')
     UNPAID = 2, _('Unpaid')
     PAID = 3, _('Paid')
-    RETURNED = 4, _('Returned')
+    REFUNDED = 4, _('Refunded')
 
 
 class Payment(CreatedUpdatedMixin):

@@ -1,9 +1,11 @@
-from server.apps.camping.models import Payment, PaymentStatus
+from server.apps.camping.models import Payment
 
 
 class PaymentCommand:
     @classmethod
-    def update_status(cls, payment: Payment, status: PaymentStatus) -> Payment:
-        payment.status = status
+    def modify(cls, payment: Payment, **kwargs) -> Payment:
+        for field, value in kwargs.items():
+            setattr(payment, field, value)
+
         payment.save()
         return payment

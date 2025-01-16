@@ -9,8 +9,8 @@ class PaymentCommandTestCase(TestCase):
     def setUp(self):
         self.payment = baker.make(_model=Payment, status=PaymentStatus.WAITING_FOR_PAYMENT)
 
-    def test_update_status(self):
+    def test_modify(self):
         new_status = PaymentStatus.PAID
-        payment = PaymentCommand.update_status(payment=self.payment, status=new_status)
+        payment = PaymentCommand.modify(payment=self.payment, status=new_status)
 
         assert payment.status == new_status

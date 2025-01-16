@@ -17,6 +17,7 @@ from server.apps.camping.models import CampingPlot, CampingSection
 from server.apps.car.models import Car
 from server.apps.common.exceptions.common import DateInThePastError, InvalidDateValuesError
 from server.business_logic.camping import ReservationCreateBL
+from server.business_logic.mailing.camping import ReservationCreateMail
 from server.datastore.commands.camping.reservation import ReservationCommand
 from server.datastore.queries.camping import CampingPlotQuery
 from server.utils.tests.baker_generators import generate_password
@@ -46,9 +47,15 @@ class ReservationCreateBLTestCase(TestCase):
         )
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         result = ReservationCreateBL.process(
@@ -72,12 +79,21 @@ class ReservationCreateBLTestCase(TestCase):
             camping_plot=self.camping_plot,
             comments=self.comments,
         )
+        send_reservation_create_mail_mock.assert_called_once_with(
+            reservation=create_reservation_mock.return_value,
+        )
         assert result == create_reservation_mock.return_value
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_without_optional_fields(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_without_optional_fields(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         result = ReservationCreateBL.process(
@@ -100,12 +116,21 @@ class ReservationCreateBLTestCase(TestCase):
             camping_plot=self.camping_plot,
             comments=None,
         )
+        send_reservation_create_mail_mock.assert_called_once_with(
+            reservation=create_reservation_mock.return_value,
+        )
         assert result == create_reservation_mock.return_value
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_with_invalid_dates(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_with_invalid_dates(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         with self.assertRaises(InvalidDateValuesError):
@@ -120,11 +145,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_with_date_in_the_past(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_with_date_in_the_past(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         with self.assertRaises(DateInThePastError):
@@ -139,11 +171,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_without_account_id_card(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_without_account_id_card(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
         self.account_profile.id_card = None
         self.account_profile.save()
@@ -160,11 +199,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_when_car_not_belongs_to_account(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_when_car_not_belongs_to_account(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
         self.car.drivers.clear()
 
@@ -180,11 +226,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_with_missing_adult_person(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_with_missing_adult_person(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         with self.assertRaises(AdultMissingForReservationError):
@@ -199,11 +252,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_with_too_many_people(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_with_too_many_people(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = True
 
         with self.assertRaises(TooManyPeopleForReservationError):
@@ -218,11 +278,18 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()
 
     @freeze_time(given_date)
+    @mock.patch.object(ReservationCreateMail, 'send')
     @mock.patch.object(CampingPlotQuery, 'get_available')
     @mock.patch.object(ReservationCommand, 'create')
-    def test_process_with_not_available_camping_plot(self, create_reservation_mock, get_available_camping_plot_mock):
+    def test_process_with_not_available_camping_plot(
+        self,
+        create_reservation_mock,
+        get_available_camping_plot_mock,
+        send_reservation_create_mail_mock,
+    ):
         get_available_camping_plot_mock.return_value.exists.return_value = False
 
         with self.assertRaises(CampingPlotNotAvailableForReservationError):
@@ -237,3 +304,4 @@ class ReservationCreateBLTestCase(TestCase):
             )
 
         create_reservation_mock.assert_not_called()
+        send_reservation_create_mail_mock.assert_not_called()

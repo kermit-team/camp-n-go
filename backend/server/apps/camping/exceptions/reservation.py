@@ -60,3 +60,17 @@ class CampingPlotNotAvailableForReservationError(Exception):
                 number_of_people=number_of_people,
             ),
         )
+
+
+class ReservationCannotBeCancelledError(Exception):
+    def __init__(self, reservation_id: int):
+        super().__init__(
+            ReservationErrorMessagesEnum.CANNOT_BE_CANCELLED.value.format(reservation_id=reservation_id),
+        )
+
+
+class ReservationCarCannotBeModifiedError(Exception):
+    def __init__(self, reservation_id: int):
+        super().__init__(
+            ReservationErrorMessagesEnum.CAR_CANNOT_BE_MODIFIED.value.format(reservation_id=reservation_id),
+        )

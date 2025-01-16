@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-10 15:47+0100\n"
+"POT-Creation-Date: 2025-01-16 17:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr "Awatar"
 
 #: server/apps/account/models/account_profile.py:40
 msgid "IdCard"
-msgstr "Dowód osobisty"
+msgstr "Dowód tożsamości"
 
 #: server/apps/account/validators/password/lowercase.py:15
 msgid "The password must contain at least 1 lowercase letter, a-z."
@@ -182,17 +182,105 @@ msgstr "Kemping"
 msgid "Campings"
 msgstr "Kempingi"
 
+#: server/apps/camping/errors/reservation.py:7
+msgid "Adult person is required to make a reservation."
+msgstr "Osoba dorosła jest wymagana do utworzenia rezerwacji."
+
+#: server/apps/camping/errors/reservation.py:9
+#, python-brace-format
+msgid ""
+"Camping plot {camping_plot_section_name}_{camping_plot_position} can hold "
+"maximum of {max_number_of_people} people, while {number_of_people} people "
+"was given for reservation."
+msgstr ""
+"Parcela {camping_plot_section_name}_{camping_plot_position} może pomieścić "
+"maksymalnie {max_number_of_people} osób, podczas gdy {number_of_people} osób została "
+"podana dla rezerwacji."
+
+#: server/apps/camping/errors/reservation.py:13
+#, python-brace-format
+msgid ""
+"Car {registration_plate} does not belong to account {account_identifier}."
+msgstr ""
+"Samochód {registration_plate} nie należy do użytkownika {account_identifier}."
+
+#: server/apps/camping/errors/reservation.py:14
+msgid "Id card is required to make a reservation."
+msgstr "Dokument tożsamości jest wymagany do utworzenia rezerwacji."
+
+#: server/apps/camping/errors/reservation.py:16
+#, python-brace-format
+msgid ""
+"Camping plot {camping_plot_section_name}_{camping_plot_position} is not "
+"available during the period of {date_from} - {date_to} for "
+"{number_of_people} people."
+msgstr ""
+"Parcela {camping_plot_section_name}_{camping_plot_position} nie jest dostępna "
+"w okresie {date_from} - {date_to} dla{number_of_people} osób."
+
+#: server/apps/camping/errors/reservation.py:19
+#, python-brace-format
+msgid "Reservation {reservation_id} cannot be cancelled."
+msgstr "Rezerwacja {reservation_id} nie może zostać anulowana."
+
+#: server/apps/camping/errors/reservation.py:20
+#, python-brace-format
+msgid "Reservation {reservation_id} car cannot be modified."
+msgstr "Rezerwacja {reservation_id} nie może zostać zmodyfikowana."
+
 #: server/apps/camping/errors/section.py:7
 #, python-brace-format
 msgid "Camping section {name} does not exist."
 msgstr "Sekcja kempingowa {name} nie istnieje."
+
+#: server/apps/camping/errors/stripe_payment.py:7
+msgid "Stripe event payload is invalid."
+msgstr "Zawartość zdarzenia Stripe jest nieprawidłowa."
+
+#: server/apps/camping/errors/stripe_payment.py:8
+#, python-brace-format
+msgid "Stripe event type {event_type} is unexpected."
+msgstr "Typ zdarzenia Stripe {event_type} jest nieoczekiwany."
+
+#: server/apps/camping/errors/stripe_payment.py:9
+#, python-brace-format
+msgid "Stripe checkout session not found for payment intent {payment_intent}."
+msgstr ""
+"Nie znaleziono sesji realizacji zakupu Stripe dla intencji płatności "
+"{payment_intent}."
+
+#: server/apps/camping/messages/reservation.py:7
+msgid "Reservation was successfully cancelled."
+msgstr "Rezerwacja została pomyślnie anulowana."
+
+#: server/apps/camping/messages/stripe_payment.py:7
+#, python-brace-format
+msgid "Stripe event {event_id} was handled successfully."
+msgstr "Zdarzenie Stripe {event_id} zostało pomyślnie obsłużone."
+
+#: server/apps/camping/messages/stripe_payment.py:9
+#, python-brace-format
+msgid ""
+"Camping plot {camping_section_name}_{camping_plot_position} reservation fee "
+"on date {date_from} - {date_to}"
+msgstr ""
+"Opłata za rezerwację parcelii {camping_section_name}_{camping_plot_position} "
+"w okresie {date_from} - {date_to}"
+
+#: server/apps/camping/messages/stripe_payment.py:11
+msgid "Adult fee"
+msgstr "Opłata za osobę dorosła"
+
+#: server/apps/camping/messages/stripe_payment.py:12
+msgid "Child fee"
+msgstr "Opłata za dziecko"
 
 #: server/apps/camping/models/payment.py:10
 msgid "WaitingForPayment"
 msgstr "Oczekiwanie na płatność"
 
 #: server/apps/camping/models/payment.py:11
-msgid "Canceled"
+msgid "Cancelled"
 msgstr "Anulowana"
 
 #: server/apps/camping/models/payment.py:12
@@ -204,14 +292,14 @@ msgid "Paid"
 msgstr "Opłacona"
 
 #: server/apps/camping/models/payment.py:14
-msgid "Returned"
+msgid "Refunded"
 msgstr "Zwrócona"
 
 #: server/apps/camping/models/payment.py:25
 msgid "StripeCheckoutId"
 msgstr "Identyfikator transakcji Stripe"
 
-#: server/apps/camping/models/payment.py:29
+#: server/apps/camping/models/payment.py:30
 msgid "Price"
 msgstr "Cena"
 
@@ -336,6 +424,17 @@ msgstr "Tablica rejestracyjna"
 msgid "Drivers"
 msgstr "Kierowcy"
 
+#: server/apps/common/errors/common.py:7
+#, python-brace-format
+msgid "Date from {date_from} must be before Date to {date_to}."
+msgstr ""
+"Data rozpoczęcia {date_from} musi być przed Datą zakończenia {date_to}."
+
+#: server/apps/common/errors/common.py:8
+#, python-brace-format
+msgid "Date {given_date} is not upcoming."
+msgstr "Data {given_date} nie jest nadchodząca."
+
 #: server/apps/common/models/created_updated.py:6
 msgid "CreatedAt"
 msgstr "Czas utworzenia"
@@ -351,6 +450,26 @@ msgstr "Weryfikacja adresu e-mail"
 #: server/business_logic/mailing/account/password_reset.py:14
 msgid "AccountPasswordResetEmailSubject"
 msgstr "Prośba o zresetowanie hasła"
+
+#: server/business_logic/mailing/camping/payment_expired.py:10
+msgid "PaymentExpiredEmailSubject"
+msgstr "Płatność wygasła"
+
+#: server/business_logic/mailing/camping/payment_refund_processed.py:10
+msgid "PaymentRefundProcessedEmailSubject"
+msgstr "Zwrot płatności"
+
+#: server/business_logic/mailing/camping/payment_success.py:11
+msgid "PaymentSuccessEmailSubject"
+msgstr "Potwierdzenie płatności"
+
+#: server/business_logic/mailing/camping/reservation_cancel.py:11
+msgid "ReservationCancelEmailSubject"
+msgstr "Anulowanie rezerwacji"
+
+#: server/business_logic/mailing/camping/reservation_create.py:15
+msgid "ReservationCreateEmailSubject"
+msgstr "Nowa rezerwacja"
 
 #: server/settings/components/permissions.py:3
 msgid "Owner"
@@ -382,6 +501,11 @@ msgstr "Weryfikacja adresu e-mail"
 
 #: server/templates/mailing/account/email_verification.html:9
 #: server/templates/mailing/account/password_reset.html:9
+#: server/templates/mailing/camping/payment_expired.html:9
+#: server/templates/mailing/camping/payment_refund_processed.html:9
+#: server/templates/mailing/camping/payment_success.html:9
+#: server/templates/mailing/camping/reservation_cancel.html:9
+#: server/templates/mailing/camping/reservation_create.html:9
 msgid "Hi"
 msgstr "Cześć"
 
@@ -395,6 +519,7 @@ msgstr "Zweryfikuj adres e-mail"
 
 #: server/templates/mailing/account/email_verification.html:20
 #: server/templates/mailing/account/password_reset.html:19
+#: server/templates/mailing/camping/reservation_create.html:20
 msgid "If the button does not work for any reason, please use the link below:"
 msgstr ""
 "Jeśli przycisk z jakiegoś powodu nie działa, skorzystaj z poniższego linku:"
@@ -406,6 +531,11 @@ msgstr ""
 
 #: server/templates/mailing/account/email_verification.html:34
 #: server/templates/mailing/account/password_reset.html:26
+#: server/templates/mailing/camping/payment_expired.html:15
+#: server/templates/mailing/camping/payment_refund_processed.html:16
+#: server/templates/mailing/camping/payment_success.html:16
+#: server/templates/mailing/camping/reservation_cancel.html:16
+#: server/templates/mailing/camping/reservation_create.html:27
 msgid "Regards"
 msgstr "Pozdrawia"
 
@@ -426,3 +556,109 @@ msgstr ""
 #: server/templates/mailing/account/password_reset.html:16
 msgid "Reset password"
 msgstr "Zresetuj hasło"
+
+#: server/templates/mailing/camping/payment_expired.html:6
+msgid "Payment expired"
+msgstr "Płatność wygasła"
+
+#: server/templates/mailing/camping/payment_expired.html:10
+#, python-format
+msgid ""
+"Unfortunately, your payment link has expired, and your reservation "
+"%(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] has been automatically canceled."
+msgstr ""
+"Niestety, link do płatności wygasł, a rezerwacja "
+"%(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] została automatycznie anulowana."
+
+#: server/templates/mailing/camping/payment_refund_processed.html:6
+msgid "Refund processed"
+msgstr "Zwrot płatności"
+
+#: server/templates/mailing/camping/payment_refund_processed.html:10
+#, python-format
+msgid ""
+"We have successfully processed your refund for reservation "
+"%(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s]. Please check your payment method for the credited "
+"amount."
+msgstr ""
+"Pomyślnie przetworzyliśmy zwrot pieniędzy za rezerwację "
+"%(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s]. Sprawdź swoją metodę płatności, aby uzyskać "
+"zaksięgowaną kwota."
+
+#: server/templates/mailing/camping/payment_success.html:6
+msgid "Payment success"
+msgstr "Potwierdzenie płatności"
+
+#: server/templates/mailing/camping/payment_success.html:10
+#, python-format
+msgid ""
+"We have received your payment for reservation %(reservation.camping_plot)s "
+"[%(reservation.date_from)s - %(reservation.date_to)s]. You can cancel your "
+"reservation up to %(cancellation_time_in_days)s days before the scheduled "
+"date."
+msgstr ""
+"Otrzymaliśmy płatność za rezerwację %(reservation.camping_plot)s "
+"[%(reservation.date_from)s - %(reservation.date_to)s]. Rezerwację można "
+"anulować do %(cancellation_time_in_days)s dni przed zaplanowaną datą."
+
+#: server/templates/mailing/camping/reservation_cancel.html:6
+msgid "Reservation cancel"
+msgstr "Anulowanie rezerwacji"
+
+#: server/templates/mailing/camping/reservation_cancel.html:10
+#, python-format
+msgid ""
+"Your reservation %(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] has been canceled, and we have initiated the refund "
+"process. You will receive your refund within the next "
+"%(max_refund_time_in_days)s business days."
+msgstr ""
+"Twoja rezerwacja %(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] została anulowana, a my rozpoczęliśmy proces zwrotu "
+"pieniędzy. Otrzymasz zwrot pieniędzy w ciągu najbliższych "
+"%(max_refund_time_in_days)s dni roboczych."
+
+#: server/templates/mailing/camping/reservation_create.html:6
+msgid "Reservation confirmation"
+msgstr "Potwierdzenie rezerwacji"
+
+#: server/templates/mailing/camping/reservation_create.html:10
+#, python-format
+msgid ""
+"Your reservation %(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] has been successfully created. To confirm your "
+"booking, please complete the payment using the link below. Note that this "
+"link will expire in %(expiration_time)s."
+msgstr ""
+"Twoja rezerwacja %(reservation.camping_plot)s [%(reservation.date_from)s - "
+"%(reservation.date_to)s] została pomyślnie utwaorzona. Aby potwierdzić Twoją "
+"rezerwację, prosimy o dokończenie płatności za pomocą poniższego linku. "
+"Należy pamiętać, że ten link wygaśnie za %(expiration_time)s."
+
+#: server/templates/mailing/camping/reservation_create.html:17
+msgid "Complete payment"
+msgstr "Dokończ płatność"
+
+#: server/utils/api/time_helper.py:12
+#, python-brace-format
+msgid "{days} days"
+msgstr "{days} dni"
+
+#: server/utils/api/time_helper.py:14
+#, python-brace-format
+msgid "{hours} hours"
+msgstr "{hours} godzin"
+
+#: server/utils/api/time_helper.py:16
+#, python-brace-format
+msgid "{minutes} minutes"
+msgstr "{minutes} minut"
+
+#: server/utils/api/time_helper.py:18
+#, python-brace-format
+msgid "{seconds} seconds"
+msgstr "{seconds} sekund"

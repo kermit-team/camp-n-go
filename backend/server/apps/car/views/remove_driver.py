@@ -10,19 +10,18 @@ from server.datastore.commands.car import CarCommand
 
 class CarRemoveDriverView(GenericAPIView):
     queryset = Car.objects.all()
-    lookup_field = 'registration_plate'
 
-    def delete(self, request: Request, registration_plate: str) -> Response:
-        car = self.get_object()
+    def delete(self, request: Request, pk: int) -> Response:
+        instance = self.get_object()
         driver = request.user
 
-        CarCommand.remove_driver(car=car, driver=driver)
+        CarCommand.remove_driver(car=instance, driver=driver)
 
         return Response(
             data={
                 'message': CarMessagesEnum.REMOVE_DRIVER_SUCCESS.value.format(
                     driver_identifier=driver.identifier,
-                    registration_plate=registration_plate,
+                    registration_plate=instance.registration_plate,
                 ),
             },
             status=status.HTTP_204_NO_CONTENT,

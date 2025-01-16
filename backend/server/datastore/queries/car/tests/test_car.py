@@ -1,6 +1,7 @@
 from django.test import TestCase
 from model_bakery import baker
 
+from server.apps.account.models import Account
 from server.apps.car.models import Car
 from server.datastore.queries.car import CarQuery
 
@@ -21,3 +22,16 @@ class CarQueryTestCase(TestCase):
 
         with self.assertRaises(Car.DoesNotExist):
             CarQuery.get_by_registration_plate(registration_plate=registration_plate)
+
+    def test_car_belongs_to_user(self):
+        user = baker.make(_model=Account)
+        self.car.drivers.add(user)
+
+        result = CarQuery.car_belongs_to_user(car=self.car, user=user)
+        assert result is True
+
+    def test_car_belongs_to_user_when_car_not_belongs_to_user(self):
+        user = baker.make(_model=Account)
+
+        result = CarQuery.car_belongs_to_user(car=self.car, user=user)
+        assert result is False

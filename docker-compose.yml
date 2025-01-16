@@ -39,6 +39,7 @@ services:
       - envs/.backend.env
       - envs/.database.env
       - envs/.rabbitmq.env
+      - envs/.stripe.env
     ports:
       - '8000:8000'
     volumes:
@@ -46,6 +47,16 @@ services:
     depends_on:
       database:
         condition: service_healthy
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    container_name: stripe-cli
+    command: "listen --api-key $${STRIPE_API_KEY} --forward-to backend:8000/api/camping/payments/webhook/"
+    env_file:
+      - envs/.stripe.env
+    depends_on:
+      backend:
+        condition: service_started
 
   rabbitmq:
     image: rabbitmq:4.0-management
@@ -62,7 +73,7 @@ services:
       test: 'rabbitmq-diagnostics -q ping'
       timeout: 5s
     depends_on:
-      smtp_server:
+      smtp-server:
         condition: service_started
 
   flower:
@@ -79,7 +90,7 @@ services:
       rabbitmq:
         condition: service_healthy
 
-  smtp_server:
+  smtp-server:
     image: mailhog/mailhog
     container_name: mailhog
     volumes:

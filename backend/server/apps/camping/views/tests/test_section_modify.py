@@ -33,7 +33,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
             'price_per_child': self.new_camping_section_data.price_per_child,
         }
         parameters = {
-            'name': self.camping_section.name,
+            'pk': self.camping_section.id,
         }
         url = reverse('camping_section_modify', kwargs=parameters)
 
@@ -57,15 +57,13 @@ class CampingSectionModifyViewTestCase(APITestCase):
 
     @mock.patch.object(CampingSectionCommand, 'modify')
     def test_request_put_without_existing_camping_section(self, modify_camping_section_mock):
-        not_existing_camping_section = baker.prepare(_model=CampingSection, _fill_optional=True)
-
         request_data = {
             'base_price': self.new_camping_section_data.base_price,
             'price_per_adult': self.new_camping_section_data.price_per_adult,
             'price_per_child': self.new_camping_section_data.price_per_child,
         }
         parameters = {
-            'name': not_existing_camping_section.name,
+            'pk': 0,
         }
         url = reverse('camping_section_modify', kwargs=parameters)
 
@@ -87,7 +85,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
             'price_per_child': self.new_camping_section_data.price_per_child,
         }
         parameters = {
-            'name': self.camping_section.name,
+            'pk': self.camping_section.id,
         }
         url = reverse('camping_section_modify', kwargs=parameters)
 
@@ -102,7 +100,6 @@ class CampingSectionModifyViewTestCase(APITestCase):
 
         modify_camping_section_mock.assert_called_once_with(
             camping_section=self.camping_section,
-            base_price=None,
             price_per_adult=request_data['price_per_adult'],
             price_per_child=request_data['price_per_child'],
         )
@@ -111,14 +108,12 @@ class CampingSectionModifyViewTestCase(APITestCase):
 
     @mock.patch.object(CampingSectionCommand, 'modify')
     def test_request_patch_without_existing_account(self, modify_camping_section_mock):
-        not_existing_camping_section = baker.prepare(_model=CampingSection, _fill_optional=True)
-
         request_data = {
             'price_per_adult': self.new_camping_section_data.price_per_adult,
             'price_per_child': self.new_camping_section_data.price_per_child,
         }
         parameters = {
-            'name': not_existing_camping_section.name,
+            'pk': 0,
         }
         url = reverse('camping_section_modify', kwargs=parameters)
 

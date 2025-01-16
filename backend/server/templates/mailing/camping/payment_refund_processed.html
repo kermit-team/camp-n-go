@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<body style="font-family: Arial, sans-serif;text-align: center;background-color: #f0f0f2;margin-top: 5%;">
+	<div style="display: inline-block;border-radius: 10px;padding: 20px;max-width: 500px;margin: 0 auto;background-color: #fdfdff;">
+		<h1 style="text-align: center;margin: 0;line-height: 1.5;padding: 10px;">
+            {% translate "Refund processed" %}
+        </h1>
+		<p style="text-align: justify;">
+            {% translate "Hi" %} {{ name }}!</br>
+            {% blocktranslate trimmed %}
+				We have successfully processed your refund for reservation {{ reservation.camping_plot }} [{{ reservation.date_from }} - {{ reservation.date_to }}].
+				Please check your payment method for the credited amount.
+            {% endblocktranslate %}
+        </p>
+		<p style="text-align: justify;margin: 0;line-height: 1.5;padding: 10px;">
+            {% translate "Regards" %}</br>
+            Kermit Team
+		</p>
+	</div>
+</body>

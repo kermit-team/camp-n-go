@@ -24,7 +24,7 @@ class CarRemoveDriverViewTestCase(APITestCase):
 
     @mock.patch.object(CarCommand, 'remove_driver')
     def test_request(self, car_remove_driver_mock):
-        parameters = {'registration_plate': self.car.registration_plate}
+        parameters = {'pk': self.car.id}
         url = reverse('car_remove_driver', kwargs=parameters)
 
         req = self.factory.delete(url)
@@ -34,7 +34,7 @@ class CarRemoveDriverViewTestCase(APITestCase):
         expected_data = {
             'message': CarMessagesEnum.REMOVE_DRIVER_SUCCESS.value.format(
                 driver_identifier=self.account.identifier,
-                registration_plate=parameters['registration_plate'],
+                registration_plate=self.car.registration_plate,
             ),
         }
 
@@ -47,7 +47,7 @@ class CarRemoveDriverViewTestCase(APITestCase):
 
     @mock.patch.object(CarCommand, 'remove_driver')
     def test_request_without_existing_car(self, car_remove_driver_mock):
-        parameters = {'registration_plate': 'not_existing_registration_plate'}
+        parameters = {'pk': 0}
         url = reverse('car_remove_driver', kwargs=parameters)
 
         req = self.factory.delete(url)

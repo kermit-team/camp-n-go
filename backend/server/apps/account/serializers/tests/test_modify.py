@@ -91,9 +91,6 @@ class AccountModifySerializerTestCase(TestCase):
             password=None,
             first_name=self.new_profile_data.first_name,
             last_name=self.new_profile_data.last_name,
-            phone_number=None,
-            avatar=None,
-            id_card=None,
         )
 
     def test_validate(self):

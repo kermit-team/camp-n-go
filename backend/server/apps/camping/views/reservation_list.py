@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema
 from rest_framework import status
@@ -33,6 +34,11 @@ from server.apps.camping.serializers import ReservationListElementSerializer
 class ReservationListView(GenericAPIView):
     queryset = Reservation.objects.order_by('-id')
     serializer_class = ReservationListElementSerializer
+
+    def get_queryset(self) -> QuerySet:
+        return Reservation.objects.filter(
+            user=self.request.user,
+        ).order_by('-id')
 
     def get(self, request: Request) -> Response:
         queryset = self.filter_queryset(self.get_queryset())

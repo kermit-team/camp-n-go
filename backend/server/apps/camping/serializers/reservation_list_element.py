@@ -2,13 +2,13 @@ from rest_framework import serializers
 
 from server.apps.camping.models import Reservation
 from server.apps.camping.serializers import CampingPlotDetailsSerializer, PaymentDetailsSerializer
-from server.datastore.queries.camping import ReservationQuery
+from server.apps.camping.serializers.reservation_metadata import ReservationMetadataSerializer
 
 
 class ReservationListElementSerializer(serializers.ModelSerializer):
     camping_plot = CampingPlotDetailsSerializer(read_only=True)
     payment = PaymentDetailsSerializer(read_only=True)
-    is_cancellable = serializers.SerializerMethodField()
+    metadata = ReservationMetadataSerializer(source='*', read_only=True)
 
     class Meta:
         model = Reservation
@@ -18,8 +18,5 @@ class ReservationListElementSerializer(serializers.ModelSerializer):
             'date_to',
             'camping_plot',
             'payment',
-            'is_cancellable',
+            'metadata',
         ]
-
-    def get_is_cancellable(self, obj: Reservation) -> bool:
-        return ReservationQuery.is_reservation_cancellable(reservation=obj)

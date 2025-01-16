@@ -50,6 +50,53 @@ class ReservationQueryTestCase(TestCase):
 
         assert calculated_price == expected_price
 
+    def test_calculate_base_price(self):
+        date_from = date(2020, 1, 1)
+        date_to = date(2020, 1, 8)
+
+        number_of_days = (date_to - date_from).days
+        expected_price = number_of_days * self.camping_section.base_price
+
+        calculated_price = ReservationQuery.calculate_base_price(
+            date_from=date_from,
+            date_to=date_to,
+            camping_section=self.camping_section,
+        )
+
+        assert calculated_price == expected_price
+
+    def test_calculate_adults_price(self):
+        date_from = date(2020, 1, 1)
+        date_to = date(2020, 1, 8)
+
+        number_of_days = (date_to - date_from).days
+        expected_price = number_of_days * self.number_of_adults * self.camping_section.price_per_adult
+
+        calculated_price = ReservationQuery.calculate_adults_price(
+            number_of_adults=self.number_of_adults,
+            date_from=date_from,
+            date_to=date_to,
+            camping_section=self.camping_section,
+        )
+
+        assert calculated_price == expected_price
+
+    def test_calculate_children_price(self):
+        date_from = date(2020, 1, 1)
+        date_to = date(2020, 1, 8)
+
+        number_of_days = (date_to - date_from).days
+        expected_price = number_of_days * self.number_of_children * self.camping_section.price_per_child
+
+        calculated_price = ReservationQuery.calculate_children_price(
+            number_of_children=self.number_of_children,
+            date_from=date_from,
+            date_to=date_to,
+            camping_section=self.camping_section,
+        )
+
+        assert calculated_price == expected_price
+
     @freeze_time(given_date)
     def test_is_reservation_cancellable_when_payment_status_is_waiting_for_payment(self):
         cancellable_date = self.given_date + timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
@@ -151,3 +198,36 @@ class ReservationQueryTestCase(TestCase):
 
         is_reservation_cancellable = ReservationQuery.is_reservation_cancellable(reservation=reservation)
         assert is_reservation_cancellable is False
+
+    @freeze_time(given_date)
+    def test_is_car_modifiable(self):
+        modifiable_date = self.given_date
+        date_from = modifiable_date - timedelta(days=7)
+        date_to = modifiable_date
+
+        reservation = baker.make(
+            _model=Reservation,
+            date_from=date_from,
+            date_to=date_to,
+            payment__status=PaymentStatus.WAITING_FOR_PAYMENT,
+            _fill_optional=True,
+        )
+
+        is_car_modifiable = ReservationQuery.is_car_modifiable(reservation=reservation)
+        assert is_car_modifiable is True
+
+    def test_is_car_modifiable_when_reservation_in_past(self):
+        modifiable_date = self.given_date
+        date_from = modifiable_date - timedelta(days=7)
+        date_to = modifiable_date - timedelta(days=1)
+
+        reservation = baker.make(
+            _model=Reservation,
+            date_from=date_from,
+            date_to=date_to,
+            payment__status=PaymentStatus.WAITING_FOR_PAYMENT,
+            _fill_optional=True,
+        )
+
+        is_car_modifiable = ReservationQuery.is_car_modifiable(reservation=reservation)
+        assert is_car_modifiable is False

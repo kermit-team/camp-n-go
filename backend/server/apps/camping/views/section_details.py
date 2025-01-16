@@ -10,9 +10,8 @@ from server.apps.camping.serializers import CampingSectionDetailsSerializer
 class CampingSectionDetailsView(GenericAPIView):
     serializer_class = CampingSectionDetailsSerializer
     queryset = CampingSection.objects.all()
-    lookup_field = 'name'
 
-    def get(self, request: Request, name: str) -> Response:
+    def get(self, request: Request, pk: int) -> Response:
         instance = self.get_object()
         serializer = self.get_serializer(instance)
 

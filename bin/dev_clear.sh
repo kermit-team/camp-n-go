@@ -10,3 +10,4 @@ rm envs/.backend.env
 rm envs/.database.env
 rm envs/.frontend.env
 rm envs/.rabbitmq.env
+rm envs/.stripe.env

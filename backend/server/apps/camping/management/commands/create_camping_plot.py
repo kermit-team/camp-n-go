@@ -4,7 +4,7 @@ from decimal import Decimal
 from django.core.management.base import BaseCommand, CommandError
 
 from server.apps.camping.exceptions.section import CampingSectionNotExistsError
-from server.datastore.commands.camping.plot import CampingPlotCommand
+from server.datastore.commands.camping import CampingPlotCommand
 
 
 class Command(BaseCommand):

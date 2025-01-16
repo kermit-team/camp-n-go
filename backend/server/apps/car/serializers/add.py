@@ -7,9 +7,14 @@ from server.datastore.commands.car import CarCommand
 
 
 class CarAddSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Car
-        fields = ['registration_plate']
+        fields = [
+            'id',
+            'registration_plate',
+        ]
         extra_kwargs = {
             'registration_plate': {'read_only': False},
         }

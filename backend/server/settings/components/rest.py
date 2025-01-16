@@ -2,7 +2,7 @@ import os
 
 from django.utils.translation import gettext_lazy as _
 
-from server.apps.common.errors import CommonErrorsEnum
+from server.apps.common.errors.common_base import CommonErrorsEnum
 from server.settings.components.camping import DRF_SPECTACULAR_ON
 from server.settings.components.common import DATETIME_INPUT_FORMATS
 

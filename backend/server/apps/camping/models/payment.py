@@ -8,10 +8,10 @@ from server.apps.common.models.created_updated import CreatedUpdatedMixin
 
 class PaymentStatus(models.IntegerChoices):
     WAITING_FOR_PAYMENT = 0, _('WaitingForPayment')
-    CANCELED = 1, _('Canceled')
+    CANCELLED = 1, _('Cancelled')
     UNPAID = 2, _('Unpaid')
     PAID = 3, _('Paid')
-    RETURNED = 4, _('Returned')
+    REFUNDED = 4, _('Refunded')
 
 
 class Payment(CreatedUpdatedMixin):
@@ -24,6 +24,7 @@ class Payment(CreatedUpdatedMixin):
     stripe_checkout_id = models.CharField(
         verbose_name=_('StripeCheckoutId'),
         max_length=settings.LARGE_LENGTH,
+        unique=True,
     )
     price = models.DecimalField(
         verbose_name=_('Price'),

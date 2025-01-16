@@ -23,6 +23,7 @@ base_settings = [
     'components/database.py',
     'components/logging.py',
     'components/mailing.py',
+    'components/payment.py',
     'components/permissions.py',
     'components/queue.py',
     'components/rest.py',

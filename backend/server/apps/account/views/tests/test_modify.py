@@ -59,9 +59,6 @@ class AccountModifyViewTestCase(APITestCase):
             password=request_data['new_password'],
             first_name=request_data['profile']['first_name'],
             last_name=request_data['profile']['last_name'],
-            phone_number=None,
-            avatar=None,
-            id_card=None,
         )
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
@@ -118,9 +115,6 @@ class AccountModifyViewTestCase(APITestCase):
             password=None,
             first_name=request_data['profile']['first_name'],
             last_name=request_data['profile']['last_name'],
-            phone_number=None,
-            avatar=None,
-            id_card=None,
         )
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data

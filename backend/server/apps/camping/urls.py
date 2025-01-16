@@ -5,6 +5,12 @@ from server.apps.camping.views import (
     CampingPlotDetailsView,
     CampingSectionDetailsView,
     CampingSectionModifyView,
+    ReservationCancelView,
+    ReservationCreateView,
+    ReservationDetailsView,
+    ReservationListView,
+    ReservationModifyCarView,
+    StripePaymentWebhookView,
 )
 
 urlpatterns = [
@@ -14,18 +20,48 @@ urlpatterns = [
         name='camping_plot_availability_list',
     ),
     path(
-        'sections/<str:camping_section__name>/plots/<str:position>/',
+        'plots/<int:pk>/',
         CampingPlotDetailsView.as_view(),
         name='camping_plot_details',
     ),
     path(
-        'sections/<str:name>/',
+        'sections/<int:pk>/',
         CampingSectionDetailsView.as_view(),
         name='camping_section_details',
     ),
     path(
-        'sections/<str:name>/modify/',
+        'sections/<int:pk>/modify/',
         CampingSectionModifyView.as_view(),
         name='camping_section_modify',
+    ),
+    path(
+        'reservations/',
+        ReservationListView.as_view(),
+        name='reservation_list',
+    ),
+    path(
+        'reservations/create/',
+        ReservationCreateView.as_view(),
+        name='reservation_create',
+    ),
+    path(
+        'reservations/<int:pk>/details/',
+        ReservationDetailsView.as_view(),
+        name='reservation_details',
+    ),
+    path(
+        'reservations/<int:pk>/modify/car/',
+        ReservationModifyCarView.as_view(),
+        name='reservation_modify_car',
+    ),
+    path(
+        'reservations/<int:pk>/cancel/',
+        ReservationCancelView.as_view(),
+        name='reservation_cancel',
+    ),
+    path(
+        'payments/webhook/',
+        StripePaymentWebhookView.as_view(),
+        name='payment_webhook',
     ),
 ]

@@ -44,7 +44,7 @@ class Reservation(CreatedUpdatedMixin):
         verbose_name=_('Payment'),
         to=Payment,
         on_delete=models.RESTRICT,
-        related_name='reservations',
+        related_name='reservation',
     )
 
     def __str__(self) -> str:  # pragma: no cover

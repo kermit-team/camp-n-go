@@ -1215,6 +1215,20 @@ pytz = "*"
 tornado = ">=5.0.0,<7.0.0"
 
 [[package]]
+name = "freezegun"
+version = "1.5.1"
+description = "Let your Python tests travel through time"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "freezegun-1.5.1-py3-none-any.whl", hash = "sha256:bf111d7138a8abe55ab48a71755673dbaa4ab87f4cff5634a4442dfec34c15f1"},
+    {file = "freezegun-1.5.1.tar.gz", hash = "sha256:b29dedfcda6d5e8e083ce71b2b542753ad48cfec44037b3fc79702e2980a89e9"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.7"
+
+[[package]]
 name = "gitdb"
 version = "4.0.11"
 description = "Git Object Database"
@@ -2708,6 +2722,21 @@ files = [
 pbr = ">=2.0.0"
 
 [[package]]
+name = "stripe"
+version = "11.4.1"
+description = "Python bindings for the Stripe API"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "stripe-11.4.1-py2.py3-none-any.whl", hash = "sha256:8aa47a241de0355c383c916c4ef7273ab666f096a44ee7081e357db4a36f0cce"},
+    {file = "stripe-11.4.1.tar.gz", hash = "sha256:7ddd251b622d490fe57d78487855dc9f4d95b1bb113607e81fd377037a133d5a"},
+]
+
+[package.dependencies]
+requests = {version = ">=2.20", markers = "python_version >= \"3.0\""}
+typing-extensions = {version = ">=4.5.0", markers = "python_version >= \"3.7\""}
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -2884,4 +2913,4 @@ requests = ">=2.0,<3.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "446147e9f5d16b35d05fe4f1dd08561c3c639cbbeac4914f2f6bdb4181b1184f"
+content-hash = "16182497c7cf9ac1b3a58e74a4769e13e0179e14906ada9c488e61f3fa309797"

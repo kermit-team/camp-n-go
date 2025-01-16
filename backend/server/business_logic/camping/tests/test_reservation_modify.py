@@ -11,6 +11,7 @@ from server.apps.camping.models import Reservation
 from server.apps.car.models import Car
 from server.business_logic.camping import ReservationModifyCarBL
 from server.datastore.commands.camping.reservation import ReservationCommand
+from server.datastore.queries.camping import ReservationQuery
 from server.datastore.queries.car import CarQuery
 from server.utils.tests.baker_generators import generate_password
 
@@ -38,11 +39,14 @@ class ReservationModifyBLTestCase(TestCase):
     @freeze_time(date_to)
     @mock.patch.object(ReservationCommand, 'modify')
     @mock.patch.object(CarQuery, 'car_belongs_to_user')
-    def test_process(self, car_belongs_to_user_mock, modify_reservation_mock):
+    @mock.patch.object(ReservationQuery, 'is_car_modifiable')
+    def test_process(self, is_reservation_car_modifiable_mock, car_belongs_to_user_mock, modify_reservation_mock):
+        is_reservation_car_modifiable_mock.return_value = True
         car_belongs_to_user_mock.return_value = True
 
         result = ReservationModifyCarBL.process(reservation=self.reservation, car=self.new_car)
 
+        is_reservation_car_modifiable_mock.assert_called_once_with(reservation=self.reservation)
         car_belongs_to_user_mock.assert_called_once_with(car=self.new_car, user=self.account)
         modify_reservation_mock.assert_called_once_with(reservation=self.reservation, car=self.new_car)
         assert result == modify_reservation_mock.return_value
@@ -50,9 +54,16 @@ class ReservationModifyBLTestCase(TestCase):
     @freeze_time(date_to)
     @mock.patch.object(ReservationCommand, 'modify')
     @mock.patch.object(CarQuery, 'car_belongs_to_user')
-    def test_process_without_optional_fields(self, car_belongs_to_user_mock, modify_reservation_mock):
+    @mock.patch.object(ReservationQuery, 'is_car_modifiable')
+    def test_process_without_optional_fields(
+        self,
+        is_reservation_car_modifiable_mock,
+        car_belongs_to_user_mock,
+        modify_reservation_mock,
+    ):
         result = ReservationModifyCarBL.process(reservation=self.reservation)
 
+        is_reservation_car_modifiable_mock.assert_not_called()
         car_belongs_to_user_mock.assert_not_called()
         modify_reservation_mock.assert_not_called()
         assert result == self.reservation
@@ -60,21 +71,38 @@ class ReservationModifyBLTestCase(TestCase):
     @freeze_time(date_to + timedelta(days=1))
     @mock.patch.object(ReservationCommand, 'modify')
     @mock.patch.object(CarQuery, 'car_belongs_to_user')
-    def test_process_when_reservation_is_in_past(self, car_belongs_to_user_mock, modify_reservation_mock):
+    @mock.patch.object(ReservationQuery, 'is_car_modifiable')
+    def test_process_when_reservation_is_in_past(
+        self,
+        is_reservation_car_modifiable_mock,
+        car_belongs_to_user_mock,
+        modify_reservation_mock,
+    ):
+        is_reservation_car_modifiable_mock.return_value = False
+
         with self.assertRaises(ReservationCarCannotBeModifiedError):
             ReservationModifyCarBL.process(reservation=self.reservation, car=self.new_car)
 
+        is_reservation_car_modifiable_mock.assert_called_once_with(reservation=self.reservation)
         car_belongs_to_user_mock.assert_not_called()
         modify_reservation_mock.assert_not_called()
 
     @freeze_time(date_to)
     @mock.patch.object(ReservationCommand, 'modify')
     @mock.patch.object(CarQuery, 'car_belongs_to_user')
-    def test_process_when_car_not_belongs_to_user(self, car_belongs_to_user_mock, modify_reservation_mock):
+    @mock.patch.object(ReservationQuery, 'is_car_modifiable')
+    def test_process_when_car_not_belongs_to_user(
+        self,
+        is_reservation_car_modifiable_mock,
+        car_belongs_to_user_mock,
+        modify_reservation_mock,
+    ):
+        is_reservation_car_modifiable_mock.return_value = True
         car_belongs_to_user_mock.return_value = False
 
         with self.assertRaises(CarNotBelongsToAccountError):
             ReservationModifyCarBL.process(reservation=self.reservation, car=self.new_car)
 
+        is_reservation_car_modifiable_mock.assert_called_once_with(reservation=self.reservation)
         car_belongs_to_user_mock.assert_called_once_with(car=self.new_car, user=self.account)
         modify_reservation_mock.assert_not_called()

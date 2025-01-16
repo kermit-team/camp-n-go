@@ -29,9 +29,46 @@ class ReservationQuery:
         )
 
     @classmethod
+    def calculate_base_price(
+        cls,
+        date_from: date,
+        date_to: date,
+        camping_section: CampingSection,
+    ) -> Decimal:
+        number_of_days = (date_to - date_from).days
+        return number_of_days * camping_section.base_price
+
+    @classmethod
+    def calculate_adults_price(
+        cls,
+        date_from: date,
+        date_to: date,
+        number_of_adults: int,
+        camping_section: CampingSection,
+    ) -> Decimal:
+        number_of_days = (date_to - date_from).days
+        return number_of_days * camping_section.price_per_adult * number_of_adults
+
+    @classmethod
+    def calculate_children_price(
+        cls,
+        date_from: date,
+        date_to: date,
+        number_of_children: int,
+        camping_section: CampingSection,
+    ) -> Decimal:
+        number_of_days = (date_to - date_from).days
+        return number_of_days * camping_section.price_per_child * number_of_children
+
+    @classmethod
     def is_reservation_cancellable(cls, reservation: Reservation) -> bool:
         current_date = date.today()
         last_cancellable_date = reservation.date_from - timedelta(days=settings.RESERVATION_CANCELLATION_PERIOD)
         is_payment_status_cancellable = reservation.payment.status in cls.cancellable_payments_statuses
 
         return is_payment_status_cancellable and current_date <= last_cancellable_date
+
+    @classmethod
+    def is_car_modifiable(cls, reservation: Reservation) -> bool:
+        current_date = date.today()
+        return current_date <= reservation.date_to

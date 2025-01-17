@@ -22,11 +22,7 @@ class CampingSectionCommand:
         )
 
     @classmethod
-    def modify(
-        cls,
-        camping_section: CampingSection,
-        **kwargs: Any,
-    ) -> CampingSection:
+    def modify(cls, camping_section: CampingSection, **kwargs: Any) -> CampingSection:
         for field, value in kwargs.items():
             setattr(camping_section, field, value)
 

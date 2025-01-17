@@ -63,7 +63,6 @@ class CampingSectionModifySerializerTestCase(TestCase):
 
         modify_camping_section_mock.assert_called_once_with(
             camping_section=self.camping_section,
-            base_price=None,
             price_per_adult=self.new_camping_section_data.price_per_adult,
             price_per_child=self.new_camping_section_data.price_per_child,
         )

@@ -22,7 +22,7 @@ class CampingSectionDetailsViewTestCase(APITestCase):
 
     def test_request(self):
         parameters = {
-            'name': self.camping_section.name,
+            'pk': self.camping_section.id,
         }
         url = reverse('camping_section_details', kwargs=parameters)
 
@@ -39,10 +39,8 @@ class CampingSectionDetailsViewTestCase(APITestCase):
         assert res.data == expected_data
 
     def test_request_without_existing_camping_section(self):
-        not_existing_camping_section = baker.prepare(_model=CampingSection, _fill_optional=True)
-
         parameters = {
-            'name': not_existing_camping_section.name,
+            'pk': 0,
         }
         url = reverse('camping_section_details', kwargs=parameters)
 

@@ -23,8 +23,7 @@ class CampingPlotDetailsViewTestCase(APITestCase):
 
     def test_request(self):
         parameters = {
-            'camping_section__name': self.camping_section.name,
-            'position': self.camping_plot.position,
+            'pk': self.camping_plot.id,
         }
         url = reverse('camping_plot_details', kwargs=parameters)
 
@@ -41,15 +40,8 @@ class CampingPlotDetailsViewTestCase(APITestCase):
         assert res.data == expected_data
 
     def test_request_without_existing_camping_plot(self):
-        not_existing_camping_plot = baker.prepare(
-            _model=CampingPlot,
-            camping_section=self.camping_section,
-            _fill_optional=True,
-        )
-
         parameters = {
-            'camping_section__name': self.camping_section.name,
-            'position': not_existing_camping_plot.position,
+            'pk': 0,
         }
         url = reverse('camping_plot_details', kwargs=parameters)
 

@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 
-from server.datastore.commands.camping import CampingSectionCommand
+from server.datastore.commands.camping.section import CampingSectionCommand
 
 
 class Command(BaseCommand):

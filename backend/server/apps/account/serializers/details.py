@@ -14,6 +14,7 @@ class AccountDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = [
+            'identifier',
             'email',
             'profile',
             'cars',

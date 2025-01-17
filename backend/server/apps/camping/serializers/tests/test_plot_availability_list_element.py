@@ -15,15 +15,15 @@ class CampingPlotAvailabilityListElementSerializerTestCase(TestCase):
     number_of_adults = 1
     number_of_children = 2
 
-    mock_plot_availability_list_element_serializer_metadata = (
+    mock_metadata_serializer = (
         'server.apps.camping.serializers.plot_availability_list_element.CampingPlotAvailabilityMetadataSerializer'
     )
 
     def setUp(self):
         self.camping_plot = baker.make(_model=CampingPlot, _fill_optional=True)
 
-    @mock.patch(mock_plot_availability_list_element_serializer_metadata)
-    def test_get_metadata(self, plot_availability_list_element_serializer_metadata_mock):
+    @mock.patch(mock_metadata_serializer)
+    def test_get_metadata(self, metadata_serializer_mock):
         context = {
             'request': mock.MagicMock(
                 query_params={
@@ -38,9 +38,9 @@ class CampingPlotAvailabilityListElementSerializerTestCase(TestCase):
         serializer = CampingPlotAvailabilityListElementSerializer(self.camping_plot, context=context)
         serializer_data = serializer.data
 
-        plot_availability_list_element_serializer_metadata_mock.assert_called_once_with(
+        metadata_serializer_mock.assert_called_once_with(
             self.camping_plot,
             context=context,
         )
 
-        assert serializer_data.get('metadata') == plot_availability_list_element_serializer_metadata_mock.return_value
+        assert serializer_data.get('metadata') == metadata_serializer_mock.return_value.data

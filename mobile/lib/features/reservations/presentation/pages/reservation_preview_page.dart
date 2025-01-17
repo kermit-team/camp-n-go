@@ -244,7 +244,7 @@ class _ReservationData extends StatelessWidget {
         KeyValueText(
           keyText: LocaleKeys.numberOfNights.tr(),
           valueText:
-              params.endDate.difference(params.startDate).inDays.toString(),
+              params.startDate.difference(params.endDate).inDays.toString(),
         ),
         SizedBox(height: Constants.spaceXS),
         KeyValueText(

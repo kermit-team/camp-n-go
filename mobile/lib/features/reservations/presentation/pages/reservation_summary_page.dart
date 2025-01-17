@@ -129,7 +129,7 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
                 isBold: true,
               ),
               StandardText(
-                (basePrice + priceForAdults + priceForChildren)
+                (widget.parcel.metadata.overallPrice)
                     .toStringAsFixed(2)
                     .toPlnPrice(),
                 isBold: true,

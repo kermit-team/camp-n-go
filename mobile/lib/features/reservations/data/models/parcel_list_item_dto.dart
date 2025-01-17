@@ -9,7 +9,7 @@ part 'parcel_list_item_dto.g.dart';
 @JsonSerializable()
 class ParcelListItemDto {
   @JsonKey(name: 'id')
-  final int parcelNumber;
+  final int id;
   @JsonKey(name: 'position')
   final String position;
   @JsonKey(name: 'max_number_of_people')
@@ -30,11 +30,11 @@ class ParcelListItemDto {
   final String description;
   @JsonKey(name: 'camping_section')
   final CampingSectionDto campingSection;
-  @JsonKey(name: 'price')
-  final String price;
+  @JsonKey(name: 'metadata')
+  final ParcelMetadataDto metadata;
 
   ParcelListItemDto({
-    required this.parcelNumber,
+    required this.id,
     required this.position,
     required this.maxNumberOfPeople,
     required this.width,
@@ -45,7 +45,7 @@ class ParcelListItemDto {
     required this.greyWaterDischarge,
     required this.description,
     required this.campingSection,
-    required this.price,
+    required this.metadata,
   });
 
   factory ParcelListItemDto.fromJson(Map<String, dynamic> json) =>
@@ -55,32 +55,71 @@ class ParcelListItemDto {
 
   factory ParcelListItemDto.fromEntity(ParcelListItem entity) =>
       ParcelListItemDto(
-        parcelNumber: entity.parcelNumber,
+        id: entity.id,
         position: entity.position,
         maxNumberOfPeople: entity.maxNumberOfPeople,
-        width: entity.width,
-        length: entity.length,
+        width: entity.width.toString(),
+        length: entity.length.toString(),
         waterConnection: entity.waterConnection,
         electricityConnection: entity.electricityConnection,
         isShaded: entity.isShaded,
         greyWaterDischarge: entity.greyWaterDischarge,
         description: entity.description,
         campingSection: CampingSectionDto.fromEntity(entity.campingSection),
-        price: entity.price.toString(),
+        metadata: ParcelMetadataDto.fromEntity(entity.metadata),
       );
 
   ParcelListItem toEntity() => ParcelListItem(
-        parcelNumber: parcelNumber,
+        id: id,
         position: position,
         maxNumberOfPeople: maxNumberOfPeople,
-        width: width,
-        length: length,
+        width: double.tryParse(width) ?? 0,
+        length: double.tryParse(length) ?? 0,
         waterConnection: waterConnection,
         electricityConnection: electricityConnection,
         isShaded: isShaded,
         greyWaterDischarge: greyWaterDischarge,
         description: description,
         campingSection: campingSection.toEntity(),
-        price: double.tryParse(price) ?? 0,
+        metadata: metadata.toEntity(),
+      );
+}
+
+@JsonSerializable()
+class ParcelMetadataDto {
+  @JsonKey(name: 'overall_price')
+  final int overallPrice;
+  @JsonKey(name: 'base_price')
+  final int basePrice;
+  @JsonKey(name: 'adults_price')
+  final int adultsPrice;
+  @JsonKey(name: 'children_price')
+  final int childrenPrice;
+
+  ParcelMetadataDto({
+    required this.overallPrice,
+    required this.basePrice,
+    required this.adultsPrice,
+    required this.childrenPrice,
+  });
+
+  factory ParcelMetadataDto.fromJson(Map<String, dynamic> json) =>
+      _$ParcelMetadataDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ParcelMetadataDtoToJson(this);
+
+  factory ParcelMetadataDto.fromEntity(ParcelMetadata entity) =>
+      ParcelMetadataDto(
+        overallPrice: entity.overallPrice,
+        basePrice: entity.basePrice,
+        adultsPrice: entity.adultsPrice,
+        childrenPrice: entity.childrenPrice,
+      );
+
+  ParcelMetadata toEntity() => ParcelMetadata(
+        overallPrice: overallPrice,
+        basePrice: basePrice,
+        adultsPrice: adultsPrice,
+        childrenPrice: childrenPrice,
       );
 }

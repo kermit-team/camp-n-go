@@ -70,6 +70,7 @@ abstract class  LocaleKeys {
   static const pickParcelForYou = 'pickParcelForYou';
   static const parcelNumber = 'parcelNumber';
   static const pricePerDay = 'pricePerDay';
+  static const overallPrice = 'overallPrice';
   static const description = 'description';
   static const reserve = 'reserve';
   static const somethingWentWrong = 'somethingWentWrong';

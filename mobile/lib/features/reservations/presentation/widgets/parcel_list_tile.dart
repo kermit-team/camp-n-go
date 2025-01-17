@@ -58,12 +58,18 @@ class ParcelListTile extends StatelessWidget {
               ),
               SizedBox(height: Constants.spaceS),
               KeyValueText(
+                keyText: LocaleKeys.overallPrice.tr(),
+                valueText:
+                    "${pricePerDay * params.endDate.difference(params.startDate).inDays}",
+              ),
+              SizedBox(height: Constants.spaceXXS),
+              KeyValueText(
                 keyText: LocaleKeys.pricePerDay.tr(),
                 valueText: "$pricePerDay",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
-                keyText: 'Max people',
+                keyText: LocaleKeys.maxPeople.tr(),
                 valueText: parcel.maxNumberOfPeople.toString(),
               ),
               SizedBox(height: Constants.spaceXXS),

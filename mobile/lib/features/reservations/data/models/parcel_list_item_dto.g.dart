@@ -8,7 +8,7 @@ part of 'parcel_list_item_dto.dart';
 
 ParcelListItemDto _$ParcelListItemDtoFromJson(Map<String, dynamic> json) =>
     ParcelListItemDto(
-      parcelNumber: (json['id'] as num).toInt(),
+      id: (json['id'] as num).toInt(),
       position: json['position'] as String,
       maxNumberOfPeople: (json['max_number_of_people'] as num).toInt(),
       width: json['width'] as String,
@@ -20,12 +20,13 @@ ParcelListItemDto _$ParcelListItemDtoFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
       campingSection: CampingSectionDto.fromJson(
           json['camping_section'] as Map<String, dynamic>),
-      price: json['price'] as String,
+      metadata:
+          ParcelMetadataDto.fromJson(json['metadata'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ParcelListItemDtoToJson(ParcelListItemDto instance) =>
     <String, dynamic>{
-      'id': instance.parcelNumber,
+      'id': instance.id,
       'position': instance.position,
       'max_number_of_people': instance.maxNumberOfPeople,
       'width': instance.width,
@@ -36,5 +37,21 @@ Map<String, dynamic> _$ParcelListItemDtoToJson(ParcelListItemDto instance) =>
       'grey_water_discharge': instance.greyWaterDischarge,
       'description': instance.description,
       'camping_section': instance.campingSection,
-      'price': instance.price,
+      'metadata': instance.metadata,
+    };
+
+ParcelMetadataDto _$ParcelMetadataDtoFromJson(Map<String, dynamic> json) =>
+    ParcelMetadataDto(
+      overallPrice: (json['overall_price'] as num).toInt(),
+      basePrice: (json['base_price'] as num).toInt(),
+      adultsPrice: (json['adults_price'] as num).toInt(),
+      childrenPrice: (json['children_price'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$ParcelMetadataDtoToJson(ParcelMetadataDto instance) =>
+    <String, dynamic>{
+      'overall_price': instance.overallPrice,
+      'base_price': instance.basePrice,
+      'adults_price': instance.adultsPrice,
+      'children_price': instance.childrenPrice,
     };

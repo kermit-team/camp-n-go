@@ -27,4 +27,4 @@ class CampingPlotAvailabilityListElementSerializer(serializers.ModelSerializer):
         ]
 
     def get_metadata(self, obj: CampingPlot) -> CampingPlotAvailabilityMetadataSerializer:
-        return CampingPlotAvailabilityMetadataSerializer(obj, context=self.context)
+        return CampingPlotAvailabilityMetadataSerializer(obj, context=self.context).data

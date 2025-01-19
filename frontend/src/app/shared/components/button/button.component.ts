@@ -12,4 +12,5 @@ import { NgClass, NgStyle } from '@angular/common';
 export class ButtonComponent {
   @Input() fullWidth = false;
   @Input() type: 'primary' | 'secondary' = 'primary';
+  @Input() disabled = false;
 }

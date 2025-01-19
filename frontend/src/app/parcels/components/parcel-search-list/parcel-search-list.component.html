@@ -1,0 +1,84 @@
+<div class="parcel-search-list">
+  @for (item of items; track item) {
+    <div class="parcel-search-item-wrapper">
+      <div class="parcel-search-item-container">
+        <div class="parcel-search-item-photo-container">
+          <img
+            src="assets/plot.jpg"
+            alt="plot"
+            class="parcel-search-item-photo"
+          />
+        </div>
+        <div class="parcel-search-item-content-contaienr">
+          <div class="parcel-search-item-content-info">
+            <div class="parcel-search-item-content-info-main">
+              <span class="parcel-search-item-content-info-title">
+                Parcela nr {{ item.position }}
+              </span>
+              <span class="parcel-search-item-content-info-title">
+                {{ item.camping_section.base_price }}zł/dzień
+              </span>
+            </div>
+
+            <span class="parcel-search-item-content-info-subinfo">
+              Sektor:
+              <span class="parcel-search-item-content-info-subinfo-bold">{{
+                item.camping_section.name
+              }}</span>
+            </span>
+            <span class="parcel-search-item-content-info-subinfo">
+              Maksymalna liczba ludzi:
+              <span class="parcel-search-item-content-info-subinfo-bold">{{
+                item.max_number_of_people
+              }}</span>
+            </span>
+            <div class="parcel-search-item-content-info-additional">
+              <span class="parcel-search-item-content-info-subinfo">
+                Dostęp do wody:
+                <span class="parcel-search-item-content-info-subinfo-bold">{{
+                  item.water_connection ? "Tak" : "Nie"
+                }}</span>
+                |
+              </span>
+              <span class="parcel-search-item-content-info-subinfo">
+                Podłączenie do prądu:
+                <span class="parcel-search-item-content-info-subinfo-bold">{{
+                  item.electricity_connection ? "Tak" : "Nie"
+                }}</span>
+                |
+              </span>
+              <span class="parcel-search-item-content-info-subinfo">
+                Zrzut szarej wody:
+                <span class="parcel-search-item-content-info-subinfo-bold">{{
+                  item.grey_water_discharge ? "Tak" : "Nie"
+                }}</span>
+              </span>
+              |
+              <a role="button" class="parcel-search-item-content-info-more"
+                >Zobacz więcej</a
+              >
+              <!--todo-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="parcel-search-item-summary">
+        {{ item.metadata.overall_price }} zł
+        <lib-button (click)="reserveClicked(item)">Rezerwuj</lib-button>
+      </div>
+    </div>
+  }
+  <mat-paginator
+    class="paginator"
+    (page)="handlePageEvent($event)"
+    [pageSize]="5"
+    [length]="paginationData?.totalElements"
+    [showFirstLastButtons]="false"
+    [pageSizeOptions]="[]"
+    [hidePageSize]="true"
+    [pageIndex]="paginationData?.currentPageIndex"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

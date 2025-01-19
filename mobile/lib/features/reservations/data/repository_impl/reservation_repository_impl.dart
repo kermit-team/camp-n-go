@@ -88,7 +88,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   @override
   Future<Result<Reservation, Exception>> getReservationDetails({
-    required String reservationId,
+    required int reservationId,
   }) async {
     if (useMocks) {
       return _reservationRepositoryMock.getReservationDetails(
@@ -132,6 +132,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
       try {
         final httpResponse = await _reservationApiService.getMyReservations(
           page: page,
+          pageSize: pageSize,
         );
 
         if (httpResponse.response.statusCode == HttpStatus.ok ||
@@ -192,7 +193,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   @override
   Future<Result<void, Exception>> updateReservation(
-      {required String reservationId,
+      {required int reservationId,
       DateTime? startDate,
       DateTime? endDate,
       String? phoneNumber,
@@ -219,7 +220,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   @override
   Future<Result<void, Exception>> cancelReservation(
-      {required String reservationId}) async {
+      {required int reservationId}) async {
     if (useMocks) {
       return _reservationRepositoryMock.cancelReservation(
           reservationId: reservationId);
@@ -240,6 +241,30 @@ class ReservationRepositoryImpl implements ReservationRepository {
       } on DioException catch (dioException) {
         return Failure(handleApiError(dioException));
       }
+    }
+  }
+
+  @override
+  Future<Result<void, Exception>> editCar({
+    required int reservationId,
+    required int carId,
+  }) async {
+    try {
+      final httpResponse = await _reservationApiService.editCar(
+        reservationId: reservationId,
+        carId: {"car": carId},
+      );
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        return const Success(null);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>editCar]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 

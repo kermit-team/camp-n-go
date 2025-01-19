@@ -126,5 +126,7 @@ abstract class  LocaleKeys {
   static const reservationError = 'reservationError';
   static const idCardCanNotBeEmpty = 'idCardCanNotBeEmpty';
   static const invalidDateRange = 'invalidDateRange';
+  static const carEdited = 'carEdited';
+  static const carNotEdited = 'carNotEdited';
 
 }

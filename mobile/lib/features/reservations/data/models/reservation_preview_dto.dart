@@ -36,7 +36,7 @@ class ReservationPreviewDto {
 
   factory ReservationPreviewDto.fromEntity(ReservationPreview entity) =>
       ReservationPreviewDto(
-        id: int.parse(entity.id),
+        id: entity.id,
         startDate: entity.startDate.toIso8601String(),
         endDate: entity.endDate.toIso8601String(),
         parcel: ParcelDto.fromEntity(entity.parcel),
@@ -48,7 +48,7 @@ class ReservationPreviewDto {
       );
 
   ReservationPreview toEntity() => ReservationPreview(
-        id: id.toString(),
+        id: id,
         startDate: DateTime.parse(startDate),
         endDate: DateTime.parse(endDate),
         parcel: parcel.toEntity(),

@@ -12,9 +12,9 @@ class ReservationDto {
   @JsonKey(name: 'id')
   final int id;
   @JsonKey(name: 'date_from')
-  final DateTime startDate;
+  final String startDate;
   @JsonKey(name: 'date_to')
-  final DateTime endDate;
+  final String endDate;
   @JsonKey(name: 'number_of_adults')
   final int numberOfAdults;
   @JsonKey(name: 'number_of_children')
@@ -26,11 +26,11 @@ class ReservationDto {
   @JsonKey(name: 'car')
   final CarDto car;
   @JsonKey(name: 'camping_plot')
-  final ParcelDto parcelDto;
+  final ParcelDto parcel;
   @JsonKey(name: 'payment')
   final PaymentDto payment;
-  @JsonKey(name: 'is_cancellable')
-  final bool isCancellable;
+  @JsonKey(name: 'metadata')
+  final ReservationMetadataDto metadata;
 
   ReservationDto({
     required this.id,
@@ -41,9 +41,9 @@ class ReservationDto {
     this.comments,
     required this.account,
     required this.car,
-    required this.parcelDto,
+    required this.parcel,
     required this.payment,
-    required this.isCancellable,
+    required this.metadata,
   });
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) =>
@@ -53,29 +53,58 @@ class ReservationDto {
 
   factory ReservationDto.fromEntity(Reservation reservation) => ReservationDto(
         id: reservation.id,
-        startDate: reservation.startDate,
-        endDate: reservation.endDate,
+        startDate: reservation.startDate.toIso8601String(),
+        endDate: reservation.endDate.toIso8601String(),
         numberOfAdults: reservation.numberOfAdults,
         numberOfChildren: reservation.numberOfChildren,
         comments: reservation.comments,
         account: AccountDto.fromEntity(reservation.account, null),
         car: CarDto.fromEntity(reservation.car),
-        parcelDto: ParcelDto.fromEntity(reservation.parcel),
+        parcel: ParcelDto.fromEntity(reservation.parcel),
         payment: PaymentDto.fromEntity(reservation.payment),
-        isCancellable: reservation.isCancellable,
+        metadata: ReservationMetadataDto.fromEntity(reservation.metadata),
       );
 
   Reservation toEntity() => Reservation(
         id: id,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: DateTime.parse(startDate),
+        endDate: DateTime.parse(endDate),
         numberOfAdults: numberOfAdults,
         numberOfChildren: numberOfChildren,
         comments: comments,
         account: account.toEntity(),
         car: car.toEntity(),
-        parcel: parcelDto.toEntity(),
+        parcel: parcel.toEntity(),
         payment: payment.toEntity(),
+        metadata: metadata.toEntity(),
+      );
+}
+
+@JsonSerializable()
+class ReservationMetadataDto {
+  @JsonKey(name: 'is_cancellable')
+  final bool isCancellable;
+  @JsonKey(name: 'is_car_modifiable')
+  final bool isCarModifiable;
+
+  ReservationMetadataDto({
+    required this.isCancellable,
+    required this.isCarModifiable,
+  });
+
+  factory ReservationMetadataDto.fromJson(Map<String, dynamic> json) =>
+      _$ReservationMetadataDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReservationMetadataDtoToJson(this);
+
+  factory ReservationMetadataDto.fromEntity(ReservationMetadata entity) =>
+      ReservationMetadataDto(
+        isCancellable: entity.isCancellable,
+        isCarModifiable: entity.isCarModifiable,
+      );
+
+  ReservationMetadata toEntity() => ReservationMetadata(
         isCancellable: isCancellable,
+        isCarModifiable: isCarModifiable,
       );
 }

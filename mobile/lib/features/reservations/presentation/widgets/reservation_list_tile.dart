@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ReservationListTile extends StatelessWidget {
   final ReservationPreview reservation;
   final void Function(ReservationPreview) onListTilePressed;
-  final void Function(String) onCancelReservationDialogPressed;
+  final void Function(int) onCancelReservationDialogPressed;
   const ReservationListTile({
     super.key,
     required this.reservation,
@@ -124,7 +124,7 @@ class ReservationListTile extends StatelessWidget {
                                       TextButton(
                                         onPressed: () {
                                           onCancelReservationDialogPressed(
-                                            'mockReservationId',
+                                            reservation.id,
                                           );
                                           Navigator.of(context).pop();
                                         },

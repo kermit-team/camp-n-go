@@ -1,3 +1,5 @@
+// reservation.dart
+
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
@@ -15,7 +17,10 @@ class Reservation extends Equatable {
   final Car car;
   final Parcel parcel;
   final Payment payment;
-  final bool isCancellable;
+  final ReservationMetadata metadata;
+
+  bool get isCancellable => metadata.isCancellable;
+  bool get isCarModifiable => metadata.isCarModifiable;
 
   const Reservation({
     required this.id,
@@ -28,7 +33,7 @@ class Reservation extends Equatable {
     required this.car,
     required this.parcel,
     required this.payment,
-    required this.isCancellable,
+    required this.metadata,
   });
 
   Reservation copyWith({
@@ -42,7 +47,7 @@ class Reservation extends Equatable {
     Car? car,
     Parcel? parcel,
     Payment? payment,
-    bool? isCancellable,
+    ReservationMetadata? metadata,
   }) =>
       Reservation(
         id: id ?? this.id,
@@ -55,7 +60,7 @@ class Reservation extends Equatable {
         car: car ?? this.car,
         parcel: parcel ?? this.parcel,
         payment: payment ?? this.payment,
-        isCancellable: isCancellable ?? this.isCancellable,
+        metadata: metadata ?? this.metadata,
       );
 
   @override
@@ -70,6 +75,31 @@ class Reservation extends Equatable {
         car,
         parcel,
         payment,
+        metadata,
+      ];
+}
+
+class ReservationMetadata extends Equatable {
+  final bool isCancellable;
+  final bool isCarModifiable;
+
+  const ReservationMetadata({
+    required this.isCancellable,
+    required this.isCarModifiable,
+  });
+
+  ReservationMetadata copyWith({
+    bool? isCancellable,
+    bool? isCarModifiable,
+  }) =>
+      ReservationMetadata(
+        isCancellable: isCancellable ?? this.isCancellable,
+        isCarModifiable: isCarModifiable ?? this.isCarModifiable,
+      );
+
+  @override
+  List<Object?> get props => [
         isCancellable,
+        isCarModifiable,
       ];
 }

@@ -32,6 +32,7 @@ abstract class ReservationApiService {
   Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
       getMyReservations({
     @Query("page") required int page,
+    @Query("page_size") required int pageSize,
   });
 
   //to test
@@ -43,24 +44,30 @@ abstract class ReservationApiService {
   //to test
   @GET("/camping/reservations/{id}/details/")
   Future<HttpResponse<ReservationDto>> getReservationDetails({
-    @Path("id") required String reservationId,
+    @Path("id") required int reservationId,
   });
 
   //to test
   @PATCH("/camping/reservations/{id}/modify/car/")
   Future<HttpResponse<void>> updateReservation({
-    @Path("id") required String reservationId,
+    @Path("id") required int reservationId,
     @Body() required UpdateReservationRequestDto updateReservationRequestDto,
   });
 
   //to test
   @DELETE("/camping/reservations/{id}/cancel/")
   Future<HttpResponse<void>> cancelReservation({
-    @Path('reservationId') required String reservationId,
+    @Path('reservationId') required int reservationId,
   });
 
   @POST('/camping/reservations/create/')
   Future<HttpResponse<CreateReservationResponseDto>> createReservation({
     @Body() required CreateReservationRequestDto createReservationRequestDto,
+  });
+
+  @PUT("/camping/reservations/{id}/modify/car/")
+  Future<HttpResponse<void>> editCar({
+    @Path("id") required int reservationId,
+    @Body() required Map<String, dynamic> carId,
   });
 }

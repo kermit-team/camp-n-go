@@ -125,4 +125,6 @@
   "reservationError": "Błąd rezerwacji",
   "idCardCanNotBeEmpty": "Dowód osobisty nie może być pusty, edytuj konto, aby ustawić nowy.",
   "invalidDateRange": "Nieprawidłowy zakres dat, data końca musi być późniejsza od daty początku",
+  "carEdited": "Samochód został zmieniony",
+  "carNotEdited": "Samochód nie został zmieniony"
 }

@@ -17,7 +17,7 @@ class ReservationPreviewCubit extends Cubit<ReservationPreviewState> {
   }) : super(const ReservationPreviewState());
 
   /// Pobiera dane rezerwacji na podstawie ID
-  Future<void> getReservationData({required String reservationId}) async {
+  Future<void> getReservationData({required int reservationId}) async {
     emit(state.copyWith(getReservationStatus: SubmissionStatus.loading));
     try {
       final Result<Reservation, Exception> result =
@@ -54,56 +54,59 @@ class ReservationPreviewCubit extends Cubit<ReservationPreviewState> {
       state.copyWith(getReservationStatus: SubmissionStatus.initial),
     );
   }
+
+  void editCar({
+    required int reservationId,
+    required int carId,
+  }) async {
+    try {
+      emit(state.copyWith(
+        editCarStatus: SubmissionStatus.loading,
+      ));
+
+      final Result<void, Exception> result =
+          await reservationRepository.editCar(
+        carId: carId,
+        reservationId: reservationId,
+      );
+
+      switch (result) {
+        case Success<void, Exception>():
+          {
+            emit(state.copyWith(
+              editCarStatus: SubmissionStatus.success,
+            ));
+            break;
+          }
+        case Failure<void, Exception>(exception: final exception):
+          {
+            emit(state.copyWith(
+              editCarStatus: SubmissionStatus.failure,
+              exception: exception,
+            ));
+          }
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        editCarStatus: SubmissionStatus.failure,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        editCarStatus: SubmissionStatus.failure,
+        exception: exception,
+      ));
+
+      emit(state.copyWith(
+        exception: Exception("[account_settings_cubit] Not implemented yet"),
+        editCarStatus: SubmissionStatus.failure,
+      ));
+    }
+  }
+
+  void resetEditCarStatus() {
+    emit(
+      state.copyWith(editCarStatus: SubmissionStatus.initial),
+    );
+  }
 }
-
-// /// Pobiera dane użytkownika na podstawie jego ID
-// Future<void> getUserData() async {
-//   emit(state.copyWith(userStatus: SubmissionStatus.loading));
-//
-//   try {
-//     final token = await serviceLocator<TokenStorage>().getAccessToken();
-//     if (token != null) {
-//       final identifier = TokenDecoder.getUserId(
-//         token: token,
-//       );
-//
-//       final Result<Account, Exception> result =
-//           await accountSettingsRepository.getAccountData(
-//         identifier: identifier,
-//       );
-//       switch (result) {
-//         case Success<Account, Exception>(
-//             value: Account accountEntity,
-//           ):
-//           {
-//             emit(state.copyWith(
-//               userStatus: SubmissionStatus.success,
-//               user: accountEntity,
-//             ));
-//             break;
-//           }
-//         case Failure<Account, Exception>(exception: final exception):
-//           {
-//             emit(state.copyWith(
-//               userStatus: SubmissionStatus.failure,
-//               exception: exception,
-//             ));
-//           }
-//       }
-//     }
-//   } catch (error) {
-//     emit(state.copyWith(
-//       userStatus: SubmissionStatus.failure,
-//       exception: error as Exception,
-//     ));
-//   }
-// }
-
-// Future<void> fetchReservationPreview(String reservationId) async {
-//   await getReservationData(reservationId);
-//   if (state.getReservationStatus == SubmissionStatus.success &&
-//       state.reservation != null) {
-//     await getUserData();
-//     // await fetchUser(state.reservation!.ownerId);
-//   }
-// }

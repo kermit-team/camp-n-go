@@ -109,9 +109,7 @@ class _ReservationListWidgetState extends State<ReservationListWidget> {
                   onListTilePressed: (ReservationPreview reservation) {
                     context.push(
                       AppRoutes.reservationPreview.route,
-                      extra: {
-                        'reservationId': state.reservations![index].id,
-                      },
+                      extra: state.reservations![index].id,
                     );
                   },
                   onCancelReservationDialogPressed: (reservationId) {

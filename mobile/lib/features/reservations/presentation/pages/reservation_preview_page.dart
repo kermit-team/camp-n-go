@@ -22,7 +22,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class ReservationPreviewPage extends StatefulWidget {
-  final String reservationId;
+  final int reservationId;
 
   const ReservationPreviewPage({
     super.key,
@@ -106,7 +106,7 @@ class _ReservationPreviewPageState extends State<ReservationPreviewPage> {
 
 class _UserData extends StatelessWidget {
   final Account account;
-  final String reservationId;
+  final int reservationId;
 
   const _UserData({
     required this.account,
@@ -118,8 +118,33 @@ class _UserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ReservationPreviewCubit, ReservationPreviewState>(
-        builder: (context, state) {
+    return BlocConsumer<ReservationPreviewCubit, ReservationPreviewState>(
+        listener: (context, state) {
+      switch (state.editCarStatus) {
+        case SubmissionStatus.initial:
+        case SubmissionStatus.loading:
+          break;
+        case SubmissionStatus.success:
+          context.read<ReservationPreviewCubit>().resetEditCarStatus();
+          if (context.mounted) {
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.carEdited.tr(),
+            );
+          }
+        // context.read<ReservationPreviewCubit>().getReservationData(
+        //       reservationId: reservationId,
+        //     );
+        case SubmissionStatus.failure:
+          context.read<ReservationPreviewCubit>().resetEditCarStatus();
+          if (context.mounted) {
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: LocaleKeys.carNotEdited.tr(),
+            );
+          }
+      }
+    }, builder: (context, state) {
       return Form(
         key: formKey,
         child: Column(
@@ -185,13 +210,18 @@ class _UserData extends StatelessWidget {
                   : '---',
             ),
             SizedBox(height: Constants.spaceXS),
-            state.reservation!.isCancellable
+            state.reservation!.isCarModifiable
                 ? GoldenCarDropdown(
                     cars: state.reservation!.account.carList,
                     hintText: LocaleKeys.selectCar.tr(),
                     validations: const [RequiredValidation()],
                     selectedCar: state.reservation!.car,
-                    //todo: add onCarChanged with cubit
+                    onChanged: (car) {
+                      context.read<ReservationPreviewCubit>().editCar(
+                            reservationId: reservationId,
+                            carId: car!.id,
+                          );
+                    },
                   )
                 : KeyValueText(
                     keyText: LocaleKeys.selectedCar.tr(),

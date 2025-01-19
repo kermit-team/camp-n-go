@@ -20,7 +20,7 @@ abstract class ReservationRepository {
   });
 
   Future<Result<Reservation, Exception>> getReservationDetails({
-    required String reservationId,
+    required int reservationId,
   });
 
   Future<Result<PaginatedResponse<ReservationPreview>, Exception>>
@@ -41,7 +41,7 @@ abstract class ReservationRepository {
   });
 
   Future<Result<void, Exception>> updateReservation({
-    required String reservationId,
+    required int reservationId,
     DateTime? startDate,
     DateTime? endDate,
     String? phoneNumber,
@@ -49,6 +49,11 @@ abstract class ReservationRepository {
   });
 
   Future<Result<void, Exception>> cancelReservation({
-    required String reservationId,
+    required int reservationId,
+  });
+
+  Future<Result<void, Exception>> editCar({
+    required int reservationId,
+    required int carId,
   });
 }

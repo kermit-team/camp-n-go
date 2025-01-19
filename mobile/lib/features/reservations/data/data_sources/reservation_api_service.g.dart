@@ -74,9 +74,15 @@ class _ReservationApiService implements ReservationApiService {
 
   @override
   Future<HttpResponse<PaginatedResponse<ReservationPreviewDto>>>
-      getMyReservations({required int page}) async {
+      getMyReservations({
+    required int page,
+    required int pageSize,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'page': page};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'page_size': pageSize,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options =
@@ -148,7 +154,7 @@ class _ReservationApiService implements ReservationApiService {
 
   @override
   Future<HttpResponse<ReservationDto>> getReservationDetails(
-      {required String reservationId}) async {
+      {required int reservationId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -183,7 +189,7 @@ class _ReservationApiService implements ReservationApiService {
 
   @override
   Future<HttpResponse<void>> updateReservation({
-    required String reservationId,
+    required int reservationId,
     required UpdateReservationRequestDto updateReservationRequestDto,
   }) async {
     final _extra = <String, dynamic>{};
@@ -214,7 +220,7 @@ class _ReservationApiService implements ReservationApiService {
 
   @override
   Future<HttpResponse<void>> cancelReservation(
-      {required String reservationId}) async {
+      {required int reservationId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -275,6 +281,37 @@ class _ReservationApiService implements ReservationApiService {
       rethrow;
     }
     final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<void>> editCar({
+    required int reservationId,
+    required Map<String, dynamic> carId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(carId);
+    final _options = _setStreamType<HttpResponse<void>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/camping/reservations/${reservationId}/modify/car/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<void>(_options);
+    final httpResponse = HttpResponse(null, _result);
     return httpResponse;
   }
 

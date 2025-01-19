@@ -3,7 +3,7 @@ import 'package:campngo/features/reservations/domain/entities/payment.dart';
 import 'package:equatable/equatable.dart';
 
 class ReservationPreview extends Equatable {
-  final String id;
+  final int id;
   final DateTime startDate;
   final DateTime endDate;
   final Parcel parcel;
@@ -23,7 +23,7 @@ class ReservationPreview extends Equatable {
   });
 
   ReservationPreview copyWith({
-    String? id,
+    int? id,
     DateTime? startDate,
     DateTime? endDate,
     Parcel? parcel,

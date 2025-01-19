@@ -186,9 +186,8 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.reservationPreview.route,
         pageBuilder: (context, state) {
-          final Map<String, dynamic> extra =
-              state.extra as Map<String, dynamic>;
-          final reservationId = extra['reservationId'] as String;
+          final int reservationId = state.extra as int;
+
           return MaterialPage(
             child: BlocProvider(
               create: (context) => ReservationPreviewCubit(

@@ -96,7 +96,7 @@ class ReservationListCubit extends Cubit<ReservationListState> {
     }
   }
 
-  Future<void> cancelReservation({required String reservationId}) async {
+  Future<void> cancelReservation({required int reservationId}) async {
     emit(state.copyWith(cancelReservationStatus: SubmissionStatus.loading));
     try {
       final Result<void, Exception> result =
@@ -110,9 +110,12 @@ class ReservationListCubit extends Cubit<ReservationListState> {
               cancelReservationStatus: SubmissionStatus.success));
           break;
         case Failure<void, Exception>():
-          emit(state.copyWith(
+          emit(
+            state.copyWith(
               cancelReservationStatus: SubmissionStatus.failure,
-              exception: result.exception));
+              exception: result.exception,
+            ),
+          );
       }
       // await Future.delayed(const Duration(seconds: 1));
       // emit(state.copyWith(cancelReservationStatus: SubmissionStatus.success));

@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'create_reservation_request_dto.g.dart';
+part 'create_reservation_response_dto.g.dart';
 
 @JsonSerializable()
-class CreateReservationRequestDto {
+class CreateReservationResponseDto {
+  @JsonKey(name: 'id')
+  final int id;
   @JsonKey(name: 'date_from')
   final String startDate;
   @JsonKey(name: 'date_to')
@@ -18,8 +20,11 @@ class CreateReservationRequestDto {
   final int parcelId;
   @JsonKey(name: 'comments')
   final String? comments;
+  @JsonKey(name: 'checkout_url')
+  final String stripeUrl;
 
-  CreateReservationRequestDto({
+  CreateReservationResponseDto({
+    required this.id,
     required this.startDate,
     required this.endDate,
     required this.numberOfAdults,
@@ -27,10 +32,11 @@ class CreateReservationRequestDto {
     required this.carId,
     required this.parcelId,
     this.comments,
+    required this.stripeUrl,
   });
 
-  Map<String, dynamic> toJson() => _$CreateReservationRequestDtoToJson(this);
+  factory CreateReservationResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$CreateReservationResponseDtoFromJson(json);
 
-  factory CreateReservationRequestDto.fromJson(Map<String, dynamic> json) =>
-      _$CreateReservationRequestDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateReservationResponseDtoToJson(this);
 }

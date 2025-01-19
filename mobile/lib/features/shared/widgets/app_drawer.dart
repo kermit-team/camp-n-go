@@ -98,6 +98,18 @@ class AppDrawer extends StatelessWidget {
                   );
                 },
               ),
+              _DrawerListTile(
+                icon: Icons.info_outline,
+                title: 'Test',
+                onTap: () {
+                  _navigateToRoute(
+                    context,
+                    AppRoutes.testWebView.route,
+                    extraString: "https://www.google.com",
+                    isPush: true,
+                  );
+                },
+              ),
               const Spacer(),
               _DrawerListTile(
                 icon: Icons.settings,
@@ -142,13 +154,14 @@ class AppDrawer extends StatelessWidget {
     String route, {
     bool isPush = false,
     Map<String, dynamic>? extra,
+    String? extraString,
   }) {
     final currentRoute = GoRouter.of(context).state?.matchedLocation;
     if (currentRoute != route) {
       if (isPush) {
-        context.push(route, extra: extra);
+        context.push(route, extra: extra ?? extraString);
       } else {
-        context.go(route, extra: extra);
+        context.go(route, extra: extra ?? extraString);
       }
     }
     Navigator.pop(context);

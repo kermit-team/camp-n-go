@@ -6,6 +6,7 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
+import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/models/update_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_mock.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
@@ -55,6 +56,7 @@ class ReservationRepositoryImpl implements ReservationRepository {
     required int adults,
     required int children,
     required int page,
+    required int pageSize,
   }) async {
     try {
       final httpResponse = await _reservationApiService.getAvailableParcels(
@@ -114,11 +116,16 @@ class ReservationRepositoryImpl implements ReservationRepository {
 
   @override
   Future<Result<PaginatedResponse<ReservationPreview>, Exception>>
-      getReservationList({required String userId, required int page}) async {
+      getReservationList({
+    required String userId,
+    required int page,
+    required int pageSize,
+  }) async {
     if (useMocks) {
       return _reservationRepositoryMock.getReservationList(
         userId: userId,
         page: 1,
+        pageSize: pageSize,
       );
     } else {
       // Real API implementation
@@ -148,36 +155,40 @@ class ReservationRepositoryImpl implements ReservationRepository {
     }
   }
 
-  // @override
-  // Future<Result<void, Exception>> createReservation(
-  //     {required int parcelNumber,
-  //     required int adults,
-  //     required int children,
-  //     required DateTime startDate,
-  //     required DateTime endDate,
-  //     required String carRegistration}) async {
-  //   try {
-  //     final httpResponse = await _reservationApiService.createReservation(
-  //         createReservationRequestDto: CreateReservationRequestDto(
-  //             parcelNumber: parcelNumber,
-  //             adults: adults,
-  //             children: children,
-  //             startDate: startDate,
-  //             endDate: endDate,
-  //             carRegistration: carRegistration));
-  //
-  //     if (httpResponse.response.statusCode == HttpStatus.ok ||
-  //         httpResponse.response.statusCode == 200) {
-  //       return const Success(null);
-  //     }
-  //
-  //     final errorResponse = handleError(httpResponse.response);
-  //     log("[ReservationRepositoryImpl>createReservation]: $errorResponse");
-  //     return Failure(Exception(errorResponse));
-  //   } on DioException catch (dioException) {
-  //     return Failure(handleApiError(dioException));
-  //   }
-  // }
+  @override
+  Future<Result<String, Exception>> createReservation({
+    required int parcelId,
+    required int adults,
+    required int children,
+    required int carId,
+    required DateTime startDate,
+    required DateTime endDate,
+    String? comments,
+  }) async {
+    try {
+      final httpResponse = await _reservationApiService.createReservation(
+          createReservationRequestDto: CreateReservationRequestDto(
+        startDate: startDate.toDateString(),
+        endDate: endDate.toDateString(),
+        numberOfAdults: adults,
+        numberOfChildren: children,
+        carId: carId,
+        parcelId: parcelId,
+        comments: comments,
+      ));
+
+      if (httpResponse.response.statusCode == HttpStatus.created ||
+          httpResponse.response.statusCode == 201) {
+        return Success(httpResponse.data.stripeUrl);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>createReservation]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
 
   @override
   Future<Result<void, Exception>> updateReservation(
@@ -231,27 +242,6 @@ class ReservationRepositoryImpl implements ReservationRepository {
       }
     }
   }
-
-//   @override
-//   Future<Result<String, Exception>> makeReservation() async {
-//     try {
-//       final httpResponse = await _reservationApiService.makeReservation();
-//
-//       if (httpResponse.response.statusCode == HttpStatus.ok ||
-//           httpResponse.response.statusCode == 200) {
-//         //todo: zmienić na zwracane
-//         return const Success("string");
-//       }
-//
-//       final errorResponse = handleError(httpResponse.response);
-//       log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
-//       return Failure(Exception(errorResponse));
-//     } on DioException catch (dioException) {
-//       return Failure(handleApiError(dioException));
-//     }
-//     throw UnimplementedError();
-//   }
-// }
 
   Exception handleError(Response response) {
     String errorText = "";

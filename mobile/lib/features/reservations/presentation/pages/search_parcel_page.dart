@@ -36,8 +36,8 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
   @override
   void initState() {
     super.initState();
-    startDateTime = DateTime.now();
-    endDateTime = DateTime.now();
+    startDateTime = DateTime.now().add(const Duration(days: 1));
+    endDateTime = DateTime.now().add(const Duration(days: 2));
     numberOfAdults = 0;
     numberOfChildren = 0;
   }
@@ -56,8 +56,14 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
             labelText: LocaleKeys.startDate.tr(),
             onChanged: (dateRange) {
               setState(() {
-                startDateTime = dateRange?.start ?? DateTime.now();
-                endDateTime = dateRange?.end ?? DateTime.now();
+                startDateTime = dateRange?.start ??
+                    DateTime.now().add(
+                      const Duration(days: 1),
+                    );
+                endDateTime = dateRange?.end ??
+                    DateTime.now().add(
+                      const Duration(days: 2),
+                    );
               });
             },
           ),
@@ -85,33 +91,23 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
           CustomButton(
             text: LocaleKeys.searchParcel.tr(),
             onPressed: () {
-              final params = GetParcelListParams(
-                startDate: startDateTime,
-                endDate: endDateTime,
-                adults: numberOfAdults,
-                children: numberOfChildren,
-              );
-              context.push(
-                AppRoutes.parcelList.route,
-                extra: {
-                  'params': params,
-                  'page': 1,
-                },
-              );
+              if (numberOfAdults != 0 && startDateTime.isBefore(endDateTime)) {
+                final params = GetParcelListParams(
+                  startDate: startDateTime,
+                  endDate: endDateTime,
+                  adults: numberOfAdults,
+                  children: numberOfChildren,
+                );
+                context.push(
+                  AppRoutes.parcelList.route,
+                  extra: {
+                    'params': params,
+                    'page': 1,
+                  },
+                );
+              }
             },
           ),
-          // if (state.status != AuthStatus.authenticated)
-          //   SizedBox(height: Constants.spaceS),
-          // if (state.status != AuthStatus.authenticated)
-          //   CustomButton(
-          //     text: LocaleKeys.login.tr(),
-          //     onPressed: () {
-          //       serviceLocator<AuthCubit>().logout();
-          //       context.go(
-          //         AppRoutes.login.route,
-          //       );
-          //     },
-          //   ),
         ],
       ),
     );

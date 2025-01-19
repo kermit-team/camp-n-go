@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
@@ -7,16 +8,15 @@ import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentResultPage extends StatelessWidget {
   final bool isSuccessful;
-  final String? paymentId;
   final String? errorCode;
 
   const PaymentResultPage({
     super.key,
     required this.isSuccessful,
-    this.paymentId,
     this.errorCode,
   });
 
@@ -33,7 +33,11 @@ class PaymentResultPage extends StatelessWidget {
                 SizedBox(height: Constants.spaceL),
                 CustomButton(
                   text: LocaleKeys.returnFrom.tr(),
-                  onPressed: Navigator.of(context).pop,
+                  onPressed: () {
+                    context.go(
+                      AppRoutes.reservationList.route,
+                    );
+                  },
                 )
               ],
             )
@@ -46,7 +50,11 @@ class PaymentResultPage extends StatelessWidget {
                 SizedBox(height: Constants.spaceL),
                 CustomButton(
                   text: LocaleKeys.returnFrom.tr(),
-                  onPressed: Navigator.of(context).pop,
+                  onPressed: () {
+                    context.go(
+                      AppRoutes.reservationList.route,
+                    );
+                  },
                 )
               ],
             ),

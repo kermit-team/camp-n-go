@@ -123,5 +123,8 @@ abstract class  LocaleKeys {
   static const failure = 'failure';
   static const paymentSuccessful = 'paymentSuccessful';
   static const paymentFailure = 'paymentFailure';
+  static const reservationError = 'reservationError';
+  static const idCardCanNotBeEmpty = 'idCardCanNotBeEmpty';
+  static const invalidDateRange = 'invalidDateRange';
 
 }

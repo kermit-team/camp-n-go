@@ -7,6 +7,7 @@ class ReservationSummaryState extends Equatable {
   final List<Car>? carList;
   final Car? assignedCar;
   final Exception? exception;
+  final String? stripeUrl;
 
   const ReservationSummaryState({
     this.getUserDataStatus = SubmissionStatus.initial,
@@ -15,6 +16,7 @@ class ReservationSummaryState extends Equatable {
     this.carList,
     this.assignedCar,
     this.exception,
+    this.stripeUrl,
   });
 
   copyWith({
@@ -24,6 +26,7 @@ class ReservationSummaryState extends Equatable {
     List<Car>? carList,
     Car? assignedCar,
     Exception? exception,
+    String? stripeUrl,
   }) =>
       ReservationSummaryState(
         getUserDataStatus: getUserDataStatus ?? this.getUserDataStatus,
@@ -32,6 +35,7 @@ class ReservationSummaryState extends Equatable {
         carList: carList ?? this.carList,
         assignedCar: assignedCar ?? this.assignedCar,
         exception: exception ?? this.exception,
+        stripeUrl: stripeUrl ?? this.stripeUrl,
       );
 
   @override
@@ -42,5 +46,6 @@ class ReservationSummaryState extends Equatable {
         carList,
         assignedCar,
         exception,
+        stripeUrl,
       ];
 }

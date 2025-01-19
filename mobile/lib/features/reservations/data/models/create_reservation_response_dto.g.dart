@@ -1,14 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_reservation_request_dto.dart';
+part of 'create_reservation_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateReservationRequestDto _$CreateReservationRequestDtoFromJson(
+CreateReservationResponseDto _$CreateReservationResponseDtoFromJson(
         Map<String, dynamic> json) =>
-    CreateReservationRequestDto(
+    CreateReservationResponseDto(
+      id: (json['id'] as num).toInt(),
       startDate: json['date_from'] as String,
       endDate: json['date_to'] as String,
       numberOfAdults: (json['number_of_adults'] as num).toInt(),
@@ -16,11 +17,13 @@ CreateReservationRequestDto _$CreateReservationRequestDtoFromJson(
       carId: (json['car'] as num).toInt(),
       parcelId: (json['camping_plot'] as num).toInt(),
       comments: json['comments'] as String?,
+      stripeUrl: json['checkout_url'] as String,
     );
 
-Map<String, dynamic> _$CreateReservationRequestDtoToJson(
-        CreateReservationRequestDto instance) =>
+Map<String, dynamic> _$CreateReservationResponseDtoToJson(
+        CreateReservationResponseDto instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'date_from': instance.startDate,
       'date_to': instance.endDate,
       'number_of_adults': instance.numberOfAdults,
@@ -28,4 +31,5 @@ Map<String, dynamic> _$CreateReservationRequestDtoToJson(
       'car': instance.carId,
       'camping_plot': instance.parcelId,
       'comments': instance.comments,
+      'checkout_url': instance.stripeUrl,
     };

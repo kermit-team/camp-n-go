@@ -120,5 +120,8 @@
   "success": "Success",
   "failure": "Failure",
   "paymentSuccessful": "Payment finished successfully",
-  "paymentFailure": "Payment finished with failure"
+  "paymentFailure": "Payment finished with failure",
+  "reservationError": "Reservation error",
+  "idCardCanNotBeEmpty": "Id card can't be empty, please add it in account settings",
+  "invalidDateRange": "Invalid date range, start date must be before end date"
 }

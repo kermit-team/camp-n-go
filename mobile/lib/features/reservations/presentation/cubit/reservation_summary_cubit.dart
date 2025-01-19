@@ -101,36 +101,55 @@ class ReservationSummaryCubit extends Cubit<ReservationSummaryState> {
     }
   }
 
-  // Future<void> makeReservation() async {
-  //   emit(const ReservationSummaryState(
-  //     getUserDataStatus: SubmissionStatus.loading,
-  //   ));
-  //
-  //   try {
-  //     final Result<String, Exception> result =
-  //         await reservationRepository.makeReservation();
-  //
-  //     switch (result) {
-  //       case Success<String, Exception>():
-  //         emit(
-  //           state.copyWith(reservationStatus: SubmissionStatus.success),
-  //         );
-  //       case Failure<String, Exception>(exception: final exception):
-  //         emit(state.copyWith(
-  //           reservationStatus: SubmissionStatus.failure,
-  //           exception: exception,
-  //         ));
-  //     }
-  //   } on DioException catch (dioException) {
-  //     emit(state.copyWith(
-  //       getUserDataStatus: SubmissionStatus.failure,
-  //       exception: dioException,
-  //     ));
-  //   } on Exception catch (exception) {
-  //     emit(state.copyWith(
-  //       getUserDataStatus: SubmissionStatus.failure,
-  //       exception: exception,
-  //     ));
-  //   }
-  // }
+  Future<void> makeReservation({
+    required int parcelId,
+    required int adults,
+    required int children,
+    required int carId,
+    required DateTime startDate,
+    required DateTime endDate,
+    String? comments,
+  }) async {
+    emit(const ReservationSummaryState(
+      getUserDataStatus: SubmissionStatus.loading,
+    ));
+
+    try {
+      final Result<String, Exception> result =
+          await reservationRepository.createReservation(
+        parcelId: parcelId,
+        adults: adults,
+        children: children,
+        carId: carId,
+        startDate: startDate,
+        endDate: endDate,
+        comments: comments,
+      );
+
+      switch (result) {
+        case Success<String, Exception>():
+          emit(
+            state.copyWith(
+              reservationStatus: SubmissionStatus.success,
+              stripeUrl: result.value,
+            ),
+          );
+        case Failure<String, Exception>(exception: final exception):
+          emit(state.copyWith(
+            reservationStatus: SubmissionStatus.failure,
+            exception: exception,
+          ));
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        reservationStatus: SubmissionStatus.failure,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        reservationStatus: SubmissionStatus.failure,
+        exception: exception,
+      ));
+    }
+  }
 }

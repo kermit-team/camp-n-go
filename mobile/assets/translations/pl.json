@@ -121,5 +121,8 @@
   "success": "Sukces",
   "failure": "Niepowodzenie",
   "paymentSuccessful": "Płatność zakończyła się sukcesem",
-  "paymentFailure": "Płatność zakończyła się niepowodzeniem"
+  "paymentFailure": "Płatność zakończyła się niepowodzeniem",
+  "reservationError": "Błąd rezerwacji",
+  "idCardCanNotBeEmpty": "Dowód osobisty nie może być pusty, edytuj konto, aby ustawić nowy.",
+  "invalidDateRange": "Nieprawidłowy zakres dat, data końca musi być późniejsza od daty początku",
 }

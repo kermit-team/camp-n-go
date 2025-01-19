@@ -237,17 +237,15 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.payment.route,
         builder: (BuildContext context, GoRouterState state) {
-          final paymentUrl = state.extra! as Map<String, dynamic>;
-          return PaymentPage(paymentUrl: paymentUrl['paymentUrl']);
+          final paymentUrl = state.extra as String;
+          return PaymentPage(paymentUrl: paymentUrl);
         },
       ),
       GoRoute(
         path: AppRoutes.paymentSuccess.route,
         builder: (BuildContext context, GoRouterState state) {
-          final paymentId = state.extra! as Map<String, dynamic>;
-          return PaymentResultPage(
+          return const PaymentResultPage(
             isSuccessful: true,
-            paymentId: paymentId['paymentId'],
           );
         },
       ),
@@ -259,6 +257,13 @@ class AppRouter {
             isSuccessful: false,
             errorCode: errorCode['errorCode'],
           );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.testWebView.route,
+        builder: (BuildContext context, GoRouterState state) {
+          final url = state.extra! as String;
+          return PaymentPage(paymentUrl: url);
         },
       ),
     ],

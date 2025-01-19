@@ -79,4 +79,10 @@ class AppTextStyles {
       decorationThickness: 1,
     );
   }
+
+  static errorTextStyle({double? fontSize}) => GoogleFonts.montserrat(
+        fontSize: fontSize ?? Constants.textSizeS,
+        fontStyle: FontStyle.normal,
+        color: _lightColorScheme.error,
+      );
 }

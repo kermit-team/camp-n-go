@@ -8,25 +8,25 @@ part 'reservation_preview_dto.g.dart';
 @JsonSerializable()
 class ReservationPreviewDto {
   @JsonKey(name: 'id')
-  final int reservationId;
+  final int id;
   @JsonKey(name: 'date_from')
-  final DateTime startDate;
+  final String startDate;
   @JsonKey(name: 'date_to')
-  final DateTime endDate;
+  final String endDate;
   @JsonKey(name: 'camping_plot')
   final ParcelDto parcel;
   @JsonKey(name: 'payment')
   final PaymentDto payment;
-  @JsonKey(name: 'is_cancellable')
-  final bool canCancel;
+  @JsonKey(name: 'metadata')
+  final ReservationPreviewMetadataDto metadata;
 
   ReservationPreviewDto({
-    required this.reservationId,
+    required this.id,
     required this.startDate,
     required this.endDate,
     required this.parcel,
     required this.payment,
-    required this.canCancel,
+    required this.metadata,
   });
 
   factory ReservationPreviewDto.fromJson(Map<String, dynamic> json) =>
@@ -36,20 +36,52 @@ class ReservationPreviewDto {
 
   factory ReservationPreviewDto.fromEntity(ReservationPreview entity) =>
       ReservationPreviewDto(
-        reservationId: int.parse(entity.id),
-        startDate: entity.startDate,
-        endDate: entity.endDate,
+        id: int.parse(entity.id),
+        startDate: entity.startDate.toIso8601String(),
+        endDate: entity.endDate.toIso8601String(),
         parcel: ParcelDto.fromEntity(entity.parcel),
         payment: PaymentDto.fromEntity(entity.payment),
-        canCancel: entity.canCancel,
+        metadata: ReservationPreviewMetadataDto(
+          isCarModifiable: entity.canBeEdited,
+          isCancellable: entity.canCancel,
+        ),
       );
 
   ReservationPreview toEntity() => ReservationPreview(
-        id: reservationId.toString(),
-        startDate: startDate,
-        endDate: endDate,
+        id: id.toString(),
+        startDate: DateTime.parse(startDate),
+        endDate: DateTime.parse(endDate),
         parcel: parcel.toEntity(),
         payment: payment.toEntity(),
-        canCancel: canCancel,
+        metadata: metadata.toEntity(),
+      );
+}
+
+@JsonSerializable()
+class ReservationPreviewMetadataDto {
+  @JsonKey(name: 'is_cancellable')
+  final bool isCancellable;
+  @JsonKey(name: 'is_car_modifiable')
+  final bool isCarModifiable;
+
+  ReservationPreviewMetadataDto({
+    required this.isCancellable,
+    required this.isCarModifiable,
+  });
+
+  factory ReservationPreviewMetadataDto.fromJson(Map<String, dynamic> json) =>
+      _$ReservationPreviewMetadataDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReservationPreviewMetadataDtoToJson(this);
+
+  factory ReservationPreviewMetadataDto.fromEntity(
+          ReservationPreviewMetadata entity) =>
+      ReservationPreviewMetadataDto(
+        isCancellable: entity.isCancellable,
+        isCarModifiable: entity.isCarModifiable,
+      );
+  ReservationPreviewMetadata toEntity() => ReservationPreviewMetadata(
+        isCancellable: isCancellable,
+        isCarModifiable: isCarModifiable,
       );
 }

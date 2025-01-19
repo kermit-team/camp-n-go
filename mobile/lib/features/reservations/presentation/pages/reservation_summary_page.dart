@@ -1,5 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/routes/app_routes.dart';
+import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/string_extension.dart';
 import 'package:campngo/core/resources/submission_status.dart';
@@ -137,18 +138,46 @@ class _ReservationSummaryPageState extends State<ReservationSummaryPage> {
             ],
           ),
           SizedBox(height: Constants.spaceXS),
-          CustomButton(
-            text: LocaleKeys.reserve.tr(),
-            onPressed: () {
-              if (formKey.currentState?.validate() == true) {
-                // context.read<ReservationSummaryCubit>().makeReservation();
+          BlocConsumer<ReservationSummaryCubit, ReservationSummaryState>(
+              listener: (context, state) {
+            switch (state.reservationStatus) {
+              case SubmissionStatus.initial:
+                break;
+              case SubmissionStatus.loading:
                 AppSnackBar.showSnackBar(
                   context: context,
-                  text: LocaleKeys.reservationData.tr(),
+                  text: "Przetwarzanie rezerwacji",
                 );
-              }
-            },
-          ),
+              case SubmissionStatus.success:
+                context.replace(
+                  AppRoutes.payment.route,
+                  extra: state.stripeUrl,
+                );
+
+              case SubmissionStatus.failure:
+                AppSnackBar.showSnackBar(
+                  context: context,
+                  text: LocaleKeys.reservationError.tr(),
+                );
+            }
+          }, builder: (context, state) {
+            return CustomButton(
+              text: LocaleKeys.reserve.tr(),
+              onPressed: () {
+                if (formKey.currentState?.validate() == true &&
+                    state.account?.profile.idCard != null) {
+                  context.read<ReservationSummaryCubit>().makeReservation(
+                        parcelId: widget.parcel.id,
+                        adults: widget.params.adults,
+                        children: widget.params.children,
+                        carId: state.assignedCar?.id ?? 0,
+                        startDate: widget.params.startDate,
+                        endDate: widget.params.endDate,
+                      );
+                }
+              },
+            );
+          }),
           SizedBox(height: Constants.spaceL),
         ],
       ),
@@ -227,6 +256,13 @@ class _UserData extends StatelessWidget {
                   ? account.profile.idCard.toString()
                   : '---',
             ),
+            if (account.profile.idCard == null)
+              StandardText(
+                LocaleKeys.idCardCanNotBeEmpty.tr(),
+                style: AppTextStyles.errorTextStyle(),
+                textAlign: TextAlign.start,
+                isBold: false,
+              ),
             SizedBox(height: Constants.spaceXS),
             StandardText('${LocaleKeys.assignCarToReservation.tr()}:'),
             state.carList != null
@@ -235,6 +271,13 @@ class _UserData extends StatelessWidget {
                     hintText: LocaleKeys.selectCar.tr(),
                     validations: const [RequiredValidation()],
                     selectedCar: state.assignedCar,
+                    onChanged: (car) {
+                      if (car != null) {
+                        context
+                            .read<ReservationSummaryCubit>()
+                            .assignCarToReservation(carToAssign: car);
+                      }
+                    },
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

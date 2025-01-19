@@ -48,7 +48,7 @@ class _GoldenCarDropdownState extends State<GoldenCarDropdown> {
     return DropdownButtonFormField<Car>(
       value: _selectedCar,
       onChanged: (value) {
-        if (widget.onCarChanged != null) widget.onCarChanged!();
+        if (widget.onChanged != null) widget.onChanged!(value);
         _selectedCar = value;
       },
       hint: StandardText(widget.hintText ?? ''),

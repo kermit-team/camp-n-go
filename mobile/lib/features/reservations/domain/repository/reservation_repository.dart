@@ -16,6 +16,7 @@ abstract class ReservationRepository {
     required int adults,
     required int children,
     required int page,
+    required int pageSize,
   });
 
   Future<Result<Reservation, Exception>> getReservationDetails({
@@ -26,16 +27,18 @@ abstract class ReservationRepository {
       getReservationList({
     required String userId,
     required int page,
+    required int pageSize,
   });
 
-  // Future<Result<void, Exception>> createReservation({
-  //   required int parcelNumber,
-  //   required int adults,
-  //   required int children,
-  //   required DateTime startDate,
-  //   required DateTime endDate,
-  //   required String carRegistration,
-  // });
+  Future<Result<String, Exception>> createReservation({
+    required int parcelId,
+    required int adults,
+    required int children,
+    required int carId,
+    required DateTime startDate,
+    required DateTime endDate,
+    String? comments,
+  });
 
   Future<Result<void, Exception>> updateReservation({
     required String reservationId,

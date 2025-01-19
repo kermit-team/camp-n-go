@@ -33,22 +33,17 @@ class _PaymentPageState extends State<PaymentPage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('your-app://payment-success')) {
-              //todo: Extract information from the URL (e.g., payment ID)
-              final uri = Uri.parse(request.url);
-              final paymentId = uri.queryParameters['paymentId'];
-              // Navigate to the success page with the payment ID
+            if (request.url
+                .startsWith('http://localhost:4200/payment/success')) {
               context.go(
                 AppRoutes.paymentSuccess.route,
-                extra: {'paymentId': paymentId},
               );
               return NavigationDecision.prevent;
             }
             if (request.url.startsWith('your-app://payment-failure')) {
-              //todo: Extract information from the URL (e.g., error code)
               final uri = Uri.parse(request.url);
               final errorCode = uri.queryParameters['errorCode'];
-              //todo: Navigate to the failure page with the error code
+
               context.go(
                 AppRoutes.paymentFailure.route,
                 extra: {'errorCode': errorCode},
@@ -67,6 +62,8 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return AppBody(
       titleText: LocaleKeys.payment.tr(),
+      scrollable: false,
+      enablePadding: false,
       child: WebViewWidget(
         controller: _controller,
       ),

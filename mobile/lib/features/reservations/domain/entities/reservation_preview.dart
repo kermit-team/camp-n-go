@@ -8,7 +8,10 @@ class ReservationPreview extends Equatable {
   final DateTime endDate;
   final Parcel parcel;
   final Payment payment;
-  final bool canCancel;
+  final ReservationPreviewMetadata metadata;
+
+  bool get canCancel => metadata.isCancellable;
+  bool get canBeEdited => metadata.isCarModifiable;
 
   const ReservationPreview({
     required this.id,
@@ -16,24 +19,24 @@ class ReservationPreview extends Equatable {
     required this.endDate,
     required this.parcel,
     required this.payment,
-    required this.canCancel,
+    required this.metadata,
   });
 
   ReservationPreview copyWith({
-    String? reservationId,
+    String? id,
     DateTime? startDate,
     DateTime? endDate,
     Parcel? parcel,
     Payment? payment,
-    bool? canCancel,
+    ReservationPreviewMetadata? metadata,
   }) =>
       ReservationPreview(
-        id: reservationId ?? this.id,
+        id: id ?? this.id,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
         parcel: parcel ?? this.parcel,
         payment: payment ?? this.payment,
-        canCancel: canCancel ?? this.canCancel,
+        metadata: metadata ?? this.metadata,
       );
 
   @override
@@ -43,6 +46,31 @@ class ReservationPreview extends Equatable {
         endDate,
         parcel,
         payment,
-        canCancel,
+        metadata,
+      ];
+}
+
+class ReservationPreviewMetadata extends Equatable {
+  final bool isCancellable;
+  final bool isCarModifiable;
+
+  const ReservationPreviewMetadata({
+    required this.isCancellable,
+    required this.isCarModifiable,
+  });
+
+  ReservationPreviewMetadata copyWith({
+    bool? isCancellable,
+    bool? isCarModifiable,
+  }) =>
+      ReservationPreviewMetadata(
+        isCancellable: isCancellable ?? this.isCancellable,
+        isCarModifiable: isCarModifiable ?? this.isCarModifiable,
+      );
+
+  @override
+  List<Object?> get props => [
+        isCancellable,
+        isCarModifiable,
       ];
 }

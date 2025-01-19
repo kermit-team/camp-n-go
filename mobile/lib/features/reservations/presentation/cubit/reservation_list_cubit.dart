@@ -42,6 +42,7 @@ class ReservationListCubit extends Cubit<ReservationListState> {
             await reservationRepository.getReservationList(
           userId: userId,
           page: page,
+          pageSize: Constants.pageSize,
         );
 
         switch (result) {

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,8 +35,10 @@ class _GoldenDateRangePickerFieldState
   void initState() {
     super.initState();
     _dateRange = DateTimeRange(
-      start: widget.initialStartDateTime ?? DateTime.now(),
-      end: widget.initialEndDateTime ?? DateTime.now(),
+      start: widget.initialStartDateTime ??
+          DateTime.now().add(const Duration(days: 1)),
+      end: widget.initialEndDateTime ??
+          DateTime.now().add(const Duration(days: 2)),
     );
   }
 
@@ -44,7 +47,7 @@ class _GoldenDateRangePickerFieldState
       final DateTimeRange? pickedDateRange = await showDateRangePicker(
         context: context,
         initialDateRange: _dateRange,
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().add(const Duration(days: 1)),
         lastDate: DateTime(2101),
         cancelText: LocaleKeys.cancel.tr(),
         confirmText: LocaleKeys.save.tr(),
@@ -76,7 +79,9 @@ class _GoldenDateRangePickerFieldState
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
                           _dateRange = DateTimeRange(
-                              start: newDateTime, end: _dateRange.end);
+                            start: newDateTime,
+                            end: _dateRange.end,
+                          );
                           widget.onChanged(_dateRange);
                         });
                       },
@@ -92,7 +97,9 @@ class _GoldenDateRangePickerFieldState
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
                           _dateRange = DateTimeRange(
-                              start: _dateRange.start, end: newDateTime);
+                            start: _dateRange.start,
+                            end: newDateTime,
+                          );
                           widget.onChanged(_dateRange);
                         });
                       },
@@ -120,6 +127,7 @@ class _GoldenDateRangePickerFieldState
     return InkWell(
       onTap: () => _selectDateTime(context),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: Constants.spaceXXS),
           Row(
@@ -205,6 +213,21 @@ class _GoldenDateRangePickerFieldState
               ),
             ),
           ),
+          if (!_dateRange.end.isAfter(_dateRange.start))
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: Constants.spaceXXS),
+                StandardText(
+                  LocaleKeys.invalidDateRange.tr(),
+                  style: AppTextStyles.errorTextStyle(
+                    fontSize: Constants.textSizeXS,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
         ],
       ),
     );

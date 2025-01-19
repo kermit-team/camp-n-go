@@ -14,6 +14,7 @@ class Constants {
   static double spaceL = 4.5.h; // Adjusted to 4.5.h
   static double spaceXL = 5.5.h; // Adjusted to 4.5.h
 
+  static double textSizeXS = 13.sp;
   static double textSizeS = 16.sp;
   static double textSizeMS = 20.sp;
   static double textSizeM = 25.sp;

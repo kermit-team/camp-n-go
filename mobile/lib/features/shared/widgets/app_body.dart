@@ -9,12 +9,14 @@ class AppBody extends StatelessWidget {
   final bool scrollable;
   final bool showDrawer;
   final String? titleText;
+  final bool enablePadding;
 
   const AppBody({
     super.key,
     required this.child,
     this.scrollable = true,
     this.showDrawer = true,
+    this.enablePadding = true,
     this.titleText,
   });
 
@@ -39,10 +41,12 @@ class AppBody extends StatelessWidget {
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.only(
-              left: 9.w, // Use 9.w for left padding
-              right: 9.w, // Use 9.w for right padding
-            ),
+            padding: enablePadding
+                ? EdgeInsets.only(
+                    left: 9.w, // Use 9.w for left padding
+                    right: 9.w, // Use 9.w for right padding
+                  )
+                : EdgeInsets.zero,
             child: SafeArea(
               child: scrollable
                   ? SingleChildScrollView(

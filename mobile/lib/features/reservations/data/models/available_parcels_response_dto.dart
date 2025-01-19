@@ -1,6 +1,3 @@
-// available_parcels_response_dto.dart
-
-import 'package:campngo/features/reservations/data/models/parcel_dto.dart';
 import 'package:campngo/features/reservations/data/models/parcel_list_item_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 

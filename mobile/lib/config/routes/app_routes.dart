@@ -15,7 +15,8 @@ enum AppRoutes {
   searchParcelUnauthenticated('/searchParcelUnauthenticated'),
   payment('/payment'),
   paymentSuccess('/paymentSuccess'),
-  paymentFailure('/paymentFailure');
+  paymentFailure('/paymentFailure'),
+  testWebView('/testWebView');
 
   const AppRoutes(this.route);
   final String route;
@@ -37,6 +38,7 @@ AccessLevel getAccessLevel(AppRoutes route) {
     case AppRoutes.payment:
     case AppRoutes.paymentSuccess:
     case AppRoutes.paymentFailure:
+    case AppRoutes.testWebView:
       return AccessLevel
           .authenticationRequired; // Requires authentication (logged in)
     case AppRoutes.home:

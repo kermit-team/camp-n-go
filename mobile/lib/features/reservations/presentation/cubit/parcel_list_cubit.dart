@@ -37,6 +37,7 @@ class ParcelListCubit extends Cubit<ParcelListState> {
       final Result<PaginatedResponse<ParcelListItem>, Exception> result =
           await reservationRepository.getParcelList(
         page: page,
+        pageSize: Constants.pageSize,
         startDate: params.startDate,
         endDate: params.endDate,
         adults: params.adults,

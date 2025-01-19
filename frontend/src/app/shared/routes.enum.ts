@@ -8,4 +8,7 @@ export enum AppRoutes {
   Profile = 'profile',
   ParcelSearch = 'parcels/search',
   ReservationCreate = 'reservation-create',
+  Payment = 'payment',
+  Success = 'success',
+  Cancel = 'cancel',
 }

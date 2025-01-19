@@ -1,10 +1,11 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import {
-  Parcel,
+  CreateReservationRequest,
+  CreateReservationResponse,
   ParcelListItem,
   ParcelSearchFilters,
+  ParcelToReserve,
   PassedData,
-  ReserveParcel,
 } from '../models/parcels.interface';
 import { ParcelsState } from '../state/parcels.state';
 import { catchError, first, of, switchMap } from 'rxjs';
@@ -54,7 +55,7 @@ export class ParcelsFacade {
       .pipe(
         switchMap((params: LibListRequestParams) =>
           this.parcelsApi
-            .getParcelList({ ...params, filters: passedData })
+            .getParcelList({ filters: passedData, ...params })
             .pipe(
               catchError((error: Error) =>
                 of({
@@ -103,44 +104,31 @@ export class ParcelsFacade {
   }
 
   setParcelFilters(filters: ParcelSearchFilters) {
-    this.parcelsState.setFilters(filters);
+    this.parcelsState.setListFilters(filters);
   }
 
-  refreshParameters() {
-    const passedData = this.getDataTransformedPassedData();
+  reserveParcel(reserveData: CreateReservationRequest) {
     this.parcelsApi
-      .getParcelList({
-        page: 1,
-        page_size: 10,
-        ...passedData,
-      })
-      .subscribe({
-        next: (response: LibListItem<ParcelListItem>) => {
-          console.log(response);
-        },
-      });
-  }
-
-  reserveParcel(reserveData: ReserveParcel) {
-    this.parcelsApi
-      .getParcelDetail(reserveData)
+      .createReservation(reserveData)
       .pipe(first())
       .subscribe({
-        next: (response: Parcel) => {
-          this.parcelsState.setParcelDatePeople$({
-            childrenNumber: reserveData.childrenNumber,
-            adultNumber: reserveData.adultNumber,
-            startDate: reserveData.dateFrom.toISOString(),
-            endDate: reserveData.dateTo.toISOString(),
-          });
-          this.router.navigate(['/reservation-create']);
+        next: (response: CreateReservationResponse) => {
+          window.location.href = response.checkout_url;
         },
         error: () => {
           this.alertService.showDialog(
-            'Nie udało się pobrać danych rezerwacji',
+            'Nie udało się utworzyć rezerwacji',
             'error',
           );
         },
       });
+  }
+
+  setParcelForReservation(data: ParcelToReserve) {
+    this.parcelsState.setParcelForReservation$(data);
+  }
+
+  selectParcelForReservation$() {
+    return this.parcelsState.selectParcelForReservation$();
   }
 }

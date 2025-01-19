@@ -30,4 +30,5 @@ export interface Profile {
 
 export interface Car {
   registration_plate: string;
+  id: number;
 }

@@ -14,7 +14,8 @@ import { ParcelsFacade } from '../../services/parcels.facade';
 import { ParcelSearchListComponent } from '../../components/parcel-search-list/parcel-search-list.component';
 import { AsyncPipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
-import { ReserveCampingRequest } from '../../models/parcels.interface';
+import { Parcel } from '../../models/parcels.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-parcel-search',
@@ -32,8 +33,10 @@ import { ReserveCampingRequest } from '../../models/parcels.interface';
 })
 export class ParcelSearchComponent implements OnInit, OnDestroy {
   @ViewChild(PeoplePickerComponent) peoplePicker!: PeoplePickerComponent;
+  @ViewChild(DatepickerComponent) datepicker!: DatepickerComponent;
   private parcelsFacade = inject(ParcelsFacade);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   dates = {
     dateFrom: this.parcelsFacade.getPassedData()?.startDate
@@ -52,16 +55,24 @@ export class ParcelSearchComponent implements OnInit, OnDestroy {
   parcels$ = this.parcelsFacade.selectParcelItems$();
   paginationMetadata$ = this.parcelsFacade.selectParcelPaginationMetadata$();
 
-  reserve(reserve: ReserveCampingRequest) {
-    this.parcelsFacade.reserveParcel({
-      ...reserve,
-      ...this.dates,
-      ...this.people,
+  reserve(parcel: Parcel) {
+    this.parcelsFacade.setParcelForReservation({
+      ...parcel,
+      date_from: this.datepicker.search.value.start.toISOString(),
+      date_to: this.datepicker.search.value.end.toISOString(),
+      number_of_adults: this.peoplePicker.adultNumber.getValue(),
+      number_of_children: this.peoplePicker.childNumber.getValue(),
     });
+    this.router.navigate([`/reservation-create`]);
   }
 
   search() {
-    this.parcelsFacade.refreshParameters();
+    this.parcelsFacade.setParcelFilters({
+      date_from: this.datepicker.search.value.start.toISOString().slice(0, 10),
+      date_to: this.datepicker.search.value.end.toISOString().slice(0, 10),
+      number_of_adults: this.peoplePicker.adultNumber.getValue(),
+      number_of_children: this.peoplePicker.childNumber.getValue(),
+    });
   }
 
   ngOnInit() {

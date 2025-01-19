@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  ParcelListItem,
-  ReserveCampingRequest,
-} from '../../models/parcels.interface';
+import { Parcel, ParcelListItem } from '../../models/parcels.interface';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import {
   MatPaginator,
@@ -27,7 +24,7 @@ export class ParcelSearchListComponent {
     this.paginationData = pagination;
   }
   @Output() paginationChanged = new EventEmitter<PageEvent>();
-  @Output() reserveFired = new EventEmitter<ReserveCampingRequest>();
+  @Output() reserveFired = new EventEmitter<Parcel>();
 
   paginationData: LibPaginationMetadata;
 
@@ -35,7 +32,7 @@ export class ParcelSearchListComponent {
     this.paginationChanged.emit(e);
   }
 
-  reserveClicked(sectionName: string, position: string) {
-    this.reserveFired.emit({ sectionName, position });
+  reserveClicked(parcel: Parcel) {
+    this.reserveFired.emit(parcel);
   }
 }

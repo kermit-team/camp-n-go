@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   LibListItem,
   LibListRequestParams,
 } from '../../shared/models/list.interface';
 import {
-  Parcel,
+  CreateReservationRequest,
+  CreateReservationResponse,
   ParcelListItem,
-  ReserveParcel,
 } from '../models/parcels.interface';
 
 @Injectable({
@@ -27,30 +27,6 @@ export class ParcelsApi {
     );
   }
 
-  getParcelDetail(data: ReserveParcel): Observable<Parcel> {
-    return of({
-      camping_section: {
-        name: 'A',
-        base_price: '400.00',
-        price_per_adult: '50.00',
-        price_per_child: '25.00',
-      },
-      base_price: '400.00',
-      name: 'A',
-      price_per_adult: '50.00',
-      price_per_child: '25.00',
-      description: 'Parcel premium w sekcji A',
-      electricity_connection: true,
-      grey_water_discharge: true,
-      is_shaded: true,
-      length: '5.00',
-      max_number_of_people: 10,
-      position: '1',
-      water_connection: true,
-      width: '10.00',
-    });
-  }
-
   convertObjectToHttpParams(obj: LibListRequestParams): HttpParams {
     let params = new HttpParams();
 
@@ -64,5 +40,12 @@ export class ParcelsApi {
     }
 
     return params;
+  }
+
+  createReservation(reservation: CreateReservationRequest) {
+    return this.httpClient.post<CreateReservationResponse>(
+      `http://localhost:8000/api/camping/reservations/create/`,
+      { ...reservation },
+    );
   }
 }

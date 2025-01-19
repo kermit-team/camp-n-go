@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthUser } from '../../auth/models/auth.interface';
 import { NgClass } from '@angular/common';
 import { AuthFacade } from '../../auth/services/auth.facade';

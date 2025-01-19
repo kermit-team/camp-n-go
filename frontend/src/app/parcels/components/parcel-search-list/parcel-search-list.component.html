@@ -64,12 +64,8 @@
       </div>
       <hr />
       <div class="parcel-search-item-summary">
-        1999zł
-        <!--todo-->
-        <lib-button
-          (click)="reserveClicked(item.camping_section.name, item.position)"
-          >Rezerwuj</lib-button
-        >
+        {{ item.metadata.overall_price }} zł
+        <lib-button (click)="reserveClicked(item)">Rezerwuj</lib-button>
       </div>
     </div>
   }

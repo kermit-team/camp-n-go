@@ -1,0 +1,10 @@
+<div class="payment">
+  @if (isPaymentSuccessful === "success") {
+    <h1 class="payment-title">Płatność zakończyła się pomyślnie</h1>
+  } @else {
+    <h1 class="payment-title">Płatność zakończyła się niepowodzeniem</h1>
+  }
+  <lib-button [routerLink]="['/reservations']"
+    >Przejdż do swoich rezerwacji</lib-button
+  >
+</div>

@@ -10,12 +10,6 @@ from server.apps.account.views import (
     AccountPasswordResetView,
     AccountRegisterView,
 )
-from server.apps.account.views.admin import (
-    AdminAccountCreateView,
-    AdminAccountListView,
-    AdminAccountModifyView,
-    AdminGroupListView,
-)
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='account_token_obtain_pair'),
@@ -50,27 +44,5 @@ urlpatterns = [
         '<str:identifier>/modify/',
         AccountModifyView.as_view(),
         name='account_modify',
-    ),
-
-    # Administration views
-    path(
-        'admin/',
-        AdminAccountListView.as_view(),
-        name='admin_account_list',
-    ),
-    path(
-        'admin/create/',
-        AdminAccountCreateView.as_view(),
-        name='admin_account_create',
-    ),
-    path(
-        'admin/<str:identifier>/modify/',
-        AdminAccountModifyView.as_view(),
-        name='admin_account_modify',
-    ),
-    path(
-        'admin/groups/',
-        AdminGroupListView.as_view(),
-        name='admin_group_list',
     ),
 ]

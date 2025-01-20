@@ -36,7 +36,9 @@ class ReservationCreateMailTestCase(TestCase):
 
         ctx = {
             'name': self.account.profile.short_name,
-            'reservation': self.reservation,
+            'camping_plot': str(self.reservation.camping_plot),
+            'date_from': self.reservation.date_from,
+            'date_to': self.reservation.date_to,
             'expiration_time': get_time_str_from_seconds(value=settings.CHECKOUT_EXPIRATION),
             'checkout_url': stripe_mock.checkout.Session.retrieve.return_value.url,
         }

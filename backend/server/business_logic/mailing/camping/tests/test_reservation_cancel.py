@@ -32,7 +32,9 @@ class ReservationCancelMailTestCase(TestCase):
 
         ctx = {
             'name': self.account.profile.short_name,
-            'reservation': self.reservation,
+            'camping_plot': str(self.reservation.camping_plot),
+            'date_from': self.reservation.date_from,
+            'date_to': self.reservation.date_to,
             'max_refund_time_in_days': settings.MAX_REFUND_TIME,
         }
         message = render_to_string(ReservationCancelMail._message_template, ctx)

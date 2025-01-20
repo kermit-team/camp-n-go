@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { NgClass } from '@angular/common';
-import { errorMessages } from '../../models/error-message.interface';
 
 @Component({
   selector: 'lib-input',

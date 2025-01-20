@@ -2,22 +2,23 @@ import uuid
 from unittest import mock
 
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from model_bakery import baker
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 from server.apps.account.models import Account, AccountProfile
-from server.apps.account.views import AccountModifyView
+from server.apps.account.views.admin import AdminAccountModifyView
 from server.datastore.commands.account import AccountCommand
 from server.utils.tests.baker_generators import generate_password
 
 
-class AccountModifyViewTestCase(APITestCase):
+class AdminAccountModifyViewTestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
-        cls.view = AccountModifyView
+        cls.view = AdminAccountModifyView
 
     def setUp(self):
         self.password = generate_password()
@@ -28,13 +29,14 @@ class AccountModifyViewTestCase(APITestCase):
             _fill_optional=True,
         )
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
+        self.groups = baker.make(_model=Group, _quantity=2)
         self.new_profile_data = baker.prepare(_model=AccountProfile, _fill_optional=True)
 
     @mock.patch.object(AccountCommand, 'modify')
     def test_request_put(self, modify_account_mock):
         request_data = {
-            'old_password': self.password,
-            'new_password': generate_password(),
+            'groups': [group.id for group in self.groups],
+            'is_active': False,
             'profile': {
                 'first_name': self.new_profile_data.first_name,
                 'last_name': self.new_profile_data.last_name,
@@ -43,7 +45,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('account_modify', kwargs=parameters)
+        url = reverse('admin_account_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -56,7 +58,8 @@ class AccountModifyViewTestCase(APITestCase):
 
         modify_account_mock.assert_called_once_with(
             account=self.account,
-            password=request_data['new_password'],
+            groups=self.groups,
+            is_active=request_data['is_active'],
             first_name=request_data['profile']['first_name'],
             last_name=request_data['profile']['last_name'],
         )
@@ -66,8 +69,8 @@ class AccountModifyViewTestCase(APITestCase):
     @mock.patch.object(AccountCommand, 'modify')
     def test_request_put_without_existing_account(self, modify_account_mock):
         request_data = {
-            'old_password': self.password,
-            'new_password': generate_password(),
+            'groups': [group.id for group in self.groups],
+            'is_active': False,
             'profile': {
                 'first_name': self.new_profile_data.first_name,
                 'last_name': self.new_profile_data.last_name,
@@ -76,7 +79,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('account_modify', kwargs=parameters)
+        url = reverse('admin_account_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -99,7 +102,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('account_modify', kwargs=parameters)
+        url = reverse('admin_account_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -112,7 +115,6 @@ class AccountModifyViewTestCase(APITestCase):
 
         modify_account_mock.assert_called_once_with(
             account=self.account,
-            password=None,
             first_name=request_data['profile']['first_name'],
             last_name=request_data['profile']['last_name'],
         )
@@ -130,7 +132,7 @@ class AccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('account_modify', kwargs=parameters)
+        url = reverse('admin_account_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)

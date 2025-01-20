@@ -7,7 +7,7 @@ from rest_framework import serializers
 
 from server.apps.account.errors.account import AccountErrorMessagesEnum
 from server.apps.account.models import Account
-from server.apps.account.serializers.profile import AccountProfileSerializer
+from server.apps.account.serializers.account_profile import AccountProfileSerializer
 from server.datastore.commands.account import AccountCommand
 
 

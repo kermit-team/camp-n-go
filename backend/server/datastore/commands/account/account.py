@@ -1,9 +1,6 @@
-from django.contrib.auth.models import Group
 from django.db import transaction
 
-from server.apps.account.exceptions.group import GroupNotExistsError
 from server.apps.account.models import Account
-from server.datastore.queries.account import GroupQuery
 
 
 class AccountCommand:
@@ -18,7 +15,7 @@ class AccountCommand:
         last_name: str,
         **kwargs,
     ) -> Account:
-        group_names = kwargs.pop('group_names', [])
+        groups = kwargs.pop('groups', [])
 
         account = Account.objects.create_account(
             email=email,
@@ -28,8 +25,8 @@ class AccountCommand:
             **kwargs,
         )
 
-        if group_names:
-            cls._add_groups_to_account(account=account, names=group_names)
+        if groups:
+            account.groups.set(groups, clear=True)
 
         return account
 
@@ -59,6 +56,10 @@ class AccountCommand:
         if password := kwargs.pop('password', None):
             cls.change_password(account=account, password=password)
 
+        groups = kwargs.pop('groups', None)
+        if groups is not None:
+            account.groups.set(groups, clear=True)
+
         account_profile = account.profile
         for field_name, value in kwargs.items():
             setattr(account_profile, field_name, value)
@@ -75,15 +76,3 @@ class AccountCommand:
     def change_password(cls, account: Account, password: str) -> None:
         account.set_password(raw_password=password)
         account.save()
-
-    @classmethod
-    def _add_groups_to_account(cls, account: Account, names: list[str]) -> None:
-        groups = []
-        for name in names:
-            try:
-                group = GroupQuery.get_by_name(name=name)
-            except Group.DoesNotExist:
-                raise GroupNotExistsError(name=name)
-            else:
-                groups.append(group)
-        account.groups.set(groups, clear=True)

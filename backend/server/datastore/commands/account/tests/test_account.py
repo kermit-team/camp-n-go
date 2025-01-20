@@ -5,10 +5,8 @@ from django.contrib.auth.models import Group
 from django.test import TestCase
 from model_bakery import baker
 
-from server.apps.account.exceptions.group import GroupNotExistsError
 from server.apps.account.models import Account, AccountProfile
 from server.datastore.commands.account import AccountCommand
-from server.datastore.queries.account import GroupQuery
 from server.utils.tests.baker_generators import generate_password
 
 
@@ -30,9 +28,8 @@ class AccountCommandTestCase(TestCase):
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
         self.group = baker.make(_model=Group)
 
-    @mock.patch.object(GroupQuery, 'get_by_name')
     @mock.patch(mock_create_account_path)
-    def test_create_account(self, create_account_mock, get_group_by_name_mock):
+    def test_create_account(self, create_account_mock):
         new_group = baker.make(_model=Group)
         groups = [
             self.group,
@@ -40,9 +37,6 @@ class AccountCommandTestCase(TestCase):
         ]
 
         create_account_mock.return_value = self.account
-        get_group_by_name_mock.side_effect = groups
-
-        group_names = ['group1', 'group2']
 
         account = AccountCommand.create(
             email=self.account.email,
@@ -54,7 +48,7 @@ class AccountCommandTestCase(TestCase):
             phone_number=self.account_profile.phone_number,
             avatar=self.account_profile.avatar,
             id_card=self.account_profile.id_card,
-            group_names=group_names,
+            groups=groups,
         )
 
         create_account_mock.assert_called_once_with(
@@ -70,51 +64,10 @@ class AccountCommandTestCase(TestCase):
         )
 
         assert account is not None
-        assert get_group_by_name_mock.call_args_list == [
-            mock.call(name=group_name)
-            for group_name in group_names
-        ]
         assert list(account.groups.all()) == groups
 
-    @mock.patch.object(GroupQuery, 'get_by_name')
     @mock.patch(mock_create_account_path)
-    def test_create_account_with_not_existing_groups(self, create_account_mock, get_group_by_name_mock):
-        create_account_mock.return_value = self.account
-        get_group_by_name_mock.side_effect = Group.DoesNotExist()
-
-        group_names = ['not_existing_group']
-
-        with self.assertRaises(GroupNotExistsError):
-            AccountCommand.create(
-                email=self.account.email,
-                password=self.password,
-                first_name=self.account_profile.first_name,
-                last_name=self.account_profile.last_name,
-                is_superuser=self.account.is_superuser,
-                is_active=self.account.is_active,
-                phone_number=self.account_profile.phone_number,
-                avatar=self.account_profile.avatar,
-                id_card=self.account_profile.id_card,
-                group_names=group_names,
-            )
-
-        create_account_mock.assert_called_once_with(
-            email=self.account.email,
-            password=self.password,
-            first_name=self.account_profile.first_name,
-            last_name=self.account_profile.last_name,
-            is_superuser=self.account.is_superuser,
-            is_active=self.account.is_active,
-            phone_number=self.account_profile.phone_number,
-            avatar=self.account_profile.avatar,
-            id_card=self.account_profile.id_card,
-        )
-
-        get_group_by_name_mock.assert_called_once_with(name=group_names[0])
-
-    @mock.patch.object(GroupQuery, 'get_by_name')
-    @mock.patch(mock_create_account_path)
-    def test_create_account_without_optional_fields(self, create_account_mock, get_group_by_name_mock):
+    def test_create_account_without_optional_fields(self, create_account_mock):
         create_account_mock.return_value = self.account
 
         account = AccountCommand.create(
@@ -132,7 +85,6 @@ class AccountCommandTestCase(TestCase):
         )
 
         assert account is not None
-        get_group_by_name_mock.assert_not_called()
         assert not account.groups.exists()
 
     @mock.patch(mock_create_superuser_account_path)
@@ -187,6 +139,7 @@ class AccountCommandTestCase(TestCase):
     def test_modify_account(self, change_password_mock):
         new_password = generate_password()
         new_profile_data = baker.prepare(_model=AccountProfile, _fill_optional=True)
+        groups = [self.group]
 
         account = AccountCommand.modify(
             account=self.account,
@@ -196,6 +149,7 @@ class AccountCommandTestCase(TestCase):
             phone_number=new_profile_data.phone_number,
             avatar=new_profile_data.avatar,
             id_card=new_profile_data.id_card,
+            groups=groups,
         )
 
         change_password_mock.assert_called_once_with(account=self.account, password=new_password)
@@ -204,6 +158,7 @@ class AccountCommandTestCase(TestCase):
         assert account.profile.phone_number == new_profile_data.phone_number
         assert account.profile.avatar == new_profile_data.avatar
         assert account.profile.id_card == new_profile_data.id_card
+        assert list(account.groups.all()) == groups
 
     @mock.patch.object(AccountCommand, 'change_password')
     def test_modify_account_without_optional_fields(self, change_password_mock):

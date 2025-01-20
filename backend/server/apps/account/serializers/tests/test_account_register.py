@@ -5,7 +5,7 @@ from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.serializers import AccountRegisterSerializer
-from server.business_logic.account import AccountRegisterBL
+from server.business_logic.account import AccountCreateBL
 from server.utils.tests.baker_generators import generate_password
 
 
@@ -15,8 +15,8 @@ class AccountRegisterSerializerTestCase(TestCase):
         self.account = baker.prepare(_model=Account, password=generate_password(), _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
-    @mock.patch.object(AccountRegisterBL, 'process')
-    def test_create(self, register_account_mock):
+    @mock.patch.object(AccountCreateBL, 'process')
+    def test_create(self, create_account_mock):
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
@@ -33,7 +33,7 @@ class AccountRegisterSerializerTestCase(TestCase):
         assert serializer.is_valid()
         serializer.save()
 
-        register_account_mock.assert_called_once_with(
+        create_account_mock.assert_called_once_with(
             email=self.account.email,
             password=self.account.password,
             first_name=self.account_profile.first_name,
@@ -43,8 +43,8 @@ class AccountRegisterSerializerTestCase(TestCase):
             id_card=self.account_profile.id_card,
         )
 
-    @mock.patch.object(AccountRegisterBL, 'process')
-    def test_create_without_optional_fields(self, register_account_mock):
+    @mock.patch.object(AccountCreateBL, 'process')
+    def test_create_without_optional_fields(self, create_account_mock):
         serializer = AccountRegisterSerializer(
             data={
                 'email': self.account.email,
@@ -59,7 +59,7 @@ class AccountRegisterSerializerTestCase(TestCase):
         assert serializer.is_valid()
         serializer.save()
 
-        register_account_mock.assert_called_once_with(
+        create_account_mock.assert_called_once_with(
             email=self.account.email,
             password=self.account.password,
             first_name=self.account_profile.first_name,

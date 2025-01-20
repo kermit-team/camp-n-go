@@ -231,3 +231,13 @@ class ReservationQueryTestCase(TestCase):
 
         is_car_modifiable = ReservationQuery.is_car_modifiable(reservation=reservation)
         assert is_car_modifiable is False
+
+    def test_get_queryset_for_account(self):
+        user_reservation = baker.make(_model=Reservation, user=self.account, _fill_optional=True)
+        another_reservation = baker.make(_model=Reservation, _fill_optional=True)
+
+        queryset = ReservationQuery.get_queryset_for_account(account=self.account)
+
+        assert queryset.count() == 1
+        assert user_reservation in set(queryset)
+        assert another_reservation not in set(queryset)

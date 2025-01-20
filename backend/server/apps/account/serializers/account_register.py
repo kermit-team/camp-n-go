@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from server.apps.account.models import Account
-from server.apps.account.serializers.profile import AccountProfileSerializer
-from server.business_logic.account import AccountRegisterBL
+from server.apps.account.serializers.account_profile import AccountProfileSerializer
+from server.business_logic.account import AccountCreateBL
 
 
 class AccountRegisterSerializer(serializers.ModelSerializer):
@@ -26,7 +26,7 @@ class AccountRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data: Any) -> Account:
         profile_data = validated_data.get('profile', {})
 
-        return AccountRegisterBL.process(
+        return AccountCreateBL.process(
             email=validated_data.get('email'),
             password=validated_data.get('password'),
             first_name=profile_data.get('first_name'),

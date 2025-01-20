@@ -1,6 +1,7 @@
 from datetime import date
 from unittest import mock
 
+from django.conf import settings
 from django.test import TestCase
 from model_bakery import baker
 
@@ -33,10 +34,10 @@ class CampingPlotAvailabilityMetadataSerializerTestCase(TestCase):
         context = {
             'request': mock.MagicMock(
                 query_params={
-                    'date_from': self.date_from,
-                    'date_to': self.date_to,
-                    'number_of_adults': self.number_of_adults,
-                    'number_of_children': self.number_of_children,
+                    'date_from': self.date_from.strftime(settings.DATE_INPUT_FORMATS[0]),
+                    'date_to': self.date_to.strftime(settings.DATE_INPUT_FORMATS[0]),
+                    'number_of_adults': str(self.number_of_adults),
+                    'number_of_children': str(self.number_of_children),
                 },
             ),
         }

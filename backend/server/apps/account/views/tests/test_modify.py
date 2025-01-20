@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 from server.apps.account.models import Account, AccountProfile
-from server.apps.account.views.modify import AccountModifyView
+from server.apps.account.views import AccountModifyView
 from server.datastore.commands.account import AccountCommand
 from server.utils.tests.baker_generators import generate_password
 

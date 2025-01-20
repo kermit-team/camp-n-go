@@ -24,7 +24,9 @@ class ReservationCreateMail(AbstractMailBL):
         subject = str(cls._subject_template)
         ctx = {
             'name': reservation.user.profile.short_name,
-            'reservation': reservation,
+            'camping_plot': str(reservation.camping_plot),
+            'date_from': reservation.date_from,
+            'date_to': reservation.date_to,
             'expiration_time': get_time_str_from_seconds(value=settings.CHECKOUT_EXPIRATION),
             'checkout_url': checkout_session.url,
         }

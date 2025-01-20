@@ -32,7 +32,9 @@ class PaymentSuccessMailTestCase(TestCase):
 
         ctx = {
             'name': self.account.profile.short_name,
-            'reservation': self.reservation,
+            'camping_plot': str(self.reservation.camping_plot),
+            'date_from': self.reservation.date_from,
+            'date_to': self.reservation.date_to,
             'cancellation_time_in_days': settings.RESERVATION_CANCELLATION_PERIOD,
         }
         message = render_to_string(PaymentSuccessMail._message_template, ctx)

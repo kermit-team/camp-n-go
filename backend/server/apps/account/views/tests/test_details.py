@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 from server.apps.account.models import Account, AccountProfile
-from server.apps.account.views.details import AccountDetailsView
+from server.apps.account.views.account_details import AccountDetailsView
 from server.apps.car.models import Car
 
 

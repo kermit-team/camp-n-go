@@ -20,7 +20,7 @@ POSTGRES_PORT=5432
 
 EMAIL_BACKEND=SMTP
 EMAIL_HOST_USER=admin@example.com
-EMAIL_HOST=smtp_server
+EMAIL_HOST=smtp-server
 EMAIL_PORT=1025
 
 FRONTEND_DOMAIN=http://localhost:4200

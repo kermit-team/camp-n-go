@@ -13,7 +13,7 @@ class CampingPlotAvailabilityMetadataSerializer(serializers.Serializer):
     children_price = serializers.SerializerMethodField()
 
     def get_overall_price(self, obj: CampingPlot) -> Decimal:
-        date_from =  parse_date(self.context['request'].query_params['date_from'])
+        date_from = parse_date(self.context['request'].query_params['date_from'])
         date_to = parse_date(self.context['request'].query_params['date_to'])
         number_of_adults = int(self.context['request'].query_params['number_of_adults'])
         number_of_children = int(self.context['request'].query_params['number_of_children'])

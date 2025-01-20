@@ -5,11 +5,11 @@ from server.apps.account.views import (
     AccountDetailsView,
     AccountEmailVerificationResendView,
     AccountEmailVerificationView,
+    AccountModifyView,
     AccountPasswordResetConfirmView,
     AccountPasswordResetView,
     AccountRegisterView,
 )
-from server.apps.account.views.modify import AccountModifyView
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='account_token_obtain_pair'),

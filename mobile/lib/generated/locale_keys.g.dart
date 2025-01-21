@@ -128,5 +128,13 @@ abstract class  LocaleKeys {
   static const invalidDateRange = 'invalidDateRange';
   static const carEdited = 'carEdited';
   static const carNotEdited = 'carNotEdited';
+  static const reservationPreview = 'reservationPreview';
+  static const reservationStatus = 'reservationStatus';
+  static const unknown = 'unknown';
+  static const pending = 'pending';
+  static const cancelled = 'cancelled';
+  static const unpaid = 'unpaid';
+  static const paid = 'paid';
+  static const refunded = 'refunded';
 
 }

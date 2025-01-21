@@ -83,7 +83,7 @@ class ReservationListTile extends StatelessWidget {
                       children: [
                         KeyValueText(
                           keyText: LocaleKeys.status.tr(),
-                          valueText: reservation.payment.status.name,
+                          valueText: reservation.payment.status.name.tr(),
                         ),
                         if (reservation.canCancel)
                           HyperlinkText(

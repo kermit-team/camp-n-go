@@ -226,13 +226,13 @@ class _ReservationApiService implements ReservationApiService {
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<HttpResponse<void>>(Options(
-      method: 'DELETE',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/camping/reservations/{id}/cancel/',
+          '/camping/reservations/${reservationId}/cancel/',
           queryParameters: queryParameters,
           data: _data,
         )

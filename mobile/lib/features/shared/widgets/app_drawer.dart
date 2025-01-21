@@ -98,18 +98,6 @@ class AppDrawer extends StatelessWidget {
                   );
                 },
               ),
-              _DrawerListTile(
-                icon: Icons.info_outline,
-                title: 'Test',
-                onTap: () {
-                  _navigateToRoute(
-                    context,
-                    AppRoutes.testWebView.route,
-                    extraString: "https://www.google.com",
-                    isPush: true,
-                  );
-                },
-              ),
               const Spacer(),
               _DrawerListTile(
                 icon: Icons.settings,

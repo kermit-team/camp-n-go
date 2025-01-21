@@ -126,5 +126,13 @@
   "idCardCanNotBeEmpty": "Dowód osobisty nie może być pusty, edytuj konto, aby ustawić nowy.",
   "invalidDateRange": "Nieprawidłowy zakres dat, data końca musi być późniejsza od daty początku",
   "carEdited": "Samochód został zmieniony",
-  "carNotEdited": "Samochód nie został zmieniony"
+  "carNotEdited": "Samochód nie został zmieniony",
+  "reservationPreview": "Podgląd rezerwacji",
+  "reservationStatus": "Status rezerwacji",
+  "unknown": "Nieznany",
+  "pending": "Oczekujące",
+  "cancelled": "Anulowane",
+  "unpaid": "Niezapłacone",
+  "paid": "Zapłacone",
+  "refunded": "Zwrócone"
 }

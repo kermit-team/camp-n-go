@@ -125,5 +125,13 @@
   "idCardCanNotBeEmpty": "Id card can't be empty, please add it in account settings",
   "invalidDateRange": "Invalid date range, start date must be before end date",
   "carEdited": "Car has been edited",
-  "carNotEdited": "Car has not been edited"
+  "carNotEdited": "Car has not been edited",
+  "reservationPreview": "Reservation preview",
+  "reservationStatus": "Reservation status",
+  "unknown": "Unknown",
+  "pending": "Pending",
+  "cancelled": "Cancelled",
+  "unpaid": "Unpaid",
+  "paid": "Paid",
+  "refunded": "Refunded"
 }

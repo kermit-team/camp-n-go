@@ -1,5 +1,4 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
@@ -11,7 +10,6 @@ import 'package:campngo/features/reservations/presentation/widgets/golden_car_dr
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/lines.dart';
-import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
@@ -19,7 +17,6 @@ import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class ReservationPreviewPage extends StatefulWidget {
   final int reservationId;
@@ -76,7 +73,7 @@ class _ReservationPreviewPageState extends State<ReservationPreviewPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(LocaleKeys.reservationSummary.tr()),
+                  TitleText(LocaleKeys.reservationPreview.tr()),
                   SizedBox(height: Constants.spaceL),
                   _ReservationData(
                     params: GetParcelListParams(
@@ -150,35 +147,9 @@ class _UserData extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                StandardText(
-                  LocaleKeys.userData.tr(),
-                  isBold: true,
-                ),
-                const Spacer(),
-                HyperlinkText(
-                  text: LocaleKeys.edit.tr(),
-                  onTap: () async {
-                    await context.push(AppRoutes.accountSettings.route).then(
-                      (value) {
-                        if (context.mounted) {
-                          context
-                              .read<ReservationPreviewCubit>()
-                              .getReservationData(
-                                reservationId: reservationId,
-                              );
-                        }
-                      },
-                    );
-                    // if (context.mounted) {
-                    //   context.read<ReservationPreviewCubit>().getAccountData();
-                    // }
-                    // );
-                  },
-                ),
-                // SizedBox(width: Constants.spaceXS),
-              ],
+            StandardText(
+              LocaleKeys.userData.tr(),
+              isBold: true,
             ),
             Lines.goldenDivider,
             KeyValueText(
@@ -247,46 +218,56 @@ class _ReservationData extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        StandardText(
-          LocaleKeys.reservationData.tr(),
-          isBold: true,
-        ),
-        Lines.goldenDivider,
-        KeyValueText(
-          keyText: LocaleKeys.parcelNumber.tr(),
-          valueText: parcel.position,
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.description.tr(),
-          valueText: parcel.description,
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.stayingPeriod.tr(),
-          valueText:
-              '${params.startDate.toDateString()} - ${params.endDate.toDateString()}',
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.numberOfNights.tr(),
-          valueText:
-              params.startDate.difference(params.endDate).inDays.toString(),
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.numberOfAdults.tr(),
-          valueText: params.adults.toString(),
-        ),
-        SizedBox(height: Constants.spaceXS),
-        KeyValueText(
-          keyText: LocaleKeys.numberOfChildren.tr(),
-          valueText: params.children.toString(),
-        ),
-      ],
+    return BlocBuilder<ReservationPreviewCubit, ReservationPreviewState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            StandardText(
+              LocaleKeys.reservationData.tr(),
+              isBold: true,
+            ),
+            Lines.goldenDivider,
+            KeyValueText(
+              keyText: LocaleKeys.parcelNumber.tr(),
+              valueText: parcel.position,
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.description.tr(),
+              valueText: parcel.description,
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.stayingPeriod.tr(),
+              valueText:
+                  '${params.startDate.toDateString()} - ${params.endDate.toDateString()}',
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.numberOfNights.tr(),
+              valueText:
+                  params.endDate.difference(params.startDate).inDays.toString(),
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.numberOfAdults.tr(),
+              valueText: params.adults.toString(),
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.numberOfChildren.tr(),
+              valueText: params.children.toString(),
+            ),
+            SizedBox(height: Constants.spaceXS),
+            KeyValueText(
+              keyText: LocaleKeys.reservationStatus.tr(),
+              valueText: state.reservation?.payment.status.name.tr() ??
+                  LocaleKeys.unknown.tr(),
+            ),
+          ],
+        );
+      },
     );
   }
 }

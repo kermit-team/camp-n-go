@@ -55,9 +55,9 @@ abstract class ReservationApiService {
   });
 
   //to test
-  @DELETE("/camping/reservations/{id}/cancel/")
+  @PATCH("/camping/reservations/{id}/cancel/")
   Future<HttpResponse<void>> cancelReservation({
-    @Path('reservationId') required int reservationId,
+    @Path('id') required int reservationId,
   });
 
   @POST('/camping/reservations/create/')

@@ -4,7 +4,9 @@
       <h1 class="header">Pola Camperowe</h1>
       <h2 class="header2">DLA NAJBARDZIEJ WYMAGAJĄCYCH</h2>
     </div>
-    <app-landing-page-form></app-landing-page-form>
+    <app-landing-page-form
+      (searchFired)="search($event)"
+    ></app-landing-page-form>
   </div>
   <p class="title">Rodzinny wypoczynek w campingu lub namiocie na Śląsku</p>
   <img

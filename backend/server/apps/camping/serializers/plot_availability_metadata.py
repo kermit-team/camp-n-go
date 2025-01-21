@@ -2,7 +2,6 @@ from decimal import Decimal
 
 from django.utils.dateparse import parse_date
 from rest_framework import serializers
-
 from server.apps.camping.models import CampingPlot
 from server.datastore.queries.camping import ReservationQuery
 

@@ -1,0 +1,61 @@
+.parcel-search-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .parcel-search-item-wrapper {
+    border: 1px solid var(--primary-color);
+
+    .parcel-search-item-container {
+      display: flex;
+
+      .parcel-search-item-photo {
+        height: 100%;
+        width: 158px;
+      }
+
+      .parcel-search-item-content-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+
+        .parcel-search-item-content-info-main {
+          display: flex;
+          justify-content: space-between;
+
+          .parcel-search-item-content-info-title {
+            font-size: 22px;
+          }
+        }
+
+        .parcel-search-item-content-info-subinfo-bold {
+          font-weight: 600;
+        }
+
+        .parcel-search-item-content-info-more {
+          color: var(--primary-color);
+          cursor: pointer;
+        }
+      }
+    }
+
+    hr {
+      display: block;
+      height: 1px;
+      border: 0;
+      border-top: 1px solid var(--primary-color);
+      padding: 0;
+    }
+
+    .parcel-search-item-summary {
+      padding: 12px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      font-size: 20px;
+    }
+  }
+}

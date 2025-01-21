@@ -6,12 +6,19 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from server.apps.account.filters import AccountListFilter
 from server.apps.account.serializers.admin import AdminAccountListElementSerializer
 from server.datastore.queries.account import AccountQuery
 
 
 @extend_schema(
     parameters=[
+        OpenApiParameter(
+            name='personal_data',
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+            required=False,
+        ),
         OpenApiParameter(
             name='page_size',
             type=OpenApiTypes.INT,
@@ -33,6 +40,7 @@ from server.datastore.queries.account import AccountQuery
 )
 class AdminAccountListView(GenericAPIView):
     serializer_class = AdminAccountListElementSerializer
+    filterset_class = AccountListFilter
 
     def get_queryset(self) -> QuerySet:
         return AccountQuery.get_queryset_for_account(account=self.request.user)

@@ -34,3 +34,7 @@ class CampingPlotQuery:
         ).exclude(
             id__in=Subquery(unavailable_camping_plot_ids),
         )
+
+    @classmethod
+    def get_queryset(cls) -> QuerySet:
+        return CampingPlot.objects.order_by('camping_section__name', 'position')

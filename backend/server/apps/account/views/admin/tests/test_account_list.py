@@ -20,7 +20,13 @@ class AdminAccountListViewTestCase(APITestCase):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
 
-    def test_request(self):
+    @mock.patch.object(AccountQuery, 'get_with_matching_personal_data')
+    @mock.patch.object(AccountQuery, 'get_queryset_for_account')
+    def test_request(self, get_queryset_for_account_mock, get_with_matching_personal_data_mock):
+        queryset = Account.objects.order_by('id')
+        get_queryset_for_account_mock.return_value = queryset
+        get_with_matching_personal_data_mock.return_value = queryset
+
         url = reverse('admin_account_list')
 
         req = self.factory.get(url)
@@ -28,28 +34,39 @@ class AdminAccountListViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = {
-            'count': 1,
+            'count': get_queryset_for_account_mock.return_value.count(),
             'links': {
                 'next': None,
                 'previous': None,
             },
             'page': 1,
             'results': self.view.serializer_class(
-                AccountQuery.get_queryset_for_account(account=self.account),
+                get_queryset_for_account_mock.return_value,
                 context={'request': req},
                 many=True,
             ).data,
         }
 
+        get_queryset_for_account_mock.assert_called_once_with(account=self.account)
+        get_with_matching_personal_data_mock.assert_not_called()
+
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
 
+    @mock.patch.object(AccountQuery, 'get_with_matching_personal_data')
+    @mock.patch.object(AccountQuery, 'get_queryset_for_account')
     @mock.patch('server.apps.account.views.admin.AdminAccountListView.pagination_class')
     def test_request_with_disabled_pagination(
         self,
-        mock_pagination_class,
+        pagination_class_mock,
+        get_queryset_for_account_mock,
+        get_with_matching_personal_data_mock,
     ):
-        mock_pagination_class.return_value = None
+        queryset = Account.objects.order_by('id')
+        get_queryset_for_account_mock.return_value = queryset
+        get_with_matching_personal_data_mock.return_value = queryset
+        pagination_class_mock.return_value = None
+
         url = reverse('admin_account_list')
 
         req = self.factory.get(url)
@@ -57,10 +74,13 @@ class AdminAccountListViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = self.view.serializer_class(
-            AccountQuery.get_queryset_for_account(account=self.account),
+            get_queryset_for_account_mock.return_value,
             context={'request': req},
             many=True,
         ).data
+
+        get_queryset_for_account_mock.assert_called_once_with(account=self.account)
+        get_with_matching_personal_data_mock.assert_not_called()
 
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data

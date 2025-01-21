@@ -1,5 +1,4 @@
 import django_filters
-from django.core.exceptions import ValidationError
 from django.db.models import QuerySet
 
 from server.datastore.queries.camping import CampingPlotQuery
@@ -12,9 +11,6 @@ class CampingPlotAvailabilityFilter(django_filters.FilterSet):
     date_to = django_filters.DateFilter(required=True)
 
     def filter_queryset(self, queryset: QuerySet) -> QuerySet:
-        if not self.form.is_valid():
-            raise ValidationError(self.form.errors)
-
         number_of_children = self.form.cleaned_data['number_of_children']
         number_of_adults = self.form.cleaned_data['number_of_adults']
         number_of_people = number_of_children + number_of_adults

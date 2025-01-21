@@ -49,9 +49,9 @@ class ReservationListViewTestCase(APITestCase):
     @mock.patch('server.apps.camping.views.ReservationListView.pagination_class')
     def test_request_with_disabled_pagination(
         self,
-        mock_pagination_class,
+        pagination_class_mock,
     ):
-        mock_pagination_class.return_value = None
+        pagination_class_mock.return_value = None
         url = reverse('reservation_list')
 
         req = self.factory.get(url)

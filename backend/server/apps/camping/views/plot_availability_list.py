@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema
 from rest_framework import status
@@ -7,8 +8,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.camping.filters import CampingPlotAvailabilityFilter
-from server.apps.camping.models import CampingPlot
 from server.apps.camping.serializers.plot_availability_list_element import CampingPlotAvailabilityListElementSerializer
+from server.datastore.queries.camping import CampingPlotQuery
 
 
 @extend_schema(
@@ -58,9 +59,11 @@ from server.apps.camping.serializers.plot_availability_list_element import Campi
 )
 class CampingPlotAvailabilityListView(GenericAPIView):
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
-    queryset = CampingPlot.objects.order_by('camping_section__name', 'position')
     serializer_class = CampingPlotAvailabilityListElementSerializer
     filterset_class = CampingPlotAvailabilityFilter
+
+    def get_queryset(self) -> QuerySet:
+        return CampingPlotQuery.get_queryset()
 
     def get(self, request: Request) -> Response:
         queryset = self.filter_queryset(self.get_queryset())

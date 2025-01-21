@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 from server.apps.account.models import Account, AccountProfile
+from server.apps.camping.models import CampingPlot
 from server.apps.camping.views import CampingPlotAvailabilityListView
 from server.datastore.queries.camping import CampingPlotQuery
 
@@ -23,13 +24,15 @@ class CampingPlotAvailabilityListViewTestCase(APITestCase):
         self.account_profile = baker.make(_model=AccountProfile, account=self.account, _fill_optional=True)
 
     @mock.patch.object(CampingPlotQuery, 'get_available')
-    @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.get_queryset')
-    def test_request(self, mock_get_camping_plot_availability_list_queryset, mock_get_available_camping_plots):
+    @mock.patch.object(CampingPlotQuery, 'get_queryset')
+    def test_request(self, mock_get_camping_plot_availability_list_queryset, get_available_camping_plots_mock):
         number_of_adults = 2
         number_of_children = 2
         date_from = date(2020, 1, 1)
         date_to = date(2020, 1, 8)
-        queryset = self.view.queryset.all()
+        queryset = CampingPlot.objects.order_by('id')
+        mock_get_camping_plot_availability_list_queryset.return_value = queryset
+        get_available_camping_plots_mock.return_value = queryset
 
         request_data = {
             'date_from': date_from,
@@ -37,8 +40,6 @@ class CampingPlotAvailabilityListViewTestCase(APITestCase):
             'number_of_adults': number_of_adults,
             'number_of_children': number_of_children,
         }
-        mock_get_camping_plot_availability_list_queryset.return_value = queryset
-        mock_get_available_camping_plots.return_value = queryset
         url = reverse('camping_plot_availability_list')
 
         req = self.factory.get(url, data=request_data)
@@ -46,69 +47,73 @@ class CampingPlotAvailabilityListViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = {
-            'count': mock_get_available_camping_plots.return_value.count(),
+            'count': get_available_camping_plots_mock.return_value.count(),
             'links': {
                 'next': None,
                 'previous': None,
             },
             'page': 1,
             'results': self.view.serializer_class(
-                queryset,
+                get_available_camping_plots_mock.return_value,
                 context={'request': req},
                 many=True,
             ).data,
         }
 
-        mock_get_available_camping_plots.assert_called_once()
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['number_of_people'] == Decimal(
+        mock_get_camping_plot_availability_list_queryset.assert_called()
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['number_of_people'] == Decimal(
             number_of_adults + number_of_children,
         )
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['date_from'] == date_from
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['date_to'] == date_to
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['date_from'] == date_from
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['date_to'] == date_to
         self.assertCountEqual(
-            mock_get_available_camping_plots.call_args_list[0].kwargs['queryset'],
-            queryset,
+            get_available_camping_plots_mock.call_args_list[0].kwargs['queryset'],
+            mock_get_camping_plot_availability_list_queryset.return_value,
         )
 
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
 
     @mock.patch.object(CampingPlotQuery, 'get_available')
-    @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.get_queryset')
+    @mock.patch.object(CampingPlotQuery, 'get_queryset')
     def test_request_without_required_filters(
         self,
         mock_get_camping_plot_availability_list_queryset,
-        mock_get_available_camping_plots,
+        get_available_camping_plots_mock,
     ):
-        queryset = self.view.queryset.all()
+        queryset = CampingPlot.objects.order_by('id')
+        mock_get_camping_plot_availability_list_queryset.return_value = queryset
+        get_available_camping_plots_mock.return_value = queryset
         request_data = {}
 
-        mock_get_camping_plot_availability_list_queryset.return_value = queryset
-        mock_get_available_camping_plots.return_value = queryset
         url = reverse('camping_plot_availability_list')
 
         req = self.factory.get(url, data=request_data)
         force_authenticate(req, user=self.account)
         res = self.view.as_view()(req)
 
-        mock_get_available_camping_plots.assert_not_called()
+        mock_get_camping_plot_availability_list_queryset.assert_called()
+        get_available_camping_plots_mock.assert_not_called()
         assert res.status_code == status.HTTP_400_BAD_REQUEST
 
     @mock.patch.object(CampingPlotQuery, 'get_available')
-    @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.get_queryset')
+    @mock.patch.object(CampingPlotQuery, 'get_queryset')
     @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.pagination_class')
     def test_request_with_disabled_pagination(
         self,
-        mock_pagination_class,
+        pagination_class_mock,
         mock_get_camping_plot_availability_list_queryset,
-        mock_get_available_camping_plots,
+        get_available_camping_plots_mock,
     ):
-        mock_pagination_class.return_value = None
+        queryset = CampingPlot.objects.order_by('id')
+        mock_get_camping_plot_availability_list_queryset.return_value = queryset
+        get_available_camping_plots_mock.return_value = queryset
+        pagination_class_mock.return_value = None
+
         number_of_adults = 2
         number_of_children = 2
         date_from = date(2020, 1, 1)
         date_to = date(2020, 1, 8)
-        queryset = self.view.queryset.all()
 
         request_data = {
             'date_from': date_from,
@@ -116,8 +121,6 @@ class CampingPlotAvailabilityListViewTestCase(APITestCase):
             'number_of_adults': number_of_adults,
             'number_of_children': number_of_children,
         }
-        mock_get_camping_plot_availability_list_queryset.return_value = queryset
-        mock_get_available_camping_plots.return_value = queryset
         url = reverse('camping_plot_availability_list')
 
         req = self.factory.get(url, data=request_data)
@@ -125,45 +128,46 @@ class CampingPlotAvailabilityListViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = self.view.serializer_class(
-            queryset,
+            get_available_camping_plots_mock.return_value,
             context={'request': req},
             many=True,
         ).data
 
-        mock_get_available_camping_plots.assert_called_once()
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['number_of_people'] == Decimal(
+        mock_get_camping_plot_availability_list_queryset.assert_called()
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['number_of_people'] == Decimal(
             number_of_adults + number_of_children,
         )
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['date_from'] == date_from
-        assert mock_get_available_camping_plots.call_args_list[0].kwargs['date_to'] == date_to
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['date_from'] == date_from
+        assert get_available_camping_plots_mock.call_args_list[0].kwargs['date_to'] == date_to
         self.assertCountEqual(
-            mock_get_available_camping_plots.call_args_list[0].kwargs['queryset'],
-            queryset,
+            get_available_camping_plots_mock.call_args_list[0].kwargs['queryset'],
+            mock_get_camping_plot_availability_list_queryset.return_value,
         )
 
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
 
     @mock.patch.object(CampingPlotQuery, 'get_available')
-    @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.get_queryset')
+    @mock.patch.object(CampingPlotQuery, 'get_queryset')
     @mock.patch('server.apps.camping.views.CampingPlotAvailabilityListView.pagination_class')
     def test_request_with_disabled_pagination_and_without_required_filters(
         self,
-        mock_pagination_class,
+        pagination_class_mock,
         mock_get_camping_plot_availability_list_queryset,
-        mock_get_available_camping_plots,
+        get_available_camping_plots_mock,
     ):
-        mock_pagination_class.return_value = None
-        queryset = self.view.queryset.all()
+        queryset = CampingPlot.objects.order_by('id')
+        mock_get_camping_plot_availability_list_queryset.return_value = queryset
+        get_available_camping_plots_mock.return_value = queryset
+        pagination_class_mock.return_value = None
         request_data = {}
 
-        mock_get_camping_plot_availability_list_queryset.return_value = queryset
-        mock_get_available_camping_plots.return_value = queryset
         url = reverse('camping_plot_availability_list')
 
         req = self.factory.get(url, data=request_data)
         force_authenticate(req, user=self.account)
         res = self.view.as_view()(req)
 
-        mock_get_available_camping_plots.assert_not_called()
+        mock_get_camping_plot_availability_list_queryset.assert_called()
+        get_available_camping_plots_mock.assert_not_called()
         assert res.status_code == status.HTTP_400_BAD_REQUEST

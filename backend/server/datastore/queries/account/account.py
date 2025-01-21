@@ -1,6 +1,7 @@
 import uuid
+from typing import Optional
 
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 
 from server.apps.account.models import Account
 
@@ -23,3 +24,14 @@ class AccountQuery:
             queryset = queryset.exclude(is_superuser=True)
 
         return queryset
+
+    @classmethod
+    def get_with_matching_personal_data(cls, personal_data: str, queryset: Optional[QuerySet] = None) -> QuerySet:
+        if not queryset:
+            queryset = Account.objects.order_by('-id')
+
+        return queryset.filter(
+            Q(email__icontains=personal_data) |
+            Q(profile__first_name__icontains=personal_data) |
+            Q(profile__last_name__icontains=personal_data),
+        )

@@ -6,17 +6,18 @@ import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
-import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_add_car_dialog.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/display_text_field.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class AccountSettingsPage extends StatefulWidget {
   const AccountSettingsPage({super.key});
@@ -198,14 +199,15 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               text: state.accountEntity?.profile.phoneNumber ??
                                   ' ',
                               validations: const [RequiredValidation()],
-                              onDialogSavePressed: (String newValue) {
+                              onPhoneNumberSavePressed:
+                                  (PhoneNumber phoneNumber) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
                                       property: AccountProperty.phoneNumber,
-                                      newValue: newValue,
+                                      newValue: phoneNumber.completeNumber,
                                     );
-                                log("New value for firstName: $newValue");
+                                log("New value for firstName: ${phoneNumber.completeNumber}");
                               },
                             ),
                             DisplayTextField(

@@ -20,6 +20,12 @@ from server.datastore.queries.account import AccountQuery
             required=False,
         ),
         OpenApiParameter(
+            name='group',
+            type=OpenApiTypes.INT,
+            location=OpenApiParameter.QUERY,
+            required=False,
+        ),
+        OpenApiParameter(
             name='page_size',
             type=OpenApiTypes.INT,
             location=OpenApiParameter.QUERY,

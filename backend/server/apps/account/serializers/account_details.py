@@ -7,9 +7,9 @@ from server.apps.car.serializers import CarDetailsSerializer
 
 
 class AccountDetailsSerializer(serializers.ModelSerializer):
-    profile = AccountProfileSerializer()
-    cars = CarDetailsSerializer(many=True)
-    groups = GroupDetailsSerializer(many=True)
+    profile = AccountProfileSerializer(read_only=True)
+    cars = CarDetailsSerializer(read_only=True, many=True)
+    groups = GroupDetailsSerializer(read_only=True, many=True)
 
     class Meta:
         model = Account

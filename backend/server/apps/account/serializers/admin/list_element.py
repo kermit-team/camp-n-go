@@ -6,8 +6,8 @@ from server.apps.account.serializers.group_details import GroupDetailsSerializer
 
 
 class AdminAccountListElementSerializer(serializers.ModelSerializer):
-    profile = AccountProfileSerializer()
-    groups = GroupDetailsSerializer(many=True)
+    profile = AccountProfileSerializer(read_only=True)
+    groups = GroupDetailsSerializer(read_only=True, many=True)
 
     class Meta:
         model = Account

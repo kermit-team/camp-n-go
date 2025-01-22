@@ -241,3 +241,52 @@ class ReservationQueryTestCase(TestCase):
         assert queryset.count() == 1
         assert user_reservation in set(queryset)
         assert another_reservation not in set(queryset)
+
+    def test_get_queryset(self):
+        user_reservation = baker.make(_model=Reservation, user=self.account, _fill_optional=True)
+        another_reservation = baker.make(_model=Reservation, _fill_optional=True)
+        expected_reservations = [user_reservation, another_reservation]
+
+        queryset = ReservationQuery.get_queryset()
+
+        self.assertCountEqual(queryset, expected_reservations)
+
+    def test_get_with_matching_personal_data(self):
+        reservation_with_email = baker.make(
+            _model=Reservation,
+            user__email='abc123@gmail.com',
+            user__profile__first_name='-',
+            user__profile__last_name='-',
+            car__registration_plate='-',
+        )
+        reservation_with_first_name = baker.make(
+            _model=Reservation,
+            user__email='def123@gmail.com',
+            user__profile__first_name='abc',
+            user__profile__last_name='-',
+            car__registration_plate='--',
+        )
+        reservation_with_last_name = baker.make(
+            _model=Reservation,
+            user__email='ghi123@gmail.com',
+            user__profile__first_name='-',
+            user__profile__last_name='abc',
+            car__registration_plate='---',
+        )
+        reservation_with_registration_plate = baker.make(
+            _model=Reservation,
+            user__email='jkl123@gmail.com',
+            user__profile__first_name='-',
+            user__profile__last_name='-',
+            car__registration_plate='abc',
+        )
+        reservations = [
+            reservation_with_email,
+            reservation_with_first_name,
+            reservation_with_last_name,
+            reservation_with_registration_plate,
+        ]
+
+        queryset = ReservationQuery.get_with_matching_reservation_data(reservation_data='abc')
+
+        self.assertCountEqual(queryset, reservations)

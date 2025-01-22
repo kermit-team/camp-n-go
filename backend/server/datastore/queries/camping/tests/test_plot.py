@@ -186,3 +186,8 @@ class CampingPlotQueryTestCase(TestCase):
         )
 
         self.assertCountEqual(result, queryset)
+
+    def test_get_queryset(self):
+        queryset = CampingPlotQuery.get_queryset()
+
+        self.assertCountEqual(queryset, self.camping_plots)

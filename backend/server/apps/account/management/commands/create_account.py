@@ -1,10 +1,12 @@
 from argparse import BooleanOptionalAction
 
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand, CommandError
 
 from server.apps.account.exceptions.group import GroupNotExistsError
 from server.datastore.commands.account import AccountCommand
+from server.datastore.queries.account import GroupQuery
 
 
 class Command(BaseCommand):
@@ -79,12 +81,32 @@ class Command(BaseCommand):
             if value is not None and arg in self._command_args
         }
 
-        try:
-            account = AccountCommand.create(**command_kwargs)
-        except GroupNotExistsError as exc:
-            raise CommandError(str(exc))
+        self._get_matching_groups(command_kwargs=command_kwargs)
+        account = AccountCommand.create(**command_kwargs)
+
         self.stdout.write(
             'Successfully created account with identifier: {identifier}.'.format(
                 identifier=account.identifier,
             ),
         )
+
+    def _get_matching_groups(self, command_kwargs: dict) -> None:
+        group_names = command_kwargs.pop('group_names', [])
+        try:
+            groups = self._get_groups(group_names=group_names)
+        except GroupNotExistsError as exc:
+            raise CommandError(str(exc))
+        else:
+            command_kwargs['groups'] = groups
+
+    def _get_groups(self, group_names: list[str]) -> list[Group]:
+        groups = []
+        for name in group_names:
+            try:
+                group = GroupQuery.get_by_name(name=name)
+            except Group.DoesNotExist:
+                raise GroupNotExistsError(name=name)  # pragma: no cover
+            else:
+                groups.append(group)
+
+        return groups

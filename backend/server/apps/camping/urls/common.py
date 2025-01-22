@@ -1,0 +1,61 @@
+from django.urls import path
+
+from server.apps.camping.views import (
+    CampingPlotAvailabilityListView,
+    CampingPlotDetailsView,
+    CampingSectionDetailsView,
+    ReservationCancelView,
+    ReservationCreateView,
+    ReservationDetailsView,
+    ReservationListView,
+    ReservationModifyCarView,
+    StripePaymentWebhookView,
+)
+
+urlpatterns = [
+    path(
+        'plots/available/',
+        CampingPlotAvailabilityListView.as_view(),
+        name='camping_plot_availability_list',
+    ),
+    path(
+        'plots/<int:pk>/',
+        CampingPlotDetailsView.as_view(),
+        name='camping_plot_details',
+    ),
+    path(
+        'sections/<int:pk>/',
+        CampingSectionDetailsView.as_view(),
+        name='camping_section_details',
+    ),
+    path(
+        'reservations/',
+        ReservationListView.as_view(),
+        name='reservation_list',
+    ),
+    path(
+        'reservations/create/',
+        ReservationCreateView.as_view(),
+        name='reservation_create',
+    ),
+    path(
+        'reservations/<int:pk>/details/',
+        ReservationDetailsView.as_view(),
+        name='reservation_details',
+    ),
+    path(
+        'reservations/<int:pk>/modify/car/',
+        ReservationModifyCarView.as_view(),
+        name='reservation_modify_car',
+    ),
+    path(
+        'reservations/<int:pk>/cancel/',
+        ReservationCancelView.as_view(),
+        name='reservation_cancel',
+    ),
+    path(
+        'payments/webhook/',
+        StripePaymentWebhookView.as_view(),
+        name='payment_webhook',
+    ),
+]

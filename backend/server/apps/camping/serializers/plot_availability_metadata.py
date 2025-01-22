@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.utils.dateparse import parse_date
 from rest_framework import serializers
 
 from server.apps.camping.models import CampingPlot
@@ -13,10 +14,10 @@ class CampingPlotAvailabilityMetadataSerializer(serializers.Serializer):
     children_price = serializers.SerializerMethodField()
 
     def get_overall_price(self, obj: CampingPlot) -> Decimal:
-        date_from = self.context['request'].query_params['date_from']
-        date_to = self.context['request'].query_params['date_to']
-        number_of_adults = self.context['request'].query_params['number_of_adults']
-        number_of_children = self.context['request'].query_params['number_of_children']
+        date_from = parse_date(self.context['request'].query_params['date_from'])
+        date_to = parse_date(self.context['request'].query_params['date_to'])
+        number_of_adults = int(self.context['request'].query_params['number_of_adults'])
+        number_of_children = int(self.context['request'].query_params['number_of_children'])
 
         return ReservationQuery.calculate_overall_price(
             date_from=date_from,
@@ -27,8 +28,8 @@ class CampingPlotAvailabilityMetadataSerializer(serializers.Serializer):
         )
 
     def get_base_price(self, obj: CampingPlot) -> Decimal:
-        date_from = self.context['request'].query_params['date_from']
-        date_to = self.context['request'].query_params['date_to']
+        date_from = parse_date(self.context['request'].query_params['date_from'])
+        date_to = parse_date(self.context['request'].query_params['date_to'])
 
         return ReservationQuery.calculate_base_price(
             date_from=date_from,
@@ -37,9 +38,9 @@ class CampingPlotAvailabilityMetadataSerializer(serializers.Serializer):
         )
 
     def get_adults_price(self, obj: CampingPlot) -> Decimal:
-        date_from = self.context['request'].query_params['date_from']
-        date_to = self.context['request'].query_params['date_to']
-        number_of_adults = self.context['request'].query_params['number_of_adults']
+        date_from = parse_date(self.context['request'].query_params['date_from'])
+        date_to = parse_date(self.context['request'].query_params['date_to'])
+        number_of_adults = int(self.context['request'].query_params['number_of_adults'])
 
         return ReservationQuery.calculate_adults_price(
             date_from=date_from,
@@ -49,9 +50,9 @@ class CampingPlotAvailabilityMetadataSerializer(serializers.Serializer):
         )
 
     def get_children_price(self, obj: CampingPlot) -> Decimal:
-        date_from = self.context['request'].query_params['date_from']
-        date_to = self.context['request'].query_params['date_to']
-        number_of_children = self.context['request'].query_params['number_of_children']
+        date_from = parse_date(self.context['request'].query_params['date_from'])
+        date_to = parse_date(self.context['request'].query_params['date_to'])
+        number_of_children = int(self.context['request'].query_params['number_of_children'])
 
         return ReservationQuery.calculate_children_price(
             date_from=date_from,

@@ -1,11 +1,27 @@
-<div class="car">
-  <div class="car__delete" (click)="deleteCar()">
-    <img src="assets/8666595_x_icon.svg" class="car-check" alt="X" />
+@if (selectable) {
+  <div
+    (click)="carSelected()"
+    class="car"
+    [ngClass]="{ 'selected-car': selectedCarPlate === car.id }"
+  >
+    <img
+      src="assets/3687823_adventure_automotive_car_transport_transportation_icon.svg"
+      alt="car"
+      class="car-icon"
+    />
+    <div class="car-text">{{ car.registration_plate }}</div>
   </div>
-  <img
-    src="assets/3687823_adventure_automotive_car_transport_transportation_icon.svg"
-    alt="car"
-    class="car-icon"
-  />
-  <div class="car-text">{{ "SK576XX" }}</div>
-</div>
+} @else {
+  <div class="car">
+    <div class="car__delete" (click)="deleteCar()">
+      <img src="assets/8666595_x_icon.svg" class="car-check" alt="X" />
+    </div>
+
+    <img
+      src="assets/3687823_adventure_automotive_car_transport_transportation_icon.svg"
+      alt="car"
+      class="car-icon"
+    />
+    <div class="car-text">{{ car.registration_plate }}</div>
+  </div>
+}

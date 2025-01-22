@@ -21,3 +21,9 @@ class GroupQueryTestCase(TestCase):
 
         with self.assertRaises(Group.DoesNotExist):
             GroupQuery.get_by_name(name=name)
+
+    def test_get_queryset(self):
+        queryset = GroupQuery.get_queryset()
+
+        assert queryset.count() == 1
+        assert self.group in queryset

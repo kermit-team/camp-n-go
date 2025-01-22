@@ -2,6 +2,7 @@
   [ngClass]="type === 'primary' ? 'lib-button-primary' : 'lib-button-secondary'"
   class="lib-button-primary"
   [ngStyle]="fullWidth ? { width: '100%' } : {}"
+  [disabled]="disabled"
 >
   <ng-content></ng-content>
 </button>

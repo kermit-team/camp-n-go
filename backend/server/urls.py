@@ -4,9 +4,13 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('api/accounts/', include('server.apps.account.urls')),
-    path('api/camping/', include('server.apps.camping.urls')),
-    path('api/cars/', include('server.apps.car.urls')),
+    path('api/accounts/', include('server.apps.account.urls.common')),
+    path('api/camping/', include('server.apps.camping.urls.common')),
+    path('api/cars/', include('server.apps.car.urls.common')),
+
+    # Administration views
+    path('api/admin/accounts/', include('server.apps.account.urls.admin')),
+    path('api/admin/camping/', include('server.apps.camping.urls.admin')),
 ]
 
 if settings.DRF_SPECTACULAR_ON:

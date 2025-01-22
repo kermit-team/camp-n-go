@@ -31,7 +31,9 @@ class PaymentExpiredMailTestCase(TestCase):
 
         ctx = {
             'name': self.account.profile.short_name,
-            'reservation': self.reservation,
+            'camping_plot': str(self.reservation.camping_plot),
+            'date_from': self.reservation.date_from,
+            'date_to': self.reservation.date_to,
         }
         message = render_to_string(PaymentExpiredMail._message_template, ctx)
 

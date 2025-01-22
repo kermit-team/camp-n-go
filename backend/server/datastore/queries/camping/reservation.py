@@ -2,7 +2,9 @@ from datetime import date, timedelta
 from decimal import Decimal
 
 from django.conf import settings
+from django.db.models import QuerySet
 
+from server.apps.account.models import Account
 from server.apps.camping.models import CampingSection, PaymentStatus, Reservation
 
 
@@ -72,3 +74,7 @@ class ReservationQuery:
     def is_car_modifiable(cls, reservation: Reservation) -> bool:
         current_date = date.today()
         return current_date <= reservation.date_to
+
+    @classmethod
+    def get_queryset_for_account(cls, account: Account) -> QuerySet:
+        return Reservation.objects.filter(user=account).order_by('-id')

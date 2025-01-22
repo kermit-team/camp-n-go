@@ -6,8 +6,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from server.apps.camping.models import Reservation
 from server.apps.camping.serializers import ReservationListElementSerializer
+from server.datastore.queries.camping import ReservationQuery
 
 
 @extend_schema(
@@ -32,13 +32,10 @@ from server.apps.camping.serializers import ReservationListElementSerializer
     },
 )
 class ReservationListView(GenericAPIView):
-    queryset = Reservation.objects.order_by('-id')
     serializer_class = ReservationListElementSerializer
 
     def get_queryset(self) -> QuerySet:
-        return Reservation.objects.filter(
-            user=self.request.user,
-        ).order_by('-id')
+        return ReservationQuery.get_queryset_for_account(account=self.request.user)
 
     def get(self, request: Request) -> Response:
         queryset = self.filter_queryset(self.get_queryset())

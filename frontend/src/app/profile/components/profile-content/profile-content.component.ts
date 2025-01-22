@@ -27,6 +27,7 @@ export class ProfileContentComponent {
 
   dataEdited(path: string, newValue: any): void {
     this.setValueByPath(this.user, path, newValue);
+    delete this.user.profile.avatar;
     this.userChanged.emit({
       profile: this.user.profile,
     });
@@ -45,6 +46,7 @@ export class ProfileContentComponent {
   }
 
   passwordChanged(data: PasswordEdit) {
+    delete this.user.profile.avatar;
     this.userChanged.emit({
       profile: this.user.profile,
       old_password: data.old_password,

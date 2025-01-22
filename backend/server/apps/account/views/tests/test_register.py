@@ -7,7 +7,7 @@ from rest_framework.test import APIRequestFactory, APITestCase
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.views import AccountRegisterView
-from server.business_logic.account import AccountRegisterBL
+from server.business_logic.account import AccountCreateBL
 from server.utils.tests.baker_generators import generate_password
 
 
@@ -22,8 +22,8 @@ class AccountRegisterViewTestCase(APITestCase):
         self.account = baker.prepare(_model=Account, _fill_optional=True)
         self.account_profile = baker.prepare(_model=AccountProfile, account=self.account, _fill_optional=True)
 
-    @mock.patch.object(AccountRegisterBL, 'process')
-    def test_request(self, register_account_mock):
+    @mock.patch.object(AccountCreateBL, 'process')
+    def test_request(self, create_account_mock):
         request_data = {
             'email': self.account.email,
             'password': self.password,
@@ -38,17 +38,17 @@ class AccountRegisterViewTestCase(APITestCase):
         res = self.view.as_view()(req)
 
         expected_data = {
-            'email': str(register_account_mock.return_value.email),
+            'email': str(create_account_mock.return_value.email),
             'profile': {
-                'first_name': str(register_account_mock.return_value.profile.first_name),
-                'last_name': str(register_account_mock.return_value.profile.last_name),
-                'phone_number': str(register_account_mock.return_value.profile.phone_number),
-                'avatar': register_account_mock.return_value.profile.avatar.url,
-                'id_card': str(register_account_mock.return_value.profile.id_card),
+                'first_name': str(create_account_mock.return_value.profile.first_name),
+                'last_name': str(create_account_mock.return_value.profile.last_name),
+                'phone_number': str(create_account_mock.return_value.profile.phone_number),
+                'avatar': create_account_mock.return_value.profile.avatar.url,
+                'id_card': str(create_account_mock.return_value.profile.id_card),
             },
         }
 
-        register_account_mock.assert_called_once_with(
+        create_account_mock.assert_called_once_with(
             email=self.account.email,
             password=self.password,
             first_name=self.account_profile.first_name,

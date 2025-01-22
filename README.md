@@ -7,15 +7,19 @@ List of services:
 - database (PostgreSQL)
 - frontend (Angular)
 - backend (Django)
+- stripe-cli (Stripe - payment gateway)
 - rabbitmq (RabbitMQ - message broker)
 - flower (Flower - Celery monitoring)
-- smtp_server (Mailhog - fake smtp server)
+- smtp-server (Mailhog - fake smtp server)
 - worker (Celery worker - handles tasks in backend)
 
 To initialize local development server you should run script 
 ```bash
 bin/dev_init.sh
 ```
+
+After that you should replace `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SIGNING_SECRET` variables 
+inside `.stripe.env` file.
 
 ## Running 
 Local development server should be run with script `run.sh`.

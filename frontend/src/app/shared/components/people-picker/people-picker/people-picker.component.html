@@ -1,0 +1,12 @@
+<div class="guests-input" (click)="openDialog()">
+  <img
+    src="../../../../../assets/human_icon.svg"
+    alt=""
+    class="guests-item-icon"
+  />
+  <span>Dorośli:</span>
+
+  <span>{{ adultNumber | async }}</span>
+  <span>Dzieci:</span>
+  <span>{{ childNumber | async }}</span>
+</div>

@@ -1,3 +1,6 @@
+button {
+  cursor: pointer;
+}
 .lib-button-primary {
   border-radius: 2px;
   padding: 10px 25px;
@@ -6,6 +9,11 @@
   background-color: var(--primary-color);
   border: none;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
 }
 
 .lib-button-secondary {

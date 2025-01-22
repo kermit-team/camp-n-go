@@ -6,5 +6,4 @@ from server.apps.camping.views.reservation_details import ReservationDetailsView
 from server.apps.camping.views.reservation_list import ReservationListView
 from server.apps.camping.views.reservation_modify_car import ReservationModifyCarView
 from server.apps.camping.views.section_details import CampingSectionDetailsView
-from server.apps.camping.views.section_modify import CampingSectionModifyView
 from server.apps.camping.views.stripe_payment_webhook import StripePaymentWebhookView

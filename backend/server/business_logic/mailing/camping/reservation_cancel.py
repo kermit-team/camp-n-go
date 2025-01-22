@@ -17,7 +17,9 @@ class ReservationCancelMail(AbstractMailBL):
         subject = str(cls._subject_template)
         ctx = {
             'name': reservation.user.profile.short_name,
-            'reservation': reservation,
+            'camping_plot': str(reservation.camping_plot),
+            'date_from': reservation.date_from,
+            'date_to': reservation.date_to,
             'max_refund_time_in_days': settings.MAX_REFUND_TIME,
         }
 

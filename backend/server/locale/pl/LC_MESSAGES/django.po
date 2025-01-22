@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-16 17:01+0100\n"
+"POT-Creation-Date: 2025-01-20 22:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,8 +194,8 @@ msgid ""
 "was given for reservation."
 msgstr ""
 "Parcela {camping_plot_section_name}_{camping_plot_position} może pomieścić "
-"maksymalnie {max_number_of_people} osób, podczas gdy {number_of_people} osób została "
-"podana dla rezerwacji."
+"maksymalnie {max_number_of_people} osób, podczas gdy {number_of_people} osób "
+"została podana dla rezerwacji."
 
 #: server/apps/camping/errors/reservation.py:13
 #, python-brace-format
@@ -215,8 +215,8 @@ msgid ""
 "available during the period of {date_from} - {date_to} for "
 "{number_of_people} people."
 msgstr ""
-"Parcela {camping_plot_section_name}_{camping_plot_position} nie jest dostępna "
-"w okresie {date_from} - {date_to} dla{number_of_people} osób."
+"Parcela {camping_plot_section_name}_{camping_plot_position} nie jest "
+"dostępna w okresie {date_from} - {date_to} dla{number_of_people} osób."
 
 #: server/apps/camping/errors/reservation.py:19
 #, python-brace-format
@@ -531,7 +531,7 @@ msgstr ""
 
 #: server/templates/mailing/account/email_verification.html:34
 #: server/templates/mailing/account/password_reset.html:26
-#: server/templates/mailing/camping/payment_expired.html:15
+#: server/templates/mailing/camping/payment_expired.html:16
 #: server/templates/mailing/camping/payment_refund_processed.html:16
 #: server/templates/mailing/camping/payment_success.html:16
 #: server/templates/mailing/camping/reservation_cancel.html:16
@@ -565,12 +565,11 @@ msgstr "Płatność wygasła"
 #, python-format
 msgid ""
 "Unfortunately, your payment link has expired, and your reservation "
-"%(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] has been automatically canceled."
+"%(camping_plot)s [%(date_from)s - %(date_to)s] has been automatically "
+"canceled."
 msgstr ""
-"Niestety, link do płatności wygasł, a rezerwacja "
-"%(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] została automatycznie anulowana."
+"Niestety, link do płatności wygasł, a rezerwacja %(camping_plot)s "
+"[%(date_from)s - %(date_to)s] została automatycznie anulowana."
 
 #: server/templates/mailing/camping/payment_refund_processed.html:6
 msgid "Refund processed"
@@ -579,14 +578,12 @@ msgstr "Zwrot płatności"
 #: server/templates/mailing/camping/payment_refund_processed.html:10
 #, python-format
 msgid ""
-"We have successfully processed your refund for reservation "
-"%(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s]. Please check your payment method for the credited "
-"amount."
+"We have successfully processed your refund for reservation %(camping_plot)s "
+"[%(date_from)s - %(date_to)s]. Please check your payment method for the "
+"credited amount."
 msgstr ""
-"Pomyślnie przetworzyliśmy zwrot pieniędzy za rezerwację "
-"%(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s]. Sprawdź swoją metodę płatności, aby uzyskać "
+"Pomyślnie przetworzyliśmy zwrot pieniędzy za rezerwację %(camping_plot)s "
+"[%(date_from)s - %(date_to)s]. Sprawdź swoją metodę płatności, aby uzyskać "
 "zaksięgowaną kwota."
 
 #: server/templates/mailing/camping/payment_success.html:6
@@ -596,14 +593,13 @@ msgstr "Potwierdzenie płatności"
 #: server/templates/mailing/camping/payment_success.html:10
 #, python-format
 msgid ""
-"We have received your payment for reservation %(reservation.camping_plot)s "
-"[%(reservation.date_from)s - %(reservation.date_to)s]. You can cancel your "
-"reservation up to %(cancellation_time_in_days)s days before the scheduled "
-"date."
+"We have received your payment for reservation %(camping_plot)s "
+"[%(date_from)s - %(date_to)s]. You can cancel your reservation up to "
+"%(cancellation_time_in_days)s days before the scheduled date."
 msgstr ""
-"Otrzymaliśmy płatność za rezerwację %(reservation.camping_plot)s "
-"[%(reservation.date_from)s - %(reservation.date_to)s]. Rezerwację można "
-"anulować do %(cancellation_time_in_days)s dni przed zaplanowaną datą."
+"Otrzymaliśmy płatność za rezerwację %(camping_plot)s [%(date_from)s - "
+"%(date_to)s]. Rezerwację można anulować do %(cancellation_time_in_days)s dni "
+"przed zaplanowaną datą."
 
 #: server/templates/mailing/camping/reservation_cancel.html:6
 msgid "Reservation cancel"
@@ -612,15 +608,13 @@ msgstr "Anulowanie rezerwacji"
 #: server/templates/mailing/camping/reservation_cancel.html:10
 #, python-format
 msgid ""
-"Your reservation %(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] has been canceled, and we have initiated the refund "
-"process. You will receive your refund within the next "
-"%(max_refund_time_in_days)s business days."
+"Your reservation %(camping_plot)s [%(date_from)s - %(date_to)s] has been "
+"canceled, and we have initiated the refund process. You will receive your "
+"refund within the next %(max_refund_time_in_days)s business days."
 msgstr ""
-"Twoja rezerwacja %(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] została anulowana, a my rozpoczęliśmy proces zwrotu "
-"pieniędzy. Otrzymasz zwrot pieniędzy w ciągu najbliższych "
-"%(max_refund_time_in_days)s dni roboczych."
+"Twoja rezerwacja %(camping_plot)s [%(date_from)s - %(date_to)s] została "
+"anulowana, a my rozpoczęliśmy proces zwrotu pieniędzy. Otrzymasz zwrot "
+"pieniędzy w ciągu najbliższych %(max_refund_time_in_days)s dni roboczych."
 
 #: server/templates/mailing/camping/reservation_create.html:6
 msgid "Reservation confirmation"
@@ -629,15 +623,14 @@ msgstr "Potwierdzenie rezerwacji"
 #: server/templates/mailing/camping/reservation_create.html:10
 #, python-format
 msgid ""
-"Your reservation %(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] has been successfully created. To confirm your "
-"booking, please complete the payment using the link below. Note that this "
-"link will expire in %(expiration_time)s."
+"Your reservation %(camping_plot)s [%(date_from)s - %(date_to)s] has been "
+"successfully created. To confirm your booking, please complete the payment "
+"using the link below. Note that this link will expire in %(expiration_time)s."
 msgstr ""
-"Twoja rezerwacja %(reservation.camping_plot)s [%(reservation.date_from)s - "
-"%(reservation.date_to)s] została pomyślnie utwaorzona. Aby potwierdzić Twoją "
-"rezerwację, prosimy o dokończenie płatności za pomocą poniższego linku. "
-"Należy pamiętać, że ten link wygaśnie za %(expiration_time)s."
+"Twoja rezerwacja %(camping_plot)s [%(date_from)s - %(date_to)s] została "
+"pomyślnie utwaorzona. Aby potwierdzić Twoją rezerwację, prosimy o "
+"dokończenie płatności za pomocą poniższego linku. Należy pamiętać, że ten "
+"link wygaśnie za %(expiration_time)s."
 
 #: server/templates/mailing/camping/reservation_create.html:17
 msgid "Complete payment"
@@ -645,20 +638,20 @@ msgstr "Dokończ płatność"
 
 #: server/utils/api/time_helper.py:12
 #, python-brace-format
-msgid "{days} days"
-msgstr "{days} dni"
+msgid "{days} days "
+msgstr "{days} dni "
 
 #: server/utils/api/time_helper.py:14
 #, python-brace-format
-msgid "{hours} hours"
-msgstr "{hours} godzin"
+msgid "{hours} hours "
+msgstr "{hours} godzin "
 
 #: server/utils/api/time_helper.py:16
 #, python-brace-format
-msgid "{minutes} minutes"
-msgstr "{minutes} minut"
+msgid "{minutes} minutes "
+msgstr "{minutes} minut "
 
 #: server/utils/api/time_helper.py:18
 #, python-brace-format
-msgid "{seconds} seconds"
-msgstr "{seconds} sekund"
+msgid "{seconds} seconds "
+msgstr "{seconds} sekund "

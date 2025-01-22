@@ -10,6 +10,7 @@ urlpatterns = [
 
     # Administration views
     path('api/admin/accounts/', include('server.apps.account.urls.admin')),
+    path('api/admin/camping/', include('server.apps.camping.urls.admin')),
 ]
 
 if settings.DRF_SPECTACULAR_ON:

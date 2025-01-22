@@ -7,7 +7,7 @@ from server.apps.camping.models import CampingSection
 from server.apps.camping.serializers import CampingSectionModifySerializer
 
 
-class CampingSectionModifyView(GenericAPIView):
+class AdminCampingSectionModifyView(GenericAPIView):
     serializer_class = CampingSectionModifySerializer
     queryset = CampingSection.objects.all()
 

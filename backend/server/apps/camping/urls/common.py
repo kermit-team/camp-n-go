@@ -4,7 +4,6 @@ from server.apps.camping.views import (
     CampingPlotAvailabilityListView,
     CampingPlotDetailsView,
     CampingSectionDetailsView,
-    CampingSectionModifyView,
     ReservationCancelView,
     ReservationCreateView,
     ReservationDetailsView,
@@ -28,11 +27,6 @@ urlpatterns = [
         'sections/<int:pk>/',
         CampingSectionDetailsView.as_view(),
         name='camping_section_details',
-    ),
-    path(
-        'sections/<int:pk>/modify/',
-        CampingSectionModifyView.as_view(),
-        name='camping_section_modify',
     ),
     path(
         'reservations/',

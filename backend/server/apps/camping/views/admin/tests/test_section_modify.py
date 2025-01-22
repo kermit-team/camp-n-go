@@ -7,15 +7,15 @@ from rest_framework.test import APIRequestFactory, APITestCase, force_authentica
 
 from server.apps.account.models import Account, AccountProfile
 from server.apps.camping.models import CampingSection
-from server.apps.camping.views import CampingSectionModifyView
+from server.apps.camping.views.admin import AdminCampingSectionModifyView
 from server.datastore.commands.camping import CampingSectionCommand
 
 
-class CampingSectionModifyViewTestCase(APITestCase):
+class AdminCampingSectionModifyViewTestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
-        cls.view = CampingSectionModifyView
+        cls.view = AdminCampingSectionModifyView
 
     def setUp(self):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
@@ -35,7 +35,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
         parameters = {
             'pk': self.camping_section.id,
         }
-        url = reverse('camping_section_modify', kwargs=parameters)
+        url = reverse('admin_camping_section_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -65,7 +65,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
         parameters = {
             'pk': 0,
         }
-        url = reverse('camping_section_modify', kwargs=parameters)
+        url = reverse('admin_camping_section_modify', kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -87,7 +87,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
         parameters = {
             'pk': self.camping_section.id,
         }
-        url = reverse('camping_section_modify', kwargs=parameters)
+        url = reverse('admin_camping_section_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -115,7 +115,7 @@ class CampingSectionModifyViewTestCase(APITestCase):
         parameters = {
             'pk': 0,
         }
-        url = reverse('camping_section_modify', kwargs=parameters)
+        url = reverse('admin_camping_section_modify', kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)

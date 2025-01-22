@@ -11,4 +11,6 @@ export enum AppRoutes {
   Payment = 'payment',
   Success = 'success',
   Cancel = 'cancel',
+  Reservations = 'reservations',
+  ReservationsEdit = 'reservations/edit/:id',
 }

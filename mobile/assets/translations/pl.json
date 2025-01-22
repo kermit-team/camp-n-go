@@ -135,5 +135,10 @@
   "unpaid": "Niezapłacone",
   "paid": "Zapłacone",
   "refunded": "Zwrócone",
-  "inputTooLong": "Wprowadzone dane są zbyt długie"
+  "inputTooLong": "Wprowadzone dane są zbyt długie",
+  "invalidIdNumber": "Nieprawidłowy lub zajęty numer dowodu osobistego",
+  "reservationListEmpty": "Brak rezerwacji",
+  "parcelListEmpty": "Brak parceli",
+  "registerFailed": "Nieprawidłowe dane użytkownika",
+  "loginFailed": "Nieprawidłowe dane logowania lub konto o podanych danych nie istnieje"
 }

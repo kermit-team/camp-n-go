@@ -2,7 +2,9 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/auth/domain/entities/auth_credentials.dart';
 import 'package:campngo/features/auth/domain/entities/auth_entity.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -60,7 +62,7 @@ class AuthCubit extends Cubit<AuthState> {
         case Failure<AuthEntity, Exception>(exception: final exception):
           emit(state.copyWith(
             status: AuthStatus.failure,
-            exception: exception,
+            exception: Exception(LocaleKeys.loginFailed.tr()),
           ));
       }
     } on DioException catch (dioException) {

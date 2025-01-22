@@ -47,7 +47,9 @@ Future<void> showEditPropertyDialog({
           TextButton(
             onPressed: () {
               if (formKey.currentState?.validate() == true) {
-                onSave(controller.text);
+                if (controller.text != initialValue) {
+                  onSave(controller.text);
+                }
                 Navigator.of(context).pop();
               }
             },

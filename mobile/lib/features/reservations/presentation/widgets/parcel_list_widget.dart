@@ -4,6 +4,7 @@ import 'package:campngo/features/reservations/domain/entities/parcel_list_item.d
 import 'package:campngo/features/reservations/presentation/cubit/parcel_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_details_dialog.dart';
 import 'package:campngo/features/reservations/presentation/widgets/parcel_list_tile.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -68,10 +69,20 @@ class _ParcelListWidgetState extends State<ParcelListWidget> {
         } else if (state.getParcelListStatus == SubmissionStatus.failure) {
           return Expanded(
             child: Center(
-              child: Text(LocaleKeys.somethingWentWrong.tr()),
+              child: StandardText(LocaleKeys.somethingWentWrong.tr()),
             ),
           );
         } else {
+          if (state.parcels!.isEmpty) {
+            return Container(
+              padding: EdgeInsets.only(
+                top: Constants.spaceM,
+              ),
+              child: StandardText(
+                LocaleKeys.parcelListEmpty.tr(),
+              ),
+            );
+          }
           return Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(vertical: Constants.spaceM),

@@ -4,7 +4,9 @@ import 'package:campngo/features/register/domain/entities/register_entity.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -62,7 +64,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           }
         case Failure<RegisterEntity, Exception>(exception: final exception):
           {
-            emit(RegisterFailure(exception));
+            emit(RegisterFailure(
+              Exception(LocaleKeys.registerFailed.tr()),
+            ));
           }
       }
     } on DioException catch (dioException) {

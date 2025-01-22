@@ -4,6 +4,7 @@ import 'package:campngo/features/reservations/domain/entities/reservation_previe
 import 'package:campngo/features/reservations/presentation/cubit/reservation_list_cubit.dart';
 import 'package:campngo/features/reservations/presentation/widgets/reservation_list_tile.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,14 @@ class _ReservationListWidgetState extends State<ReservationListWidget> {
             ),
           );
         } else {
+          if (state.reservations!.isEmpty) {
+            return Container(
+              padding: EdgeInsets.only(
+                top: Constants.spaceM,
+              ),
+              child: StandardText(LocaleKeys.reservationListEmpty.tr()),
+            );
+          }
           return Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(vertical: Constants.spaceM),

@@ -73,7 +73,9 @@ class _ReservationPreviewPageState extends State<ReservationPreviewPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(LocaleKeys.reservationPreview.tr()),
+                  Center(
+                    child: TitleText(LocaleKeys.reservationPreview.tr()),
+                  ),
                   SizedBox(height: Constants.spaceL),
                   _ReservationData(
                     params: GetParcelListParams(

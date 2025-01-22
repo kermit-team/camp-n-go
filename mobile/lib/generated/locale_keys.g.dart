@@ -137,5 +137,10 @@ abstract class  LocaleKeys {
   static const paid = 'paid';
   static const refunded = 'refunded';
   static const inputTooLong = 'inputTooLong';
+  static const invalidIdNumber = 'invalidIdNumber';
+  static const reservationListEmpty = 'reservationListEmpty';
+  static const parcelListEmpty = 'parcelListEmpty';
+  static const registerFailed = 'registerFailed';
+  static const loginFailed = 'loginFailed';
 
 }

@@ -134,5 +134,10 @@
   "unpaid": "Unpaid",
   "paid": "Paid",
   "refunded": "Refunded",
-  "inputTooLong": "Input data is too long"
+  "inputTooLong": "Input data is too long",
+  "invalidIdNumber": "Invalid or taken id number",
+  "reservationListEmpty": "Reservation list is empty",
+  "parcelListEmpty": "Parcel list is empty",
+  "registerFailed": "Wrong credentials",
+  "loginFailed": "Nieprawidłowe dane logowania"
 }

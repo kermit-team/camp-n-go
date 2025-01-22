@@ -59,7 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
         case Success<AuthEntity, Exception>():
           emit(state.copyWith(status: AuthStatus.authenticated));
 
-        case Failure<AuthEntity, Exception>(exception: final exception):
+        case Failure<AuthEntity, Exception>():
           emit(state.copyWith(
             status: AuthStatus.failure,
             exception: Exception(LocaleKeys.loginFailed.tr()),

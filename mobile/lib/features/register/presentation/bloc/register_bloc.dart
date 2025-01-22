@@ -62,7 +62,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           {
             emit(RegisterSuccess(registerEntity));
           }
-        case Failure<RegisterEntity, Exception>(exception: final exception):
+        case Failure<RegisterEntity, Exception>():
           {
             emit(RegisterFailure(
               Exception(LocaleKeys.registerFailed.tr()),

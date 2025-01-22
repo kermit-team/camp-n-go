@@ -1,6 +1,6 @@
 from django.urls import path
 
-from server.apps.car.views import CarAddView, CarRemoveDriverView
+from server.apps.car.views import CarAddView, CarEntryView, CarRemoveDriverView
 
 urlpatterns = [
     path(
@@ -12,5 +12,10 @@ urlpatterns = [
         '<int:pk>/remove-driver/',
         CarRemoveDriverView.as_view(),
         name='car_remove_driver',
+    ),
+    path(
+        'entry/',
+        CarEntryView.as_view(),
+        name='car_entry',
     ),
 ]

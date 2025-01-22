@@ -4,7 +4,6 @@ import 'package:campngo/features/account_settings/presentation/widgets/edit_prop
 import 'package:campngo/features/shared/widgets/golden_text_field.dart';
 import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/phone_number.dart';
 
 class DisplayTextField extends StatelessWidget {
   final String label;
@@ -13,9 +12,10 @@ class DisplayTextField extends StatelessWidget {
   final List<Validation<String>>? validations;
   final void Function(String)? onDialogSavePressed;
   final void Function(String, String)? onPasswordDialogSavePressed;
-  final void Function(PhoneNumber)? onPhoneNumberSavePressed;
+  final void Function(String)? onPhoneNumberSavePressed;
   final bool isPassword;
   final bool canBeModified;
+  final bool hintFloatingEnable;
 
   const DisplayTextField({
     super.key,
@@ -28,6 +28,7 @@ class DisplayTextField extends StatelessWidget {
     this.onPhoneNumberSavePressed,
     this.isPassword = false,
     this.canBeModified = true,
+    this.hintFloatingEnable = false,
   });
 
   @override
@@ -38,6 +39,7 @@ class DisplayTextField extends StatelessWidget {
         GoldenTextField(
           label: label,
           controller: TextEditingController(text: text),
+          hintFloatingEnable: hintFloatingEnable,
           enabled: false,
           isPassword: isPassword,
         ),
@@ -54,6 +56,7 @@ class DisplayTextField extends StatelessWidget {
                           context: context,
                           label: label,
                           initialValue: text,
+                          hintFloatingEnable: hintFloatingEnable,
                           validations: validations,
                           onSave: (newValue) {
                             onDialogSavePressed?.call(newValue);
@@ -76,7 +79,7 @@ class DisplayTextField extends StatelessWidget {
                           label: label,
                           validations: [const RequiredValidation()],
                           onSave: (phoneNumber) {
-                            onPhoneNumberSavePressed?.call(phoneNumber!);
+                            onPhoneNumberSavePressed?.call(phoneNumber ?? '');
                           },
                         );
                       }

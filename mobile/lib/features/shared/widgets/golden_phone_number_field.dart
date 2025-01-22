@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/config/theme/app_theme.dart';
 import 'package:campngo/core/validation/validations.dart';
@@ -32,6 +34,17 @@ class GoldenPhoneNumberFieldState extends State<GoldenPhoneNumberField> {
   PhoneNumber? _phoneNumber;
   String? _initialCountryCode;
 
+  PhoneNumber? get phoneNumber => _phoneNumber;
+
+  String? get stringNumber {
+    if (_phoneNumber != null && _phoneNumber!.number.isNotEmpty) {
+      log('${_phoneNumber?.completeNumber}');
+      return '+${_phoneNumber?.completeNumber}';
+    } else {
+      return null;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +60,8 @@ class GoldenPhoneNumberFieldState extends State<GoldenPhoneNumberField> {
   Widget build(BuildContext context) {
     return IntlPhoneField(
       enabled: widget.enabled,
+      initialCountryCode: _initialCountryCode ?? 'PL',
+      initialValue: _phoneNumber?.number,
       autofocus: widget.autofocus,
       cursorColor: goldenColor,
       style: AppTextStyles.mainTextStyle()
@@ -86,9 +101,6 @@ class GoldenPhoneNumberFieldState extends State<GoldenPhoneNumberField> {
           _phoneNumber = phone;
         });
       },
-      initialCountryCode: _initialCountryCode ?? 'PL',
     );
   }
-
-  PhoneNumber? get phoneNumber => _phoneNumber;
 }

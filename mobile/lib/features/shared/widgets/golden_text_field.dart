@@ -12,6 +12,7 @@ class GoldenTextField extends StatefulWidget {
   final bool enabled;
   final bool autofocus;
   final String? label;
+  final bool hintFloatingEnable;
 
   const GoldenTextField({
     super.key,
@@ -21,6 +22,7 @@ class GoldenTextField extends StatefulWidget {
     this.validations,
     this.enabled = true,
     this.autofocus = false,
+    this.hintFloatingEnable = true,
     this.label,
   });
 
@@ -45,6 +47,9 @@ class _GoldenTextFieldState extends State<GoldenTextField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: AppTextStyles.hintTextStyle().copyWith(),
+        floatingLabelBehavior: widget.hintFloatingEnable
+            ? FloatingLabelBehavior.auto
+            : FloatingLabelBehavior.always,
         label: widget.label != null
             ? Text(
                 widget.label!,

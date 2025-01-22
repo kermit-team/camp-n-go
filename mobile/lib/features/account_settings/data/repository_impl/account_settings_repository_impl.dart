@@ -45,13 +45,16 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
     required String newValue,
   }) async {
     try {
+      String? valueToSend = newValue.isNotEmpty ? newValue : null;
+
       Map<String, dynamic> accountJson = {
         "profile": {
-          if (property == AccountProperty.firstName) "first_name": newValue,
-          if (property == AccountProperty.lastName) "last_name": newValue,
-          if (property == AccountProperty.phoneNumber) "phone_number": newValue,
-          if (property == AccountProperty.avatar) "avatar": newValue,
-          if (property == AccountProperty.idCard) "id_card": newValue,
+          if (property == AccountProperty.firstName) "first_name": valueToSend,
+          if (property == AccountProperty.lastName) "last_name": valueToSend,
+          if (property == AccountProperty.phoneNumber)
+            "phone_number": valueToSend,
+          if (property == AccountProperty.avatar) "avatar": valueToSend,
+          if (property == AccountProperty.idCard) "id_card": valueToSend,
         }
       };
 

@@ -13,6 +13,7 @@ Future<void> showEditPropertyDialog({
   String? initialValue,
   List<Validation<String>>? validations,
   required Function(String) onSave,
+  required bool hintFloatingEnable,
 }) async {
   final TextEditingController controller =
       TextEditingController(text: initialValue);
@@ -31,6 +32,7 @@ Future<void> showEditPropertyDialog({
               controller: controller,
               hintText: label,
               autofocus: true,
+              hintFloatingEnable: hintFloatingEnable,
               validations: validations ?? [],
             ),
           ),
@@ -144,7 +146,7 @@ Future<void> showPhoneNumberDialog({
   required String label,
   String? initialValue,
   List<Validation<PhoneNumber>>? validations,
-  required Function(PhoneNumber?) onSave,
+  required Function(String?) onSave,
 }) async {
   final formKey = GlobalKey<FormState>();
   final phoneFieldKey = GlobalKey<GoldenPhoneNumberFieldState>();
@@ -177,7 +179,7 @@ Future<void> showPhoneNumberDialog({
           TextButton(
             onPressed: () {
               if (formKey.currentState?.validate() == true) {
-                onSave(phoneFieldKey.currentState?.phoneNumber);
+                onSave(phoneFieldKey.currentState?.stringNumber);
                 Navigator.of(context).pop();
               }
             },

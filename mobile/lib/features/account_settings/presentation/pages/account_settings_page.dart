@@ -17,7 +17,6 @@ import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl_phone_field/phone_number.dart';
 
 class AccountSettingsPage extends StatefulWidget {
   const AccountSettingsPage({super.key});
@@ -149,7 +148,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.firstName.tr(),
                               text:
-                                  state.accountEntity?.profile.firstName ?? ' ',
+                                  state.accountEntity?.profile.firstName ?? '',
                               validations: const [RequiredValidation()],
                               onDialogSavePressed: (String newValue) {
                                 context
@@ -163,8 +162,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.lastName.tr(),
-                              text:
-                                  state.accountEntity?.profile.lastName ?? ' ',
+                              text: state.accountEntity?.profile.lastName ?? '',
                               validations: const [RequiredValidation()],
                               onDialogSavePressed: (String newValue) {
                                 context
@@ -179,7 +177,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.email.tr(),
                               canBeModified: false,
-                              text: state.accountEntity?.email ?? ' ',
+                              text: state.accountEntity?.email ?? '',
                               validations: const [
                                 RequiredValidation(),
                                 EmailValidation()
@@ -197,23 +195,21 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.phoneNumber.tr(),
                               text: state.accountEntity?.profile.phoneNumber ??
-                                  ' ',
-                              validations: const [RequiredValidation()],
-                              onPhoneNumberSavePressed:
-                                  (PhoneNumber phoneNumber) {
+                                  '',
+                              onPhoneNumberSavePressed: (String phoneNumber) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
                                       property: AccountProperty.phoneNumber,
-                                      newValue: phoneNumber.completeNumber,
+                                      newValue: phoneNumber,
                                     );
-                                log("New value for firstName: ${phoneNumber.completeNumber}");
+                                log("New value for phoneNumber: $phoneNumber");
                               },
                             ),
                             DisplayTextField(
                               label: LocaleKeys.idNumber.tr(),
-                              text: state.accountEntity?.profile.idCard ?? ' ',
-                              validations: const [RequiredValidation()],
+                              text: state.accountEntity?.profile.idCard ?? '',
+                              // validations: const [RequiredValidation()],
                               onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()

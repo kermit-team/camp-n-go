@@ -1,0 +1,18 @@
+<div class="reservations">
+  <div class="reservations-wrapper">
+    <div class="reservations-container">
+      <div class="reservations-header-container">
+        <div class="reservations-header-border">
+          <h1 class="reservations-header-text">Moje rezerwacje</h1>
+        </div>
+      </div>
+      <app-reservations-list
+        [items]="reservations$ | async"
+        [paginationMetadata]="paginationMetadata$ | async"
+        (paginationChanged)="onPaginationChanged($event)"
+        (editFired)="edit($event)"
+        (cancelFired)="cancel($event)"
+      ></app-reservations-list>
+    </div>
+  </div>
+</div>

@@ -11,6 +11,9 @@ import { ProfileComponent } from './profile/containers/profile/profile.component
 import { ParcelSearchComponent } from './parcels/containers/parcel-search/parcel-search.component';
 import { ReservationCreateComponent } from './parcels/containers/reservation-create/reservation-create.component';
 import { PaymentComponent } from './payment/containers/payment/payment.component';
+import { ReservationsComponent } from './reservations/containers/reservations/reservations.component';
+import { ReservationEditComponent } from './reservations/containers/reservation-edit/reservation-edit.component';
+import { reservationDetailsResolver } from './reservations/resolvers/reservation-details.resolver';
 
 export const routes: Routes = [
   {
@@ -47,6 +50,17 @@ export const routes: Routes = [
   {
     path: AppRoutes.ReservationCreate,
     component: ReservationCreateComponent,
+  },
+  {
+    path: AppRoutes.Reservations,
+    component: ReservationsComponent,
+  },
+  {
+    path: AppRoutes.ReservationsEdit,
+    component: ReservationEditComponent,
+    resolve: {
+      reservationDetails: reservationDetailsResolver,
+    },
   },
   {
     path: AppRoutes.Payment,

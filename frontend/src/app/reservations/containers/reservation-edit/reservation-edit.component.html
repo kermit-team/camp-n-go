@@ -1,0 +1,7 @@
+<app-reservation-edit-content
+  [reservationDetails]="reservationDetails$ | async"
+  [user]="authenticated$ | async"
+  (cancelFired)="cancel()"
+  (changeCarFired)="changeCar($event)"
+>
+</app-reservation-edit-content>

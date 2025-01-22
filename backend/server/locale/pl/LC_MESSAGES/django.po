@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-20 22:11+0100\n"
+"POT-Creation-Date: 2025-01-22 22:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -491,10 +491,6 @@ msgstr "Aplikacja do zarządzania kempingiem"
 msgid "Polish"
 msgstr "Polski"
 
-#: server/settings/components/translations.py:19
-msgid "English"
-msgstr "Angielski"
-
 #: server/templates/mailing/account/email_verification.html:6
 msgid "E-mail address verification"
 msgstr "Weryfikacja adresu e-mail"
@@ -655,3 +651,6 @@ msgstr "{minutes} minut "
 #, python-brace-format
 msgid "{seconds} seconds "
 msgstr "{seconds} sekund "
+
+#~ msgid "English"
+#~ msgstr "Angielski"

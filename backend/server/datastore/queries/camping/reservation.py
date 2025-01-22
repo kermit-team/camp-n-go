@@ -1,8 +1,9 @@
 from datetime import date, timedelta
 from decimal import Decimal
+from typing import Optional
 
 from django.conf import settings
-from django.db.models import QuerySet
+from django.db.models import Q, QuerySet
 
 from server.apps.account.models import Account
 from server.apps.camping.models import CampingSection, PaymentStatus, Reservation
@@ -78,3 +79,23 @@ class ReservationQuery:
     @classmethod
     def get_queryset_for_account(cls, account: Account) -> QuerySet:
         return Reservation.objects.filter(user=account).order_by('-id')
+
+    @classmethod
+    def get_queryset(cls) -> QuerySet:
+        return Reservation.objects.order_by('-id')
+
+    @classmethod
+    def get_with_matching_reservation_data(
+        cls,
+        reservation_data: str,
+        queryset: Optional[QuerySet] = None,
+    ) -> QuerySet:
+        if not queryset:
+            queryset = Reservation.objects.order_by('-id')
+
+        return queryset.filter(
+            Q(user__email__icontains=reservation_data) |
+            Q(user__profile__first_name__icontains=reservation_data) |
+            Q(user__profile__last_name__icontains=reservation_data) |
+            Q(car__registration_plate__icontains=reservation_data),
+        )

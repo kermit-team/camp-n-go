@@ -5,4 +5,3 @@ from server.apps.camping.serializers.reservation_details import ReservationDetai
 from server.apps.camping.serializers.reservation_list_element import ReservationListElementSerializer
 from server.apps.camping.serializers.reservation_modify_car import ReservationModifyCarSerializer
 from server.apps.camping.serializers.section_details import CampingSectionDetailsSerializer
-from server.apps.camping.serializers.section_modify import CampingSectionModifySerializer

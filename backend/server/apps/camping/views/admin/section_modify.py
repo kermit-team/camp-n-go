@@ -4,11 +4,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.camping.models import CampingSection
-from server.apps.camping.serializers import CampingSectionModifySerializer
+from server.apps.camping.serializers.admin import AdminCampingSectionModifySerializer
 
 
 class AdminCampingSectionModifyView(GenericAPIView):
-    serializer_class = CampingSectionModifySerializer
+    serializer_class = AdminCampingSectionModifySerializer
     queryset = CampingSection.objects.all()
 
     def put(self, request: Request, pk: int) -> Response:

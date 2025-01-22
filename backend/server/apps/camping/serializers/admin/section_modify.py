@@ -6,7 +6,7 @@ from server.apps.camping.models import CampingSection
 from server.datastore.commands.camping import CampingSectionCommand
 
 
-class CampingSectionModifySerializer(serializers.ModelSerializer):
+class AdminCampingSectionModifySerializer(serializers.ModelSerializer):
     class Meta:
         model = CampingSection
         fields = [

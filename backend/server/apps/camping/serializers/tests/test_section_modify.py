@@ -4,7 +4,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from server.apps.camping.models import CampingSection
-from server.apps.camping.serializers import CampingSectionModifySerializer
+from server.apps.camping.serializers.admin import AdminCampingSectionModifySerializer
 from server.datastore.commands.camping import CampingSectionCommand
 
 
@@ -16,7 +16,7 @@ class CampingSectionModifySerializerTestCase(TestCase):
 
     @mock.patch.object(CampingSectionCommand, 'modify')
     def test_update(self, modify_camping_section_mock):
-        serializer = CampingSectionModifySerializer(
+        serializer = AdminCampingSectionModifySerializer(
             instance=self.camping_section,
             data={
                 'base_price': self.new_camping_section_data.base_price,
@@ -37,7 +37,7 @@ class CampingSectionModifySerializerTestCase(TestCase):
 
     @mock.patch.object(CampingSectionCommand, 'modify')
     def test_update_without_required_fields(self, modify_camping_section_mock):
-        serializer = CampingSectionModifySerializer(
+        serializer = AdminCampingSectionModifySerializer(
             instance=self.camping_section,
             data={
                 'base_price': self.new_camping_section_data.base_price,
@@ -49,7 +49,7 @@ class CampingSectionModifySerializerTestCase(TestCase):
 
     @mock.patch.object(CampingSectionCommand, 'modify')
     def test_partial_update(self, modify_camping_section_mock):
-        serializer = CampingSectionModifySerializer(
+        serializer = AdminCampingSectionModifySerializer(
             instance=self.camping_section,
             data={
                 'price_per_adult': self.new_camping_section_data.price_per_adult,

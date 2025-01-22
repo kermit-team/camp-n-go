@@ -149,7 +149,10 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               label: LocaleKeys.firstName.tr(),
                               text:
                                   state.accountEntity?.profile.firstName ?? '',
-                              validations: const [RequiredValidation()],
+                              validations: const [
+                                RequiredValidation(),
+                                NameValidation(),
+                              ],
                               onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
@@ -163,7 +166,10 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.lastName.tr(),
                               text: state.accountEntity?.profile.lastName ?? '',
-                              validations: const [RequiredValidation()],
+                              validations: const [
+                                RequiredValidation(),
+                                NameValidation(),
+                              ],
                               onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
@@ -209,7 +215,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             DisplayTextField(
                               label: LocaleKeys.idNumber.tr(),
                               text: state.accountEntity?.profile.idCard ?? '',
-                              // validations: const [RequiredValidation()],
+                              validations: const [IdCardValidation()],
                               onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()

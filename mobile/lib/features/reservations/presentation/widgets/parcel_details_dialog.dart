@@ -13,6 +13,7 @@ import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 class ParcelDetailsDialog extends StatelessWidget {
   final ParcelListItem parcel;
@@ -57,6 +58,7 @@ class ParcelDetailsDialog extends StatelessWidget {
           SizedBox(height: Constants.spaceMS),
           Image.asset(
             'assets/images/parcel_example.png',
+            height: 20.h,
           ),
           SizedBox(height: Constants.spaceMS),
           Divider(

@@ -136,5 +136,6 @@ abstract class  LocaleKeys {
   static const unpaid = 'unpaid';
   static const paid = 'paid';
   static const refunded = 'refunded';
+  static const inputTooLong = 'inputTooLong';
 
 }

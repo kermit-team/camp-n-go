@@ -52,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: LocaleKeys.firstName.tr(),
                   validations: const [
                     RequiredValidation(),
+                    NameValidation(),
                   ],
                 ),
                 SizedBox(height: Constants.spaceM),
@@ -60,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: LocaleKeys.lastName.tr(),
                   validations: const [
                     RequiredValidation(),
+                    NameValidation(),
                   ],
                 ),
                 SizedBox(height: Constants.spaceM),

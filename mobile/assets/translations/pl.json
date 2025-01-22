@@ -134,5 +134,6 @@
   "cancelled": "Anulowane",
   "unpaid": "Niezapłacone",
   "paid": "Zapłacone",
-  "refunded": "Zwrócone"
+  "refunded": "Zwrócone",
+  "inputTooLong": "Wprowadzone dane są zbyt długie"
 }

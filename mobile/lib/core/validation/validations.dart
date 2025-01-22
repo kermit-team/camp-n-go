@@ -71,3 +71,33 @@ class PasswordMatchValidation extends Validation<String> {
     return null;
   }
 }
+
+class NameValidation extends Validation<String> {
+  const NameValidation();
+
+  @override
+  String? validate(BuildContext context, String? value) {
+    if (value == null) return null;
+
+    if (value.length > 128) {
+      return LocaleKeys.inputTooLong.tr();
+    }
+
+    return null;
+  }
+}
+
+class IdCardValidation extends Validation<String> {
+  const IdCardValidation();
+
+  @override
+  String? validate(BuildContext context, String? value) {
+    if (value == null) return null;
+
+    if (value.length > 32) {
+      return LocaleKeys.inputTooLong.tr();
+    }
+
+    return null;
+  }
+}

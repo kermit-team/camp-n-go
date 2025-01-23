@@ -7,12 +7,11 @@ import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/golden_text_field.dart';
-import 'package:campngo/features/shared/widgets/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
-import 'package:campngo/features/shared/widgets/title_text.dart';
+import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +40,9 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.createAccount.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.toPlanYourVacation.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -53,17 +52,19 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: LocaleKeys.firstName.tr(),
                   validations: const [
                     RequiredValidation(),
+                    NameValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: lastNameController,
                   hintText: LocaleKeys.lastName.tr(),
                   validations: const [
                     RequiredValidation(),
+                    NameValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: emailController,
                   hintText: LocaleKeys.email.tr(),
@@ -72,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     EmailValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: passwordController,
                   hintText: LocaleKeys.password.tr(),
@@ -82,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     PasswordValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: confirmPasswordController,
                   hintText: LocaleKeys.repeatPassword.tr(),
@@ -92,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     PasswordValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 _getButtons(
                   context,
                   _formKey,
@@ -102,23 +103,23 @@ class _RegisterPageState extends State<RegisterPage> {
                   passwordController,
                   confirmPasswordController,
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 // CustomButtonInverted(
                 //   text: "GOOGLE Zaloguj się przez Google",
                 //   onPressed: () {},
                 // ),
-                // const SizedBox(height: Constants.spaceS),
+                // SizedBox(height: Constants.spaceS),
                 Wrap(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StandardText("${LocaleKeys.alreadyHaveAccount.tr()}?"),
-                        const SizedBox(width: Constants.spaceXS),
+                        SizedBox(width: Constants.spaceXS),
                         HyperlinkText(
                             text: LocaleKeys.login.tr(),
                             onTap: () {
-                              serviceLocator<GoRouter>().go("/login");
+                              context.go("/login");
                             }),
                       ],
                     ),
@@ -127,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: Constants.spaceL,
           ),
         ],
@@ -156,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             text: LocaleKeys.emailToResetPasswordSent.tr(),
           );
-          serviceLocator<GoRouter>().go("/confirmAccount");
+          context.go("/confirmAccount");
         }
       },
       builder: (context, state) {

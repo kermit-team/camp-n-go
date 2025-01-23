@@ -1,5 +1,7 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/token_storage.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 
 class TokenInterceptor extends Interceptor {
@@ -46,6 +48,8 @@ class TokenInterceptor extends Interceptor {
         } catch (e) {
           return handler.next(err);
         }
+      } else {
+        serviceLocator<AuthCubit>().logout();
       }
     }
     handler
@@ -65,7 +69,10 @@ class TokenInterceptor extends Interceptor {
       final newAccessToken = response.data['access'];
       // final newRefreshToken = response.data['refresh_token'];
 
-      await tokenStorage.saveTokens(newAccessToken, refreshToken);
+      await tokenStorage.saveTokens(
+        accessToken: newAccessToken,
+        refreshToken: refreshToken,
+      );
       return true;
     } catch (e) {
       await tokenStorage.clearTokens();

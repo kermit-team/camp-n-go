@@ -28,6 +28,7 @@ Future<void> showCarDetailsDialog({
             enabled: false,
           ),
         ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
         actions: <Widget>[
           TextButton(
             onPressed: () {

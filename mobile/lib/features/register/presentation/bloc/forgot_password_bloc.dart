@@ -2,11 +2,9 @@ import 'package:campngo/core/resources/data_result.dart';
 import 'package:campngo/features/register/domain/repository/register_repository.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_event.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_state.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
 
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
@@ -31,8 +29,7 @@ class ForgotPasswordBloc
         case Success<dynamic, Exception>():
           {
             emit(const ForgotPasswordSuccess());
-            serviceLocator<GoRouter>().go("/login");
-            emit(const ForgotPasswordInitial());
+            // emit(const ForgotPasswordInitial());
           }
         case Failure<dynamic, Exception>(exception: final exception):
           {

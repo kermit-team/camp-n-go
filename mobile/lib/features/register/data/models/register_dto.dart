@@ -1,4 +1,4 @@
-import 'package:campngo/features/register/data/models/profile_dto.dart';
+import 'package:campngo/features/account_settings/data/models/account_profile_dto.dart';
 import 'package:campngo/features/register/domain/entities/register_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -8,7 +8,7 @@ part 'register_dto.g.dart';
 class RegisterDTO {
   final String email;
   final String? password;
-  final ProfileDTO profile;
+  final AccountProfileDto profile;
 
   RegisterDTO({
     this.password,
@@ -16,15 +16,8 @@ class RegisterDTO {
     required this.profile,
   });
 
-  factory RegisterDTO.fromJson(Map<String, dynamic> json) => RegisterDTO(
-        email: json['email'] as String,
-        profile: ProfileDTO.fromJson(
-          (json['profile'] as Map<String, dynamic>?)?.map(
-                (k, e) => MapEntry(k, e == "" ? null : e),
-              ) ??
-              {},
-        ), // Handle null and empty strings
-      );
+  factory RegisterDTO.fromJson(Map<String, dynamic> json) =>
+      _$RegisterDTOFromJson(json);
 
   Map<String, dynamic> toJson() => _$RegisterDTOToJson(this);
 
@@ -37,6 +30,6 @@ class RegisterDTO {
   factory RegisterDTO.fromEntity(RegisterEntity entity) => RegisterDTO(
         email: entity.email,
         password: entity.password,
-        profile: ProfileDTO.fromEntity(entity.profile),
+        profile: AccountProfileDto.fromEntity(entity.profile),
       );
 }

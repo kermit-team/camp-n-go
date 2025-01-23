@@ -1,12 +1,13 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_router.dart';
 import 'package:campngo/config/theme/app_theme.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:sizer/sizer.dart';
 
 //generate translations command:
 //flutter pub run easy_localization:generate -S "assets/translations" -O "lib/generated" -f keys -o locale_keys.g.dart
@@ -14,7 +15,11 @@ import 'package:go_router/go_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  initializeDependencies();
+  await initializeDependencies();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(EasyLocalization(
     supportedLocales: const [
       Locale('pl'),
@@ -30,9 +35,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    return Sizer(
+      builder: (p0, p1, p2) {
+        return const MaterialApp(
+          title: 'Flutter Demo',
+          home: MyHomePage(title: 'Flutter Demo Home Page'),
+        );
+      },
     );
   }
 }
@@ -48,9 +57,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>(
+    return BlocProvider<AuthCubit>(
       create: (BuildContext context) =>
-          serviceLocator<AuthBloc>()..add(InitialLogin()),
+          serviceLocator<AuthCubit>()..appStarted(),
       child: Builder(
         builder: (context) => MaterialApp.router(
           title: Constants.appName,
@@ -58,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           theme: theme(),
-          routerConfig: serviceLocator<GoRouter>(),
+          // routerConfig: context,
+          routerConfig: AppRouter().router,
         ),
       ),
     );

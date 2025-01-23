@@ -2,17 +2,17 @@ import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/validation/validations.dart';
-import 'package:campngo/features/account_settings/domain/entities/account_entity.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
-import 'package:campngo/features/account_settings/presentation/widgets/display_text_field.dart';
+import 'package:campngo/features/account_settings/presentation/widgets/show_add_car_dialog.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
-import 'package:campngo/features/shared/widgets/title_text.dart';
+import 'package:campngo/features/shared/widgets/display_text_field.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +38,36 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AccountSettingsCubit, AccountSettingsState>(
       listener: (context, state) {
+        switch (state.carOperationStatus) {
+          case CarOperationStatus.unknown:
+          case CarOperationStatus.loading:
+            break;
+          case CarOperationStatus.notDeleted:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: "${LocaleKeys.carNotDeleted.tr()}: ${state.exception}",
+            );
+          case CarOperationStatus.deleted:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.carDeletedSuccessfully.tr(),
+            );
+          case CarOperationStatus.notAdded:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: "${LocaleKeys.carNotAdded.tr()}: ${state.exception}",
+            );
+          case CarOperationStatus.added:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.carAddedSuccessfully.tr(),
+            );
+          case CarOperationStatus.alreadyExists:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: LocaleKeys.carAlreadyExists.tr(),
+            );
+        }
         switch (state.editPropertyStatus) {
           case EditPropertyStatus.unknown:
           case EditPropertyStatus.loading:
@@ -53,8 +83,20 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 context: context,
                 text: "Nowa wartość pola została ustawiona",
               );
-              context.read<AccountSettingsCubit>().getAccountData();
             }
+        }
+        switch (state.editPasswordStatus) {
+          case EditPasswordStatus.unknown:
+          case EditPasswordStatus.loading:
+            break;
+          case EditPasswordStatus.failure:
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: state.exception.toString(),
+            );
+          case EditPasswordStatus.success:
+            AppSnackBar.showSnackBar(
+                context: context, text: "Hasło zostało zmienione");
         }
       },
       builder: (context, state) {
@@ -66,9 +108,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: Column(
                   children: [
                     TitleText(LocaleKeys.accountSettings.tr()),
-                    const SizedBox(height: Constants.spaceS),
+                    SizedBox(height: Constants.spaceS),
                     StandardText(LocaleKeys.updateUserData.tr()),
-                    const SizedBox(height: Constants.spaceL),
+                    SizedBox(height: Constants.spaceL),
                     const CircularProgressIndicator()
                   ],
                 ),
@@ -80,9 +122,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 child: Column(
                   children: [
                     TitleText(LocaleKeys.accountSettings.tr()),
-                    const SizedBox(height: Constants.spaceS),
+                    SizedBox(height: Constants.spaceS),
                     StandardText(LocaleKeys.updateUserData.tr()),
-                    const SizedBox(height: Constants.spaceL),
+                    SizedBox(height: Constants.spaceL),
                     const StandardText(
                         "Dane nie zostały załadowane prawidłowo"),
                   ],
@@ -96,18 +138,22 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   child: Column(
                     children: [
                       TitleText(LocaleKeys.accountSettings.tr()),
-                      const SizedBox(height: Constants.spaceS),
+                      SizedBox(height: Constants.spaceS),
                       StandardText(LocaleKeys.updateUserData.tr()),
-                      const SizedBox(height: Constants.spaceL),
+                      SizedBox(height: Constants.spaceL),
                       Form(
                         key: _formKey,
                         child: Column(
                           children: [
                             DisplayTextField(
                               label: LocaleKeys.firstName.tr(),
-                              text: state.accountEntity?.firstName ?? '',
-                              validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              text:
+                                  state.accountEntity?.profile.firstName ?? '',
+                              validations: const [
+                                RequiredValidation(),
+                                NameValidation(),
+                              ],
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -119,9 +165,12 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.lastName.tr(),
-                              text: state.accountEntity?.lastName ?? '',
-                              validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              text: state.accountEntity?.profile.lastName ?? '',
+                              validations: const [
+                                RequiredValidation(),
+                                NameValidation(),
+                              ],
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -133,12 +182,13 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.email.tr(),
+                              canBeModified: false,
                               text: state.accountEntity?.email ?? '',
                               validations: const [
                                 RequiredValidation(),
                                 EmailValidation()
                               ],
-                              onHyperlinkPressed: (String newValue) {
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
@@ -150,27 +200,27 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.phoneNumber.tr(),
-                              text: state.accountEntity?.phoneNumber ?? '',
-                              validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              text: state.accountEntity?.profile.phoneNumber ??
+                                  '',
+                              onPhoneNumberSavePressed: (String phoneNumber) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
                                       property: AccountProperty.phoneNumber,
-                                      newValue: newValue,
+                                      newValue: phoneNumber,
                                     );
-                                log("New value for firstName: $newValue");
+                                log("New value for phoneNumber: $phoneNumber");
                               },
                             ),
                             DisplayTextField(
                               label: LocaleKeys.idNumber.tr(),
-                              text: state.accountEntity?.idNumber ?? '',
-                              validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              text: state.accountEntity?.profile.idCard ?? '',
+                              validations: const [IdCardValidation()],
+                              onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
                                     .editProperty(
-                                      property: AccountProperty.idNumber,
+                                      property: AccountProperty.idCard,
                                       newValue: newValue,
                                     );
                                 log("New value for firstName: $newValue");
@@ -178,29 +228,26 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                             ),
                             DisplayTextField(
                               label: LocaleKeys.password.tr(),
-                              text: state.accountEntity?.password ?? '',
+                              text: "·············",
                               isPassword: true,
                               validations: const [RequiredValidation()],
-                              onHyperlinkPressed: (String newValue) {
+                              onPasswordDialogSavePressed: (
+                                String oldPassword,
+                                String newPassword,
+                              ) {
                                 context
                                     .read<AccountSettingsCubit>()
-                                    .editProperty(
-                                      property: AccountProperty.password,
-                                      newValue: newValue,
+                                    .editPassword(
+                                      oldPassword: oldPassword,
+                                      newPassword: newPassword,
                                     );
-                                log("New value for firstName: $newValue");
                               },
                             ),
-                            const SizedBox(height: Constants.spaceS),
-                            TextButton(
-                              onPressed: context
-                                  .read<AccountSettingsCubit>()
-                                  .getCarList,
-                              child: const StandardText("Your cars"),
-                            ),
-                            const SizedBox(height: Constants.spaceM),
+                            SizedBox(height: Constants.spaceS),
+                            const StandardText("Your cars"),
+                            SizedBox(height: Constants.spaceM),
                             CarListWidget(
-                              onListTilePressed: (CarEntity car) {
+                              onListTilePressed: (Car car) {
                                 showCarDetailsDialog(
                                     context: context,
                                     registrationPlate: car.registrationPlate,
@@ -211,13 +258,20 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                     });
                               },
                               onAddButtonPressed: () {
-                                AppSnackBar.showSnackBar(
+                                showAddCarDialog(
                                   context: context,
-                                  text: "Dodawanie nowego samochodu",
+                                  validations: [
+                                    const RequiredValidation(),
+                                  ],
+                                  onSubmit: (registrationPlate) {
+                                    context.read<AccountSettingsCubit>().addCar(
+                                          registrationPlate: registrationPlate,
+                                        );
+                                  },
                                 );
                               },
                             ),
-                            const SizedBox(height: Constants.spaceL),
+                            SizedBox(height: Constants.spaceL),
                           ],
                         ),
                       ),

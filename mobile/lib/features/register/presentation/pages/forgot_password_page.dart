@@ -8,10 +8,9 @@ import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/golden_text_field.dart';
 import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
-import 'package:campngo/features/shared/widgets/title_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +35,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         children: [
           const IconAppBar(),
           TitleText(LocaleKeys.forgotPassword.tr()),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.weWillSendYouEmail.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -51,7 +50,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     EmailValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 _getButtons(
                   context,
                   _formKey,
@@ -78,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             text: _getExceptionMessage(forgotPasswordState.exception!),
           );
         } else if (forgotPasswordState is ForgotPasswordSuccess) {
-          serviceLocator<GoRouter>().replace("/resetPasswordInfo");
+          context.replace("/resetPasswordInfo");
         }
       },
       builder: (forgotPasswordContext, forgotPasswordState) {

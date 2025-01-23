@@ -4,21 +4,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'auth_response_dto.g.dart';
 
 @JsonSerializable()
-class AuthResponseDTO {
+class AuthResponseDto {
   @JsonKey(name: 'access')
   final String accessToken;
   @JsonKey(name: 'refresh')
   final String refreshToken;
 
-  AuthResponseDTO({
+  AuthResponseDto({
     required this.accessToken,
     required this.refreshToken,
   });
 
-  factory AuthResponseDTO.fromJson(Map<String, dynamic> json) =>
-      _$AuthResponseDTOFromJson(json);
+  factory AuthResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$AuthResponseDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthResponseDTOToJson(this);
+  Map<String, dynamic> toJson() => _$AuthResponseDtoToJson(this);
 
   AuthEntity toEntity() => AuthEntity(
         accessToken: accessToken,

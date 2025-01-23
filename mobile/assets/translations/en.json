@@ -27,7 +27,7 @@
   "confirmAccount": "Confirm account",
   "confirmationEmailSent": "We sent confirmation link to entered email address",
   "returnToLogin": "Return to login",
-  "passwordRules": "Hasło musi mieć co najmniej 9 znaków i posiadać min. 1 wielką literę, 1 małą literę, 1 znak specjalny, 1 cyfrę",
+  "passwordRules": "Password must be at least 9 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 special character, and 1 digit.",
   "invalidEmail": "Email is not valid",
   "accountSettings": "Account settings",
   "updateUserData": "Update user data",
@@ -139,5 +139,5 @@
   "reservationListEmpty": "Reservation list is empty",
   "parcelListEmpty": "Parcel list is empty",
   "registerFailed": "Wrong credentials",
-  "loginFailed": "Nieprawidłowe dane logowania"
+  "loginFailed": "Wrong credentials or account with this data already exists"
 }

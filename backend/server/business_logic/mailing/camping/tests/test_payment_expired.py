@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.conf import settings
 from django.template.loader import render_to_string
 from django.test import TestCase
 from model_bakery import baker
@@ -51,6 +52,7 @@ class PaymentExpiredMailTestCase(TestCase):
             to_email=emails,
             subject=subject,
             html_message=message,
+            from_email=settings.EMAIL_HOST_USER,
         )
 
         celery_app_mock.send_task.assert_called_once_with(

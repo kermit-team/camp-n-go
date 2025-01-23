@@ -101,6 +101,23 @@ services:
     ports:
       - '8025:8025'
 
+  celery-beat:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    volumes:
+      - ./backend:/code
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+      - envs/.rabbitmq.env
+    command: sh run_celery.dev.sh
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
   worker:
     build:
       context: ./

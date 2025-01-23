@@ -1,6 +1,8 @@
 import logging
 from abc import ABC, abstractmethod
 
+from django.conf import settings
+
 from server.celery import app
 from server.services.consumer.enums import TaskNameEnum
 from server.services.consumer.serializers.mailing import MailingSerializer
@@ -30,11 +32,18 @@ class AbstractMailBL(ABC):
         raise NotImplementedError
 
     @classmethod
-    def _enqueue_files_to_mail(cls, subject: str, message: str, emails: list[str]) -> None:
+    def _enqueue_files_to_mail(
+        cls,
+        subject: str,
+        message: str,
+        emails: list[str],
+        from_email: str = settings.EMAIL_HOST_USER,
+    ) -> None:
         payload_serializer = MailingSerializer(
             to_email=emails,
             subject=subject,
             html_message=message,
+            from_email=from_email,
         )
         app.send_task(
             name=TaskNameEnum.MAILING,

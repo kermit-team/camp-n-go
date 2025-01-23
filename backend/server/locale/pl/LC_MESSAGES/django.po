@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-22 22:48+0100\n"
+"POT-Creation-Date: 2025-01-23 23:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -249,6 +249,11 @@ msgstr ""
 "Nie znaleziono sesji realizacji zakupu Stripe dla intencji płatności "
 "{payment_intent}."
 
+#: server/apps/camping/messages/contact_form.py:7
+#, python-brace-format
+msgid "Contact form from email {email} has been successfully sent."
+msgstr "Formularz kontaktowy z adresu email {email} został pomyślnie wysłany."
+
 #: server/apps/camping/messages/reservation.py:7
 msgid "Reservation was successfully cancelled."
 msgstr "Rezerwacja została pomyślnie anulowana."
@@ -451,6 +456,14 @@ msgstr "Weryfikacja adresu e-mail"
 msgid "AccountPasswordResetEmailSubject"
 msgstr "Prośba o zresetowanie hasła"
 
+#: server/business_logic/mailing/camping/contact_form.py:10
+msgid "ContactFormEmailSubject"
+msgstr "Formularz kontaktowy"
+
+#: server/business_logic/mailing/camping/contact_form_confirmation.py:10
+msgid "ContactFormConfirmationEmailSubject"
+msgstr "Potwierdzenie wysłania formularza kontaktowego"
+
 #: server/business_logic/mailing/camping/payment_expired.py:10
 msgid "PaymentExpiredEmailSubject"
 msgstr "Płatność wygasła"
@@ -470,6 +483,10 @@ msgstr "Anulowanie rezerwacji"
 #: server/business_logic/mailing/camping/reservation_create.py:15
 msgid "ReservationCreateEmailSubject"
 msgstr "Nowa rezerwacja"
+
+#: server/business_logic/mailing/camping/reservation_reminder.py:11
+msgid "ReservationReminderEmailSubject"
+msgstr "Przypomnienie o nadchodzącej rezerwacji"
 
 #: server/settings/components/permissions.py:3
 msgid "Owner"
@@ -497,11 +514,13 @@ msgstr "Weryfikacja adresu e-mail"
 
 #: server/templates/mailing/account/email_verification.html:9
 #: server/templates/mailing/account/password_reset.html:9
+#: server/templates/mailing/camping/contact_form_confirmation.html:9
 #: server/templates/mailing/camping/payment_expired.html:9
 #: server/templates/mailing/camping/payment_refund_processed.html:9
 #: server/templates/mailing/camping/payment_success.html:9
 #: server/templates/mailing/camping/reservation_cancel.html:9
 #: server/templates/mailing/camping/reservation_create.html:9
+#: server/templates/mailing/camping/reservation_reminder.html:9
 msgid "Hi"
 msgstr "Cześć"
 
@@ -527,11 +546,13 @@ msgstr ""
 
 #: server/templates/mailing/account/email_verification.html:34
 #: server/templates/mailing/account/password_reset.html:26
+#: server/templates/mailing/camping/contact_form_confirmation.html:16
 #: server/templates/mailing/camping/payment_expired.html:16
 #: server/templates/mailing/camping/payment_refund_processed.html:16
 #: server/templates/mailing/camping/payment_success.html:16
 #: server/templates/mailing/camping/reservation_cancel.html:16
 #: server/templates/mailing/camping/reservation_create.html:27
+#: server/templates/mailing/camping/reservation_reminder.html:27
 msgid "Regards"
 msgstr "Pozdrawia"
 
@@ -552,6 +573,24 @@ msgstr ""
 #: server/templates/mailing/account/password_reset.html:16
 msgid "Reset password"
 msgstr "Zresetuj hasło"
+
+#: server/templates/mailing/camping/contact_form.html:6
+#: server/templates/mailing/camping/contact_form_confirmation.html:6
+msgid "Contact form"
+msgstr "Formularz kontaktowy"
+
+#: server/templates/mailing/camping/contact_form.html:9
+msgid "Content"
+msgstr "Treść"
+
+#: server/templates/mailing/camping/contact_form_confirmation.html:10
+#, python-format
+msgid ""
+"We have received your message and will do our best to respond as soon as "
+"possible. It usually takes about %(contact_form_respond_time)s business day."
+msgstr ""
+"Otrzymaliśmy Twoją wiadomość i dołożymy wszelkich starań, aby odpowiedzieć tak szybko, jak to możliwe. "
+"Zwykle zajmuje to około %(contact_form_respond_time)s dni roboczych."
 
 #: server/templates/mailing/camping/payment_expired.html:6
 msgid "Payment expired"
@@ -631,6 +670,42 @@ msgstr ""
 #: server/templates/mailing/camping/reservation_create.html:17
 msgid "Complete payment"
 msgstr "Dokończ płatność"
+
+#: server/templates/mailing/camping/reservation_reminder.html:6
+msgid "Reservation reminder"
+msgstr "Przypomnienie o nadchodzącej rezerwacji"
+
+#: server/templates/mailing/camping/reservation_reminder.html:10
+#, python-format
+msgid ""
+"Your reservation %(camping_plot)s [%(date_from)s - %(date_to)s] is upcoming."
+msgstr ""
+"Termin Twojej rezerwacji %(camping_plot)s [%(date_from)s - %(date_to)s] zbliża się."
+
+#: server/templates/mailing/camping/reservation_reminder.html:14
+msgid "Reservation details"
+msgstr "Szczegóły rezerwacji"
+
+#: server/templates/mailing/camping/reservation_reminder.html:16
+msgid "Number of adults"
+msgstr "Liczba dorosłych"
+
+#: server/templates/mailing/camping/reservation_reminder.html:17
+msgid "Number of children"
+msgstr "Liczba dzieci"
+
+#: server/templates/mailing/camping/reservation_reminder.html:18
+msgid "Chosen car"
+msgstr "Wybrany samochód"
+
+#: server/templates/mailing/camping/reservation_reminder.html:21
+#, python-format
+msgid ""
+"We kindly remind you that check-in is possible from %(check_in_time)s, while "
+"check-out must be done by %(check_out_time)s."
+msgstr ""
+"Uprzejmie przypominamy, że zameldowanie jest możliwe od %(check_in_time)s, "
+"natomiast wymeldowanie musi nastąpić do %(check_out_time)s."
 
 #: server/utils/api/time_helper.py:12
 #, python-brace-format

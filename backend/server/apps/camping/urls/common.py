@@ -4,6 +4,7 @@ from server.apps.camping.views import (
     CampingPlotAvailabilityListView,
     CampingPlotDetailsView,
     CampingSectionDetailsView,
+    ContactFormSendView,
     ReservationCancelView,
     ReservationCreateView,
     ReservationDetailsView,
@@ -57,5 +58,10 @@ urlpatterns = [
         'payments/webhook/',
         StripePaymentWebhookView.as_view(),
         name='payment_webhook',
+    ),
+    path(
+        'contact-form/send/',
+        ContactFormSendView.as_view(),
+        name='contact_form_send',
     ),
 ]

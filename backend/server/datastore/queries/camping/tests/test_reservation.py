@@ -290,3 +290,57 @@ class ReservationQueryTestCase(TestCase):
         queryset = ReservationQuery.get_with_matching_reservation_data(reservation_data='abc')
 
         self.assertCountEqual(queryset, reservations)
+
+    def test_get_incoming_reservations(self):
+        reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME),
+            payment__status=PaymentStatus.PAID,
+        )
+        expected_reservations = [reservation]
+
+        results = ReservationQuery.get_incoming_reservations(given_date=self.given_date)
+
+        self.assertCountEqual(results, expected_reservations)
+
+    def test_get_incoming_reservations_without_matching_date(self):
+        _future_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME + 1),
+            payment__status=PaymentStatus.PAID,
+        )
+        _past_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME - 1),
+            payment__status=PaymentStatus.PAID,
+        )
+
+        results = ReservationQuery.get_incoming_reservations(given_date=self.given_date)
+
+        assert not results
+
+    def test_get_incoming_reservations_without_matching_payment_status(self):
+        _waiting_for_payment_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME),
+            payment__status=PaymentStatus.WAITING_FOR_PAYMENT,
+        )
+        _cancelled_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME),
+            payment__status=PaymentStatus.CANCELLED,
+        )
+        _unpaid_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME),
+            payment__status=PaymentStatus.UNPAID,
+        )
+        _refunded_reservation = baker.make(
+            _model=Reservation,
+            date_from=self.given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME),
+            payment__status=PaymentStatus.REFUNDED,
+        )
+
+        results = ReservationQuery.get_incoming_reservations(given_date=self.given_date)
+
+        assert not results

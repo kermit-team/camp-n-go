@@ -1,3 +1,4 @@
+from server.apps.camping.serializers.contact_form import ContactFormSerializer
 from server.apps.camping.serializers.payment_details import PaymentDetailsSerializer
 from server.apps.camping.serializers.plot_details import CampingPlotDetailsSerializer
 from server.apps.camping.serializers.reservation_create import ReservationCreateSerializer

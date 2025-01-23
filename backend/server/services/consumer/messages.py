@@ -15,3 +15,9 @@ class ConsumerMessagesEnum(enum.StrEnum):
     ENQUEUED_PAYMENT_EXPIRED_TO_MAIL = 'Enqueueing mail for payment expired to sent'  # noqa: S105
     ENQUEUED_RESERVATION_CANCEL_TO_MAIL = 'Enqueueing mail for reservation cancel to sent'  # noqa: S105
     ENQUEUED_PAYMENT_REFUND_PROCESSED_TO_MAIL = 'Enqueueing mail for payment refund processed to sent'  # noqa: S105
+    ENQUEUED_CONTACT_FORM_TO_MAIL = 'Enqueueing mail for contact form to sent'  # noqa: S105
+    ENQUEUED_CONTACT_FORM_CONFIRMATION_TO_MAIL = 'Enqueueing mail for contact form confirmation to sent'  # noqa: S105
+    ENQUEUED_RESERVATION_REMINDER_TO_MAIL = 'Enqueueing mail for reservation remind to sent'  # noqa: S105
+    ENQUEUED_RESERVATIONS_REMINDER_DISPATCH = (
+        'Enqueued reservations reminder dispatcher for accounts: {accounts}.'  # noqa: S105
+    )

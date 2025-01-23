@@ -1,15 +1,19 @@
 import 'package:campngo/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 ThemeData theme({bool isDarkTheme = false}) => ThemeData.from(
       colorScheme: _lightColorScheme,
     ).copyWith(
       scaffoldBackgroundColor: Colors.white,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+          size: 22.sp,
+        ),
       ),
     );
 

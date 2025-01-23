@@ -57,6 +57,7 @@ dependencies:
   infinite_scroll_pagination: ^4.1.0
   webview_flutter: ^4.10.0
   intl_phone_field: ^3.2.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:

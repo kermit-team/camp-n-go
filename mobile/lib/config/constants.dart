@@ -1,7 +1,7 @@
 import 'package:sizer/sizer.dart';
 
 class Constants {
-  static const String appName = "Camp'n'go";
+  static const String appName = "Camp'n'Go";
   static const String apiUrl = 'http://10.0.2.2:8000/api';
   static const int pageSize = 5;
 

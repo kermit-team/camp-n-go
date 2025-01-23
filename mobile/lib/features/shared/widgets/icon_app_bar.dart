@@ -9,12 +9,12 @@ class IconAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: Constants.spaceL,
+        bottom: Constants.spaceS,
       ),
       child: Image.asset(
         'assets/images/logo.png',
         color: Theme.of(context).colorScheme.onSurface,
-        height: 10.h,
+        height: 15.h,
         width: double.maxFinite,
       ),
     );

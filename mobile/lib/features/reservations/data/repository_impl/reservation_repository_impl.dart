@@ -8,7 +8,6 @@ import 'package:campngo/core/resources/paginated_response.dart';
 import 'package:campngo/features/reservations/data/data_sources/reservation_api_service.dart';
 import 'package:campngo/features/reservations/data/models/create_reservation_request_dto.dart';
 import 'package:campngo/features/reservations/data/models/update_reservation_request_dto.dart';
-import 'package:campngo/features/reservations/data/repository_impl/reservation_repository_mock.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation.dart';
@@ -18,12 +17,10 @@ import 'package:dio/dio.dart';
 
 class ReservationRepositoryImpl implements ReservationRepository {
   final ReservationApiService _reservationApiService;
-  final bool useMocks; // Add a flag to control mock usage
-  final ReservationRepositoryMock _reservationRepositoryMock =
-      ReservationRepositoryMock();
 
-  ReservationRepositoryImpl(this._reservationApiService,
-      {this.useMocks = false});
+  ReservationRepositoryImpl(
+    this._reservationApiService,
+  );
 
   @override
   Future<Result<Parcel, Exception>> getParcelDetails({
@@ -90,27 +87,21 @@ class ReservationRepositoryImpl implements ReservationRepository {
   Future<Result<Reservation, Exception>> getReservationDetails({
     required int reservationId,
   }) async {
-    if (useMocks) {
-      return _reservationRepositoryMock.getReservationDetails(
+    try {
+      final httpResponse = await _reservationApiService.getReservationDetails(
           reservationId: reservationId);
-    } else {
-      // Real API implementation
-      try {
-        final httpResponse = await _reservationApiService.getReservationDetails(
-            reservationId: reservationId);
 
-        if (httpResponse.response.statusCode == HttpStatus.ok ||
-            httpResponse.response.statusCode == 200) {
-          final Reservation reservation = httpResponse.data.toEntity();
-          return Success(reservation);
-        }
-
-        final errorResponse = handleError(httpResponse.response);
-        log("[ReservationRepositoryImpl>getReservationDetails]: $errorResponse");
-        return Failure(Exception(errorResponse));
-      } on DioException catch (dioException) {
-        return Failure(handleApiError(dioException));
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final Reservation reservation = httpResponse.data.toEntity();
+        return Success(reservation);
       }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>getReservationDetails]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 
@@ -121,38 +112,29 @@ class ReservationRepositoryImpl implements ReservationRepository {
     required int page,
     required int pageSize,
   }) async {
-    if (useMocks) {
-      return _reservationRepositoryMock.getReservationList(
-        userId: userId,
-        page: 1,
+    // Real API implementation
+    try {
+      final httpResponse = await _reservationApiService.getMyReservations(
+        page: page,
         pageSize: pageSize,
       );
-    } else {
-      // Real API implementation
-      try {
-        final httpResponse = await _reservationApiService.getMyReservations(
-          page: page,
-          pageSize: pageSize,
+
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        final PaginatedResponse<ReservationPreview> paginatedResponse =
+            PaginatedResponse<ReservationPreview>(
+          currentPage: httpResponse.data.currentPage,
+          totalItems: httpResponse.data.totalItems,
+          items: httpResponse.data.items.map((dto) => dto.toEntity()).toList(),
         );
-
-        if (httpResponse.response.statusCode == HttpStatus.ok ||
-            httpResponse.response.statusCode == 200) {
-          final PaginatedResponse<ReservationPreview> paginatedResponse =
-              PaginatedResponse<ReservationPreview>(
-            currentPage: httpResponse.data.currentPage,
-            totalItems: httpResponse.data.totalItems,
-            items:
-                httpResponse.data.items.map((dto) => dto.toEntity()).toList(),
-          );
-          return Success(paginatedResponse);
-        }
-
-        final errorResponse = handleError(httpResponse.response);
-        log("[ReservationRepositoryImpl>getReservationList]: $errorResponse");
-        return Failure(Exception(errorResponse));
-      } on DioException catch (dioException) {
-        return Failure(handleApiError(dioException));
+        return Success(paginatedResponse);
       }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>getReservationList]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 
@@ -221,26 +203,21 @@ class ReservationRepositoryImpl implements ReservationRepository {
   @override
   Future<Result<void, Exception>> cancelReservation(
       {required int reservationId}) async {
-    if (useMocks) {
-      return _reservationRepositoryMock.cancelReservation(
-          reservationId: reservationId);
-    } else {
-      try {
-        final httpResponse = await _reservationApiService.cancelReservation(
-          reservationId: reservationId,
-        );
+    try {
+      final httpResponse = await _reservationApiService.cancelReservation(
+        reservationId: reservationId,
+      );
 
-        if (httpResponse.response.statusCode == HttpStatus.ok ||
-            httpResponse.response.statusCode == 200) {
-          return const Success(null);
-        }
-
-        final errorResponse = handleError(httpResponse.response);
-        log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
-        return Failure(Exception(errorResponse));
-      } on DioException catch (dioException) {
-        return Failure(handleApiError(dioException));
+      if (httpResponse.response.statusCode == HttpStatus.ok ||
+          httpResponse.response.statusCode == 200) {
+        return const Success(null);
       }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[ReservationRepositoryImpl>cancelReservation]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
     }
   }
 

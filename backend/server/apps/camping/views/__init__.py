@@ -1,3 +1,4 @@
+from server.apps.camping.views.contact_form_send import ContactFormSendView
 from server.apps.camping.views.plot_availability_list import CampingPlotAvailabilityListView
 from server.apps.camping.views.plot_details import CampingPlotDetailsView
 from server.apps.camping.views.reservation_cancel import ReservationCancelView

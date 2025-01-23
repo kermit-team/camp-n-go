@@ -7,3 +7,4 @@ class ConsumerMessages(enum.StrEnum):
 
 class TaskNameEnum(enum.StrEnum):
     MAILING = 'MailingTask'
+    RESERVATIONS_REMINDER_DAILY_DISPATCHER = 'ReservationsReminderDailyDispatcherTask'

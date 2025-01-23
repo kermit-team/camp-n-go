@@ -8,13 +8,13 @@ from model_bakery import baker
 from server.apps.account.models import Account, AccountProfile
 from server.apps.camping.models import Reservation
 from server.business_logic.mailing.abstract import logger
-from server.business_logic.mailing.camping import PaymentSuccessMail
+from server.business_logic.mailing.camping import ReservationReminderMail
 from server.services.consumer.enums import TaskNameEnum
 from server.services.consumer.serializers.mailing import MailingSerializer
 from server.utils.tests.helpers import get_formatted_log, is_log_in_logstream
 
 
-class PaymentSuccessMailTestCase(TestCase):
+class ReservationReminderMailTestCase(TestCase):
     mock_celery_app_path = 'server.business_logic.mailing.abstract.app'
 
     def setUp(self):
@@ -28,22 +28,26 @@ class PaymentSuccessMailTestCase(TestCase):
         celery_app_mock,
     ):
         emails = [self.reservation.user.email]
-        subject = str(PaymentSuccessMail._subject_template)
+        subject = str(ReservationReminderMail._subject_template)
 
         ctx = {
             'name': self.account.profile.short_name,
             'camping_plot': str(self.reservation.camping_plot),
             'date_from': self.reservation.date_from,
             'date_to': self.reservation.date_to,
-            'cancellation_time_in_days': settings.RESERVATION_CANCELLATION_PERIOD,
+            'number_of_adults': self.reservation.number_of_adults,
+            'number_of_children': self.reservation.number_of_children,
+            'registration_plate': self.reservation.car.registration_plate,
+            'check_in_time': settings.CHECK_IN_TIME,
+            'check_out_time': settings.CHECK_OUT_TIME,
         }
-        message = render_to_string(PaymentSuccessMail._message_template, ctx)
+        message = render_to_string(ReservationReminderMail._message_template, ctx)
 
         with self.assertLogs(logger=logger.name, level='DEBUG') as context:
-            PaymentSuccessMail.send(reservation=self.reservation)
+            ReservationReminderMail.send(reservation=self.reservation)
 
             expected_log = get_formatted_log(
-                msg=PaymentSuccessMail._logger_message,
+                msg=ReservationReminderMail._logger_message,
                 level='INFO',
                 logger=logger,
             )

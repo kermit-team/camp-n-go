@@ -26,6 +26,7 @@ class MailingTask(AbstractCeleryTask):
         to_email: list[str],
         subject: str,
         html_message: str,
+        from_email: str,
         files: Optional[list[FileInfo]] = None,
         *args,
         **kwargs,
@@ -34,6 +35,7 @@ class MailingTask(AbstractCeleryTask):
             to_email=to_email,
             subject=subject,
             html_message=html_message,
+            from_email=from_email,
             files=files,
         )
 
@@ -43,7 +45,7 @@ class MailingTask(AbstractCeleryTask):
 
         plain_message = strip_tags(payload.html_message)
         mail = EmailMultiAlternatives(
-            from_email=settings.EMAIL_HOST_USER,
+            from_email=from_email,
             to=payload.to_email,
             subject=payload.subject,
             body=plain_message,
@@ -61,6 +63,7 @@ class MailingTask(AbstractCeleryTask):
         to_email: list[str],
         subject: str,
         html_message: str,
+        from_email: str,
         files: Optional[list[FileInfo]] = None,
     ) -> MailingSerializer:
         try:
@@ -68,6 +71,7 @@ class MailingTask(AbstractCeleryTask):
                 to_email=to_email,
                 subject=subject,
                 html_message=html_message,
+                from_email=from_email,
                 files=files,
             )
         except (ValidationError, TypeError) as exc:

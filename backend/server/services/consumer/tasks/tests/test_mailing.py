@@ -2,6 +2,7 @@ from smtplib import SMTPException
 from unittest import mock
 
 import pytest
+from django.conf import settings
 from django.test import TestCase
 
 from server.business_logic.mailing.messages import MailingMessages
@@ -30,6 +31,7 @@ class MailingTaskTestCase(TestCase):
             to_email=self.to_emails,
             subject=self.subject,
             html_message=self.html_message,
+            from_email=settings.EMAIL_HOST_USER,
         )
 
         email_mock.return_value.attach_alternative.assert_called_with(self.html_message, 'text/html')
@@ -43,6 +45,7 @@ class MailingTaskTestCase(TestCase):
             to_email=self.to_emails,
             subject=self.subject,
             html_message=self.html_message,
+            from_email=settings.EMAIL_HOST_USER,
             files=self.files,
         )
 
@@ -68,6 +71,7 @@ class MailingTaskTestCase(TestCase):
                 to_email=[],
                 subject=self.subject,
                 html_message=self.html_message,
+                from_email=settings.EMAIL_HOST_USER,
                 files=self.files,
             )
 
@@ -86,6 +90,7 @@ class MailingTaskTestCase(TestCase):
             MailingTask().run(
                 to_email=self.to_emails,
                 subject=self.subject,
+                from_email=settings.EMAIL_HOST_USER,
                 html_message=self.html_message,
             )
 
@@ -97,6 +102,7 @@ class MailingTaskTestCase(TestCase):
                 to_email=self.to_emails,
                 subject=self.subject,
                 html_message=self.html_message,
+                from_email=settings.EMAIL_HOST_USER,
                 files=self.files,
             )
 
@@ -108,5 +114,6 @@ class MailingTaskTestCase(TestCase):
                 to_email=10,
                 subject=self.subject,
                 html_message=self.html_message,
+                from_email=settings.EMAIL_HOST_USER,
                 files=self.files,
             )

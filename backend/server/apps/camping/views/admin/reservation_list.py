@@ -14,6 +14,24 @@ from server.datastore.queries.camping import ReservationQuery
 @extend_schema(
     parameters=[
         OpenApiParameter(
+            name='reservation_data',
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+            required=False,
+        ),
+        OpenApiParameter(
+            name='date_from',
+            type=OpenApiTypes.DATE,
+            location=OpenApiParameter.QUERY,
+            required=True,
+        ),
+        OpenApiParameter(
+            name='date_to',
+            type=OpenApiTypes.DATE,
+            location=OpenApiParameter.QUERY,
+            required=True,
+        ),
+        OpenApiParameter(
             name='page_size',
             type=OpenApiTypes.INT,
             location=OpenApiParameter.QUERY,

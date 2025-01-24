@@ -1,2 +1,3 @@
 STRIPE_API_KEY=REPLACE-THIS
 STRIPE_WEBHOOK_SIGNING_SECRET=REPLACE-THIS
+STRIPE_EVENTS=checkout.session.completed,checkout.session.expired,charge.refunded

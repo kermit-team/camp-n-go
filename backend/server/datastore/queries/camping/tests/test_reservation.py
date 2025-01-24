@@ -243,13 +243,11 @@ class ReservationQueryTestCase(TestCase):
         assert another_reservation not in set(queryset)
 
     def test_get_queryset(self):
-        user_reservation = baker.make(_model=Reservation, user=self.account, _fill_optional=True)
-        another_reservation = baker.make(_model=Reservation, _fill_optional=True)
-        expected_reservations = [user_reservation, another_reservation]
+        reservations = baker.make(_model=Reservation, _quantity=3)
 
         queryset = ReservationQuery.get_queryset()
 
-        self.assertCountEqual(queryset, expected_reservations)
+        self.assertCountEqual(queryset, reservations)
 
     def test_get_with_matching_personal_data(self):
         reservation_with_email = baker.make(

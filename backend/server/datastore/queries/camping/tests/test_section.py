@@ -21,3 +21,11 @@ class CampingSectionQueryTestCase(TestCase):
 
         with self.assertRaises(CampingSection.DoesNotExist):
             CampingSectionQuery.get_by_name(name=name)
+
+    def test_get_queryset(self):
+        CampingSection.objects.all().delete()
+        camping_sections = baker.make(_model=CampingSection, _quantity=3)
+
+        queryset = CampingSectionQuery.get_queryset()
+
+        self.assertCountEqual(queryset, camping_sections)

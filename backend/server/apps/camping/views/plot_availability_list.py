@@ -66,8 +66,6 @@ class CampingPlotAvailabilityListView(GenericAPIView):
         return CampingPlotQuery.get_queryset()
 
     def get(self, request: Request) -> Response:
-        print(self.request.data)
-        print(self.request.query_params)
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)

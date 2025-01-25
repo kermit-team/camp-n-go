@@ -1,11 +1,11 @@
 import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/contact_form_cubit.dart';
 import 'package:campngo/features/account_settings/presentation/pages/account_settings_page.dart';
-import 'package:campngo/features/account_settings/presentation/pages/contact_form_page.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/auth/presentation/pages/login_page.dart';
+import 'package:campngo/features/contact_form/cubit/contact_form_cubit.dart';
+import 'package:campngo/features/contact_form/pages/contact_form_page.dart';
 import 'package:campngo/features/register/presentation/bloc/forgot_password_bloc.dart';
 import 'package:campngo/features/register/presentation/bloc/register_bloc.dart';
 import 'package:campngo/features/register/presentation/pages/confirm_aacount_page.dart';
@@ -208,7 +208,10 @@ class AppRouter {
                 create: (context) => ContactFormCubit(
                     accountSettingsRepository:
                         serviceLocator<AccountSettingsRepository>()),
-                child: const ContactFormPage(unauthenticated: true)),
+                child: ContactFormPage(
+                  authenticated:
+                      _authCubit.state.status == AuthStatus.authenticated,
+                )),
           );
         },
       ),

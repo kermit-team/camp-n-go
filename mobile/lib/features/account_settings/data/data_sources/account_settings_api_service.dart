@@ -38,9 +38,8 @@ abstract class AccountSettingsApiService {
     @Path("id") required int id,
   });
 
-  @POST("/contact/{email}")
+  @POST("/camping/contact-form/send/")
   Future<HttpResponse<void>> sendContactEmail({
-    @Path("email") required String email,
     @Body() required Map<String, dynamic> content,
   });
 }

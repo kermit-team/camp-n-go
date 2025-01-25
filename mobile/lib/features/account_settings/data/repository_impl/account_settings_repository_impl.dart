@@ -159,8 +159,10 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
   }) async {
     try {
       final httpResponse = await _accountSettingsApiService.sendContactEmail(
-        email: email,
-        content: {"content": content},
+        content: {
+          "email": email,
+          "content": content,
+        },
       );
 
       if (httpResponse.response.statusCode == 200 ||

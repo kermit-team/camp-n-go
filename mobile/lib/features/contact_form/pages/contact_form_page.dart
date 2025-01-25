@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/contact_form_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/widgets/contact_form_text_field.dart';
+import 'package:campngo/features/contact_form/cubit/contact_form_cubit.dart';
+import 'package:campngo/features/contact_form/widgets/contact_form_text_field.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
@@ -13,16 +13,18 @@ import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ContactFormPage extends StatefulWidget {
-  final bool unauthenticated;
+  final bool authenticated;
 
   const ContactFormPage({
     super.key,
-    this.unauthenticated = false,
+    this.authenticated = false,
   });
 
   @override
@@ -40,6 +42,18 @@ class _ContactFormPageState extends State<ContactFormPage> {
     _formKey = GlobalKey<FormState>();
     emailController = TextEditingController();
     textController = TextEditingController();
+    _getEmail();
+  }
+
+  Future<void> _getEmail() async {
+    if (widget.authenticated) {
+      final savedEmail = await serviceLocator<FlutterSecureStorage>().read(
+        key: 'email',
+      );
+      setState(() {
+        emailController.text = savedEmail ?? '';
+      });
+    }
   }
 
   @override
@@ -66,6 +80,7 @@ class _ContactFormPageState extends State<ContactFormPage> {
               children: [
                 GoldenTextField(
                   controller: emailController,
+                  enabled: !widget.authenticated,
                   hintText: LocaleKeys.email.tr(),
                   validations: const [
                     RequiredValidation(),

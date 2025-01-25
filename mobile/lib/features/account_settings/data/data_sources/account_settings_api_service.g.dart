@@ -197,10 +197,8 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
   }
 
   @override
-  Future<HttpResponse<void>> sendContactEmail({
-    required String email,
-    required Map<String, dynamic> content,
-  }) async {
+  Future<HttpResponse<void>> sendContactEmail(
+      {required Map<String, dynamic> content}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -213,7 +211,7 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
     )
         .compose(
           _dio.options,
-          '/contact/${email}',
+          '/camping/contact-form/send/',
           queryParameters: queryParameters,
           data: _data,
         )

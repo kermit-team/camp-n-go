@@ -56,13 +56,10 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
             labelText: LocaleKeys.startDate.tr(),
             onChanged: (dateRange) {
               setState(() {
-                startDateTime = dateRange?.start ??
-                    DateTime.now().add(
-                      const Duration(days: 1),
-                    );
+                startDateTime = dateRange?.start ?? DateTime.now();
                 endDateTime = dateRange?.end ??
                     DateTime.now().add(
-                      const Duration(days: 2),
+                      const Duration(days: 1),
                     );
               });
             },

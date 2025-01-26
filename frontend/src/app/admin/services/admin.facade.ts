@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { catchError, first, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, first, of, switchMap, tap } from 'rxjs';
 import {
   LibListItem,
   LibListRequestParams,
@@ -16,12 +16,15 @@ import { AdminApi } from './admin.api';
 import { AlertService } from '../../shared/services/alert.service';
 import { LibSelectItem } from '../../shared/components/select/model/select.interface';
 import { Router } from '@angular/router';
+import { AdminReservationsState } from '../state/admin-reservations.state';
+import { AdminReservationItem } from '../models/admin-reservations.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminFacade {
   private adminUsersState = inject(AdminUsersState);
+  private adminReservationsState = inject(AdminReservationsState);
   private adminApi = inject(AdminApi);
   private alertService = inject(AlertService);
   private router = inject(Router);
@@ -157,5 +160,60 @@ export class AdminFacade {
           );
         },
       });
+  }
+
+  loadAdminReservationsItems(destroyRef: DestroyRef) {
+    this.selectParcelListParams$()
+      .pipe(
+        switchMap((params: LibListRequestParams) =>
+          this.adminApi.getAdminReservationsList({ ...params }).pipe(
+            catchError((error: Error) =>
+              of({
+                page: 0,
+                count: 0,
+                results: [],
+              }),
+            ),
+          ),
+        ),
+        takeUntilDestroyed(destroyRef),
+      )
+      .subscribe({
+        next: (response: LibListItem<AdminReservationItem>) => {
+          this.adminReservationsState.setItems(response.results);
+          this.adminReservationsState.setPaginationMetadata({
+            currentPage: response.page,
+            totalElements: response.count,
+            currentLimit: 10,
+          });
+        },
+        error: () => {
+          this.adminReservationsState.setItems([]);
+        },
+      });
+  }
+
+  selectAdminReservationItems$() {
+    return this.adminReservationsState.selectItems$();
+  }
+
+  selectAdminReservationListParams$() {
+    return this.adminReservationsState.selectListRequestParameters$();
+  }
+
+  selectAdminReservationPaginationMetadata$() {
+    return this.adminReservationsState.selectPaginationMetadata$();
+  }
+
+  setAdminReservationPage(newPage: number) {
+    this.adminReservationsState.setPage(newPage);
+  }
+
+  selectAdminReservationFilters$() {
+    return this.adminReservationsState.selectFilters$();
+  }
+
+  setAdminReservationFilters(filters: AdminUsersFilters) {
+    this.adminReservationsState.setListFilters(filters);
   }
 }

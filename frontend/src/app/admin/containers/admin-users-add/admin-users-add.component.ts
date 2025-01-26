@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AdminFacade } from '../../services/admin.facade';
 import { AdminUsersAddEditRequest } from '../../models/admin-users.interface';
 import { RouterLink } from '@angular/router';
-import { AdminUsersAddContentComponent } from '../../components/admin-users-add-content/admin-users-add-content.component';
+import { AdminUsersAddContentComponent } from '../../components/admin-users/admin-users-add-content/admin-users-add-content.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({

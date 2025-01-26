@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { AdminUsersFiltersComponent } from '../../components/admin-users-filters/admin-users-filters.component';
-import { AdminUsersListComponent } from '../../components/admin-users-list/admin-users-list.component';
+import { AdminUsersFiltersComponent } from '../../components/admin-users/admin-users-filters/admin-users-filters.component';
+import { AdminUsersListComponent } from '../../components/admin-users/admin-users-list/admin-users-list.component';
 import { Router, RouterLink } from '@angular/router';
 import { AdminFacade } from '../../services/admin.facade';
 import { AsyncPipe } from '@angular/common';

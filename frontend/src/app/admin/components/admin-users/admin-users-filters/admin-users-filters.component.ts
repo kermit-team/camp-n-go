@@ -6,17 +6,17 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { SelectComponent } from '../../../shared/components/select/select.component';
-import { AdminUsersFilters } from '../../models/admin-users.interface';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { InputComponent } from '../../../../shared/components/input/input.component';
+import { SelectComponent } from '../../../../shared/components/select/select.component';
+import { AdminUsersFilters } from '../../../models/admin-users.interface';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { LibSelectItem } from '../../../shared/components/select/model/select.interface';
+import { LibSelectItem } from '../../../../shared/components/select/model/select.interface';
 
 @Component({
   selector: 'app-admin-users-filters',

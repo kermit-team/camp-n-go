@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdminFacade } from '../../services/admin.facade';
 import { AdminUsersAddEditRequest } from '../../models/admin-users.interface';
 import { AsyncPipe } from '@angular/common';
-import { AdminUsersEditContentComponent } from '../../components/admin-users-edit-content/admin-users-edit-content.component';
+import { AdminUsersEditContentComponent } from '../../components/admin-users/admin-users-edit-content/admin-users-edit-content.component';
 
 @Component({
   selector: 'app-admin-users',

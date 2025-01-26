@@ -1,15 +1,15 @@
-.admin-users {
+.admin-reservations {
   padding: 200px 15px 15px 15px;
   width: 100%;
 
-  .admin-users-container {
+  .admin-reservations-container {
     margin: auto;
     max-width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 
-    .admin-users-header {
+    .admin-reservations-header {
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -17,12 +17,12 @@
       margin-bottom: 20px;
       padding-bottom: 20px;
 
-      .admin-users-header-title {
+      .admin-reservations-header-title {
         font-family: "Playfair Display";
         font-size: 40px;
       }
 
-      .admin-users-header-link {
+      .admin-reservations-header-link {
         color: var(--primary-color);
         width: fit-content;
       }

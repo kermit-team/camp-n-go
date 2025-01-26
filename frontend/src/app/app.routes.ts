@@ -20,6 +20,7 @@ import { userGroupsResolver } from './admin/resolvers/user-groups.resolver';
 import { AdminUsersEditComponent } from './admin/containers/admin-user-edit/admin-users-edit.component';
 import { AdminUsersAddComponent } from './admin/containers/admin-users-add/admin-users-add.component';
 import { accountDetailsResolver } from './admin/resolvers/account-details.resolver';
+import { AdminReservationsComponent } from './admin/containers/admin-reservations/admin-reservations.component';
 
 export const routes: Routes = [
   {
@@ -64,6 +65,10 @@ export const routes: Routes = [
   {
     path: AppRoutes.Reservations,
     component: ReservationsComponent,
+  },
+  {
+    path: AppRoutes.AdminReservations,
+    component: AdminReservationsComponent,
   },
   {
     path: AppRoutes.AdminUsers,

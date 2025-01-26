@@ -1,0 +1,60 @@
+@if (items && items.length > 0) {
+  <div class="admin-users-container">
+    <table mat-table [dataSource]="items" class="table">
+      <ng-container matColumnDef="imie">
+        <th mat-header-cell *matHeaderCellDef>Imię</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.profile.first_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nazwisko">
+        <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.profile.last_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rola">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let element">
+          {{ getRoles(element.groups) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            class="table-action-button"
+            (click)="edit(element.identifier)"
+          >
+            Edytuj
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    class="paginator"
+    (page)="handlePageEvent($event)"
+    [pageSize]="5"
+    [length]="paginationData?.totalElements"
+    [showFirstLastButtons]="false"
+    [pageSizeOptions]="[]"
+    [hidePageSize]="true"
+    [pageIndex]="paginationData?.currentPageIndex"
+    aria-label="Select page"
+  ></mat-paginator>
+} @else {
+  <span>Brak danych</span>
+}

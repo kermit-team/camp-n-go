@@ -1,0 +1,19 @@
+<div class="admin-reservations">
+  <div class="admin-reservations-container">
+    <div class="admin-reservations-header">
+      <h1 class="admin-reservations-header-title">Rezerwacje</h1>
+      <a class="admin-reservations-header-link" [routerLink]="'..'"
+        >Dashboard</a
+      >
+    </div>
+    <app-admin-reservations-filters
+      (searchFired)="search($event)"
+    ></app-admin-reservations-filters>
+    <app-admin-reservations-list
+      [items]="adminReservationItems$ | async"
+      [paginationMetadata]="paginationMetadata$ | async"
+      (paginationChanged)="onPaginationChanged($event)"
+      (detailsFired)="edit($event)"
+    ></app-admin-reservations-list>
+  </div>
+</div>

@@ -1,9 +1,6 @@
 <div class="admin-users-filters">
   <div class="admin-users-filters-container" [formGroup]="form">
-    <lib-select
-      [items]="selectItems"
-      formControlName="group"
-    ></lib-select>
+    <lib-select [items]="selectItems" formControlName="group"></lib-select>
     <lib-input
       formControlName="personal_data"
       [placeholder]="'Szukaj'"

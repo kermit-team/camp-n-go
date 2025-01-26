@@ -1,16 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormHelperComponent } from '../../../shared/classes/form-helper.component';
-import { LibSelectItem } from '../../../shared/components/select/model/select.interface';
-import {
-  AdminUserDetails,
-  AdminUsersAddEditRequest,
-} from '../../models/admin-users.interface';
+import { FormHelperComponent } from '../../../../shared/classes/form-helper.component';
+import { LibSelectItem } from '../../../../shared/components/select/model/select.interface';
+import { AdminUsersAddEditRequest } from '../../../models/admin-users.interface';
 import { AdminUsersGeneralFormComponent } from '../admin-users-general-form/admin-users-general-form.component';
-import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { SelectComponent } from '../../../shared/components/select/select.component';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
+import { InputComponent } from '../../../../shared/components/input/input.component';
+import { SelectComponent } from '../../../../shared/components/select/select.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-admin-users-add-content',

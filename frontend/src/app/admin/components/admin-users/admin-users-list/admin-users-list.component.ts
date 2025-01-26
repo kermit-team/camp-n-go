@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LibPaginationMetadata } from '../../../shared/models/list.interface';
+import { LibPaginationMetadata } from '../../../../shared/models/list.interface';
 import {
   MatPaginator,
   MatPaginatorIntl,
   PageEvent,
 } from '@angular/material/paginator';
-import { AdminUsersItem } from '../../models/admin-users.interface';
+import { AdminUsersItem } from '../../../models/admin-users.interface';
 import {
   MatCell,
   MatCellDef,
@@ -18,7 +18,7 @@ import {
   MatRowDef,
   MatTable,
 } from '@angular/material/table';
-import { MyCustomPaginatorIntl } from '../../../shared/classes/mat-paginator-intl.component';
+import { MyCustomPaginatorIntl } from '../../../../shared/classes/mat-paginator-intl.component';
 
 @Component({
   selector: 'app-admin-users-list',

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { FormHelperComponent } from '../../../shared/classes/form-helper.component';
-import { ErrorMessageComponent } from '../../../shared/components/error-message/error-message.component';
+import { InputComponent } from '../../../../shared/components/input/input.component';
+import { FormHelperComponent } from '../../../../shared/classes/form-helper.component';
+import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
 
 @Component({
   selector: 'app-admin-users-general-form',

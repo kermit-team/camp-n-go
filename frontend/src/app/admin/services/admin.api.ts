@@ -11,6 +11,7 @@ import {
   AdminUsersItem,
 } from '../models/admin-users.interface';
 import { LibSelectItem } from '../../shared/components/select/model/select.interface';
+import { AdminReservationItem } from '../models/admin-reservations.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,16 @@ export class AdminApi {
     const params = this.convertObjectToHttpParams(parameters);
     return this.httpClient.get<LibListItem<AdminUsersItem>>(
       `http://localhost:8000/api/admin/accounts/`,
+      { params },
+    );
+  }
+
+  getAdminReservationsList(
+    parameters: LibListRequestParams,
+  ): Observable<LibListItem<AdminReservationItem>> {
+    const params = this.convertObjectToHttpParams(parameters);
+    return this.httpClient.get<LibListItem<AdminReservationItem>>(
+      `http://localhost:8000/api/admin/reservations/`,
       { params },
     );
   }

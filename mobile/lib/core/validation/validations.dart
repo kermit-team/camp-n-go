@@ -2,6 +2,7 @@ import 'package:campngo/core/validation/app_regex.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 abstract class Validation<T> {
   const Validation();
@@ -96,6 +97,36 @@ class IdCardValidation extends Validation<String> {
 
     if (value.length > 32) {
       return LocaleKeys.inputTooLong.tr();
+    }
+
+    return null;
+  }
+}
+
+class NumberValidation extends Validation<String> {
+  const NumberValidation();
+
+  @override
+  String? validate(BuildContext context, String? value) {
+    if (value == null) return null;
+
+    if (!AppRegex.numberRegex.hasMatch(value)) {
+      return LocaleKeys.invalidNumber.tr();
+    }
+
+    return null;
+  }
+}
+
+class PhoneNumberValidation extends Validation<PhoneNumber> {
+  const PhoneNumberValidation();
+
+  @override
+  String? validate(BuildContext context, PhoneNumber? value) {
+    if (value == null) return null;
+
+    if (!AppRegex.numberRegex.hasMatch(value.number)) {
+      return LocaleKeys.invalidNumber.tr();
     }
 
     return null;

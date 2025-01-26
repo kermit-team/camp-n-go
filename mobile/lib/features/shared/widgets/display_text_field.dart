@@ -77,7 +77,10 @@ class DisplayTextField extends StatelessWidget {
                           context: context,
                           initialValue: text,
                           label: label,
-                          validations: [const RequiredValidation()],
+                          validations: [
+                            const RequiredValidation(),
+                            const PhoneNumberValidation(),
+                          ],
                           onSave: (phoneNumber) {
                             onPhoneNumberSavePressed?.call(phoneNumber ?? '');
                           },

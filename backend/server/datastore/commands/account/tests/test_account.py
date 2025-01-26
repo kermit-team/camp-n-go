@@ -1,11 +1,13 @@
+import uuid
 from unittest import mock
 
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.test import TestCase
 from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
+from server.apps.car.models import Car
 from server.datastore.commands.account import AccountCommand
 from server.utils.tests.baker_generators import generate_password
 
@@ -22,6 +24,7 @@ class AccountCommandTestCase(TestCase):
         self.password = generate_password()
         self.account = baker.make(
             _model=Account,
+            is_active=True,
             password=make_password(self.password),
             _fill_optional=True,
         )
@@ -150,6 +153,7 @@ class AccountCommandTestCase(TestCase):
             avatar=new_profile_data.avatar,
             id_card=new_profile_data.id_card,
             groups=groups,
+            is_active=False,
         )
 
         change_password_mock.assert_called_once_with(account=self.account, password=new_password)
@@ -158,6 +162,7 @@ class AccountCommandTestCase(TestCase):
         assert account.profile.phone_number == new_profile_data.phone_number
         assert account.profile.avatar == new_profile_data.avatar
         assert account.profile.id_card == new_profile_data.id_card
+        assert account.is_active is False
         self.assertCountEqual(account.groups.all(), groups)
 
     @mock.patch.object(AccountCommand, 'change_password')
@@ -170,6 +175,7 @@ class AccountCommandTestCase(TestCase):
         assert account.profile.phone_number == self.account_profile.phone_number
         assert account.profile.avatar == self.account_profile.avatar
         assert account.profile.id_card == self.account_profile.id_card
+        assert account.is_active is True
 
     def test_activate(self):
         account = baker.make(_model=Account, is_active=False)
@@ -185,3 +191,26 @@ class AccountCommandTestCase(TestCase):
         AccountCommand.change_password(account=account, password=password)
 
         assert account.check_password(raw_password=password)
+
+    @mock.patch.object(uuid, 'uuid4')
+    def test_anonymize(self, uuid4_mock):
+        uuid4_mock.return_value = 'some-uuid'
+
+        car = baker.make(_model=Car)
+        permission = baker.make(_model=Permission)
+
+        self.account.cars.add(car)
+        self.account.groups.add(self.group)
+        self.account.user_permissions.add(permission)
+
+        expected_email = AccountCommand._anonymized_email_schema.format(uuid=uuid4_mock.return_value)
+
+        account = AccountCommand.anonymize(account=self.account)
+
+        assert account.email == expected_email
+        assert not account.has_usable_password()
+        assert not account.is_active
+        assert account.is_anonymized
+        assert not account.cars.exists()
+        assert not account.groups.exists()
+        assert not account.user_permissions.exists()

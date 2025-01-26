@@ -21,7 +21,7 @@ class AccountQuery:
         queryset = Account.objects.order_by('-id')
 
         if not account.is_superuser:
-            queryset = queryset.exclude(is_superuser=True)
+            queryset = queryset.exclude(Q(is_superuser=True) | Q(is_anonymized=True))
 
         return queryset
 

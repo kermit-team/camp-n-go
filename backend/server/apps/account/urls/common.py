@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from server.apps.account.views import (
+    AccountAnonymizeView,
     AccountDetailsView,
     AccountEmailVerificationResendView,
     AccountEmailVerificationView,
@@ -44,5 +45,10 @@ urlpatterns = [
         '<str:identifier>/modify/',
         AccountModifyView.as_view(),
         name='account_modify',
+    ),
+    path(
+        '<str:identifier>/anonymize/',
+        AccountAnonymizeView.as_view(),
+        name='account_anonymize',
     ),
 ]

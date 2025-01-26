@@ -5,11 +5,12 @@ from server.apps.car.models import Car
 
 
 class CarCommand:
-
     @classmethod
     @transaction.atomic
     def add(cls, registration_plate: str, driver: Account) -> Car:
-        car, _ = Car.objects.get_or_create(registration_plate=registration_plate)
+        cleaned_registration_plate = ''.join(registration_plate.split())
+
+        car, _ = Car.objects.get_or_create(registration_plate=cleaned_registration_plate)
         car.drivers.add(driver)
 
         return car

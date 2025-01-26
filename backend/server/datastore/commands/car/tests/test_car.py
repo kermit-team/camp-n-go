@@ -18,6 +18,20 @@ class CarCommandTestCase(TestCase):
         )
 
         assert car
+        assert car.registration_plate == self.car.registration_plate
+        assert car.drivers.filter(identifier=self.account.identifier).exists()
+
+    def test_add_car_when_registration_plate_has_whitespaces(self):
+        registration_plate = ' A\tB\vC \n1\r2\f3 '
+        cleaned_registration_plate = 'ABC123'
+
+        car = CarCommand.add(
+            registration_plate=registration_plate,
+            driver=self.account,
+        )
+
+        assert car
+        assert car.registration_plate == cleaned_registration_plate
         assert car.drivers.filter(identifier=self.account.identifier).exists()
 
     def test_add_car_when_registration_plate_exists(self):
@@ -29,6 +43,7 @@ class CarCommandTestCase(TestCase):
         )
 
         assert car
+        assert car.registration_plate == self.car.registration_plate
         assert car.drivers.filter(identifier=self.account.identifier).exists()
 
     def test_remove_driver_from_car(self):

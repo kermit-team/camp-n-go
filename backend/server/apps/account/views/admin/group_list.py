@@ -6,9 +6,11 @@ from rest_framework.response import Response
 
 from server.apps.account.serializers.group_details import GroupDetailsSerializer
 from server.datastore.queries.account import GroupQuery
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
 class AdminGroupListView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = GroupDetailsSerializer
 
     def get_queryset(self) -> QuerySet:

@@ -4,10 +4,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.account.models import Account
+from server.apps.account.permissions import AccountObjectPermissions
 from server.apps.account.serializers import AccountDetailsSerializer
+from server.utils.api.permissions import AdminPermissions, DjangoModelPermissionsWithGetPermissions
 
 
 class AccountDetailsView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, (AccountObjectPermissions | AdminPermissions))
     serializer_class = AccountDetailsSerializer
     queryset = Account.objects.all()
     lookup_field = 'identifier'

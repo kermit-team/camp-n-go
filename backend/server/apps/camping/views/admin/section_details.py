@@ -5,9 +5,11 @@ from rest_framework.response import Response
 
 from server.apps.camping.models import CampingSection
 from server.apps.camping.serializers import CampingSectionDetailsSerializer
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
-class CampingSectionDetailsView(GenericAPIView):
+class AdminCampingSectionDetailsView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = CampingSectionDetailsSerializer
     queryset = CampingSection.objects.all()
 

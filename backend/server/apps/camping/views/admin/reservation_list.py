@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from server.apps.camping.filters import ReservationListFilter
 from server.apps.camping.serializers.admin import AdminReservationListElementSerializer
 from server.datastore.queries.camping import ReservationQuery
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
 @extend_schema(
@@ -51,6 +52,7 @@ from server.datastore.queries.camping import ReservationQuery
     },
 )
 class AdminReservationListView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = AdminReservationListElementSerializer
     filterset_class = ReservationListFilter
 

@@ -5,9 +5,11 @@ from rest_framework.views import APIView
 
 from server.apps.account.models import Account
 from server.apps.account.serializers.admin import AdminAccountCreateSerializer
+from server.utils.api.permissions import AdminPermissions, DjangoModelPermissionsWithGetPermissions
 
 
 class AdminAccountCreateView(APIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, AdminPermissions)
     serializer_class = AdminAccountCreateSerializer
     queryset = Account.objects.all()
 

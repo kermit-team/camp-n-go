@@ -9,7 +9,7 @@ from server.business_logic.account import AccountEmailVerificationResendBL
 
 
 class AccountEmailVerificationResendView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny, )
     serializer_class = AccountEmailSerializer
 
     def post(self, request: Request) -> Response:

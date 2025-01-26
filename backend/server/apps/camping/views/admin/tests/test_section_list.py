@@ -9,13 +9,20 @@ from server.apps.account.models import Account, AccountProfile
 from server.apps.camping.models import CampingSection
 from server.apps.camping.views.admin.section_list import AdminCampingSectionListView
 from server.datastore.queries.camping import CampingSectionQuery
+from server.utils.tests.account_view_permissions import AccountViewPermissions
+from server.utils.tests.account_view_permissions_mixin import AccountViewPermissionsTestMixin
 
 
-class AdminCampingSectionListViewTestCase(APITestCase):
+class AdminCampingSectionListViewTestCase(AccountViewPermissionsTestMixin, APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
         cls.view = AdminCampingSectionListView
+        cls.viewname = 'admin_camping_section_list'
+        cls.view_permissions = AccountViewPermissions(
+            owner=True,
+            employee=True,
+        )
 
     def setUp(self):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
@@ -26,7 +33,7 @@ class AdminCampingSectionListViewTestCase(APITestCase):
         queryset = CampingSection.objects.order_by('name')
         get_queryset_mock.return_value = queryset
 
-        url = reverse('admin_camping_section_list')
+        url = reverse(self.viewname)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)
@@ -46,8 +53,6 @@ class AdminCampingSectionListViewTestCase(APITestCase):
             ).data,
         }
 
-        get_queryset_mock.assert_called_once_with()
-
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
 
@@ -58,7 +63,7 @@ class AdminCampingSectionListViewTestCase(APITestCase):
         get_queryset_mock.return_value = queryset
         pagination_class_mock.return_value = None
 
-        url = reverse('admin_camping_section_list')
+        url = reverse(self.viewname)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)
@@ -70,7 +75,13 @@ class AdminCampingSectionListViewTestCase(APITestCase):
             many=True,
         ).data
 
-        get_queryset_mock.assert_called_once_with()
-
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
+
+    @mock.patch.object(CampingSectionQuery, 'get_queryset')
+    def test_permissions(self, get_queryset_mock):
+        queryset = CampingSection.objects.order_by('name')
+        get_queryset_mock.return_value = queryset
+
+        self._create_accounts_with_groups_and_permissions()
+        self._test_list_permissions()

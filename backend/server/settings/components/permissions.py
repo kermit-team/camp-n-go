@@ -99,9 +99,7 @@ GROUPS = (
     {
         'NAME': OWNER,
         'PERMISSIONS': (
-            ADD_ACCOUNT,
-            CHANGE_ACCOUNT,
-            VIEW_ACCOUNT,
+            *ACCOUNT_FULL,
             VIEW_GROUP,
             ADD_CAMPING_SECTION,
             CHANGE_CAMPING_SECTION,
@@ -120,9 +118,7 @@ GROUPS = (
     {
         'NAME': EMPLOYEE,
         'PERMISSIONS': (
-            ADD_ACCOUNT,
-            CHANGE_ACCOUNT,
-            VIEW_ACCOUNT,
+            *ACCOUNT_FULL,
             VIEW_GROUP,
             ADD_CAMPING_SECTION,
             CHANGE_CAMPING_SECTION,
@@ -141,9 +137,7 @@ GROUPS = (
     {
         'NAME': CLIENT,
         'PERMISSIONS': (
-            ADD_ACCOUNT,
-            CHANGE_ACCOUNT,
-            VIEW_ACCOUNT,
+            *ACCOUNT_FULL,
             ADD_RESERVATION,
             CHANGE_RESERVATION,
             VIEW_RESERVATION,

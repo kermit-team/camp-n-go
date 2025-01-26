@@ -67,7 +67,7 @@ class ReservationCreateBL(AbstractBL):
         if date_from >= date_to:
             raise InvalidDateValuesError(date_from=date_from, date_to=date_to)
 
-        if date_from <= date.today():
+        if date_from < date.today():
             raise DateInThePastError(given_date=date_from)
 
     @classmethod

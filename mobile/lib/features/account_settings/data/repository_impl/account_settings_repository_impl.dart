@@ -177,6 +177,27 @@ class AccountSettingsRepositoryImpl implements AccountSettingsRepository {
       return Failure(handleApiError(dioException));
     }
   }
+
+  @override
+  Future<Result<void, Exception>> deleteAccount({
+    required String identifier,
+  }) async {
+    try {
+      final httpResponse = await _accountSettingsApiService.deleteAccount(
+        identifier: identifier,
+      );
+
+      if (httpResponse.response.statusCode == 204) {
+        return const Success(null);
+      }
+
+      final errorResponse = handleError(httpResponse.response);
+      log("[AccountSettingsRepositoryImpl>DeleteAccount]: $errorResponse");
+      return Failure(Exception(errorResponse));
+    } on DioException catch (dioException) {
+      return Failure(handleApiError(dioException));
+    }
+  }
 }
 
 Exception handleError(Response response) {

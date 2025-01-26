@@ -21,6 +21,7 @@ class AccountSettingsState extends Equatable {
   final EditPropertyStatus editPropertyStatus;
   final EditPasswordStatus editPasswordStatus;
   final CarOperationStatus carOperationStatus;
+  final SubmissionStatus deleteAccountStatus;
 
   final Account? accountEntity;
 
@@ -31,6 +32,7 @@ class AccountSettingsState extends Equatable {
     this.editPropertyStatus = EditPropertyStatus.unknown,
     this.editPasswordStatus = EditPasswordStatus.unknown,
     this.carOperationStatus = CarOperationStatus.unknown,
+    this.deleteAccountStatus = SubmissionStatus.initial,
     this.accountEntity,
     this.exception,
   });
@@ -40,6 +42,7 @@ class AccountSettingsState extends Equatable {
     EditPropertyStatus? editPropertyStatus,
     EditPasswordStatus? editPasswordStatus,
     CarOperationStatus? carOperationStatus,
+    SubmissionStatus? deleteAccountStatus,
     Account? accountEntity,
     List<Car>? carList,
     Exception? exception,
@@ -49,6 +52,7 @@ class AccountSettingsState extends Equatable {
         editPropertyStatus: editPropertyStatus ?? this.editPropertyStatus,
         editPasswordStatus: editPasswordStatus ?? this.editPasswordStatus,
         carOperationStatus: carOperationStatus ?? this.carOperationStatus,
+        deleteAccountStatus: deleteAccountStatus ?? this.deleteAccountStatus,
         accountEntity: accountEntity ?? this.accountEntity,
         exception: exception ?? this.exception,
       );
@@ -59,6 +63,7 @@ class AccountSettingsState extends Equatable {
         editPropertyStatus,
         editPasswordStatus,
         carOperationStatus,
+        deleteAccountStatus,
         accountEntity,
         exception,
       ];

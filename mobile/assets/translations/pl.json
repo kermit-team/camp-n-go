@@ -140,5 +140,7 @@
   "reservationListEmpty": "Brak rezerwacji",
   "parcelListEmpty": "Brak parceli",
   "registerFailed": "Nieprawidłowe dane użytkownika",
-  "loginFailed": "Nieprawidłowe dane logowania lub konto o podanych danych nie istnieje"
+  "loginFailed": "Nieprawidłowe dane logowania lub konto o podanych danych nie istnieje",
+  "deleteAccount": "Usuń konto",
+  "anonymizeAccountConfirmation": "Twoje dane zostaną usunięte, a konto zostanie zanonimizowane w systemie.\n\nNie będzie możliwości jego przywrócenia.\n\nNastąpi wylogowanie z systemu"
 }

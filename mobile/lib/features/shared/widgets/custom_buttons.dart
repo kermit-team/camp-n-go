@@ -10,6 +10,8 @@ class CustomButton extends StatelessWidget {
   final double height;
   final IconData? prefixIcon;
   final bool isLoading;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   const CustomButton({
     super.key,
@@ -19,6 +21,8 @@ class CustomButton extends StatelessWidget {
     this.height = double.minPositive,
     this.prefixIcon,
     this.isLoading = false,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   @override
@@ -26,8 +30,10 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: !isLoading ? onPressed : null,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor:
+            backgroundColor ?? Theme.of(context).colorScheme.primary,
+        foregroundColor:
+            foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
         textStyle: GoogleFonts.montserrat(
           fontSize: Constants.textSizeS,
         ),
@@ -35,7 +41,7 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(Radius.circular(2)),
           side: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
+            color: backgroundColor ?? Theme.of(context).colorScheme.primary,
           ),
         ),
       ),

@@ -142,5 +142,7 @@ abstract class  LocaleKeys {
   static const parcelListEmpty = 'parcelListEmpty';
   static const registerFailed = 'registerFailed';
   static const loginFailed = 'loginFailed';
+  static const deleteAccount = 'deleteAccount';
+  static const anonymizeAccountConfirmation = 'anonymizeAccountConfirmation';
 
 }

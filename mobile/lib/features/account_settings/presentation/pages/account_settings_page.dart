@@ -10,6 +10,7 @@ import 'package:campngo/features/account_settings/presentation/widgets/show_add_
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
+import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/display_text_field.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
@@ -216,6 +217,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               label: LocaleKeys.idNumber.tr(),
                               text: state.accountEntity?.profile.idCard ?? '',
                               validations: const [IdCardValidation()],
+                              asterixString: true,
                               onDialogSavePressed: (String newValue) {
                                 context
                                     .read<AccountSettingsCubit>()
@@ -272,6 +274,19 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               },
                             ),
                             SizedBox(height: Constants.spaceL),
+                            CustomButton(
+                              text: LocaleKeys.deleteAccount.tr(),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onError,
+                              prefixIcon: Icons.highlight_remove,
+                              onPressed: () {
+                                _showDeleteAccountConfirmationDialog(
+                                    context: context);
+                              },
+                            ),
+                            SizedBox(height: Constants.spaceL),
                           ],
                         ),
                       ),
@@ -282,6 +297,41 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             }
         }
       },
+    );
+  }
+
+  void _showDeleteAccountConfirmationDialog({
+    required BuildContext context,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(LocaleKeys.deleteAccount.tr()),
+        content: Text(
+          LocaleKeys.anonymizeAccountConfirmation.tr(),
+        ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(LocaleKeys.cancel.tr()),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<AccountSettingsCubit>().deleteAccount();
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              LocaleKeys.delete.tr(),
+              style: const TextStyle(
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

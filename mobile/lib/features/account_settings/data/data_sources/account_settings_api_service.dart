@@ -42,4 +42,9 @@ abstract class AccountSettingsApiService {
   Future<HttpResponse<void>> sendContactEmail({
     @Body() required Map<String, dynamic> content,
   });
+
+  @DELETE("/accounts/{identifier}/anonymize/")
+  Future<HttpResponse<void>> deleteAccount({
+    @Path("identifier") required String identifier,
+  });
 }

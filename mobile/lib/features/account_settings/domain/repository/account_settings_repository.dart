@@ -20,7 +20,6 @@ abstract class AccountSettingsRepository {
     required String newPassword,
   });
 
-  //TODO: check if tha car entity is given from backend
   Future<Result<Car, Exception>> addCar({
     required String registrationPlate,
   });
@@ -32,5 +31,9 @@ abstract class AccountSettingsRepository {
   Future<Result<void, Exception>> sendContactEmail({
     required String email,
     required String content,
+  });
+
+  Future<Result<void, Exception>> deleteAccount({
+    required String identifier,
   });
 }

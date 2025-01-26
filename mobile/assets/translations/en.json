@@ -139,5 +139,7 @@
   "reservationListEmpty": "Reservation list is empty",
   "parcelListEmpty": "Parcel list is empty",
   "registerFailed": "Wrong credentials",
-  "loginFailed": "Wrong credentials or account with this data already exists"
+  "loginFailed": "Wrong credentials or account with this data already exists",
+  "deleteAccount": "Delete account",
+  "anonymizeAccountConfirmation": "Your data will be removed, and your account will be anonymized.\n\nThis action is irreversible.\n\nYou will be logged out of the system."
 }

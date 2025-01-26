@@ -1,4 +1,5 @@
 import 'package:campngo/core/resources/data_result.dart';
+import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/token_storage.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
@@ -256,6 +257,53 @@ class AccountSettingsCubit extends Cubit<AccountSettingsState> {
       emit(state.copyWith(
         exception: Exception("[account_settings_cubit] Not implemented yet"),
         editPropertyStatus: EditPropertyStatus.failure,
+      ));
+    }
+  }
+
+  deleteAccount() async {
+    try {
+      emit(state.copyWith(
+        deleteAccountStatus: SubmissionStatus.loading,
+      ));
+
+      final token = await serviceLocator<TokenStorage>().getAccessToken();
+      if (token != null) {
+        final userId = TokenDecoder.getUserId(
+          token: token,
+        );
+
+        final Result<void, Exception> result =
+            await accountSettingsRepository.deleteAccount(
+          identifier: userId,
+        );
+
+        switch (result) {
+          case Success<void, Exception>():
+            {
+              emit(state.copyWith(
+                deleteAccountStatus: SubmissionStatus.success,
+              ));
+              break;
+            }
+          case Failure<void, Exception>(exception: final exception):
+            {
+              emit(state.copyWith(
+                deleteAccountStatus: SubmissionStatus.failure,
+                exception: exception,
+              ));
+            }
+        }
+      }
+    } on DioException catch (dioException) {
+      emit(state.copyWith(
+        deleteAccountStatus: SubmissionStatus.failure,
+        exception: dioException,
+      ));
+    } on Exception catch (exception) {
+      emit(state.copyWith(
+        deleteAccountStatus: SubmissionStatus.failure,
+        exception: exception,
       ));
     }
   }

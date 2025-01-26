@@ -11,14 +11,20 @@ from rest_framework.test import APIRequestFactory, APITestCase, force_authentica
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.views.admin import AdminAccountModifyView
 from server.datastore.commands.account import AccountCommand
+from server.utils.tests.account_view_permissions import AccountViewPermissions
+from server.utils.tests.account_view_permissions_mixin import AccountViewPermissionsTestMixin
 from server.utils.tests.baker_generators import generate_password
 
 
-class AdminAccountModifyViewTestCase(APITestCase):
+class AdminAccountModifyViewTestCase(AccountViewPermissionsTestMixin, APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
         cls.view = AdminAccountModifyView
+        cls.viewname = 'admin_account_modify'
+        cls.view_permissions = AccountViewPermissions(
+            owner=True,
+        )
 
     def setUp(self):
         self.password = generate_password()
@@ -45,7 +51,7 @@ class AdminAccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('admin_account_modify', kwargs=parameters)
+        url = reverse(self.viewname, kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -79,7 +85,7 @@ class AdminAccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('admin_account_modify', kwargs=parameters)
+        url = reverse(self.viewname, kwargs=parameters)
 
         req = self.factory.put(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -102,7 +108,7 @@ class AdminAccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': self.account.identifier,
         }
-        url = reverse('admin_account_modify', kwargs=parameters)
+        url = reverse(self.viewname, kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -132,7 +138,7 @@ class AdminAccountModifyViewTestCase(APITestCase):
         parameters = {
             'identifier': uuid.uuid4(),
         }
-        url = reverse('admin_account_modify', kwargs=parameters)
+        url = reverse(self.viewname, kwargs=parameters)
 
         req = self.factory.patch(url, data=request_data)
         force_authenticate(req, user=self.account)
@@ -143,3 +149,20 @@ class AdminAccountModifyViewTestCase(APITestCase):
         modify_account_mock.assert_not_called()
         assert res.status_code == status.HTTP_404_NOT_FOUND
         assert res.data == expected_data
+
+    @mock.patch.object(AccountCommand, 'modify')
+    def test_permissions(self, modify_account_mock):
+        self._create_accounts_with_groups_and_permissions()
+        account = baker.make(_model=Account)
+        request_data = {
+            'groups': [group.id for group in self.groups],
+            'is_active': False,
+            'profile': {
+                'first_name': self.new_profile_data.first_name,
+                'last_name': self.new_profile_data.last_name,
+            },
+        }
+        parameters = {'identifier': account.identifier}
+
+        self._test_update_permissions(parameters=parameters, data=request_data)
+        self._test_partial_update_permissions(parameters=parameters, data=request_data)

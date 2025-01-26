@@ -8,14 +8,24 @@ from rest_framework.test import APIRequestFactory, APITestCase
 from server.apps.account.models import Account, AccountProfile
 from server.apps.account.views import AccountRegisterView
 from server.business_logic.account import AccountCreateBL
+from server.utils.tests.account_view_permissions import AccountViewPermissions
+from server.utils.tests.account_view_permissions_mixin import AccountViewPermissionsTestMixin
 from server.utils.tests.baker_generators import generate_password
 
 
-class AccountRegisterViewTestCase(APITestCase):
+class AccountRegisterViewTestCase(AccountViewPermissionsTestMixin, APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
         cls.view = AccountRegisterView
+        cls.viewname = 'account_register'
+        cls.view_permissions = AccountViewPermissions(
+            anon=True,
+            account=True,
+            owner=True,
+            employee=True,
+            client=True,
+        )
 
     def setUp(self):
         self.password = generate_password()
@@ -32,7 +42,7 @@ class AccountRegisterViewTestCase(APITestCase):
                 'last_name': self.account_profile.last_name,
             },
         }
-        url = reverse('account_register')
+        url = reverse(self.viewname)
 
         req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req)
@@ -60,3 +70,17 @@ class AccountRegisterViewTestCase(APITestCase):
 
         assert res.status_code == status.HTTP_201_CREATED
         assert res.data == expected_data
+
+    @mock.patch.object(AccountCreateBL, 'process')
+    def test_permissions(self, create_account_mock):
+        self._create_accounts_with_groups_and_permissions()
+        request_data = {
+            'email': self.account.email,
+            'password': self.password,
+            'profile': {
+                'first_name': self.account_profile.first_name,
+                'last_name': self.account_profile.last_name,
+            },
+        }
+
+        self._test_create_permissions(data=request_data)

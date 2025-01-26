@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from server.apps.account.filters import AccountListFilter
 from server.apps.account.serializers.admin import AdminAccountListElementSerializer
 from server.datastore.queries.account import AccountQuery
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
 @extend_schema(
@@ -45,6 +46,7 @@ from server.datastore.queries.account import AccountQuery
     },
 )
 class AdminAccountListView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = AdminAccountListElementSerializer
     filterset_class = AccountListFilter
 

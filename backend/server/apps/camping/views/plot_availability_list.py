@@ -3,7 +3,7 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, OpenApiResponse, extend_schema
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import AllowAny
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -58,7 +58,7 @@ from server.datastore.queries.camping import CampingPlotQuery
     },
 )
 class CampingPlotAvailabilityListView(GenericAPIView):
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = (AllowAny, )
     serializer_class = CampingPlotAvailabilityListElementSerializer
     filterset_class = CampingPlotAvailabilityFilter
 

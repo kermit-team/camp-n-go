@@ -19,8 +19,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'server.apps.common.pagination.StandardPageNumberPagination',
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
-        'rest_framework.permissions.IsAuthenticated',
+        'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',

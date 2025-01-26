@@ -4,10 +4,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.camping.models import Reservation
+from server.apps.camping.permissions import ReservationObjectPermissions
 from server.apps.camping.serializers import ReservationModifyCarSerializer
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions
 
 
 class ReservationModifyCarView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, ReservationObjectPermissions)
     serializer_class = ReservationModifyCarSerializer
     queryset = Reservation.objects.all()
 

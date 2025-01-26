@@ -2,8 +2,6 @@ from django.urls import path
 
 from server.apps.camping.views import (
     CampingPlotAvailabilityListView,
-    CampingPlotDetailsView,
-    CampingSectionDetailsView,
     ContactFormSendView,
     ReservationCancelView,
     ReservationCreateView,
@@ -18,16 +16,6 @@ urlpatterns = [
         'plots/available/',
         CampingPlotAvailabilityListView.as_view(),
         name='camping_plot_availability_list',
-    ),
-    path(
-        'plots/<int:pk>/',
-        CampingPlotDetailsView.as_view(),
-        name='camping_plot_details',
-    ),
-    path(
-        'sections/<int:pk>/',
-        CampingSectionDetailsView.as_view(),
-        name='camping_section_details',
     ),
     path(
         'reservations/',

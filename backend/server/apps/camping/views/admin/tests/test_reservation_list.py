@@ -9,13 +9,20 @@ from server.apps.account.models import Account, AccountProfile
 from server.apps.camping.models import Reservation
 from server.apps.camping.views.admin import AdminReservationListView
 from server.datastore.queries.camping import ReservationQuery
+from server.utils.tests.account_view_permissions import AccountViewPermissions
+from server.utils.tests.account_view_permissions_mixin import AccountViewPermissionsTestMixin
 
 
-class AdminReservationListViewTestCase(APITestCase):
+class AdminReservationListViewTestCase(AccountViewPermissionsTestMixin, APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
         cls.view = AdminReservationListView
+        cls.viewname = 'admin_reservation_list'
+        cls.view_permissions = AccountViewPermissions(
+            owner=True,
+            employee=True,
+        )
 
     def setUp(self):
         self.account = baker.make(_model=Account, is_superuser=True, _fill_optional=True)
@@ -28,7 +35,7 @@ class AdminReservationListViewTestCase(APITestCase):
         get_queryset_mock.return_value = queryset
         get_with_matching_reservation_data_mock.return_value = queryset
 
-        url = reverse('admin_reservation_list')
+        url = reverse(self.viewname)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)
@@ -48,7 +55,6 @@ class AdminReservationListViewTestCase(APITestCase):
             ).data,
         }
 
-        get_queryset_mock.assert_called_once_with()
         get_with_matching_reservation_data_mock.assert_not_called()
 
         assert res.status_code == status.HTTP_200_OK
@@ -68,7 +74,7 @@ class AdminReservationListViewTestCase(APITestCase):
         get_with_matching_reservation_data_mock.return_value = queryset
         pagination_class_mock.return_value = None
 
-        url = reverse('admin_reservation_list')
+        url = reverse(self.viewname)
 
         req = self.factory.get(url)
         force_authenticate(req, user=self.account)
@@ -80,8 +86,17 @@ class AdminReservationListViewTestCase(APITestCase):
             many=True,
         ).data
 
-        get_queryset_mock.assert_called_once_with()
         get_with_matching_reservation_data_mock.assert_not_called()
 
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
+
+    @mock.patch.object(ReservationQuery, 'get_with_matching_reservation_data')
+    @mock.patch.object(ReservationQuery, 'get_queryset')
+    def test_permissions(self, get_queryset_mock, get_with_matching_reservation_data_mock):
+        queryset = Reservation.objects.order_by('id')
+        get_queryset_mock.return_value = queryset
+        get_with_matching_reservation_data_mock.return_value = queryset
+
+        self._create_accounts_with_groups_and_permissions()
+        self._test_list_permissions()

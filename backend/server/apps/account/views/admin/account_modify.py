@@ -5,9 +5,11 @@ from rest_framework.response import Response
 
 from server.apps.account.models import Account
 from server.apps.account.serializers.admin import AdminAccountModifySerializer
+from server.utils.api.permissions import AdminPermissions, DjangoModelPermissionsWithGetPermissions
 
 
 class AdminAccountModifyView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, AdminPermissions)
     serializer_class = AdminAccountModifySerializer
     queryset = Account.objects.all()
     lookup_field = 'identifier'

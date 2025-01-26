@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from server.apps.camping.serializers import CampingSectionDetailsSerializer
 from server.datastore.queries.camping import CampingSectionQuery
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
 @extend_schema(
@@ -32,6 +33,7 @@ from server.datastore.queries.camping import CampingSectionQuery
     },
 )
 class AdminCampingSectionListView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = CampingSectionDetailsSerializer
 
     def get_queryset(self) -> QuerySet:

@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.exceptions import NotFound, ParseError, PermissionDenied, ValidationError
 from rest_framework.test import APITestCase
 
-from server.utils.api import custom_exception_handler
+from server.utils.api.exception_handler import custom_exception_handler
 
 
 class CustomExceptionHandlerTestCase(APITestCase):

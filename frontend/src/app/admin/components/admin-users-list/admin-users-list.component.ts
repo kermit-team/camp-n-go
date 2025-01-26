@@ -46,6 +46,7 @@ export class AdminUsersListComponent {
     this.paginationData = pagination;
   }
   @Output() paginationChanged = new EventEmitter<PageEvent>();
+  @Output() editFired = new EventEmitter<string>();
 
   paginationData: LibPaginationMetadata;
 
@@ -57,5 +58,9 @@ export class AdminUsersListComponent {
 
   getRoles(roles: Array<{ id: number; name: string }>) {
     return roles.map((r) => r.name).join(', ');
+  }
+
+  edit(id: string) {
+    this.editFired.emit(id);
   }
 }

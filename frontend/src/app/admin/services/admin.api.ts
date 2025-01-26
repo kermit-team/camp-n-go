@@ -5,7 +5,11 @@ import {
   LibListItem,
   LibListRequestParams,
 } from '../../shared/models/list.interface';
-import { AdminUsersItem } from '../models/admin-users.interface';
+import {
+  AdminUserDetails,
+  AdminUsersAddEditRequest,
+  AdminUsersItem,
+} from '../models/admin-users.interface';
 import { LibSelectItem } from '../../shared/components/select/model/select.interface';
 
 @Injectable({
@@ -30,6 +34,31 @@ export class AdminApi {
     );
   }
 
+  createUser(
+    data: AdminUsersAddEditRequest,
+  ): Observable<AdminUsersAddEditRequest> {
+    return this.httpClient.post<AdminUsersAddEditRequest>(
+      `http://localhost:8000/api/admin/accounts/create/`,
+      { ...data },
+    );
+  }
+
+  editeUser(
+    data: AdminUsersAddEditRequest,
+    id: string,
+  ): Observable<AdminUsersAddEditRequest> {
+    return this.httpClient.patch<AdminUsersAddEditRequest>(
+      `http://localhost:8000/api/admin/accounts/${id}/modify/`,
+      { ...data },
+    );
+  }
+
+  getUserDetails(identifier: string): Observable<AdminUserDetails> {
+    return this.httpClient.get<AdminUserDetails>(
+      `http://localhost:8000/api/accounts/${identifier}/`,
+    );
+  }
+
   convertObjectToHttpParams(obj: LibListRequestParams): HttpParams {
     let params = new HttpParams();
 
@@ -47,11 +76,4 @@ export class AdminApi {
 
     return params;
   }
-
-  // createReservation(reservation: CreateReservationRequest) {
-  //   return this.httpClient.post<CreateReservationResponse>(
-  //     `http://localhost:8000/api/camping/reservations/create/`,
-  //     { ...reservation },
-  //   );
-  // }
 }

@@ -1,0 +1,13 @@
+.admin-users-add-content-form {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .admin-users-add-content-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+  }
+}

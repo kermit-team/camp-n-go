@@ -1,4 +1,4 @@
-@if (items.length > 0) {
+@if (items && items.length > 0) {
   <div class="admin-users-container">
     <table mat-table [dataSource]="items" class="table">
       <ng-container matColumnDef="imie">
@@ -30,7 +30,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button>Edytuj</button>
+          <button class="table-action-button" (click)="edit(element.identifier)">Edytuj</button>
         </td>
       </ng-container>
 

@@ -2,7 +2,7 @@
   <div class="admin-users-filters-container" [formGroup]="form">
     <lib-select
       [items]="selectItems"
-      [formControl]="selectFormControl"
+      formControlName="group"
     ></lib-select>
     <lib-input
       formControlName="personal_data"

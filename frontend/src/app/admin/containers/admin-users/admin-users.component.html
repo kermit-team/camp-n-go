@@ -15,6 +15,7 @@
       [items]="adminUsersItems$ | async"
       [paginationMetadata]="paginationMetadata$ | async"
       (paginationChanged)="onPaginationChanged($event)"
+      (editFired)="edit($event)"
     ></app-admin-users-list>
   </div>
 </div>

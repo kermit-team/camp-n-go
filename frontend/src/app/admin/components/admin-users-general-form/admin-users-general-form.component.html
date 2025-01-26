@@ -1,0 +1,46 @@
+@if(form){
+<form class="admin-users-add-content-form" name="form" [formGroup]="form">
+    <div class="admin-users-add-content-form-input-wrapper">
+      <lib-input
+        placeholder="Imię"
+        [formControlName]="'first_name'"
+        [fieldHasError]="controlHasError('first_name')"
+        [fieldRequired]="true"
+      ></lib-input>
+      <lib-error-message
+        [field]="form.get('first_name')"
+      ></lib-error-message>
+    </div>
+    <div class="admin-users-add-content-form-input-wrapper">
+      <lib-input
+        placeholder="Nazwisko"
+        [formControlName]="'last_name'"
+        [fieldHasError]="controlHasError('last_name')"
+        [fieldRequired]="true"
+      ></lib-input>
+      <lib-error-message
+        [field]="form.get('last_name')"
+      ></lib-error-message>
+    </div>
+      <div class="admin-users-add-content-form-input-wrapper">
+      <lib-input
+        placeholder="Numer telefonu z numerem kierunkowym"
+        [formControlName]="'phone_number'"
+        [fieldHasError]="controlHasError('phone_number')"
+      ></lib-input>
+      <lib-error-message
+        [field]="form.get('phone_number')"
+      ></lib-error-message>
+    </div>
+    <div class="admin-users-add-content-form-input-wrapper">
+      <lib-input
+        placeholder="Numer dowodu osobistego"
+        [formControlName]="'id_card'"
+        [fieldHasError]="controlHasError('id_card')"
+      ></lib-input>
+      <lib-error-message
+        [field]="form.get('id_card')"
+      ></lib-error-message>
+    </div>
+</form>
+}

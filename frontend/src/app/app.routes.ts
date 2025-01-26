@@ -17,6 +17,9 @@ import { reservationDetailsResolver } from './reservations/resolvers/reservation
 import { AdminUsersComponent } from './admin/containers/admin-users/admin-users.component';
 import { AdminDashboardComponent } from './admin/containers/admin-dashboard/admin-dashboard.component';
 import { userGroupsResolver } from './admin/resolvers/user-groups.resolver';
+import { AdminUsersEditComponent } from './admin/containers/admin-user-edit/admin-users-edit.component';
+import { AdminUsersAddComponent } from './admin/containers/admin-users-add/admin-users-add.component';
+import { accountDetailsResolver } from './admin/resolvers/account-details.resolver';
 
 export const routes: Routes = [
   {
@@ -67,6 +70,21 @@ export const routes: Routes = [
     component: AdminUsersComponent,
     resolve: {
       userGroups: userGroupsResolver,
+    },
+  },
+  {
+    path: AppRoutes.AdminUsersAdd,
+    component: AdminUsersAddComponent,
+    resolve: {
+      userGroups: userGroupsResolver,
+    },
+  },
+  {
+    path: AppRoutes.AdminUsersEdit,
+    component: AdminUsersEditComponent,
+    resolve: {
+      userGroups: userGroupsResolver,
+      accountDetails: accountDetailsResolver,
     },
   },
   {

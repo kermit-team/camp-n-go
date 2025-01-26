@@ -1,0 +1,31 @@
+.admin-users {
+  padding: 200px 15px 15px 15px;
+  width: 100%;
+
+  .admin-users-container {
+    margin: auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .admin-users-header {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      border-bottom: 1px solid lightgray;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+
+      .admin-users-header-title {
+        font-family: "Playfair Display";
+        font-size: 40px;
+      }
+
+      .admin-users-header-link {
+        color: var(--primary-color);
+        width: fit-content;
+      }
+    }
+  }
+}

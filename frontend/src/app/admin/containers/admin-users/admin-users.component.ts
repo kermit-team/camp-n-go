@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AdminUsersFiltersComponent } from '../../components/admin-users-filters/admin-users-filters.component';
 import { AdminUsersListComponent } from '../../components/admin-users-list/admin-users-list.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AdminFacade } from '../../services/admin.facade';
 import { AsyncPipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
@@ -22,6 +22,7 @@ import { AdminUsersFilters } from '../../models/admin-users.interface';
 export class AdminUsersComponent implements OnInit {
   private adminFacade = inject(AdminFacade);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
 
   userGroups$ = this.adminFacade.selectUserRoles$();
   adminUsersItems$ = this.adminFacade.selectParcelItems$();
@@ -37,5 +38,9 @@ export class AdminUsersComponent implements OnInit {
 
   search(filters: AdminUsersFilters) {
     this.adminFacade.setParcelFilters({ ...filters });
+  }
+
+  edit(id: string) {
+    this.router.navigate(['admin/users/edit', id]);
   }
 }

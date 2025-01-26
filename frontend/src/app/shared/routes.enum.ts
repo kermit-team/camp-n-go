@@ -15,4 +15,6 @@ export enum AppRoutes {
   ReservationsEdit = 'reservations/edit/:id',
   Admin = 'admin',
   AdminUsers = 'admin/users',
+  AdminUsersAdd = 'admin/users/add',
+  AdminUsersEdit = 'admin/users/edit/:id',
 }

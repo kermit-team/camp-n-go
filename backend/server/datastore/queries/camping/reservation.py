@@ -99,3 +99,12 @@ class ReservationQuery:
             Q(user__profile__last_name__icontains=reservation_data) |
             Q(car__registration_plate__icontains=reservation_data),
         )
+
+    @classmethod
+    def get_incoming_reservations(cls, given_date: date) -> QuerySet:
+        incoming_date = given_date + timedelta(days=settings.RESERVATIONS_REMINDER_DISPATCH_TIME)
+
+        return Reservation.objects.filter(
+            date_from=incoming_date,
+            payment__status=PaymentStatus.PAID,
+        ).order_by('-id')

@@ -12,4 +12,5 @@ class MailingSerializer(BaseModel):
     to_email: list[str]
     subject: str
     html_message: str
+    from_email: str
     files: Optional[list[FileInfo]] = None

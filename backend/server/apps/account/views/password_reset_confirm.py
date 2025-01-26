@@ -9,7 +9,7 @@ from server.business_logic.account import AccountPasswordResetConfirmBL
 
 
 class AccountPasswordResetConfirmView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny, )
     serializer_class = AccountPasswordResetSerializer
 
     def post(self, request: Request, uidb64: str, token: str) -> Response:

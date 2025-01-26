@@ -9,7 +9,7 @@ from server.datastore.queries.car import CarQuery
 
 
 class CarEntryView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny, )
     serializer_class = CarEntrySerializer
 
     def post(self, request: Request) -> Response:

@@ -1,0 +1,1 @@
+from server.apps.camping.permissions.reservation import ReservationObjectPermissions

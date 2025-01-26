@@ -15,7 +15,7 @@ abstract class RegisterApiService {
   });
 
   @POST('/accounts/password-reset/')
-  Future<HttpResponse<dynamic>> forgotPassword({
+  Future<HttpResponse<dynamic>> passwordReset({
     @Body() required Map<String, dynamic> email,
   });
 }

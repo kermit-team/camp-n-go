@@ -1,17 +1,15 @@
 import 'package:campngo/config/constants.dart';
-import 'package:campngo/features/account_settings/domain/entities/car_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/car.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/account_settings_state.dart';
-import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CarListWidget extends StatelessWidget {
-  final void Function(CarEntity) onListTilePressed;
+  final void Function(Car) onListTilePressed;
   final void Function() onAddButtonPressed;
 
   const CarListWidget({
@@ -22,70 +20,12 @@ class CarListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AccountSettingsCubit, AccountSettingsState>(
-      listener: (context, state) {
-        switch (state.carOperationStatus) {
-          case CarOperationStatus.unknown:
-          case CarOperationStatus.loading:
-            break;
-
-          case CarOperationStatus.notDeleted:
-          case CarOperationStatus.notAdded:
-            AppSnackBar.showErrorSnackBar(
-              context: context,
-              text: state.exception.toString(),
-              //TODO: add error translations
-            );
-
-          case CarOperationStatus.deleted:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: "Car deleted successfully",
-            );
-            break;
-          case CarOperationStatus.added:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: "Car added successfully",
-            );
-            break;
-        }
-      },
+    return BlocBuilder<AccountSettingsCubit, AccountSettingsState>(
       builder: (context, state) {
-        switch (state.carListStatus) {
-          case CarListStatus.failure:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: state.exception!.toString(),
-            );
-            return const SizedBox();
-
-          case CarListStatus.unknown:
-            return const Text("Brak samochodów");
-
-          case CarListStatus.loading:
-            return CircularProgressIndicator(
-              color: Theme.of(context).colorScheme.onSurface,
-            );
-
-          case CarListStatus.success:
-            final carList = state.carList!;
-
+        if (state.accountEntity != null) {
+          if (state.accountEntity!.carList.isEmpty) {
             return Column(
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  itemCount: carList.length,
-                  itemBuilder: (context, index) {
-                    final car = carList[index];
-                    return CarListItem(
-                      car: car,
-                      onListTilePressed: onListTilePressed,
-                    );
-                  },
-                ),
                 CustomButton(
                   text: LocaleKeys.addCar.tr(),
                   onPressed: onAddButtonPressed,
@@ -93,45 +33,68 @@ class CarListWidget extends StatelessWidget {
                 ),
               ],
             );
+          }
 
-          default:
-            AppSnackBar.showSnackBar(
-              context: context,
-              text: "Something went wrong",
-            );
-            return const CircularProgressIndicator(
-              color: Colors.red,
-            );
+          final carList = state.accountEntity!.carList;
+
+          return Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(0),
+                itemCount: carList.length,
+                itemBuilder: (context, index) {
+                  final car = carList[index];
+                  return CarListItem(
+                    car: car,
+                    onListTilePressed: onListTilePressed,
+                  );
+                },
+              ),
+              CustomButton(
+                text: LocaleKeys.addCar.tr(),
+                onPressed: onAddButtonPressed,
+                prefixIcon: Icons.add,
+              ),
+            ],
+          );
         }
+        return const SizedBox.shrink();
       },
     );
   }
 }
 
 class CarListItem extends StatelessWidget {
-  final CarEntity car;
-  final void Function(CarEntity) onListTilePressed;
+  final Car car;
+  final void Function(Car) onListTilePressed;
+  final bool isAssigned;
+  final bool showDots;
 
   const CarListItem({
     super.key,
     required this.car,
     required this.onListTilePressed,
+    this.isAssigned = false,
+    this.showDots = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: Constants.spaceS),
+      padding: EdgeInsets.only(bottom: Constants.spaceS),
       child: InkWell(
         onTap: () {
           onListTilePressed(car);
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(
+          padding: EdgeInsets.symmetric(
             horizontal: Constants.spaceMS,
             vertical: Constants.spaceM,
           ),
           decoration: BoxDecoration(
+            color: isAssigned ? Theme.of(context).colorScheme.primary : null,
             border: Border.fromBorderSide(
               BorderSide(
                 color: Theme.of(context).colorScheme.primary,
@@ -148,16 +111,18 @@ class CarListItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
                 size: Constants.textSizeM,
               ),
-              const SizedBox(width: Constants.spaceM),
+              SizedBox(width: Constants.spaceM),
               StandardText(
                 car.registrationPlate,
                 textAlign: TextAlign.center,
               ),
               const Spacer(),
-              Icon(
-                Icons.more_horiz,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
+              showDots
+                  ? Icon(
+                      Icons.more_horiz,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),

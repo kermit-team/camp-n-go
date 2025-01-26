@@ -19,8 +19,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'server.apps.common.pagination.StandardPageNumberPagination',
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
-        'rest_framework.permissions.IsAuthenticated',
+        'server.utils.api.permissions.DjangoModelPermissionsWithGetPermissions',
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -28,6 +27,14 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'EXCEPTION_HANDLER': 'server.utils.api.exception_handler.custom_exception_handler',
     'PAGE_SIZE': int(os.getenv('REST_PAGE_SIZE', 10)),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': os.getenv('THROTTLING_RATE_ANONYMOUS', '200/minute'),
+        'user': os.getenv('THROTTLING_RATE_USER', '500/minute'),
+    },
 }
 
 if DRF_SPECTACULAR_ON:

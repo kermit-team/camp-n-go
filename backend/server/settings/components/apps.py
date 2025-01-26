@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'cid.apps.CidAppConfig',
     'corsheaders',
+    'django_celery_beat',
     'django_filters',
     'phonenumber_field',
     'rest_framework',

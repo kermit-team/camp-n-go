@@ -9,10 +9,29 @@ from rest_framework.response import Response
 from server.apps.camping.filters import ReservationListFilter
 from server.apps.camping.serializers.admin import AdminReservationListElementSerializer
 from server.datastore.queries.camping import ReservationQuery
+from server.utils.api.permissions import DjangoModelPermissionsWithGetPermissions, StaffPermissions
 
 
 @extend_schema(
     parameters=[
+        OpenApiParameter(
+            name='reservation_data',
+            type=OpenApiTypes.STR,
+            location=OpenApiParameter.QUERY,
+            required=False,
+        ),
+        OpenApiParameter(
+            name='date_from',
+            type=OpenApiTypes.DATE,
+            location=OpenApiParameter.QUERY,
+            required=True,
+        ),
+        OpenApiParameter(
+            name='date_to',
+            type=OpenApiTypes.DATE,
+            location=OpenApiParameter.QUERY,
+            required=True,
+        ),
         OpenApiParameter(
             name='page_size',
             type=OpenApiTypes.INT,
@@ -33,6 +52,7 @@ from server.datastore.queries.camping import ReservationQuery
     },
 )
 class AdminReservationListView(GenericAPIView):
+    permission_classes = (DjangoModelPermissionsWithGetPermissions, StaffPermissions)
     serializer_class = AdminReservationListElementSerializer
     filterset_class = ReservationListFilter
 

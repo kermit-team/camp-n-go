@@ -19,7 +19,7 @@ class CarQuery:
         current_day = date.today()
 
         return Reservation.objects.filter(
-            car__registration_plate=registration_plate,
+            car__registration_plate__iexact=registration_plate,
             date_from__lte=current_day,
             date_to__gte=current_day,
             payment__status=PaymentStatus.PAID,

@@ -1,14 +1,14 @@
 import 'package:campngo/core/resources/data_result.dart';
-import 'package:campngo/features/register/domain/entities/profile_entity.dart';
+import 'package:campngo/features/account_settings/domain/entities/account_profile.dart';
 import 'package:campngo/features/register/domain/entities/register_entity.dart';
 import 'package:campngo/features/register/domain/use_cases/register_use_case.dart';
 import 'package:campngo/features/register/presentation/bloc/register_event.dart';
 import 'package:campngo/features/register/presentation/bloc/register_state.dart';
-import 'package:campngo/injection_container.dart';
+import 'package:campngo/generated/locale_keys.g.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:go_router/go_router.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final RegisterUseCase registerUseCase;
@@ -48,7 +48,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         params: RegisterEntity(
           email: event.email,
           password: event.password,
-          profile: ProfileEntity(
+          profile: AccountProfile(
             firstName: event.firstName,
             lastName: event.lastName,
           ),
@@ -61,12 +61,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           ):
           {
             emit(RegisterSuccess(registerEntity));
-            serviceLocator<GoRouter>().go("/login");
-            emit(const RegisterInitial());
           }
-        case Failure<RegisterEntity, Exception>(exception: final exception):
+        case Failure<RegisterEntity, Exception>():
           {
-            emit(RegisterFailure(exception));
+            emit(RegisterFailure(
+              Exception(LocaleKeys.registerFailed.tr()),
+            ));
           }
       }
     } on DioException catch (dioException) {

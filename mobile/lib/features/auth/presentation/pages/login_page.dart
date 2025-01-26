@@ -1,18 +1,16 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/config/routes/app_routes.dart';
 import 'package:campngo/core/validation/validations.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_event.dart';
-import 'package:campngo/features/auth/presentation/bloc/auth_state.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
 import 'package:campngo/features/shared/widgets/golden_text_field.dart';
-import 'package:campngo/features/shared/widgets/hyperlink_text.dart';
 import 'package:campngo/features/shared/widgets/icon_app_bar.dart';
-import 'package:campngo/features/shared/widgets/standard_text.dart';
-import 'package:campngo/features/shared/widgets/title_text.dart';
+import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
+import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
+import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
-import 'package:campngo/injection_container.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +51,9 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           const IconAppBar(),
           TitleText('${LocaleKeys.welcomeAgain.tr()}!'),
-          const SizedBox(height: Constants.spaceS),
+          SizedBox(height: Constants.spaceS),
           StandardText(LocaleKeys.enterCredentialsBelow.tr()),
-          const SizedBox(height: Constants.spaceL),
+          SizedBox(height: Constants.spaceL),
           Form(
             key: _formKey,
             child: Column(
@@ -67,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 GoldenTextField(
                   controller: passwordController,
                   hintText: LocaleKeys.password.tr(),
@@ -76,35 +74,35 @@ class _LoginPageState extends State<LoginPage> {
                     RequiredValidation(),
                   ],
                 ),
-                const SizedBox(height: Constants.spaceML),
+                SizedBox(height: Constants.spaceML),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
                   child: HyperlinkText(
                     text: LocaleKeys.forgotPassword.tr(),
                     isUnderlined: true,
                     onTap: () {
-                      serviceLocator<GoRouter>().push("/forgotPassword");
+                      context.push("/forgotPassword");
                     },
                   ),
                 ),
-                const SizedBox(height: Constants.spaceM),
+                SizedBox(height: Constants.spaceM),
                 _getButtons(
                   context,
                   emailController,
                   passwordController,
                 ),
-                const SizedBox(height: Constants.spaceS),
+                SizedBox(height: Constants.spaceS),
                 Wrap(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StandardText("${LocaleKeys.dontHaveAccount.tr()}?"),
-                        const SizedBox(width: Constants.spaceXS),
+                        SizedBox(width: Constants.spaceXS),
                         HyperlinkText(
                           text: LocaleKeys.registerForFree.tr(),
                           onTap: () {
-                            serviceLocator<GoRouter>().go("/register");
+                            context.go("/register");
                           },
                         ),
                       ],
@@ -114,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: Constants.spaceL,
           ),
         ],
@@ -126,27 +124,23 @@ class _LoginPageState extends State<LoginPage> {
       BuildContext context,
       TextEditingController emailController,
       TextEditingController passwordController) {
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (authContext, authState) {
-        if (authState is AuthFailure) {
-          AppSnackBar.showErrorSnackBar(
-            context: context,
-            text: _getExceptionMessage(authState.exception!),
-          );
-        } else if (authState is AuthEmailEmpty) {
-          AppSnackBar.showErrorSnackBar(
-            context: context,
-            text: LocaleKeys.emailCannotBeEmpty.tr(),
-          );
-        } else if (authState is AuthPasswordEmpty) {
-          AppSnackBar.showErrorSnackBar(
-            context: context,
-            text: LocaleKeys.passwordCannotBeEmpty.tr(),
-          );
+        if (authState.status == AuthStatus.authenticated) {
+          context.go(AppRoutes.home.route);
+        }
+        if (authState.status == AuthStatus.failure) {
+          final errorText = _getExceptionMessage(authState.exception!);
+          if (errorText != '') {
+            AppSnackBar.showErrorSnackBar(
+              context: context,
+              text: errorText,
+            );
+          }
         }
       },
       builder: (authContext, authState) {
-        if (authState is AuthLoading) {
+        if (authState.status == AuthStatus.loading) {
           return CircularProgressIndicator(
             color: Theme.of(context).colorScheme.primary,
           );
@@ -155,11 +149,9 @@ class _LoginPageState extends State<LoginPage> {
           text: LocaleKeys.login.tr(),
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
-              context.read<AuthBloc>().add(
-                    Login(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    ),
+              context.read<AuthCubit>().login(
+                    email: emailController.text,
+                    password: passwordController.text,
                   );
             }
           },
@@ -173,6 +165,9 @@ class _LoginPageState extends State<LoginPage> {
       return exception.message ?? exception.toString();
     }
     String exceptionWithPrefix = exception.toString();
+    if (exceptionWithPrefix == "Exception") {
+      return '';
+    }
     return exceptionWithPrefix.replaceFirst('Exception: ', '');
   }
 }

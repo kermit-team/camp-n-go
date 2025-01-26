@@ -10,7 +10,12 @@ abstract class AuthApiService {
   factory AuthApiService(Dio dio) = _AuthApiService;
 
   @POST('/accounts/token/')
-  Future<HttpResponse<AuthResponseDTO>> login({
+  Future<HttpResponse<AuthResponseDto>> login({
     @Body() required Map<String, dynamic> credentials,
+  });
+
+  @POST("/accounts/token/refresh/")
+  Future<HttpResponse<String>> refreshAccessToken({
+    @Body() required Map<String, dynamic> refreshToken,
   });
 }

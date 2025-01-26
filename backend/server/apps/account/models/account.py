@@ -30,6 +30,11 @@ class Account(CreatedUpdatedMixin, PermissionsMixin, AbstractBaseUser):
             'Unselect this instead of deleting accounts.',
         ),
     )
+    is_anonymized = models.BooleanField(
+        verbose_name=_('IsAnonymized'),
+        default=False,
+        help_text=_('Designates whether this account should be treated as anonymized.'),
+    )
 
     objects = AccountManager()
 

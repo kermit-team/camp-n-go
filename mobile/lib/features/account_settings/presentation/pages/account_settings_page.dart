@@ -273,7 +273,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                 );
                               },
                             ),
-                            SizedBox(height: Constants.spaceL),
+                            SizedBox(height: Constants.spaceXL),
                             CustomButton(
                               text: LocaleKeys.deleteAccount.tr(),
                               backgroundColor:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-26 21:19+0100\n"
+"POT-Creation-Date: 2025-01-26 22:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,7 +470,7 @@ msgstr "Weryfikacja adresu e-mail"
 msgid "AccountPasswordResetEmailSubject"
 msgstr "Prośba o zresetowanie hasła"
 
-#: server/business_logic/mailing/camping/contact_form.py:10
+#: server/business_logic/mailing/camping/contact_form.py:11
 msgid "ContactFormEmailSubject"
 msgstr "Formularz kontaktowy"
 
@@ -594,6 +594,14 @@ msgid "Contact form"
 msgstr "Formularz kontaktowy"
 
 #: server/templates/mailing/camping/contact_form.html:9
+msgid "Sender"
+msgstr "Nadawca"
+
+#: server/templates/mailing/camping/contact_form.html:12
+msgid "Dispatch time"
+msgstr "Czas wysyłki"
+
+#: server/templates/mailing/camping/contact_form.html:15
 msgid "Content"
 msgstr "Treść"
 

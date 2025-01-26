@@ -51,7 +51,7 @@ services:
   stripe-cli:
     image: stripe/stripe-cli
     container_name: stripe-cli
-    command: "listen --api-key $${STRIPE_API_KEY} --events $${STRIPE_EVENTS} --forward-to backend:8000/api/camping/payments/webhook/"
+    command: "listen --events checkout.session.completed,checkout.session.expired,charge.refunded --forward-to backend:8000/api/camping/payments/webhook/"
     env_file:
       - envs/.stripe.env
     depends_on:

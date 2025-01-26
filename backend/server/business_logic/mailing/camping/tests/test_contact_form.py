@@ -3,6 +3,8 @@ from unittest import mock
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.test import TestCase
+from django.utils import timezone
+from freezegun import freeze_time
 from model_bakery import baker
 
 from server.apps.account.models import Account, AccountProfile
@@ -20,11 +22,13 @@ class ContactFormMailTestCase(TestCase):
         self.account = baker.make(Account, _fill_optional=True)
         baker.make(AccountProfile, account=self.account, _fill_optional=True)
 
+    @freeze_time()
     @mock.patch(mock_celery_app_path)
     def test_send(
         self,
         celery_app_mock,
     ):
+        current_datetime = timezone.now()
         some_content = 'Some message content'
         from_email = self.account.email
         emails = [settings.EMAIL_HOST_USER]
@@ -33,6 +37,7 @@ class ContactFormMailTestCase(TestCase):
         ctx = {
             'email': from_email,
             'content': some_content,
+            'datetime': current_datetime.strftime(settings.DATETIME_INPUT_FORMATS[0]),
         }
         message = render_to_string(ContactFormMail._message_template, ctx)
 

@@ -64,7 +64,7 @@ class AccountCommandTestCase(TestCase):
         )
 
         assert account is not None
-        assert list(account.groups.all()) == groups
+        self.assertCountEqual(account.groups.all(), groups)
 
     @mock.patch(mock_create_account_path)
     def test_create_account_without_optional_fields(self, create_account_mock):
@@ -158,7 +158,7 @@ class AccountCommandTestCase(TestCase):
         assert account.profile.phone_number == new_profile_data.phone_number
         assert account.profile.avatar == new_profile_data.avatar
         assert account.profile.id_card == new_profile_data.id_card
-        assert list(account.groups.all()) == groups
+        self.assertCountEqual(account.groups.all(), groups)
 
     @mock.patch.object(AccountCommand, 'change_password')
     def test_modify_account_without_optional_fields(self, change_password_mock):

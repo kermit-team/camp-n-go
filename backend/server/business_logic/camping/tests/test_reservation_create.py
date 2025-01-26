@@ -25,7 +25,7 @@ from server.utils.tests.baker_generators import generate_password
 
 class ReservationCreateBLTestCase(TestCase):
     given_date = date(2020, 1, 1)
-    date_from = given_date + timedelta(days=7)
+    date_from = given_date
     date_to = date_from + timedelta(days=7)
 
     number_of_adults = 2
@@ -161,7 +161,7 @@ class ReservationCreateBLTestCase(TestCase):
 
         with self.assertRaises(DateInThePastError):
             ReservationCreateBL.process(
-                date_from=self.given_date,
+                date_from=self.date_from - timedelta(days=1),
                 date_to=self.date_to,
                 number_of_adults=self.number_of_adults,
                 number_of_children=self.number_of_children,

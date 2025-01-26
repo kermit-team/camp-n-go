@@ -9,16 +9,26 @@ from server.apps.account.models import Account, AccountProfile
 from server.apps.camping.messages.contact_form import ContactFormMessagesEnum
 from server.apps.camping.views import ContactFormSendView
 from server.business_logic.mailing.camping import ContactFormConfirmationMail, ContactFormMail
+from server.utils.tests.account_view_permissions import AccountViewPermissions
+from server.utils.tests.account_view_permissions_mixin import AccountViewPermissionsTestMixin
 from server.utils.tests.baker_generators import generate_password
 
 
-class ContactFormSendViewTestCase(APITestCase):
+class ContactFormSendViewTestCase(AccountViewPermissionsTestMixin, APITestCase):
     content = 'Some message content.'
 
     @classmethod
     def setUpTestData(cls):
         cls.factory = APIRequestFactory()
         cls.view = ContactFormSendView
+        cls.viewname = 'contact_form_send'
+        cls.view_permissions = AccountViewPermissions(
+            anon=True,
+            account=True,
+            owner=True,
+            employee=True,
+            client=True,
+        )
 
     def setUp(self):
         self.password = generate_password()
@@ -32,7 +42,7 @@ class ContactFormSendViewTestCase(APITestCase):
             'email': self.account.email,
             'content': self.content,
         }
-        url = reverse('contact_form_send')
+        url = reverse(self.viewname)
 
         req = self.factory.post(url, data=request_data)
         res = self.view.as_view()(req)
@@ -51,3 +61,18 @@ class ContactFormSendViewTestCase(APITestCase):
 
         assert res.status_code == status.HTTP_200_OK
         assert res.data == expected_data
+
+    @mock.patch.object(ContactFormConfirmationMail, 'send')
+    @mock.patch.object(ContactFormMail, 'send')
+    def test_permissions(self, send_contact_form_mail_mock, send_contact_form_confirmation_mail_mock):
+        self._create_accounts_with_groups_and_permissions()
+        account = baker.make(_model=Account)
+        request_data = {
+            'email': account.email,
+            'content': self.content,
+        }
+
+        self._test_custom_view_permissions(
+            request_factory_handler=self.factory.post,
+            data=request_data,
+        )

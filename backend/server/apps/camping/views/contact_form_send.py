@@ -10,7 +10,7 @@ from server.business_logic.mailing.camping import ContactFormConfirmationMail, C
 
 
 class ContactFormSendView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = (AllowAny, )
     serializer_class = ContactFormSerializer
 
     def post(self, request: Request) -> Response:

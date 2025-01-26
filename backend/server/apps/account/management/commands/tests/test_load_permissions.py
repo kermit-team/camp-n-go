@@ -1,8 +1,10 @@
+from unittest import mock
+
 import pytest
-from django.conf import settings
-from django.contrib.auth.models import Permission
 from django.core.management import call_command
 from django.test import TestCase
+
+from server.business_logic.account import LoadPermissionsBL
 
 
 class LoadPermissionsCommandTestCase(TestCase):
@@ -10,16 +12,10 @@ class LoadPermissionsCommandTestCase(TestCase):
     def capsys_setter(self, capsys):
         self.capsys = capsys
 
-    def test_load_permissions_success(self):
+    @mock.patch.object(LoadPermissionsBL, 'process')
+    def test_load_permissions_success(self, load_permissions_process_mock):
         call_command('load_permissions')
         captured = self.capsys.readouterr()
 
+        load_permissions_process_mock.assert_called_once()
         assert captured.out == 'Successfully added permissions.\n'
-
-        for permission in settings.PERMISSIONS:
-            assert Permission.objects.filter(
-                name=permission['NAME'],
-                codename=permission['CODENAME'],
-                content_type__app_label=permission['CONTENT_TYPE_APP_LABEL'],
-                content_type__model=permission['CONTENT_TYPE_MODEL'],
-            ).exists()

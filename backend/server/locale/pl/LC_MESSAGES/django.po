@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 23:41+0100\n"
+"POT-Creation-Date: 2025-01-26 21:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -102,6 +102,11 @@ msgstr ""
 msgid "Password for account with uidb64 {uidb64} has been successfully reset."
 msgstr "Hasło dla użytkownika o uidb64 {uidb64} zostało pomyślnie zresetowane."
 
+#: server/apps/account/messages/account.py:11
+#, python-brace-format
+msgid "Account {identifier} has been successfully anonymized."
+msgstr "Użytkownik {identifier} został pomyślnie zanonimizowany."
+
 #: server/apps/account/models/account.py:14
 msgid "Identifier"
 msgstr "Identyfikator"
@@ -121,6 +126,15 @@ msgid ""
 msgstr ""
 "Określa czy ten użytkownik powinien być traktowany jako aktywny. Odznacz tą "
 "opcję zamiast usuwać użytkownika."
+
+#: server/apps/account/models/account.py:34
+msgid "IsAnonymized"
+msgstr "Zanonimizowany"
+
+#: server/apps/account/models/account.py:36
+msgid "Designates whether this account should be treated as anonymized."
+msgstr ""
+"Określa czy ten użytkownik powinien być traktowany jako zanonimizowany."
 
 #: server/apps/account/models/account_profile.py:15
 msgid "FirstName"
@@ -500,7 +514,7 @@ msgstr "Pracownik"
 msgid "Client"
 msgstr "Klient"
 
-#: server/settings/components/rest.py:36
+#: server/settings/components/rest.py:43
 msgid "Application for camping management"
 msgstr "Aplikacja do zarządzania kempingiem"
 
@@ -589,8 +603,9 @@ msgid ""
 "We have received your message and will do our best to respond as soon as "
 "possible. It usually takes about %(contact_form_respond_time)s business day."
 msgstr ""
-"Otrzymaliśmy Twoją wiadomość i dołożymy wszelkich starań, aby odpowiedzieć tak szybko, jak to możliwe. "
-"Zwykle zajmuje to około %(contact_form_respond_time)s dni roboczych."
+"Otrzymaliśmy Twoją wiadomość i dołożymy wszelkich starań, aby odpowiedzieć "
+"tak szybko, jak to możliwe. Zwykle zajmuje to około "
+"%(contact_form_respond_time)s dni roboczych."
 
 #: server/templates/mailing/camping/payment_expired.html:6
 msgid "Payment expired"
@@ -680,7 +695,8 @@ msgstr "Przypomnienie o nadchodzącej rezerwacji"
 msgid ""
 "Your reservation %(camping_plot)s [%(date_from)s - %(date_to)s] is upcoming."
 msgstr ""
-"Termin Twojej rezerwacji %(camping_plot)s [%(date_from)s - %(date_to)s] zbliża się."
+"Termin Twojej rezerwacji %(camping_plot)s [%(date_from)s - %(date_to)s] "
+"zbliża się."
 
 #: server/templates/mailing/camping/reservation_reminder.html:14
 msgid "Reservation details"
@@ -707,25 +723,33 @@ msgstr ""
 "Uprzejmie przypominamy, że zameldowanie jest możliwe od %(check_in_time)s, "
 "natomiast wymeldowanie musi nastąpić do %(check_out_time)s."
 
-#: server/utils/api/time_helper.py:12
+#: server/utils/api/tests/test_time_helper.py:18
+#: server/utils/api/tests/test_time_helper.py:61
+#: server/utils/api/time_helper.py:18
 #, python-brace-format
-msgid "{days} days "
-msgstr "{days} dni "
+msgid "{seconds} seconds "
+msgstr "{seconds} sekund "
 
-#: server/utils/api/time_helper.py:14
-#, python-brace-format
-msgid "{hours} hours "
-msgstr "{hours} godzin "
-
+#: server/utils/api/tests/test_time_helper.py:25
+#: server/utils/api/tests/test_time_helper.py:60
 #: server/utils/api/time_helper.py:16
 #, python-brace-format
 msgid "{minutes} minutes "
 msgstr "{minutes} minut "
 
-#: server/utils/api/time_helper.py:18
+#: server/utils/api/tests/test_time_helper.py:32
+#: server/utils/api/tests/test_time_helper.py:59
+#: server/utils/api/time_helper.py:14
 #, python-brace-format
-msgid "{seconds} seconds "
-msgstr "{seconds} sekund "
+msgid "{hours} hours "
+msgstr "{hours} godzin "
+
+#: server/utils/api/tests/test_time_helper.py:41
+#: server/utils/api/tests/test_time_helper.py:58
+#: server/utils/api/time_helper.py:12
+#, python-brace-format
+msgid "{days} days "
+msgstr "{days} dni "
 
 #~ msgid "English"
 #~ msgstr "Angielski"

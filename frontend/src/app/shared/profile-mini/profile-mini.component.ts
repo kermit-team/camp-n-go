@@ -24,4 +24,8 @@ export class ProfileMiniComponent {
   logout() {
     this.authFacade.logout();
   }
+
+  get isOwner() {
+    return this.user.groups.some((group) => group.name === 'Właściciel');
+  }
 }

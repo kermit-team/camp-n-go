@@ -14,6 +14,9 @@ import { PaymentComponent } from './payment/containers/payment/payment.component
 import { ReservationsComponent } from './reservations/containers/reservations/reservations.component';
 import { ReservationEditComponent } from './reservations/containers/reservation-edit/reservation-edit.component';
 import { reservationDetailsResolver } from './reservations/resolvers/reservation-details.resolver';
+import { AdminUsersComponent } from './admin/containers/admin-users/admin-users.component';
+import { AdminDashboardComponent } from './admin/containers/admin-dashboard/admin-dashboard.component';
+import { userGroupsResolver } from './admin/resolvers/user-groups.resolver';
 
 export const routes: Routes = [
   {
@@ -52,8 +55,19 @@ export const routes: Routes = [
     component: ReservationCreateComponent,
   },
   {
+    path: AppRoutes.Admin,
+    component: AdminDashboardComponent,
+  },
+  {
     path: AppRoutes.Reservations,
     component: ReservationsComponent,
+  },
+  {
+    path: AppRoutes.AdminUsers,
+    component: AdminUsersComponent,
+    resolve: {
+      userGroups: userGroupsResolver,
+    },
   },
   {
     path: AppRoutes.ReservationsEdit,

@@ -10,7 +10,11 @@
     </div>
   </button>
   <div class="dropdown" [class.show]="showDropdown">
-    <!--    <p class="dropdown-option" *ngIf="isAdmin" [routerLink]="['/adminPanel']">Panel Administratora</p>-->
+    @if (isOwner) {
+      <p class="dropdown-option" [routerLink]="['/admin']">
+        Panel Administratora
+      </p>
+    }
     <p class="dropdown-option" [routerLink]="['/profile']">Mój Profil</p>
     <p class="dropdown-option" [routerLink]="['/reservations']">
       Moje Rezerwacje
@@ -20,7 +24,3 @@
     <!-- Dropdown content goes here -->
   </div>
 </div>
-
-<!-- [routerLink]="['/profile']" -->
-
-<!-- *ngIf="userData?.groups?.includes('Administratorzy')" -->

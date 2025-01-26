@@ -1,3 +1,4 @@
+from server.apps.account.views.account_anonymize import AccountAnonymizeView
 from server.apps.account.views.account_details import AccountDetailsView
 from server.apps.account.views.account_modify import AccountModifyView
 from server.apps.account.views.account_register import AccountRegisterView

@@ -1,4 +1,5 @@
-from server.business_logic.account.create_account import AccountCreateBL
+from server.business_logic.account.account_anonymize import AccountAnonymizeBL
+from server.business_logic.account.account_create import AccountCreateBL
 from server.business_logic.account.email_verification import AccountEmailVerificationBL
 from server.business_logic.account.email_verification_resend import AccountEmailVerificationResendBL
 from server.business_logic.account.load_groups import LoadGroupsBL

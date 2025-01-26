@@ -40,15 +40,19 @@ class AccountQueryTestCase(TestCase):
             AccountQuery.get_by_email(email=email)
 
     def test_get_queryset_for_account_when_is_superuser(self):
+        anonymized_account = baker.make(_model=Account, is_anonymized=True)
         accounts = self._create_account_for_each_group()
         accounts.append(self.account)
+        accounts.append(anonymized_account)
 
         queryset = AccountQuery.get_queryset_for_account(account=self.account)
 
         self.assertCountEqual(queryset, accounts)
 
     def test_get_queryset_for_account(self):
+        _anonymized_account = baker.make(_model=Account, is_anonymized=True)
         accounts = self._create_account_for_each_group()
+
         self.account.is_superuser = False
 
         queryset = AccountQuery.get_queryset_for_account(account=self.account)

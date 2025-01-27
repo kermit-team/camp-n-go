@@ -34,7 +34,7 @@ export class AdminApi {
   ): Observable<LibListItem<AdminReservationItem>> {
     const params = this.convertObjectToHttpParams(parameters);
     return this.httpClient.get<LibListItem<AdminReservationItem>>(
-      `http://localhost:8000/api/admin/reservations/`,
+      `http://localhost:8000/api/admin/camping/reservations/`,
       { params },
     );
   }

@@ -1,23 +1,25 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { InputComponent } from '../../../../shared/components/input/input.component';
-import { AdminUsersFilters } from '../../../models/admin-users.interface';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DatepickerComponent } from '../../../../shared/components/datepicker/datepicker/datepicker.component';
+import { AdminReservationFilters } from '../../../models/admin-reservations.interface';
+import moment from 'moment';
 
 @Component({
   selector: 'app-admin-reservations-filters',
   standalone: true,
-  imports: [ButtonComponent, InputComponent, ReactiveFormsModule],
+  imports: [
+    ButtonComponent,
+    InputComponent,
+    ReactiveFormsModule,
+    DatepickerComponent,
+  ],
   templateUrl: './admin-reservations-filters.component.html',
   styleUrl: './admin-reservations-filters.component.scss',
 })
-export class AdminReservationsFiltersComponent implements OnInit {
-  @Output() public searchFired = new EventEmitter<AdminUsersFilters>();
+export class AdminReservationsFiltersComponent {
+  @Output() public searchFired = new EventEmitter<AdminReservationFilters>();
 
   private fb = inject(FormBuilder);
 
@@ -25,29 +27,22 @@ export class AdminReservationsFiltersComponent implements OnInit {
 
   constructor() {
     this.form = this.fb.group({
-      group: undefined,
-      personal_data: undefined,
+      date_from: undefined,
+      date_to: undefined,
+      reservation_data: undefined,
     });
   }
 
-  ngOnInit() {
-    // this.form.patchValue({
-    //   group: this.defaultOption.id,
-    // });
-  }
-
   search() {
-    const data = {
-      group:
-        this.form.get('group').value !== -1
-          ? this.form.get('group').value
-          : undefined,
-      personal_data: this.form.get('personal_data').value ?? undefined,
-    };
-    this.searchFired.emit(data);
-  }
-
-  get selectFormControl() {
-    return this.form.get('group') as FormControl;
+    const formData = this.form.getRawValue();
+    this.searchFired.emit({
+      date_from: formData.date_from
+        ? moment(formData.date_from).format('YYYY-MM-DD')
+        : undefined,
+      date_to: formData.date_to
+        ? moment(formData.date_to).format('YYYY-MM-DD')
+        : undefined,
+      reservation_data: formData.reservation_data,
+    });
   }
 }

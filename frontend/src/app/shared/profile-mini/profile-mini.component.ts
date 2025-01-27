@@ -3,11 +3,12 @@ import { RouterLink } from '@angular/router';
 import { AuthUser } from '../../auth/models/auth.interface';
 import { NgClass } from '@angular/common';
 import { AuthFacade } from '../../auth/services/auth.facade';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-profile-mini',
   standalone: true,
-  imports: [RouterLink, NgClass],
+  imports: [RouterLink, NgClass, MatMenuTrigger, MatMenu, MatMenuItem],
   templateUrl: './profile-mini.component.html',
   styleUrl: './profile-mini.component.scss',
 })

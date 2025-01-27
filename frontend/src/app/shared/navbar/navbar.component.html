@@ -1,90 +1,22 @@
 <nav class="navbar">
-  <div class="navbar-container">
-    <input id="menu__toggle" type="checkbox" />
-    <label class="menu__btn" for="menu__toggle">
-      <div></div>
-      <div></div>
-      <div></div>
-    </label>
-    <ul class="menu-items" [ngClass]="{ 'menu-items-black': isBlack }">
-      <li class="menu-item logo-mobile">
-        <a routerLink="/hotel" class="menu-item-link"
-          ><img [routerLink]="['/']" src="assets/logo.svg" alt="logo"
-        /></a>
-      </li>
-      <li class="active menu-item">
-        <a
-          routerLink="/hotel"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >HOTEL</a
-        >
-      </li>
-      <li class="menu-item">
-        <a
-          routerLink="/restauracja"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >RESTAURACJA</a
-        >
-      </li>
-      <li class="menu-item">
-        <a
-          routerLink="/biznes"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >BIZNES</a
-        >
-      </li>
-      <li class="menu-item" [ngClass]="{ 'menu-item-black': isBlack }">
-        <a
-          routerLink="/wesela"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >WESELA</a
-        >
-      </li>
-      <img
-        [routerLink]="['/']"
-        src="assets/logo.svg"
-        alt="logo"
-        class="logo"
-        [ngClass]="{ 'black-logo': isBlack }"
-      />
-      <li class="menu-item">
-        <a
-          routerLink="/zatoka"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >ZATOKA</a
-        >
-      </li>
-      <li class="menu-item">
-        <a
-          routerLink="/camping"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >CAMPING</a
-        >
-      </li>
-      <li class="menu-item">
-        <a
-          routerLink="/galeria"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >GALERIA</a
-        >
-      </li>
-      <li class="menu-item">
-        <a
-          routerLink="/kontakt"
-          class="menu-item-link"
-          [ngClass]="{ 'menu-item-black': isBlack }"
-          >KONTAKT</a
-        >
-      </li>
-    </ul>
+  <div class="logo-wrapper" (click)="navigateToHome()">
+    <img
+      src="../../../assets/logo.svg"
+      alt="logo"
+      class="navbar-logo"
+      [ngClass]="{
+        black: isBlack,
+      }"
+    />
+    <span
+      class="logo-text"
+      [ngClass]="{
+        black: isBlack,
+      }"
+      >Camp'n'go</span
+    >
   </div>
+
   <div class="user-info">
     @if (authUser) {
       <app-profile-mini
@@ -95,7 +27,9 @@
       <a
         routerLink="/login"
         class="login-link"
-        [ngClass]="{ 'menu-item-black': isBlack }"
+        [ngClass]="{
+          black: isBlack,
+        }"
         >Zaloguj się</a
       >
     }

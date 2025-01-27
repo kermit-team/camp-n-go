@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { LibPaginationMetadata } from '../../../../shared/models/list.interface';
 import {
   MatPaginator,
@@ -20,6 +20,7 @@ import {
 import { MyCustomPaginatorIntl } from '../../../../shared/classes/mat-paginator-intl.component';
 import { AdminReservationItem } from '../../../models/admin-reservations.interface';
 import { DateFormatPipe } from '../../../../shared/pipes/date.pipe';
+import { UtilService } from '../../../../shared/services/util.service';
 
 @Component({
   selector: 'app-admin-reservations-list',
@@ -48,7 +49,10 @@ export class AdminReservationsListComponent {
     this.paginationData = pagination;
   }
   @Output() paginationChanged = new EventEmitter<PageEvent>();
-  @Output() detailsFired = new EventEmitter<string>();
+  @Output() detailsFired = new EventEmitter<AdminReservationItem>();
+
+  private utilService = inject(UtilService);
+  public getPaymentStatus = this.utilService.getPaymentStatus;
 
   paginationData: LibPaginationMetadata;
 
@@ -58,29 +62,7 @@ export class AdminReservationsListComponent {
     this.paginationChanged.emit(e);
   }
 
-  getPaymentStatus(status: number) {
-    let statusText;
-    switch (status) {
-      case 0:
-        statusText = 'Oczekujące na płatność';
-        break;
-      case 1:
-        statusText = 'Odrzucona';
-        break;
-      case 2:
-        statusText = 'Nieopłacona';
-        break;
-      case 3:
-        statusText = 'Opłacona';
-        break;
-      case 4:
-        statusText = 'Zwrócona';
-        break;
-    }
-    return statusText;
-  }
-
-  details(id: string) {
-    this.detailsFired.emit(id);
+  details(item: AdminReservationItem) {
+    this.detailsFired.emit(item);
   }
 }

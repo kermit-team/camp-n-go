@@ -13,7 +13,7 @@
       [items]="adminReservationItems$ | async"
       [paginationMetadata]="paginationMetadata$ | async"
       (paginationChanged)="onPaginationChanged($event)"
-      (detailsFired)="edit($event)"
+      (detailsFired)="showDetails($event)"
     ></app-admin-reservations-list>
   </div>
 </div>

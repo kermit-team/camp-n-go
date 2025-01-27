@@ -179,3 +179,11 @@ mat-paginator {
   border-bottom-color: var(--primary-color) !important;
   border-bottom-width: 2px !important;
 }
+
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input {
+  color: unset !important;
+}
+
+.mat-mdc-menu-panel {
+  border-radius: 2px !important;
+}

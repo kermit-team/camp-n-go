@@ -19,10 +19,6 @@ export abstract class SharedListState<T> {
     return this.listRequestParameters$.asObservable();
   }
 
-  getListRequestParameters() {
-    return this.listRequestParameters$.getValue();
-  }
-
   setItems(items: Array<T>) {
     this.items$.next([...items]);
   }

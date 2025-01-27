@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatepickerComponent } from '../../../shared/components/datepicker/datepicker.component';
+import { DateRangePickerComponent } from '../../../shared/components/datepicker/date-range-picker/date-range-picker.component';
 import { PeoplePickerComponent } from '../../../shared/components/people-picker/people-picker/people-picker.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { ParcelsFacade } from '../../services/parcels.facade';
@@ -23,7 +23,7 @@ import { ReserveCampingRequest } from '../../models/parcels.interface';
   styleUrl: './reservation-list.component.scss',
   imports: [
     ReactiveFormsModule,
-    DatepickerComponent,
+    DateRangePickerComponent,
     PeoplePickerComponent,
     ButtonComponent,
     ParcelSearchListComponent,

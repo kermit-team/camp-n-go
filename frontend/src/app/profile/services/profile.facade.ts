@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { ProfileApi } from './profile.api';
 import { switchMap, throwError } from 'rxjs';
 import { AuthFacade } from '../../auth/services/auth.facade';
@@ -12,7 +12,7 @@ import { ProfileEdit } from '../models/profile.interface';
 export class ProfileFacade {
   private profileApi = inject(ProfileApi);
   private authFacade = inject(AuthFacade);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
 
   addCar(registration_plate: string) {
     this.profileApi

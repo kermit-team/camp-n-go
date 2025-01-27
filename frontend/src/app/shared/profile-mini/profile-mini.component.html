@@ -1,5 +1,9 @@
 <div class="profile-mini-container">
-  <button class="profile-mini-button" (click)="toggleDropdown()">
+  <button
+    class="profile-mini-button"
+    (click)="toggleDropdown()"
+    [matMenuTriggerFor]="menu"
+  >
     <div class="circle">
       {{ user.profile.first_name.slice(0, 1)
       }}{{ user.profile.last_name.slice(0, 1) }}
@@ -9,18 +13,16 @@
       <span>{{ user.profile.last_name }}</span>
     </div>
   </button>
-  <div class="dropdown" [class.show]="showDropdown">
+  <mat-menu #menu="matMenu">
     @if (isOwner) {
-      <p class="dropdown-option" [routerLink]="['/admin']">
+      <button mat-menu-item [routerLink]="['/admin']">
         Panel Administratora
-      </p>
+      </button>
     }
-    <p class="dropdown-option" [routerLink]="['/profile']">Mój Profil</p>
-    <p class="dropdown-option" [routerLink]="['/reservations']">
+    <button mat-menu-item [routerLink]="['/profile']">Profil</button>
+    <button mat-menu-item [routerLink]="['/reservations']">
       Moje Rezerwacje
-    </p>
-    <p class="dropdown-option" [routerLink]="['/']">Strona Główna</p>
-    <p class="dropdown-option" (click)="logout()">Wyloguj się</p>
-    <!-- Dropdown content goes here -->
-  </div>
+    </button>
+    <button mat-menu-item (click)="logout()">Wyloguj się</button>
+  </mat-menu>
 </div>

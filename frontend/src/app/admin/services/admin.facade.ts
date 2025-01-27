@@ -13,11 +13,14 @@ import {
   AdminUsersItem,
 } from '../models/admin-users.interface';
 import { AdminApi } from './admin.api';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { LibSelectItem } from '../../shared/components/select/model/select.interface';
 import { Router } from '@angular/router';
 import { AdminReservationsState } from '../state/admin-reservations.state';
-import { AdminReservationItem } from '../models/admin-reservations.interface';
+import {
+  AdminReservationFilters,
+  AdminReservationItem,
+} from '../models/admin-reservations.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +29,7 @@ export class AdminFacade {
   private adminUsersState = inject(AdminUsersState);
   private adminReservationsState = inject(AdminReservationsState);
   private adminApi = inject(AdminApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private router = inject(Router);
 
   loadAdminUserItems(destroyRef: DestroyRef) {
@@ -163,7 +166,7 @@ export class AdminFacade {
   }
 
   loadAdminReservationsItems(destroyRef: DestroyRef) {
-    this.selectParcelListParams$()
+    this.selectAdminReservationListParams$()
       .pipe(
         switchMap((params: LibListRequestParams) =>
           this.adminApi.getAdminReservationsList({ ...params }).pipe(
@@ -213,7 +216,7 @@ export class AdminFacade {
     return this.adminReservationsState.selectFilters$();
   }
 
-  setAdminReservationFilters(filters: AdminUsersFilters) {
+  setAdminReservationFilters(filters: AdminReservationFilters) {
     this.adminReservationsState.setListFilters(filters);
   }
 }

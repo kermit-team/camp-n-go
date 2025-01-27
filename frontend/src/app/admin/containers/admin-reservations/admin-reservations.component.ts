@@ -1,11 +1,16 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AdminFacade } from '../../services/admin.facade';
 import { AsyncPipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
-import { AdminUsersFilters } from '../../models/admin-users.interface';
 import { AdminReservationsFiltersComponent } from '../../components/admin-reservations/admin-reservations-filters/admin-reservations-filters.component';
 import { AdminReservationsListComponent } from '../../components/admin-reservations/admin-reservations-list/admin-reservations-list.component';
+import {
+  AdminReservationFilters,
+  AdminReservationItem,
+} from '../../models/admin-reservations.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AdminReservationsDialogTableComponent } from '../../components/admin-reservations/admin-reservation-dialog-table/admin-reservations-dialog-table.component';
 
 @Component({
   selector: 'app-admin-reservations',
@@ -22,7 +27,7 @@ import { AdminReservationsListComponent } from '../../components/admin-reservati
 export class AdminReservationsComponent implements OnInit {
   private adminFacade = inject(AdminFacade);
   private destroyRef = inject(DestroyRef);
-  private router = inject(Router);
+  private dialog = inject(MatDialog);
 
   adminReservationItems$ = this.adminFacade.selectAdminReservationItems$();
   paginationMetadata$ =
@@ -36,11 +41,14 @@ export class AdminReservationsComponent implements OnInit {
     this.adminFacade.setAdminReservationPage(pageEvent.pageIndex + 1);
   }
 
-  search(filters: AdminUsersFilters) {
+  search(filters: AdminReservationFilters) {
     this.adminFacade.setAdminReservationFilters({ ...filters });
   }
 
-  edit(id: string) {
-    //todo dialog
+  showDetails(item: AdminReservationItem) {
+    const dialogRef = this.dialog.open(AdminReservationsDialogTableComponent, {
+      width: '500px',
+      data: { reservationData: item },
+    });
   }
 }

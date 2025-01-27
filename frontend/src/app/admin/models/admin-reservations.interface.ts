@@ -19,3 +19,9 @@ export interface AdminReservationItem {
     price: string;
   };
 }
+
+export interface AdminReservationFilters {
+  reservation_data: string;
+  date_from: string;
+  date_to: string;
+}

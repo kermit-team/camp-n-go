@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatPaginator,
@@ -9,6 +9,7 @@ import { MyCustomPaginatorIntl } from '../../../shared/classes/mat-paginator-int
 import { LibPaginationMetadata } from '../../../shared/models/list.interface';
 import { ReservationListItem } from '../../models/reservation.interface';
 import { DateFormatPipe } from '../../../shared/pipes/date.pipe';
+import { UtilService } from '../../../shared/services/util.service';
 
 @Component({
   selector: 'app-reservations-list',
@@ -27,6 +28,9 @@ export class ReservationsListComponent {
   @Output() editFired = new EventEmitter<number>();
   @Output() cancelFired = new EventEmitter<number>();
 
+  private utilService = inject(UtilService);
+  public getPaymentStatus = this.utilService.getPaymentStatus;
+
   paginationData: LibPaginationMetadata;
 
   handlePageEvent(e: PageEvent) {
@@ -35,28 +39,6 @@ export class ReservationsListComponent {
 
   onEditFired(id: number) {
     this.editFired.emit(id);
-  }
-
-  getPaymentStatus(status: number) {
-    let statusText;
-    switch (status) {
-      case 0:
-        statusText = 'Oczekujące na płatność';
-        break;
-      case 1:
-        statusText = 'Odrzucona';
-        break;
-      case 2:
-        statusText = 'Nieopłacona';
-        break;
-      case 3:
-        statusText = 'Opłacona';
-        break;
-      case 4:
-        statusText = 'Zwrócona';
-        break;
-    }
-    return statusText;
   }
 
   cancelReservation(id: number) {

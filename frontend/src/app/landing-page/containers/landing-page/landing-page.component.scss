@@ -9,146 +9,6 @@
     url(../../../../assets/camper.jpg) no-repeat;
   background-position: top;
   height: 70%;
-}
-
-.title {
-  color: #4d4d4d;
-  font-size: 40px;
-  text-align: center;
-  margin: 3% auto 0;
-  width: 60%;
-  position: relative;
-}
-
-.text {
-  color: #313131;
-  width: 60%;
-  margin: 3% auto 0;
-}
-
-.squares {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  width: 13%;
-}
-
-.image-with-text {
-  display: block;
-  align-items: center;
-  justify-content: center;
-  width: 60%;
-  height: 50%;
-  margin: 3% auto;
-
-  .header3 {
-    font-size: 36px;
-    width: 50%;
-    letter-spacing: 0.3rem;
-    color: #2c2c2c;
-    text-align: left;
-  }
-
-  .text2 {
-    text-align: justify;
-    width: 50%;
-    height: auto;
-  }
-
-  .camper2 {
-    float: right;
-    width: 30%;
-    margin-bottom: 20px;
-    margin-right: 6%;
-  }
-
-  .map-pricelist-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    float: right;
-    clear: both;
-    margin-top: 10px;
-    background-color: transparent;
-    color: #4d4d4d;
-    font-size: 0.9rem;
-    text-decoration: underline;
-    text-decoration-color: #ae9560;
-    width: 40%;
-    letter-spacing: 2px;
-  }
-}
-
-.perks {
-  display: flex;
-  align-self: center;
-  justify-content: center;
-  width: 50%;
-  padding-bottom: 50px;
-  margin: auto;
-}
-
-@media only screen and (max-width: 600px) {
-  .header-div {
-    .header {
-      font-size: 3rem;
-    }
-
-    .header2 {
-      font-size: 0.8rem;
-      letter-spacing: 0.2rem;
-    }
-  }
-
-  .title {
-    font-size: 20px;
-    width: 80%;
-    margin-top: auto;
-  }
-
-  .text {
-    width: 90%;
-    font-size: 0.5rem;
-  }
-
-  .squares {
-    width: 20%;
-  }
-
-  .image-with-text {
-    width: 80%;
-    height: 50%;
-    margin: 3% auto 0;
-
-    .header3 {
-      font-size: 0.8rem;
-    }
-
-    .camper2 {
-      width: 40%;
-    }
-
-    .text2 {
-      font-size: 0.5rem;
-      width: 50%;
-    }
-
-    .map-pricelist-buttons {
-      margin-top: 3px;
-      font-size: 0.5rem;
-    }
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .landing-page {
-    background:
-      linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      url(../../../../assets/camper.jpg) no-repeat;
-    background-position: top;
-    height: 70%;
-  }
 
   .header-div {
     padding-top: 250px;
@@ -173,130 +33,112 @@
       display: flex;
       font-weight: 400;
     }
-  }
 
-  //@font-face {
-  //  font-family: "CustomFont";
-  //  src: url("../../assets/CreattionDemo.otf");
-  //}
-
-  .title {
-    color: #4d4d4d;
-    font-size: 40px;
-    text-align: center;
-    margin: 3% auto 0;
-    width: 60%;
-    position: relative;
-  }
-
-  .text {
-    color: #313131;
-    width: 60%;
-    margin: 3% auto 0;
-  }
-
-  .squares {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    width: 13%;
-  }
-
-  .image-with-text {
-    display: block;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    height: 50%;
-    margin: 3% auto;
-
-    .header3 {
-      font-size: 36px;
-      width: 50%;
-      letter-spacing: 0.3rem;
-      color: #2c2c2c;
-      text-align: left;
-    }
-
-    .text2 {
-      text-align: justify;
-      width: 50%;
-      height: auto;
-    }
-
-    .camper2 {
-      float: right;
-      width: 30%;
-      margin-bottom: 20px;
-      margin-right: 6%;
-    }
-
-    .map-pricelist-buttons {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      float: right;
-      clear: both;
-      margin-top: 10px;
-      background-color: transparent;
-      color: #4d4d4d;
-      font-size: 0.9rem;
-      text-decoration: underline;
-      text-decoration-color: #ae9560;
-      width: 40%;
-      letter-spacing: 2px;
-    }
-  }
-
-  .perks {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    width: 50%;
-    padding-bottom: 50px;
-    margin: auto;
-  }
-
-  @media only screen and (max-width: 600px) {
-    .title {
-      font-size: 0.7rem;
-    }
-
-    .text {
-      font-size: 0.6rem;
-    }
-    .image-with-text {
-      height: auto;
-
-      .text2 {
-        font-size: 0.4rem;
+    @media (max-width: 765px) {
+      .header {
+        margin-bottom: 10px;
+        font-size: 4rem;
       }
 
-      .map-pricelist-buttons {
-        margin-top: 1em;
+      .header2 {
         font-size: 0.7rem;
+        text-align: center;
       }
     }
   }
 }
 
-@media only screen and (min-width: 1600px) {
-  .image-with-text {
-    .camper2 {
-      float: right;
-      width: 22%;
-      margin-right: 10%;
-    }
+.landing-page-content {
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
 
-    .map-pricelist-buttons {
-      margin-top: 10px;
-      font-size: 1.2rem;
+  .title {
+    color: #4d4d4d;
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .squares {
+    margin: auto;
+  }
+
+  .header3 {
+    font-size: 36px;
+    letter-spacing: 0.3rem;
+    color: #4d4d4d;
+    margin-top: 20px;
+
+    @media (max-width: 400px) {
+      font-size: 28px;
     }
   }
 
-  .perks {
-    width: 50%;
-    margin-top: 7%;
+  .image-with-text {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+
+    .text2 {
+      line-height: 24px;
+    }
+
+    .camper2 {
+      height: auto;
+    }
+
+    @media (max-width: 890px) {
+      align-items: center;
+      flex-direction: column;
+
+      .camper2 {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .localization {
+        text-align: center;
+      }
+    }
+
+    .image-with-text-container {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+
+      .localization {
+        margin-top: 20px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  background-color: #382f18;
+  display: flex;
+  justify-content: center;
+
+  .terms-and-contitions {
+    max-width: 1000px;
+    width: 100%;
+    text-align: right;
+    padding: 20px 40px;
+    display: flex;
+    gap: 20px;
+    align-self: flex-end;
+
+    .terms-and-contidtions-link {
+      color: white;
+      font-size: 12px;
+      font-weight: 400;
+    }
   }
 }

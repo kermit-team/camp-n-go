@@ -187,3 +187,7 @@ mat-paginator {
 .mat-mdc-menu-panel {
   border-radius: 2px !important;
 }
+
+.mat-date-range-input-inner[disabled] {
+  color: unset !important;
+}

@@ -31,6 +31,15 @@
     }
   }
 
+  .login-link {
+    color: #fff;
+    text-decoration: none;
+
+    &.black {
+      color: black;
+    }
+  }
+
   @media (max-width: 600px) {
     padding: 20px;
 

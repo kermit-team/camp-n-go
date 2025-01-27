@@ -37,15 +37,12 @@ export class ParcelsFacade {
   }
 
   getDataTransformedPassedData() {
+    console.log(this.getPassedData().endDate);
     return {
       number_of_adults: this.getPassedData().adultNumber,
       number_of_children: this.getPassedData().childrenNumber,
-      date_to: new Date(this.getPassedData().endDate)
-        .toISOString()
-        .slice(0, 10),
-      date_from: new Date(this.getPassedData().startDate)
-        .toISOString()
-        .slice(0, 10),
+      date_to: this.getPassedData().endDate,
+      date_from: this.getPassedData().startDate,
     };
   }
 

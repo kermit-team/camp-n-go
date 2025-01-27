@@ -142,5 +142,13 @@
   "registerFailed": "Nieprawidłowe dane użytkownika",
   "loginFailed": "Nieprawidłowe dane logowania lub konto o podanych danych nie istnieje",
   "deleteAccount": "Usuń konto",
-  "anonymizeAccountConfirmation": "Twoje dane zostaną usunięte, a konto zostanie zanonimizowane w systemie.\n\nNie będzie możliwości jego przywrócenia.\n\nNastąpi wylogowanie z systemu"
+  "anonymizeAccountConfirmation": "Twoje dane zostaną usunięte, a konto zostanie zanonimizowane w systemie.\n\nNie będzie możliwości jego przywrócenia.\n\nNastąpi wylogowanie z systemu",
+  "propertyChanged": "Pomyślnie zmieniono dane",
+  "passwordChanged": "Hasło zostało zmienione",
+  "accountDeleted": "Konto zostało usunięte",
+  "accountNotDeleted": "Nie udało się usunąć konta",
+  "dataNotLoaded": "Nie udało się załadować danych",
+  "checkboxMustBeChecked": "Pole musi być zaznaczone",
+  "accept": "Akceptuję",
+  "termsAndConditions": "regulamin i politykę prywatności"
 }

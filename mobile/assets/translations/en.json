@@ -141,5 +141,13 @@
   "registerFailed": "Wrong credentials",
   "loginFailed": "Wrong credentials or account with this data already exists",
   "deleteAccount": "Delete account",
-  "anonymizeAccountConfirmation": "Your data will be removed, and your account will be anonymized.\n\nThis action is irreversible.\n\nYou will be logged out of the system."
+  "anonymizeAccountConfirmation": "Your data will be removed, and your account will be anonymized.\n\nThis action is irreversible.\n\nYou will be logged out of the system.",
+  "propertyChanged": "Property changed successfully",
+  "passwordChanged": "Password changed successfully",
+  "accountDeleted": "Account deleted successfully",
+  "accountNotDeleted": "Account could not be deleted",
+  "dataNotLoaded": "Data could not be loaded",
+  "checkboxMustBeChecked": "Checkbox must be checked",
+  "accept": "Accept",
+  "termsAndConditions": "terms and conditions"
 }

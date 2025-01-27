@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/core/resources/submission_status.dart';
 import 'package:campngo/core/validation/validations.dart';
 import 'package:campngo/features/account_settings/domain/entities/account.dart';
 import 'package:campngo/features/account_settings/domain/entities/car.dart';
@@ -8,6 +9,7 @@ import 'package:campngo/features/account_settings/presentation/cubit/account_set
 import 'package:campngo/features/account_settings/presentation/widgets/car_list.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_add_car_dialog.dart';
 import 'package:campngo/features/account_settings/presentation/widgets/show_car_details_dialog.dart';
+import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:campngo/features/shared/widgets/app_body.dart';
 import 'package:campngo/features/shared/widgets/app_snack_bar.dart';
 import 'package:campngo/features/shared/widgets/custom_buttons.dart';
@@ -15,6 +17,7 @@ import 'package:campngo/features/shared/widgets/display_text_field.dart';
 import 'package:campngo/features/shared/widgets/texts/standard_text.dart';
 import 'package:campngo/features/shared/widgets/texts/title_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
+import 'package:campngo/injection_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,7 +85,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             {
               AppSnackBar.showSnackBar(
                 context: context,
-                text: "Nowa wartość pola została ustawiona",
+                text: LocaleKeys.propertyChanged.tr(),
               );
             }
         }
@@ -97,7 +100,28 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             );
           case EditPasswordStatus.success:
             AppSnackBar.showSnackBar(
-                context: context, text: "Hasło zostało zmienione");
+              context: context,
+              text: LocaleKeys.passwordChanged.tr(),
+            );
+        }
+
+        switch (state.deleteAccountStatus) {
+          case SubmissionStatus.initial:
+          case SubmissionStatus.loading:
+            break;
+          case SubmissionStatus.success:
+            if (context.mounted) {
+              AppSnackBar.showSnackBar(
+                context: context,
+                text: LocaleKeys.accountDeleted.tr(),
+              );
+            }
+            serviceLocator<AuthCubit>().logout();
+          case SubmissionStatus.failure:
+            AppSnackBar.showSnackBar(
+              context: context,
+              text: LocaleKeys.accountNotDeleted.tr(),
+            );
         }
       },
       builder: (context, state) {
@@ -126,8 +150,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                     SizedBox(height: Constants.spaceS),
                     StandardText(LocaleKeys.updateUserData.tr()),
                     SizedBox(height: Constants.spaceL),
-                    const StandardText(
-                        "Dane nie zostały załadowane prawidłowo"),
+                    StandardText(
+                      LocaleKeys.dataNotLoaded.tr(),
+                    ),
                   ],
                 ),
               );
@@ -283,7 +308,11 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                               prefixIcon: Icons.highlight_remove,
                               onPressed: () {
                                 _showDeleteAccountConfirmationDialog(
-                                    context: context);
+                                  context: context,
+                                  onDelete: context
+                                      .read<AccountSettingsCubit>()
+                                      .deleteAccount,
+                                );
                               },
                             ),
                             SizedBox(height: Constants.spaceL),
@@ -302,6 +331,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
 
   void _showDeleteAccountConfirmationDialog({
     required BuildContext context,
+    required Function() onDelete,
   }) {
     showDialog(
       context: context,
@@ -320,7 +350,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           ),
           TextButton(
             onPressed: () {
-              context.read<AccountSettingsCubit>().deleteAccount();
+              onDelete();
               Navigator.of(context).pop();
             },
             child: Text(

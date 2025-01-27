@@ -67,7 +67,7 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
           SizedBox(height: Constants.spaceM),
           GoldenNumberPickerField(
             labelText: LocaleKeys.numberOfAdults.tr(),
-            initialValue: 0,
+            initialValue: 1,
             onChanged: (value) {
               setState(() {
                 numberOfAdults = value!;

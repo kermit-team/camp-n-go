@@ -9,10 +9,11 @@ class AccountProfileDto {
   final String firstName;
   @JsonKey(name: 'last_name')
   final String lastName;
-  @JsonKey(name: 'phone_number')
+  @JsonKey(name: 'phone_number', includeIfNull: false)
   final String? phoneNumber;
+  @JsonKey(name: 'avatar', includeIfNull: false)
   final String? avatar;
-  @JsonKey(name: 'id_card')
+  @JsonKey(name: 'id_card', includeIfNull: false)
   final String? idCard;
 
   AccountProfileDto({
@@ -23,11 +24,9 @@ class AccountProfileDto {
     this.idCard,
   });
 
-  /// Metoda do deserializacji z JSON
   factory AccountProfileDto.fromJson(Map<String, dynamic> json) =>
       _$AccountProfileDtoFromJson(json);
 
-  /// Metoda do serializacji do JSON
   Map<String, dynamic> toJson() => _$AccountProfileDtoToJson(this);
 
   factory AccountProfileDto.fromEntity(AccountProfile profile) =>

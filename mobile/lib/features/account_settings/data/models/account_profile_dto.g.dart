@@ -15,11 +15,20 @@ AccountProfileDto _$AccountProfileDtoFromJson(Map<String, dynamic> json) =>
       idCard: json['id_card'] as String?,
     );
 
-Map<String, dynamic> _$AccountProfileDtoToJson(AccountProfileDto instance) =>
-    <String, dynamic>{
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'phone_number': instance.phoneNumber,
-      'avatar': instance.avatar,
-      'id_card': instance.idCard,
-    };
+Map<String, dynamic> _$AccountProfileDtoToJson(AccountProfileDto instance) {
+  final val = <String, dynamic>{
+    'first_name': instance.firstName,
+    'last_name': instance.lastName,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('phone_number', instance.phoneNumber);
+  writeNotNull('avatar', instance.avatar);
+  writeNotNull('id_card', instance.idCard);
+  return val;
+}

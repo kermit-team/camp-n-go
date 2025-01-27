@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onTap: () {
                                   openInAppBrowser(
                                     Uri.parse(
-                                      'https://www.onet.pl/',
+                                      Constants.termsAndConditionsUrl,
                                     ),
                                   );
                                 },

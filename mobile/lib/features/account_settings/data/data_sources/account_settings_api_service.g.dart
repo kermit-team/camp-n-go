@@ -197,10 +197,8 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
   }
 
   @override
-  Future<HttpResponse<void>> sendContactEmail({
-    required String email,
-    required Map<String, dynamic> content,
-  }) async {
+  Future<HttpResponse<void>> sendContactEmail(
+      {required Map<String, dynamic> content}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -213,7 +211,34 @@ class _AccountSettingsApiService implements AccountSettingsApiService {
     )
         .compose(
           _dio.options,
-          '/contact/${email}',
+          '/camping/contact-form/send/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<void>(_options);
+    final httpResponse = HttpResponse(null, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<void>> deleteAccount({required String identifier}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<HttpResponse<void>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/accounts/${identifier}/anonymize/',
           queryParameters: queryParameters,
           data: _data,
         )

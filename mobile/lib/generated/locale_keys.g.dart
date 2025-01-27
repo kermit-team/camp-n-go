@@ -142,5 +142,15 @@ abstract class  LocaleKeys {
   static const parcelListEmpty = 'parcelListEmpty';
   static const registerFailed = 'registerFailed';
   static const loginFailed = 'loginFailed';
+  static const deleteAccount = 'deleteAccount';
+  static const anonymizeAccountConfirmation = 'anonymizeAccountConfirmation';
+  static const propertyChanged = 'propertyChanged';
+  static const passwordChanged = 'passwordChanged';
+  static const accountDeleted = 'accountDeleted';
+  static const accountNotDeleted = 'accountNotDeleted';
+  static const dataNotLoaded = 'dataNotLoaded';
+  static const checkboxMustBeChecked = 'checkboxMustBeChecked';
+  static const accept = 'accept';
+  static const termsAndConditions = 'termsAndConditions';
 
 }

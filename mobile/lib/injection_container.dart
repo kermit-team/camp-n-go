@@ -4,11 +4,11 @@ import 'package:campngo/features/account_settings/data/data_sources/account_sett
 import 'package:campngo/features/account_settings/data/repository_impl/account_settings_repository_impl.dart';
 import 'package:campngo/features/account_settings/domain/repository/account_settings_repository.dart';
 import 'package:campngo/features/account_settings/presentation/cubit/account_settings_cubit.dart';
-import 'package:campngo/features/account_settings/presentation/cubit/contact_form_cubit.dart';
 import 'package:campngo/features/auth/data/data_sources/auth_api_service.dart';
 import 'package:campngo/features/auth/data/repository_impl/auth_repository_impl.dart';
 import 'package:campngo/features/auth/domain/repository/auth_repository.dart';
 import 'package:campngo/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:campngo/features/contact_form/cubit/contact_form_cubit.dart';
 import 'package:campngo/features/register/data/data_sources/register_api_service.dart';
 import 'package:campngo/features/register/data/repository_impl/register_repository_impl.dart';
 import 'package:campngo/features/register/domain/repository/register_repository.dart';

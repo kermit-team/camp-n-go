@@ -19,7 +19,11 @@ class RegisterDTO {
   factory RegisterDTO.fromJson(Map<String, dynamic> json) =>
       _$RegisterDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RegisterDTOToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'email': email,
+        'password': password,
+        'profile': profile.toJson(),
+      };
 
   RegisterEntity toEntity() => RegisterEntity(
         email: email,

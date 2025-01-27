@@ -36,9 +36,9 @@ class _GoldenDateRangePickerFieldState
     super.initState();
     _dateRange = DateTimeRange(
       start: widget.initialStartDateTime ??
-          DateTime.now().add(const Duration(days: 1)),
+          DateTime.now(),
       end: widget.initialEndDateTime ??
-          DateTime.now().add(const Duration(days: 2)),
+          DateTime.now().add(const Duration(days: 1)),
     );
   }
 
@@ -47,7 +47,7 @@ class _GoldenDateRangePickerFieldState
       final DateTimeRange? pickedDateRange = await showDateRangePicker(
         context: context,
         initialDateRange: _dateRange,
-        firstDate: DateTime.now().add(const Duration(days: 1)),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2101),
         cancelText: LocaleKeys.cancel.tr(),
         confirmText: LocaleKeys.save.tr(),

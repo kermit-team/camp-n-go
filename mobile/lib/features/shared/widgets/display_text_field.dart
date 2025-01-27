@@ -17,6 +17,8 @@ class DisplayTextField extends StatelessWidget {
   final bool canBeModified;
   final bool hintFloatingEnable;
 
+  final bool asterixString;
+
   const DisplayTextField({
     super.key,
     required this.label,
@@ -29,6 +31,7 @@ class DisplayTextField extends StatelessWidget {
     this.isPassword = false,
     this.canBeModified = true,
     this.hintFloatingEnable = false,
+    this.asterixString = false,
   });
 
   @override
@@ -38,7 +41,9 @@ class DisplayTextField extends StatelessWidget {
       children: [
         GoldenTextField(
           label: label,
-          controller: TextEditingController(text: text),
+          controller: TextEditingController(
+            text: asterixString ? _starString(text) : text,
+          ),
           hintFloatingEnable: hintFloatingEnable,
           enabled: false,
           isPassword: isPassword,
@@ -77,7 +82,10 @@ class DisplayTextField extends StatelessWidget {
                           context: context,
                           initialValue: text,
                           label: label,
-                          validations: [const RequiredValidation()],
+                          validations: [
+                            const RequiredValidation(),
+                            const PhoneNumberValidation(),
+                          ],
                           onSave: (phoneNumber) {
                             onPhoneNumberSavePressed?.call(phoneNumber ?? '');
                           },
@@ -95,5 +103,17 @@ class DisplayTextField extends StatelessWidget {
               ),
       ],
     );
+  }
+
+  String _starString(String input) {
+    if (input.length <= 5) {
+      return '*' * input.length;
+    }
+
+    final firstTwo = input.substring(0, 2);
+    final lastTwo = input.substring(input.length - 2);
+    final maskedMiddle = '*' * (input.length - 4);
+
+    return '$firstTwo$maskedMiddle$lastTwo';
   }
 }

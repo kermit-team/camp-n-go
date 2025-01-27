@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from server.business_logic.mailing.abstract import AbstractMailBL
@@ -13,10 +14,13 @@ class ContactFormMail(AbstractMailBL):
 
     @classmethod
     def send(cls, email: str, content: str) -> None:
+        current_datetime = timezone.now()
+
         subject = str(cls._subject_template)
         ctx = {
             'email': email,
             'content': content,
+            'datetime': current_datetime.strftime(settings.DATETIME_INPUT_FORMATS[0]),
         }
 
         message = render_to_string(cls._message_template, ctx)

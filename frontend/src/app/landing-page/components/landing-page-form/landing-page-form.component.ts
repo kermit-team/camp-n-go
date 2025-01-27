@@ -16,6 +16,7 @@ import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { PeoplePickerComponent } from '../../../shared/components/people-picker/people-picker/people-picker.component';
 import { PassedData } from '../../../parcels/models/parcels.interface';
+import moment from 'moment/moment';
 
 @Component({
   selector: 'app-landing-page-form',
@@ -58,12 +59,15 @@ export class LandingPageFormComponent {
       this.now.getMonth(),
       this.now.getDate() + 1,
     );
+
+    this.search.get('start').disable();
+    this.search.get('end').disable();
   }
 
   searchParcels() {
     this.searchFired.emit({
-      startDate: this.search.value.start.toISOString(),
-      endDate: this.search.value.end.toISOString(),
+      startDate: moment(this.search.value.start).format('YYYY-MM-DD'),
+      endDate: moment(this.search.value.end).format('YYYY-MM-DD'),
       adultNumber: this.peoplePicker.adultNumber.getValue(),
       childrenNumber: this.peoplePicker.childNumber.getValue(),
     });

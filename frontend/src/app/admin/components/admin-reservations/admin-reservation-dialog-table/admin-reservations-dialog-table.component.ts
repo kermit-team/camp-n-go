@@ -84,7 +84,7 @@ export class AdminReservationsDialogTableComponent implements OnInit {
         name: 'Status Płatności',
         value: this.getPaymentStatus(reservation.payment.status),
       },
-      { name: 'Cena Płatności', value: reservation.payment.price + 'zł' },
+      { name: 'Cena', value: reservation.payment.price + 'zł' },
     ];
   }
 

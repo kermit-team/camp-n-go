@@ -21,6 +21,8 @@ import { AdminUsersEditComponent } from './admin/containers/admin-user-edit/admi
 import { AdminUsersAddComponent } from './admin/containers/admin-users-add/admin-users-add.component';
 import { accountDetailsResolver } from './admin/resolvers/account-details.resolver';
 import { AdminReservationsComponent } from './admin/containers/admin-reservations/admin-reservations.component';
+import { PolicyComponent } from './policy/container/policy/policy.component';
+import { RulesComponent } from './policy/container/rules/rules.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +47,14 @@ export const routes: Routes = [
   {
     path: AppRoutes.PasswordReset,
     component: PasswordResetComponent,
+  },
+  {
+    path: AppRoutes.Policy,
+    component: PolicyComponent,
+  },
+  {
+    path: AppRoutes.Rules,
+    component: RulesComponent,
   },
   {
     path: AppRoutes.Profile,

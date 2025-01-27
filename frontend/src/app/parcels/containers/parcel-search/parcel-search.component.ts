@@ -2,7 +2,6 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +15,7 @@ import { AsyncPipe } from '@angular/common';
 import { PageEvent } from '@angular/material/paginator';
 import { Parcel } from '../../models/parcels.interface';
 import { Router } from '@angular/router';
+import moment from 'moment';
 
 @Component({
   selector: 'app-parcel-search',
@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
     AsyncPipe,
   ],
 })
-export class ParcelSearchComponent implements OnInit, OnDestroy {
+export class ParcelSearchComponent implements OnInit {
   @ViewChild(PeoplePickerComponent) peoplePicker!: PeoplePickerComponent;
   @ViewChild(DateRangePickerComponent) datepicker!: DateRangePickerComponent;
   private parcelsFacade = inject(ParcelsFacade);
@@ -68,8 +68,10 @@ export class ParcelSearchComponent implements OnInit, OnDestroy {
 
   search() {
     this.parcelsFacade.setParcelFilters({
-      date_from: this.datepicker.search.value.start.toISOString().slice(0, 10),
-      date_to: this.datepicker.search.value.end.toISOString().slice(0, 10),
+      date_from: moment(this.datepicker.search.value.start).format(
+        'YYYY-MM-DD',
+      ),
+      date_to: moment(this.datepicker.search.value.end).format('YYYY-MM-DD'),
       number_of_adults: this.peoplePicker.adultNumber.getValue(),
       number_of_children: this.peoplePicker.childNumber.getValue(),
     });
@@ -81,9 +83,5 @@ export class ParcelSearchComponent implements OnInit, OnDestroy {
 
   onPaginationChanged(pageEvent: PageEvent) {
     this.parcelsFacade.setParcelPage(pageEvent.pageIndex + 1);
-  }
-
-  ngOnDestroy() {
-    console.log('destroy');
   }
 }

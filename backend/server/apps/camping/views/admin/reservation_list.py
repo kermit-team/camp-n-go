@@ -24,13 +24,13 @@ from server.utils.api.permissions import DjangoModelPermissionsWithGetPermission
             name='date_from',
             type=OpenApiTypes.DATE,
             location=OpenApiParameter.QUERY,
-            required=True,
+            required=False,
         ),
         OpenApiParameter(
             name='date_to',
             type=OpenApiTypes.DATE,
             location=OpenApiParameter.QUERY,
-            required=True,
+            required=False,
         ),
         OpenApiParameter(
             name='page_size',

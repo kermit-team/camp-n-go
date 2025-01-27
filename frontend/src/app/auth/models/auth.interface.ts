@@ -17,6 +17,7 @@ export interface AuthUser {
   email: string;
   profile: Profile;
   cars: Array<Car>;
+  groups: Array<{ name: string }>;
   is_superuser: boolean;
 }
 

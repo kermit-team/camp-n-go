@@ -4,7 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Car } from '../../../auth/models/auth.interface';
 import { switchMap } from 'rxjs';
 import { AuthFacade } from '../../../auth/services/auth.facade';
-import { AlertService } from '../../services/alert.service';
+import { UtilService } from '../../services/util.service';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -21,7 +21,7 @@ export class CarComponent {
   @Output() carDeleted: EventEmitter<string> = new EventEmitter<string>();
   @Output() selectedFired = new EventEmitter<number>();
 
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private httpClient = inject(HttpClient);
   private authFacade = inject(AuthFacade);
 

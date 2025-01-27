@@ -15,7 +15,7 @@ import {
 } from '../../shared/models/list.interface';
 import { ParcelsApi } from './parcels.api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 export class ParcelsFacade {
   private parcelsState = inject(ParcelsState);
   private parcelsApi = inject(ParcelsApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private router = inject(Router);
 
   setPassedData(passedData: PassedData) {

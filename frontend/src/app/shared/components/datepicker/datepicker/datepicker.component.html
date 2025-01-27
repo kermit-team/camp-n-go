@@ -1,0 +1,16 @@
+<div class="datepicker-input">
+  <mat-form-field floatLabel="always">
+    <mat-label>{{ placeholder }}</mat-label>
+    <input
+      class="input"
+      [placeholder]="placeholder"
+      matInput
+      [matDatepicker]="picker"
+      [disabled]="true"
+      [(ngModel)]="value"
+      (ngModelChange)="dateValueChanged($event)"
+    />
+    <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [disabled]="false"></mat-datepicker>
+  </mat-form-field>
+</div>

@@ -9,7 +9,7 @@ import { MatFormField, MatPrefix } from '@angular/material/form-field';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'lib-datepicker',
+  selector: 'lib-date-range-picker',
   standalone: true,
   imports: [
     MatDateRangeInput,
@@ -20,10 +20,10 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatPrefix,
   ],
-  templateUrl: './datepicker.component.html',
-  styleUrl: './datepicker.component.scss',
+  templateUrl: './date-range-picker.component.html',
+  styleUrl: './date-range-picker.component.scss',
 })
-export class DatepickerComponent {
+export class DateRangePickerComponent {
   private readonly now: Date = new Date();
   private readonly tomorrow: Date = new Date(
     this.now.getFullYear(),

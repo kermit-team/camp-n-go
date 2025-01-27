@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatepickerComponent } from '../../../shared/components/datepicker/datepicker.component';
+import { DateRangePickerComponent } from '../../../shared/components/datepicker/date-range-picker/date-range-picker.component';
 import { PeoplePickerComponent } from '../../../shared/components/people-picker/people-picker/people-picker.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { ParcelsFacade } from '../../services/parcels.facade';
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
   styleUrl: './parcel-search.component.scss',
   imports: [
     ReactiveFormsModule,
-    DatepickerComponent,
+    DateRangePickerComponent,
     PeoplePickerComponent,
     ButtonComponent,
     ParcelSearchListComponent,
@@ -33,7 +33,7 @@ import { Router } from '@angular/router';
 })
 export class ParcelSearchComponent implements OnInit, OnDestroy {
   @ViewChild(PeoplePickerComponent) peoplePicker!: PeoplePickerComponent;
-  @ViewChild(DatepickerComponent) datepicker!: DatepickerComponent;
+  @ViewChild(DateRangePickerComponent) datepicker!: DateRangePickerComponent;
   private parcelsFacade = inject(ParcelsFacade);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);

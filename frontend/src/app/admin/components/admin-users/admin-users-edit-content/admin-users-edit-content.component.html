@@ -1,0 +1,22 @@
+<form class="admin-users-add-content-form" [formGroup]="form">
+  <app-admin-users-general-form
+    [profileFormGroup]="getProfileFormGroup()"
+  ></app-admin-users-general-form>
+
+  <div class="admin-users-add-content-form-input-wrapper">
+    <lib-select [formControlName]="'groups'" [items]="userGroups"></lib-select>
+  </div>
+
+  <div class="admin-users-add-content-form-input-wrapper">
+    <mat-checkbox
+      formControlName="is_active"
+      class="admin-users-edit-content-form-checkbox"
+      >Użytkownik aktywny</mat-checkbox
+    >
+  </div>
+  <div class="admin-users-add-content-footer">
+    <lib-button type="primary" (click)="editUser()"
+      >Edytuj użytkownika</lib-button
+    >
+  </div>
+</form>

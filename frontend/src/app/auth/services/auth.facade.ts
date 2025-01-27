@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RegisterRequest } from '../models/register.interface';
 import { AuthApi } from './auth.api';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { catchError, first, map, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthState } from '../state/auth.state';
 import {
@@ -20,7 +20,7 @@ const REFRESH_KEY = 'refresh';
 })
 export class AuthFacade {
   private authApi = inject(AuthApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private authState = inject(AuthState);
   private router = inject(Router);
 

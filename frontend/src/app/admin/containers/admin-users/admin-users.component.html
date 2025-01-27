@@ -1,0 +1,21 @@
+<div class="admin-users">
+  <div class="admin-users-container">
+    <div class="admin-users-header">
+      <h1 class="admin-users-header-title">Użytkownicy</h1>
+      <a class="admin-users-header-link" [routerLink]="['/admin/users/add']"
+        >Dodaj użytkownika</a
+      >
+      <a class="admin-users-header-link" [routerLink]="'..'">Dashboard</a>
+    </div>
+    <app-admin-users-filters
+      [groups]="userGroups$ | async"
+      (searchFired)="search($event)"
+    ></app-admin-users-filters>
+    <app-admin-users-list
+      [items]="adminUsersItems$ | async"
+      [paginationMetadata]="paginationMetadata$ | async"
+      (paginationChanged)="onPaginationChanged($event)"
+      (editFired)="edit($event)"
+    ></app-admin-users-list>
+  </div>
+</div>

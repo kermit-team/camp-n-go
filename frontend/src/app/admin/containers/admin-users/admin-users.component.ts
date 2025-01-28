@@ -1,4 +1,10 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { AdminUsersFiltersComponent } from '../../components/admin-users/admin-users-filters/admin-users-filters.component';
 import { AdminUsersListComponent } from '../../components/admin-users/admin-users-list/admin-users-list.component';
 import { Router, RouterLink } from '@angular/router';
@@ -19,7 +25,7 @@ import { AdminUsersFilters } from '../../models/admin-users.interface';
   templateUrl: './admin-users.component.html',
   styleUrl: './admin-users.component.scss',
 })
-export class AdminUsersComponent implements OnInit {
+export class AdminUsersComponent implements OnInit, OnDestroy {
   private adminFacade = inject(AdminFacade);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
@@ -42,5 +48,8 @@ export class AdminUsersComponent implements OnInit {
 
   edit(id: string) {
     this.router.navigate(['admin/users/edit', id]);
+  }
+  ngOnDestroy() {
+    this.adminFacade.resetAdminParcelList();
   }
 }

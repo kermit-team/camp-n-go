@@ -54,6 +54,6 @@ export class ReservationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroy');
+    this.reservationsFacade.resetRezervationListParams();
   }
 }

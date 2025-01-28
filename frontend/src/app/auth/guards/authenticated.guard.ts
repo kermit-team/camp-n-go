@@ -3,7 +3,9 @@ import { AuthFacade } from '../services/auth.facade';
 import {
   ActivatedRouteSnapshot,
   CanActivateFn,
+  Router,
   RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
 import { AuthUser } from '../models/auth.interface';
@@ -12,34 +14,45 @@ import { AuthUser } from '../models/auth.interface';
   providedIn: 'root',
 })
 export class AuthenticatedGuard {
-  private readonly authFacade: AuthFacade;
+  private readonly authFacade = inject(AuthFacade);
+  private readonly router = inject(Router);
 
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+  ): Observable<boolean | UrlTree> | UrlTree {
     const token = this.authFacade.getToken();
 
     if (token) {
-      return this.authFacade
-        .selectAuthenticated$()
-        .pipe(map((authUser: AuthUser) => this.canAccess(authUser, route)));
+      return this.authFacade.selectAuthenticated$().pipe(
+        map((authUser: AuthUser) => {
+          const canAccess = this.canAccess(authUser, route);
+          return canAccess ? true : this.router.createUrlTree(['']);
+        }),
+      );
     } else {
-      return of(false);
+      return this.router.parseUrl('');
     }
   }
 
   canAccess(authUser: AuthUser, route: ActivatedRouteSnapshot) {
-    const isAdmin: boolean = route.data?.['admin'];
+    const mustBeAdmin: boolean = route.data?.['admin'];
 
     if (!authUser) {
       return false;
     }
 
-    return true; // todo if property isAdmin is implemented
-
-    // if (isAdmin && isAdmin === authUser.isAdmin) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
+    if (mustBeAdmin) {
+      if (
+        authUser.is_superuser ||
+        authUser.groups.some((group) => group.name === 'Właściciel')
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 }
 

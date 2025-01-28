@@ -87,6 +87,11 @@ export class AdminFacade {
     this.adminUsersState.setListFilters(filters);
   }
 
+  resetAdminParcelList() {
+    this.adminUsersState.resetListRequestParameters();
+    this.adminUsersState.unsetListFilters();
+  }
+
   getUserRoles$() {
     return this.adminApi.getUserGroups().pipe(
       first(),
@@ -220,5 +225,8 @@ export class AdminFacade {
     this.adminReservationsState.setListFilters(filters);
   }
 
-  resetAdminReservationList() {}
+  resetAdminReservationList() {
+    this.adminReservationsState.resetListRequestParameters();
+    this.adminReservationsState.unsetListFilters();
+  }
 }

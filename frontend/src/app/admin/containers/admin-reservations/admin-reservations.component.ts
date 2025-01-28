@@ -1,4 +1,10 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AdminFacade } from '../../services/admin.facade';
 import { AsyncPipe } from '@angular/common';
@@ -24,7 +30,7 @@ import { AdminReservationsDialogTableComponent } from '../../components/admin-re
   templateUrl: './admin-reservations.component.html',
   styleUrl: './admin-reservations.component.scss',
 })
-export class AdminReservationsComponent implements OnInit {
+export class AdminReservationsComponent implements OnInit, OnDestroy {
   private adminFacade = inject(AdminFacade);
   private destroyRef = inject(DestroyRef);
   private dialog = inject(MatDialog);
@@ -50,5 +56,9 @@ export class AdminReservationsComponent implements OnInit {
       width: '500px',
       data: { reservationData: item },
     });
+  }
+
+  ngOnDestroy() {
+    this.adminFacade.resetAdminReservationList();
   }
 }

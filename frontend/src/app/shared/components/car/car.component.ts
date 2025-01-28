@@ -28,7 +28,7 @@ export class CarComponent {
   deleteCar() {
     this.httpClient
       .delete<any>(
-        `http://localhost:8000/api/${this.car.id}/cars/remove-driver/`,
+        `http://localhost:8000/api/cars/${this.car.id}/remove-driver/`,
       )
       .pipe(
         switchMap((response: HttpResponse<any>) => {

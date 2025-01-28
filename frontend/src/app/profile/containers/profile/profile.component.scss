@@ -21,4 +21,22 @@
       font-size: 20px;
     }
   }
+
+  @media (max-width: 600px) {
+    padding: 150px 15px 15px 15px;
+
+    .profile-container {
+      .profile-header {
+        font-size: 30px;
+      }
+
+      .profile-subheader {
+        font-size: 18px;
+      }
+
+      .profile-squares {
+        max-width: 150px;
+      }
+    }
+  }
 }

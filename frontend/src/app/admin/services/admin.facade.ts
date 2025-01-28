@@ -219,4 +219,6 @@ export class AdminFacade {
   setAdminReservationFilters(filters: AdminReservationFilters) {
     this.adminReservationsState.setListFilters(filters);
   }
+
+  resetAdminReservationList() {}
 }

@@ -20,4 +20,21 @@
     color: var(--primary-color);
     cursor: pointer;
   }
+
+  @media (max-width: 500px) {
+    padding: 20px 10px;
+
+    .profile-base-form-content-wrapper,
+    .profile-base-form-action {
+      font-size: 14px;
+    }
+
+    .profile-base-form-content-wrapper {
+      gap: 16px;
+
+      .profile-base-form-title {
+        min-width: 120px;
+      }
+    }
+  }
 }

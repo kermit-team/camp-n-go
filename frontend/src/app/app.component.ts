@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        const hiddenRoutes = ['/register', '/login', 'forgot-password'];
+        const hiddenRoutes = ['/register', '/login', '/forgot-password'];
 
         if (event.url === '/') {
           this.isBlackNavbar.next(false);

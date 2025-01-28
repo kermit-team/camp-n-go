@@ -69,11 +69,27 @@ export class AuthFacade {
   }
 
   getToken(): string {
-    return this.authState.getToken();
+    let token = this.authState.getToken();
+    if (!token) {
+      token = this.getTokenFromStorage();
+      if (token && !this.checkIfExpired(token)) {
+        this.authState.setToken(token);
+      } else {
+        this.setAuthenticatedUser(undefined);
+        return undefined;
+      }
+    }
+    return token;
   }
 
   getTokenFromStorage(): string {
     return localStorage.getItem(ACCESS_KEY);
+  }
+
+  checkIfExpired(token: string) {
+    const decoded = jwtDecode(token);
+    const now = Date.now() / 1000;
+    return now > decoded.exp;
   }
 
   saveTokens(tokens: LoginTokensResponse) {

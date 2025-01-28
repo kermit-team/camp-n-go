@@ -27,6 +27,9 @@ export class ProfileMiniComponent {
   }
 
   get isOwner() {
-    return this.user.groups.some((group) => group.name === 'Właściciel');
+    return (
+      this.user.groups.some((group) => group.name === 'Właściciel') ||
+      this.user.is_superuser
+    );
   }
 }

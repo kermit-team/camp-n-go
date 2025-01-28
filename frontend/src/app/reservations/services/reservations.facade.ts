@@ -75,6 +75,10 @@ export class ReservationsFacade {
     this.reservationsState.refreshListRequestParameters();
   }
 
+  resetRezervationListParams() {
+    this.reservationsState.refreshListRequestParameters();
+  }
+
   cancelReservation(id: number) {
     this.reservationsApi
       .cancelReservation(id)

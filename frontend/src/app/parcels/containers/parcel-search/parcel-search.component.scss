@@ -17,5 +17,13 @@
     .parcel-search-container {
       width: 100%;
     }
+
+    @media (max-width: 900px) {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 150px 15px 15px 15px;
   }
 }

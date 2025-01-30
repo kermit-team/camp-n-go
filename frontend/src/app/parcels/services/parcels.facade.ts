@@ -15,8 +15,9 @@ import {
 } from '../../shared/models/list.interface';
 import { ParcelsApi } from './parcels.api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { Router } from '@angular/router';
+import { ContactRequest } from '../../landing-page/models/contact.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ import { Router } from '@angular/router';
 export class ParcelsFacade {
   private parcelsState = inject(ParcelsState);
   private parcelsApi = inject(ParcelsApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private router = inject(Router);
 
   setPassedData(passedData: PassedData) {
@@ -37,15 +38,12 @@ export class ParcelsFacade {
   }
 
   getDataTransformedPassedData() {
+    console.log(this.getPassedData().endDate);
     return {
       number_of_adults: this.getPassedData().adultNumber,
       number_of_children: this.getPassedData().childrenNumber,
-      date_to: new Date(this.getPassedData().endDate)
-        .toISOString()
-        .slice(0, 10),
-      date_from: new Date(this.getPassedData().startDate)
-        .toISOString()
-        .slice(0, 10),
+      date_to: this.getPassedData().endDate,
+      date_from: this.getPassedData().startDate,
     };
   }
 
@@ -130,5 +128,19 @@ export class ParcelsFacade {
 
   selectParcelForReservation$() {
     return this.parcelsState.selectParcelForReservation$();
+  }
+
+  sendContact(data: ContactRequest) {
+    this.parcelsApi
+      .contact(data)
+      .pipe(first())
+      .subscribe({
+        next: (response: ContactRequest) => {
+          this.alertService.showDialog('Wysłano email', 'success');
+        },
+        error: () => {
+          this.alertService.showDialog('Nie udało się wysłać emaila', 'error');
+        },
+      });
   }
 }

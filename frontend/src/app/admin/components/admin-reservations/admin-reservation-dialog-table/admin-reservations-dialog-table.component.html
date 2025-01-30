@@ -1,0 +1,24 @@
+<div class="profile-base-dialog">
+  <h2 mat-dialog-title>Dane rezerwacji</h2>
+  <mat-dialog-content>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSourceTransformed">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <lib-button [type]="'primary'" (click)="onCancel()">Zamknij</lib-button>
+  </mat-dialog-actions>
+</div>

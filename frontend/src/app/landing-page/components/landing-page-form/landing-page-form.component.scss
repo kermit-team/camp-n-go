@@ -1,4 +1,3 @@
-$primary: #ae9560;
 .search-container {
   display: flex;
   justify-content: center;
@@ -12,16 +11,32 @@ $primary: #ae9560;
     padding: 10px 20px;
     justify-content: space-between;
 
+    @media (max-width: 765px) {
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+
+      .search-button {
+        border-radius: 2px;
+        padding: 10px 25px;
+        font-size: 16px;
+        color: #fff;
+        background-color: var(--primary-color);
+        border: none;
+        cursor: pointer;
+      }
+    }
+
     .date-range-input {
       display: flex;
       align-items: center;
-      border-bottom: 1px solid $primary;
+      border-bottom: 1px solid var(--primary-color);
     }
     .guests-input {
       cursor: pointer;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid $primary;
+      border-bottom: 1px solid var(--primary-color);
       .guests-item-icon {
         width: 1rem;
         height: 1rem;
@@ -37,13 +52,24 @@ $primary: #ae9560;
       font-size: 20px;
       text-align: center;
       padding: 0 20px;
-      background-color: $primary;
+      background-color: var(--primary-color);
       border: none;
       border-radius: 2px;
       color: white;
       font-family: Montserrat;
       height: 56px;
       cursor: pointer;
+
+      @media (max-width: 765px) {
+        border-radius: 2px;
+        padding: 10px 25px;
+        font-size: 16px;
+        color: #fff;
+        background-color: var(--primary-color);
+        border: none;
+        cursor: pointer;
+        height: unset;
+      }
     }
   }
 }
@@ -52,40 +78,41 @@ $primary: #ae9560;
   max-width: 32px;
 }
 
-@media screen and (max-width: 600px) {
-  .search-container {
-    .search-form {
-      .date-range-input {
-        .date-input {
-          padding: 0.25rem;
-          border: none;
-          border-bottom: 1px solid $primary;
-          outline: none;
-          font-size: 0.5rem;
-        }
-      }
-      .guests-input {
-        cursor: pointer;
-        font-size: 0.5rem;
-        .guests-item-icon {
-          display: none;
-        }
-        .guests-select {
-          padding: 0.1rem;
-          border: none;
-          background-color: white;
-          margin-right: 0.5rem;
-          font-size: 0.5rem;
-        }
-      }
-      .search-button {
-        font-size: 24px;
-        text-align: center;
-        padding: 5px 10px;
-        margin-left: 0.5rem;
-        margin-right: 0.2rem;
-        background-color: $primary;
-      }
-    }
-  }
-}
+//@media screen and (max-width: 600px) {
+//  .search-container {
+//    .search-form {
+//      flex-direction: column;
+//      .date-range-input {
+//        .date-input {
+//          padding: 0.25rem;
+//          border: none;
+//          border-bottom: 1px solid var(--primary-color);
+//          outline: none;
+//          font-size: 0.5rem;
+//        }
+//      }
+//      .guests-input {
+//        cursor: pointer;
+//        font-size: 0.5rem;
+//        .guests-item-icon {
+//          display: none;
+//        }
+//        .guests-select {
+//          padding: 0.1rem;
+//          border: none;
+//          background-color: white;
+//          margin-right: 0.5rem;
+//          font-size: 0.5rem;
+//        }
+//      }
+//      .search-button {
+//        font-size: 24px;
+//        text-align: center;
+//        padding: 5px 10px;
+//        margin-left: 0.5rem;
+//        margin-right: 0.2rem;
+//        background-color: var(--primary-color);
+//      }
+//    }
+//  }
+//}

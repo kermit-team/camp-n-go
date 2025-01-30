@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RegisterRequest } from '../models/register.interface';
 import { AuthApi } from './auth.api';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { catchError, first, map, Observable, of, switchMap, tap } from 'rxjs';
 import { AuthState } from '../state/auth.state';
 import {
@@ -20,7 +20,7 @@ const REFRESH_KEY = 'refresh';
 })
 export class AuthFacade {
   private authApi = inject(AuthApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private authState = inject(AuthState);
   private router = inject(Router);
 
@@ -30,10 +30,14 @@ export class AuthFacade {
       .pipe(first())
       .subscribe({
         next: () =>
-          this.alertService.showDialog(
-            'Pomyślnie dodano użytkownika',
-            'success',
-          ),
+          this.router
+            .navigate(['/login'])
+            .then(() =>
+              this.alertService.showDialog(
+                'Pomyślnie dodano użytkownika',
+                'success',
+              ),
+            ),
 
         error: () =>
           this.alertService.showDialog(
@@ -69,11 +73,27 @@ export class AuthFacade {
   }
 
   getToken(): string {
-    return this.authState.getToken();
+    let token = this.authState.getToken();
+    if (!token) {
+      token = this.getTokenFromStorage();
+      if (token && !this.checkIfExpired(token)) {
+        this.authState.setToken(token);
+      } else {
+        this.setAuthenticatedUser(undefined);
+        return undefined;
+      }
+    }
+    return token;
   }
 
   getTokenFromStorage(): string {
     return localStorage.getItem(ACCESS_KEY);
+  }
+
+  checkIfExpired(token: string) {
+    const decoded = jwtDecode(token);
+    const now = Date.now() / 1000;
+    return now > decoded.exp;
   }
 
   saveTokens(tokens: LoginTokensResponse) {

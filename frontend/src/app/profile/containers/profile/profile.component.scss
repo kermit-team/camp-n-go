@@ -4,7 +4,7 @@
 
   .profile-container {
     margin: auto;
-    max-width: 765px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -21,4 +21,26 @@
       font-size: 20px;
     }
   }
+
+  @media (max-width: 600px) {
+    padding: 150px 15px 15px 15px;
+
+    .profile-container {
+      .profile-header {
+        font-size: 30px;
+      }
+
+      .profile-subheader {
+        font-size: 18px;
+      }
+
+      .profile-squares {
+        max-width: 150px;
+      }
+    }
+  }
+}
+
+.profile-header:nth-of-type(3) {
+  margin-top: 20px;
 }

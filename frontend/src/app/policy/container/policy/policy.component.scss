@@ -1,0 +1,37 @@
+.policy {
+  padding: 200px 40px;
+  max-width: 1000px;
+  margin: auto;
+
+  h1,
+  h2 {
+    color: #333;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+
+  p,
+  li {
+    margin: 10px 0;
+  }
+
+  ul {
+    margin-left: 20px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  .section hr {
+    margin: 20px 0;
+  }
+}

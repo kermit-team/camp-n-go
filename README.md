@@ -22,7 +22,10 @@ After that you should replace `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SIGNING_SECRE
 inside `.stripe.env` file.
 
 ## Running 
-Local development server should be run with script `run.sh`.
+Local development server should be run with script
+```bash
+bin/run.sh
+```
 
 If there's a need to clear local environment, you can run script 
 ```bash
@@ -33,11 +36,11 @@ bin/dev_clear.sh
 Scripts are located inside **bin** directory.
 
 
-| Script                      | Comment                                      |
-|-----------------------------|----------------------------------------------|
-| dev_clear.sh                | Is deleting all development environment.     |
-| dev_init.sh                 | Is creating all development environment.     |
-| enter.sh                    | Is running existing development environment. |
+| Script       | Comment                                      |
+|--------------|----------------------------------------------|
+| dev_clear.sh | Is deleting all development environment.     |
+| dev_init.sh  | Is creating all development environment.     |
+| run.sh       | Is running existing development environment. |
 
 ## Environment variables
 Environment variables are stored in grouped files. 
@@ -86,6 +89,7 @@ These files can be used by multiple services because of related settings.
 | RESERVATION_CANCELLATION_PERIOD_IN_DAYS              | 7            | The value of reservation cancellation period (in days).                                                          |
 | STRIPE_API_KEY                                       |              | API key used for payment gateway (Stripe CLi).                                                                   |
 | STRIPE_WEBHOOK_SIGNING_SECRET                        |              | Signing secret used for validating Stripe payment webhook requests.                                              |
+| MAX_REFUND_TIME_IN_DAYS                              | 14           | The value of max refund time (in days), which is handled by Stripe.                                              |
 | CHECK_IN_TIME_AS_HOUR                                | 14           | Check-in time value for camping (as hour).                                                                       |
 | CHECK_OUT_TIME_AS_HOUR                               | 10           | Check-out time value for camping (as hour).                                                                      |
 | CONTACT_FORM_RESPOND_TIME_IN_DAYS                    | 1            | Contact form respond time value (in days).                                                                       |
@@ -93,3 +97,5 @@ These files can be used by multiple services because of related settings.
 | RESERVATIONS_REMINDER_DAILY_DISPATCHER_TASK_SCHEDULE | 0 12 * * *   | Reservations reminder daily dispatcher time schedule (as crontab).                                               |
 | THROTTLING_RATE_ANONYMOUS                            | 200/minute   | Throttling rate for unauthenticated users.                                                                       |
 | THROTTLING_RATE_USER                                 | 500/minute   | Throttling rate for authenticated users.                                                                         |
+| ANONYMIZED_FIRST_NAME                                | Gall         | First name used for account anonymization process.                                                               |
+| ANONYMIZED_LAST_NAME                                 | Anonymous    | Last name used for account anonymization process.                                                                |

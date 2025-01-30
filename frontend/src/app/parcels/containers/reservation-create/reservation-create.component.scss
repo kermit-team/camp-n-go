@@ -12,7 +12,12 @@
 
     .reservation-create-header {
       font-family: "Playfair Display";
-      font-size: 48px;
+      font-size: 40px;
+      text-align: center;
+
+      @media (max-width: 500px) {
+        font-size: 34px;
+      }
     }
   }
 
@@ -36,6 +41,10 @@
 
         .reservation-create-data-parcel-info-photo {
           width: 250px;
+
+          @media (max-width: 500px) {
+            display: none;
+          }
         }
 
         .reservation-create-data-parcel-info-container {
@@ -46,6 +55,12 @@
 
         .reservation-create-data-parcel-info-text-bold {
           font-weight: 600;
+        }
+
+        @media (max-width: 500px) {
+          .reservation-create-data-parcel-info-row {
+            font-size: 14px;
+          }
         }
       }
 
@@ -71,6 +86,17 @@
           .reservation-create-data-personal-info-data-cars-error {
             color: red;
           }
+
+          @media (max-width: 500px) {
+            grid-template-columns: 1fr 1fr;
+            font-size: 14px;
+
+            &:last-of-type {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+          }
         }
       }
     }
@@ -87,6 +113,10 @@
         .reservation-create-payment-row {
           display: flex;
           justify-content: space-between;
+
+          @media (max-width: 500px) {
+            font-size: 14px;
+          }
         }
 
         .reservation-create-payment-sum {
@@ -104,6 +134,15 @@
       }
     }
   }
+
+  @media (max-width: 850px) {
+    padding: 150px 15px 15px 15px;
+
+    .reservation-create-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 }
 .reservation-create-data-header {
   display: flex;
@@ -115,6 +154,10 @@
   .reservation-create-data-header-text {
     font-size: 24px;
     font-weight: 500;
+
+    @media (max-width: 400px) {
+      font-size: 20px;
+    }
   }
 
   .reservation-create-action-wrapper {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ParcelsFacade } from '../../services/parcels.facade';
 import { AuthFacade } from '../../../auth/services/auth.facade';
@@ -8,6 +8,7 @@ import { CarComponent } from '../../../shared/components/car/car.component';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { DateFormatPipe } from '../../../shared/pipes/date.pipe';
 import { ParcelToReserve } from '../../models/parcels.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-create',
@@ -23,7 +24,7 @@ import { ParcelToReserve } from '../../models/parcels.interface';
     DateFormatPipe,
   ],
 })
-export class ReservationCreateComponent {
+export class ReservationCreateComponent implements OnInit, OnDestroy {
   private parcelFacade = inject(ParcelsFacade);
   private authFacade = inject(AuthFacade);
   private router = inject(Router);
@@ -32,6 +33,16 @@ export class ReservationCreateComponent {
   parcelToReserve$ = this.parcelFacade.selectParcelForReservation$();
 
   selectedCar: number;
+
+  private subscription: Subscription;
+
+  ngOnInit() {
+    this.subscription = this.parcelToReserve$.subscribe((parcel) => {
+      if (!parcel) {
+        this.router.navigate(['/parcels/search']);
+      }
+    });
+  }
 
   maskIdCard(id_card: string): string {
     if (!id_card) {
@@ -68,6 +79,10 @@ export class ReservationCreateComponent {
     this.router.navigate([`/parcels/search`]);
   }
 
+  goToProfile() {
+    this.router.navigate([`/profile`]);
+  }
+
   createReservation(parcel: ParcelToReserve) {
     this.parcelFacade.reserveParcel({
       date_from: new Date(parcel.date_from).toISOString().slice(0, 10),
@@ -77,5 +92,9 @@ export class ReservationCreateComponent {
       car: this.selectedCar,
       camping_plot: parcel.id,
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

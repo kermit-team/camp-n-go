@@ -13,6 +13,10 @@
       .parcel-search-item-photo {
         height: 100%;
         width: 158px;
+
+        @media (max-width: 600px) {
+          display: none;
+        }
       }
 
       .parcel-search-item-content-info {
@@ -27,6 +31,16 @@
 
           .parcel-search-item-content-info-title {
             font-size: 22px;
+
+            @media (max-width: 600px) {
+              font-size: 18px;
+            }
+          }
+        }
+
+        .parcel-search-item-content-info-subinfo {
+          @media (max-width: 600px) {
+            font-size: 14px;
           }
         }
 
@@ -37,6 +51,10 @@
         .parcel-search-item-content-info-more {
           color: var(--primary-color);
           cursor: pointer;
+
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
         }
       }
     }

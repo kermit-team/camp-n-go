@@ -1,0 +1,19 @@
+<div class="admin-users-filters">
+  <div class="admin-users-filters-container" [formGroup]="form">
+    <lib-datepicker
+      [placeholder]="'Data od'"
+      formControlName="date_from"
+    ></lib-datepicker>
+    <lib-datepicker
+      [placeholder]="'Data do'"
+      formControlName="date_to"
+    ></lib-datepicker>
+    <lib-input
+      formControlName="reservation_data"
+      [placeholder]="'Szukaj'"
+    ></lib-input>
+  </div>
+  <div class="admin-filters-button">
+    <lib-button (click)="search()">Wyszukaj</lib-button>
+  </div>
+</div>

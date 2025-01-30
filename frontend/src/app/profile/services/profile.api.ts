@@ -21,4 +21,10 @@ export class ProfileApi {
       { ...profileData },
     );
   }
+
+  anonimise(id: string) {
+    return this.httpClient.delete<string>(
+      `http://localhost:8000/api/accounts/${id}/anonymize/`,
+    );
+  }
 }

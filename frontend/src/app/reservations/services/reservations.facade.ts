@@ -7,7 +7,7 @@ import {
 } from '../../shared/models/list.interface';
 import { ReservationsApi } from './reservations.api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AlertService } from '../../shared/services/alert.service';
+import { UtilService } from '../../shared/services/util.service';
 import { Router } from '@angular/router';
 import {
   ReservationChangeCar,
@@ -21,7 +21,7 @@ import {
 export class ReservationsFacade {
   private reservationsState = inject(ReservationsState);
   private reservationsApi = inject(ReservationsApi);
-  private alertService = inject(AlertService);
+  private alertService = inject(UtilService);
   private router = inject(Router);
 
   loadReservationsItems(destroyRef: DestroyRef) {
@@ -72,6 +72,10 @@ export class ReservationsFacade {
   }
 
   refreshReservationsParamaters() {
+    this.reservationsState.refreshListRequestParameters();
+  }
+
+  resetRezervationListParams() {
     this.reservationsState.refreshListRequestParameters();
   }
 

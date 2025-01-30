@@ -19,10 +19,6 @@ export abstract class SharedListState<T> {
     return this.listRequestParameters$.asObservable();
   }
 
-  getListRequestParameters() {
-    return this.listRequestParameters$.getValue();
-  }
-
   setItems(items: Array<T>) {
     this.items$.next([...items]);
   }
@@ -75,5 +71,12 @@ export abstract class SharedListState<T> {
 
   refreshListRequestParameters() {
     this.listRequestParameters$.next(this.listRequestParameters$.getValue());
+  }
+
+  resetListRequestParameters(pageSize = 10) {
+    this.listRequestParameters$.next({
+      page: 1,
+      page_size: pageSize,
+    });
   }
 }

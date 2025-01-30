@@ -1,5 +1,5 @@
 <div class="reservations-list">
-  @if (items) {
+  @if (items && items.length > 0) {
     @for (item of items; track item) {
       <div class="reservations-item-wrapper" (click)="onEditFired(item.id)">
         <div class="reservations-item-container">

@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        const hiddenRoutes = ['/register', '/login', 'forgot-password'];
+        const hiddenRoutes = ['/register', '/login', '/forgot-password'];
 
         if (event.url === '/') {
           this.isBlackNavbar.next(false);
@@ -32,14 +32,12 @@ export class AppComponent implements OnInit {
           this.isBlackNavbar.next(true);
         }
 
-        // Dynamic patterns
         const dynamicPatterns = [
           /^\/accounts\/[^/]+$/, // Matches /accounts/{random-token}
           /^\/accounts\/email-verification\/[^/]+\/[^/]+$/, // Matches /accounts/email-verification/{token}/{another-token}
           /^\/accounts\/password-reset\/confirm\/[^/]+\/[^/]+$/, // Matches /accounts/password-reset/confirm
         ];
 
-        // Check if the current route matches any hidden route or dynamic pattern
         this.showNavbar = !(
           hiddenRoutes.includes(event.url) ||
           dynamicPatterns.some((pattern) => pattern.test(event.url))

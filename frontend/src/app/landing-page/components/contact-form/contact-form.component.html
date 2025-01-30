@@ -1,0 +1,28 @@
+<form class="search-form" [formGroup]="form">
+  <h1>Skontaktuj się</h1>
+  <div class="search-form-content">
+    <div class="search-form-input-wrapper">
+      <lib-input
+        placeholder="Email"
+        [formControlName]="'email'"
+        [fieldHasError]="controlHasError('email')"
+        [fieldRequired]="true"
+      ></lib-input>
+      <lib-error-message [field]="form.get('email')"></lib-error-message>
+    </div>
+    <div class="search-form-input-wrapper">
+      <textarea
+        [ngClass]="{
+          'control-invalid': !!controlHasError('content'),
+        }"
+        class="search-form-textarea"
+        cols="30"
+        placeholder="Treść*"
+        rows="10"
+        formControlName="content"
+      ></textarea>
+      <lib-error-message [field]="form.get('content')"></lib-error-message>
+    </div>
+  </div>
+  <lib-button (click)="send()"> Wyślij </lib-button>
+</form>

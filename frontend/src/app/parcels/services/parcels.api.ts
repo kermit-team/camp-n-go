@@ -10,6 +10,7 @@ import {
   CreateReservationResponse,
   ParcelListItem,
 } from '../models/parcels.interface';
+import { ContactRequest } from '../../landing-page/models/contact.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,13 @@ export class ParcelsApi {
     return this.httpClient.post<CreateReservationResponse>(
       `http://localhost:8000/api/camping/reservations/create/`,
       { ...reservation },
+    );
+  }
+
+  contact(data: ContactRequest) {
+    return this.httpClient.post<ContactRequest>(
+      `http://localhost:8000/api/camping/contact-form/send/`,
+      { ...data },
     );
   }
 }

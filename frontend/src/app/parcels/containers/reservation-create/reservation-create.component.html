@@ -101,7 +101,10 @@
             <span class="reservation-create-data-header-text"
               >Dane osobowe</span
             >
-            <div class="reservation-create-action-wrapper">
+            <div
+              class="reservation-create-action-wrapper"
+              (click)="goToProfile()"
+            >
               @if (authenticated$ | async) {
                 <span class="reservation-create-action-text">Zmień</span>
                 <svg

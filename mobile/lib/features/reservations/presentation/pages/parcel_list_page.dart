@@ -39,8 +39,8 @@ class _ParcelListPageState extends State<ParcelListPage> {
           params: GetParcelListParams(
             startDate: widget.params.startDate,
             endDate: widget.params.endDate,
-            adults: 2,
-            children: 0,
+            adults: widget.params.adults,
+            children: widget.params.children,
           ),
           page: pageKey,
         );

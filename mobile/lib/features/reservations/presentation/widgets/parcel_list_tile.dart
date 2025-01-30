@@ -60,12 +60,12 @@ class ParcelListTile extends StatelessWidget {
               KeyValueText(
                 keyText: LocaleKeys.overallPrice.tr(),
                 valueText:
-                    "${pricePerDay * params.endDate.difference(params.startDate).inDays}",
+                    "${pricePerDay * params.endDate.difference(params.startDate).inDays} PLN",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.pricePerDay.tr(),
-                valueText: "$pricePerDay",
+                valueText: "$pricePerDay PLN",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
@@ -75,12 +75,12 @@ class ParcelListTile extends StatelessWidget {
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.parcelLength.tr(),
-                valueText: parcel.length.toString(),
+                valueText: "${parcel.length.toString()}m",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(
                 keyText: LocaleKeys.parcelWidth.tr(),
-                valueText: parcel.width.toString(),
+                valueText: "${parcel.width.toString()}m",
               ),
               SizedBox(height: Constants.spaceXXS),
               KeyValueText(

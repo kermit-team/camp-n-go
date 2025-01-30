@@ -1,5 +1,6 @@
 import 'package:campngo/config/constants.dart';
 import 'package:campngo/core/resources/date_time_extension.dart';
+import 'package:campngo/core/resources/string_extension.dart';
 import 'package:campngo/features/reservations/domain/entities/reservation_preview.dart';
 import 'package:campngo/features/reservations/presentation/cubit/reservation_list_cubit.dart';
 import 'package:campngo/features/shared/widgets/texts/hyperlink_text.dart';
@@ -67,8 +68,9 @@ class ReservationListTile extends StatelessWidget {
                   SizedBox(height: Constants.spaceXXS),
                   KeyValueText(
                     keyText: LocaleKeys.price.tr(),
-                    valueText:
-                        '${reservation.payment.price.toStringAsFixed(2)} zł',
+                    valueText: reservation.payment.price
+                        .toStringAsFixed(2)
+                        .toPlnPrice(),
                   ),
                   SizedBox(height: Constants.spaceXXS),
                   KeyValueText(

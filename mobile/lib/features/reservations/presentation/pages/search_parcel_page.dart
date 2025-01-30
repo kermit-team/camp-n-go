@@ -36,9 +36,9 @@ class _SearchParcelPageState extends State<SearchParcelPage> {
   @override
   void initState() {
     super.initState();
-    startDateTime = DateTime.now().add(const Duration(days: 1));
-    endDateTime = DateTime.now().add(const Duration(days: 2));
-    numberOfAdults = 0;
+    startDateTime = DateTime.now();
+    endDateTime = DateTime.now().add(const Duration(days: 1));
+    numberOfAdults = 1;
     numberOfChildren = 0;
   }
 

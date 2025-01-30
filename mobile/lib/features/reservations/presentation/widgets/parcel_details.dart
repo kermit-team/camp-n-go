@@ -1,4 +1,5 @@
 import 'package:campngo/config/constants.dart';
+import 'package:campngo/core/resources/string_extension.dart';
 import 'package:campngo/features/reservations/domain/entities/parcel_list_item.dart';
 import 'package:campngo/features/shared/widgets/texts/key_value_text.dart';
 import 'package:campngo/generated/locale_keys.g.dart';
@@ -28,17 +29,19 @@ class ParcelDetailsWidget extends StatelessWidget {
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.baseParcelPrice.tr(),
-            valueText: parcel.campingSection.basePrice.toString(),
+            valueText: parcel.campingSection.basePrice.toString().toPlnPrice(),
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.pricePerAdult.tr(),
-            valueText: parcel.campingSection.pricePerAdult.toString(),
+            valueText:
+                parcel.campingSection.pricePerAdult.toString().toPlnPrice(),
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.pricePerChild.tr(),
-            valueText: parcel.campingSection.pricePerChild.toString(),
+            valueText:
+                parcel.campingSection.pricePerChild.toString().toPlnPrice(),
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
@@ -48,12 +51,12 @@ class ParcelDetailsWidget extends StatelessWidget {
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.parcelLength.tr(),
-            valueText: parcel.length.toString(),
+            valueText: "${parcel.length.toString()}m",
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(
             keyText: LocaleKeys.parcelWidth.tr(),
-            valueText: parcel.width.toString(),
+            valueText: "${parcel.width.toString()}m",
           ),
           SizedBox(height: Constants.spaceXS),
           KeyValueText(

@@ -30,8 +30,6 @@ export function tokenInterceptor(
     catchError((error: HttpErrorResponse) => {
       // Handle 401 errors
       if (error.status === 401 && !isRefreshTokenRequest) {
-        console.error('Access token expired. Attempting to refresh...');
-
         return authFacade.refreshToken().pipe(
           switchMap((newToken: { access: string }) => {
             authFacade.saveAccessTokenToStorage(newToken.access);
@@ -45,14 +43,12 @@ export function tokenInterceptor(
             return next(refreshedRequest);
           }),
           catchError((refreshError) => {
-            console.error('Token refresh failed. Logging out.', refreshError);
             authFacade.logout();
             return throwError(() => refreshError);
           }),
         );
       }
 
-      // If the error is not 401 or unhandled, propagate it
       return throwError(() => error);
     }),
   );

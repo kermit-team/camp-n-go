@@ -30,10 +30,14 @@ export class AuthFacade {
       .pipe(first())
       .subscribe({
         next: () =>
-          this.alertService.showDialog(
-            'Pomyślnie dodano użytkownika',
-            'success',
-          ),
+          this.router
+            .navigate(['/login'])
+            .then(() =>
+              this.alertService.showDialog(
+                'Pomyślnie dodano użytkownika',
+                'success',
+              ),
+            ),
 
         error: () =>
           this.alertService.showDialog(

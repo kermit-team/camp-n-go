@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthUser } from '../models/auth.interface';
 
 @Injectable({

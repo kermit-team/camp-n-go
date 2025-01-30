@@ -15,8 +15,9 @@
     (valueChanged)="dataEdited('profile.phone_number', $event)"
   ></app-profile-base-form>
   <app-profile-base-form
-    [data]="maskIdCard(user.profile.id_card)"
+    [data]="user.profile.id_card"
     [title]="'Dowód osobisty'"
+    [isMasked]="true"
     (valueChanged)="dataEdited('profile.id_card', $event)"
   ></app-profile-base-form>
   <app-profile-base-form

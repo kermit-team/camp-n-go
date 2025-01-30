@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthUser } from '../../../auth/models/auth.interface';
 import { ProfileBaseFormComponent } from '../profile-base-form/profile-base-form.component';
 import { PasswordEdit, ProfileEdit } from '../../models/profile.interface';
@@ -10,22 +10,20 @@ import { PasswordEdit, ProfileEdit } from '../../models/profile.interface';
   templateUrl: './profile-content.component.html',
   styleUrl: './profile-content.component.scss',
 })
-export class ProfileContentComponent {
+export class ProfileContentComponent implements OnInit {
   @Input() user: AuthUser;
   @Output() userChanged = new EventEmitter<ProfileEdit>();
 
-  maskIdCard(id_card: string): string {
-    if (!id_card) {
-      return '';
-    }
-    const start = id_card.slice(0, 2);
-    const end = id_card.slice(-2);
-    const masked = '*'.repeat(id_card.length - 4);
+  oldUser: AuthUser;
 
-    return `${start}${masked}${end}`;
+  ngOnInit() {
+    this.oldUser = this.user;
   }
 
   dataEdited(path: string, newValue: any): void {
+    if (this.user.profile.id_card === this.oldUser.profile.id_card) {
+      delete this.user.profile.id_card;
+    }
     this.setValueByPath(this.user, path, newValue);
     delete this.user.profile.avatar;
     this.userChanged.emit({

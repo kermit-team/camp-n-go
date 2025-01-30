@@ -16,5 +16,9 @@
       [cars]="(userData$ | async).cars"
       (carAdded)="carAdded($event)"
     ></app-profile-cars>
+    <h1 class="profile-header">Anonimizacja</h1>
+    <h2 class="profile-subheader">Zanonimizuj swoje dane</h2>
+    <img src="assets/squares.png" alt="squares" class="profile-squares" />
+    <lib-button type="secondary" (click)="anonimise()">Anonimizuj</lib-button>
   </div>
 </div>

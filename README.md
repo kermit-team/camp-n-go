@@ -22,7 +22,10 @@ After that you should replace `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SIGNING_SECRE
 inside `.stripe.env` file.
 
 ## Running 
-Local development server should be run with script `run.sh`.
+Local development server should be run with script
+```bash
+bin/run.sh
+```
 
 If there's a need to clear local environment, you can run script 
 ```bash
@@ -33,11 +36,11 @@ bin/dev_clear.sh
 Scripts are located inside **bin** directory.
 
 
-| Script                      | Comment                                      |
-|-----------------------------|----------------------------------------------|
-| dev_clear.sh                | Is deleting all development environment.     |
-| dev_init.sh                 | Is creating all development environment.     |
-| enter.sh                    | Is running existing development environment. |
+| Script       | Comment                                      |
+|--------------|----------------------------------------------|
+| dev_clear.sh | Is deleting all development environment.     |
+| dev_init.sh  | Is creating all development environment.     |
+| run.sh       | Is running existing development environment. |
 
 ## Environment variables
 Environment variables are stored in grouped files. 

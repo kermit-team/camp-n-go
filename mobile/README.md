@@ -35,7 +35,7 @@ It provides a user-friendly interface for browsing available camping plots, sele
 
 2.  **Run the app:**
 
-        flutter run
+    Drag .apk file from /mobile/apk/campngo.apk to emulator, allow to install application and run application Camp'n'go from installed applications.
 
 ## Key Libraries Used
 

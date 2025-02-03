@@ -1,0 +1,36 @@
+.reservations {
+  padding: 200px 15px 15px 15px;
+  width: 100%;
+
+  .reservations-wrapper {
+    margin: auto;
+    max-width: 1000px;
+    display: flex;
+    gap: 30px;
+
+    .reservations-container {
+      width: 100%;
+
+      .reservations-header-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        .reservations-header-border {
+          padding: 10px 50px;
+          border-bottom: 1px solid var(--primary-color);
+
+          .reservations-header-text {
+            font-family: "Playfair Display";
+            font-size: 40px;
+            text-align: center;
+
+            @media (max-width: 500px) {
+              font-size: 34px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

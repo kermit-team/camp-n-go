@@ -1,0 +1,151 @@
+<div class="reservation-create">
+  <div class="reservation-create-header-container">
+    <h1 class="reservation-create-header">Edytuj rezerwację</h1>
+  </div>
+  <div class="reservation-create-wrapper">
+    <div class="reservation-create-data">
+      <div class="reservation-create-data-parcel-wrapper">
+        <div class="reservation-create-data-header">
+          <span class="reservation-create-data-header-text">Dane parceli</span>
+        </div>
+        <div class="reservation-create-data-parcel-info">
+          <img
+            src="assets/plot.jpg"
+            alt="plot"
+            class="reservation-create-data-parcel-info-photo"
+          />
+          <div class="reservation-create-data-parcel-info-container">
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Numer parceli:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{ reservationDetails.camping_plot.position }}
+              </span>
+            </div>
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Sektor:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{ reservationDetails.camping_plot.camping_section.name }}
+              </span>
+            </div>
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Okres pobytu:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{ reservationDetails.date_from | dateNormalized }}-{{
+                  reservationDetails.date_to | dateNormalized
+                }}
+              </span>
+            </div>
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Liczba nocy:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{
+                  calculateNights(
+                    reservationDetails.date_from,
+                    reservationDetails.date_to
+                  )
+                }}
+              </span>
+            </div>
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Liczba dorosłych:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{ reservationDetails.number_of_adults }}
+              </span>
+            </div>
+            <div class="reservation-create-data-parcel-info-row">
+              <span class="reservation-create-data-parcel-info-text"
+                >Liczba dzieci:
+              </span>
+              <span class="reservation-create-data-parcel-info-text-bold"
+                >{{ reservationDetails.number_of_children }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reservation-create-data-personal-wrapper">
+        <div class="reservation-create-data-header">
+          <span class="reservation-create-data-header-text">Dane osobowe</span>
+        </div>
+        <div class="reservation-create-data-personal-info">
+          <div class="reservation-create-data-personal-info-descriptions">
+            <span class="reservation-create-data-personal-info-data"
+              >Imię i nazwisko:</span
+            >
+            <span class="reservation-create-data-personal-info-data"
+              >{{ reservationDetails.user.profile.first_name }}
+              {{ reservationDetails.user.profile.last_name }}</span
+            >
+          </div>
+          <div class="reservation-create-data-personal-info-descriptions">
+            <span class="reservation-create-data-personal-info-data"
+              >Nr telefonu:</span
+            >
+            <span class="reservation-create-data-personal-info-data">{{
+              reservationDetails.user.profile.phone_number
+            }}</span>
+          </div>
+          <div class="reservation-create-data-personal-info-descriptions">
+            <span class="reservation-create-data-personal-info-data"
+              >Dowód osobisty:</span
+            >
+            <span class="reservation-create-data-personal-info-data">{{
+              maskIdCard(reservationDetails.user.profile.id_card)
+            }}</span>
+          </div>
+          <div class="reservation-create-data-personal-info-descriptions">
+            <span class="reservation-create-data-personal-info-data"
+              >Samochody:</span
+            >
+            <div class="reservation-create-data-personal-info-data">
+              <div
+                class="reservation-create-data-personal-info-data-cars-container"
+              >
+                <div class="reservation-create-data-personal-info-data-cars">
+                  @for (car of user.cars; track car) {
+                    <lib-car
+                      (selectedFired)="selectCar($event)"
+                      [selectedCarPlate]="selectedCar"
+                      [selectable]="true"
+                      [car]="car"
+                    ></lib-car>
+                  }
+                </div>
+                @if (!selectedCar) {
+                  <div
+                    class="reservation-create-data-personal-info-data-cars-error"
+                  >
+                    Wybierz samochód, którym wjedziesz na kemping
+                  </div>
+                }
+              </div>
+              Dodaj samochody w
+              <a
+                [routerLink]="['/profile']"
+                class="reservation-create-data-personal-info-link"
+              >
+                Profilu
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reservation-buttons-wrapper">
+        <div class="reservation-buttons">
+          <lib-button type="secondary" (click)="cancel()">Odrzuć</lib-button>
+          <lib-button type="primary" (click)="save()">Zapisz</lib-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

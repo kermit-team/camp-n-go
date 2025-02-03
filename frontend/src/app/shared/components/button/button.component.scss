@@ -1,0 +1,27 @@
+button {
+  cursor: pointer;
+}
+.lib-button-primary {
+  border-radius: 2px;
+  padding: 10px 25px;
+  font-size: 16px;
+  color: #fff;
+  background-color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
+}
+
+.lib-button-secondary {
+  border-radius: 2px;
+  padding: 10px 25px;
+  font-size: 16px;
+  color: var(--primary-color);
+  background-color: white;
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+}

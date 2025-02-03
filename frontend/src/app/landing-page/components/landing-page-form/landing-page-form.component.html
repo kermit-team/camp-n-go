@@ -1,0 +1,37 @@
+<div class="search-container">
+  <form class="search-form" [formGroup]="search">
+    <div class="date-range-input" (click)="picker.open()">
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+          <input
+            [min]="minDate"
+            matStartDate
+            formControlName="start"
+            placeholder="Data zame..."
+            [disabled]="true"
+            [value]="minDate"
+          />
+          <input
+            matEndDate
+            formControlName="end"
+            [disabled]="true"
+            placeholder="Data wyme..."
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconPrefix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker
+          [disabled]="false"
+          #picker
+        ></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <lib-people-picker></lib-people-picker>
+
+    <button class="search-button" type="submit" (click)="searchParcels()">
+      Szukaj
+    </button>
+  </form>
+</div>

@@ -1,0 +1,63 @@
+<div class="reservations-list">
+  @if (items && items.length > 0) {
+    @for (item of items; track item) {
+      <div class="reservations-item-wrapper" (click)="onEditFired(item.id)">
+        <div class="reservations-item-container">
+          <div class="reservations-item-photo-container">
+            <img
+              src="assets/plot.jpg"
+              alt="plot"
+              class="reservations-item-photo"
+            />
+          </div>
+          <div class="reservations-item-info">
+            <div class="reservations-item-info-main">
+              <span class="reservation-item-info-main-text-bold">
+                Parcela nr {{ item.camping_plot.position }}
+              </span>
+              <span class="reservation-item-info-main-text"
+                >Sektor: {{ item.camping_plot.camping_section.name }}</span
+              ><span class="reservation-item-info-main-text"
+                >Okres pobytu:
+                <span class="text-bold">
+                  {{ item.date_from | dateNormalized }} -{{
+                    item.date_to | dateNormalized
+                  }}</span
+                ></span
+              ><span class="reservation-item-info-main-text">{{
+                getPaymentStatus(item.payment.status)
+              }}</span>
+            </div>
+            <div class="reservations-item-info-actions">
+              <span class="reservation-item-info-main-text-bold"
+                >{{ item.payment.price }}zł</span
+              >
+              @if (item.metadata.is_cancellable) {
+                <button
+                  class="reservations-item-info-actions-button"
+                  (click)="cancelReservation(item.id)"
+                >
+                  Odwołaj
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <mat-paginator
+      class="paginator"
+      (page)="handlePageEvent($event)"
+      [pageSize]="5"
+      [length]="paginationData?.totalElements"
+      [showFirstLastButtons]="false"
+      [pageSizeOptions]="[]"
+      [hidePageSize]="true"
+      [pageIndex]="paginationData?.currentPageIndex"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  } @else {
+    <span>Brak rezerwacji</span>
+  }
+</div>

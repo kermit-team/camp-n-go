@@ -1,0 +1,141 @@
+services:
+  database:
+    container_name: database
+    image: postgres:16
+    ports:
+      - '5432:5432'
+    env_file:
+      - envs/.database.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"'
+      timeout: 2s
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.frontend
+    env_file:
+      - envs/.frontend.env
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./frontend:/code
+      - /code/node_modules
+    depends_on:
+      backend:
+        condition: service_started
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+      - envs/.rabbitmq.env
+      - envs/.stripe.env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/code
+    depends_on:
+      database:
+        condition: service_healthy
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    container_name: stripe-cli
+    command: "listen --events checkout.session.completed,checkout.session.expired,charge.refunded --forward-to backend:8000/api/camping/payments/webhook/"
+    env_file:
+      - envs/.stripe.env
+    depends_on:
+      backend:
+        condition: service_started
+
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    env_file:
+      - envs/.rabbitmq.env
+    ports:
+      - '5672:5672'
+      - '8080:15672'
+    healthcheck:
+      interval: 10s
+      retries: 10
+      test: 'rabbitmq-diagnostics -q ping'
+      timeout: 5s
+    depends_on:
+      smtp-server:
+        condition: service_started
+
+  flower:
+    image: mher/flower
+    container_name: flower
+    env_file:
+      - envs/.rabbitmq.env
+    ports:
+      - '5555:5555'
+    command: celery flower --persistent=True
+    volumes:
+      - flower_data:/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  smtp-server:
+    image: mailhog/mailhog
+    container_name: mailhog
+    volumes:
+      - mailhog_data:/maildir
+    environment:
+      - MH_STORAGE=maildir
+      - MH_MAILDIR_PATH=maildir
+    ports:
+      - '8025:8025'
+
+  celery-beat:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    volumes:
+      - ./backend:/code
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+      - envs/.rabbitmq.env
+    command: sh run_celery.dev.sh
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile.backend
+    env_file:
+      - envs/.backend.env
+      - envs/.database.env
+      - envs/.rabbitmq.env
+    volumes:
+      - ./backend:/code
+    command: sh run_consumer.dev.sh common celery
+    depends_on:
+      database:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  flower_data:
+  mailhog_data:

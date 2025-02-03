@@ -1,0 +1,37 @@
+<nav class="navbar">
+  <div class="logo-wrapper" (click)="navigateToHome()">
+    <img
+      src="../../../assets/logo.svg"
+      alt="logo"
+      class="navbar-logo"
+      [ngClass]="{
+        black: isBlack,
+      }"
+    />
+    <span
+      class="logo-text"
+      [ngClass]="{
+        black: isBlack,
+      }"
+      >Camp'n'go</span
+    >
+  </div>
+
+  <div class="user-info">
+    @if (authUser) {
+      <app-profile-mini
+        [user]="authUser"
+        [isBlack]="isBlack"
+      ></app-profile-mini>
+    } @else {
+      <a
+        routerLink="/login"
+        class="login-link"
+        [ngClass]="{
+          black: isBlack,
+        }"
+        >Zaloguj się</a
+      >
+    }
+  </div>
+</nav>

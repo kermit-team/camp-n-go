@@ -1,0 +1,31 @@
+<div class="people-picker-wrapper">
+  <div class="people-picker-form-wrapper">
+    <div class="people-picker-input-wrapper">
+      <label for="adult-number" class="people-picker-input-label"
+        >Dorośli</label
+      >
+      <div class="input-control-wrapper">
+        <input
+          min="1"
+          [(ngModel)]="data.adultNumber"
+          class="input-control"
+          type="number"
+          id="adult-number"
+        />
+      </div>
+    </div>
+    <div class="people-picker-input-wrapper">
+      <label for="child-number" class="people-picker-input-label">Dzieci</label>
+      <div class="input-control-wrapper">
+        <input
+          min="0"
+          [(ngModel)]="data.childNumber"
+          class="input-control"
+          type="number"
+          id="child-number"
+        />
+      </div>
+    </div>
+  </div>
+  <lib-button (click)="closeDialog()">Zatwierdź</lib-button>
+</div>

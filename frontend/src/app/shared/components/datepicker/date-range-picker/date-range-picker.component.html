@@ -1,0 +1,22 @@
+<div class="date-range-input" [formGroup]="search">
+  <mat-form-field appearance="outline">
+    <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+      <input
+        [min]="minDate"
+        matStartDate
+        formControlName="start"
+        placeholder="Data zameldowan..."
+        [value]="minDate"
+        [disabled]="true"
+      />
+      <input
+        matEndDate
+        formControlName="end"
+        placeholder="Data wymeldowan..."
+        [disabled]="true"
+      />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker [disabled]="false"></mat-date-range-picker>
+  </mat-form-field>
+</div>

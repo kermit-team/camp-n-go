@@ -1,0 +1,50 @@
+.navbar {
+  width: 100%;
+  position: absolute;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    width: fit-content;
+
+    .navbar-logo {
+      filter: invert(100%);
+      height: 70px;
+
+      &.black {
+        filter: unset;
+      }
+    }
+
+    .logo-text {
+      color: #fff;
+
+      &.black {
+        color: black;
+      }
+    }
+  }
+
+  .login-link {
+    color: #fff;
+    text-decoration: none;
+
+    &.black {
+      color: black;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px;
+
+    .logo-text {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@if (items && items.length > 0) {
+  <div class="admin-users-container">
+    <table mat-table [dataSource]="items" class="table">
+      <ng-container matColumnDef="client">
+        <th mat-header-cell *matHeaderCellDef>Klient</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.user.profile.first_name }}
+          {{ element.user.profile.last_name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="registration">
+        <th mat-header-cell *matHeaderCellDef>Samochód</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.car.registration_plate }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="period">
+        <th mat-header-cell *matHeaderCellDef>Okres</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date_from | dateNormalized }} -
+          {{ element.date_to | dateNormalized }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          {{ getPaymentStatus(element.payment.status) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button class="table-action-button" (click)="details(element)">
+            Szczegóły
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    class="paginator"
+    (page)="handlePageEvent($event)"
+    [pageSize]="5"
+    [length]="paginationData?.totalElements"
+    [showFirstLastButtons]="false"
+    [pageSizeOptions]="[]"
+    [hidePageSize]="true"
+    [pageIndex]="paginationData?.currentPageIndex"
+    aria-label="Select page"
+  ></mat-paginator>
+} @else {
+  <span>Brak danych</span>
+}

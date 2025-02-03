@@ -1,0 +1,29 @@
+.input-control-wrapper {
+  border: 0;
+  border-bottom: 2px solid var(--primary-color);
+  outline: 0;
+  padding: 9px 0;
+  background: transparent;
+  display: flex;
+
+  .input-control {
+    border: 0;
+    appearance: none;
+    outline: none;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0 16px;
+
+    :focus {
+      border: 0;
+    }
+  }
+}
+
+.control-focus {
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.control-invalid {
+  border-bottom: 2px solid #b82727;
+}

@@ -1,0 +1,174 @@
+.reservation-create {
+  padding: 200px 15px 15px 15px;
+  width: 100%;
+
+  .reservation-create-header-container {
+    display: flex;
+    justify-content: center;
+    max-width: 650px;
+    margin: auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--primary-color);
+
+    .reservation-create-header {
+      font-family: "Playfair Display";
+      font-size: 40px;
+      text-align: center;
+
+      @media (max-width: 500px) {
+        font-size: 34px;
+      }
+    }
+  }
+
+  .reservation-create-wrapper {
+    margin: auto;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 50px;
+    column-gap: 70px;
+
+    .reservation-create-data {
+      grid-column: 1/4;
+      display: flex;
+      flex-direction: column;
+
+      .reservation-create-data-parcel-info {
+        display: flex;
+        padding: 24px 0;
+        gap: 24px;
+
+        .reservation-create-data-parcel-info-photo {
+          width: 250px;
+
+          @media (max-width: 500px) {
+            display: none;
+          }
+        }
+
+        .reservation-create-data-parcel-info-container {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .reservation-create-data-parcel-info-text-bold {
+          font-weight: 600;
+        }
+
+        @media (max-width: 500px) {
+          .reservation-create-data-parcel-info-row {
+            font-size: 14px;
+          }
+        }
+      }
+
+      .reservation-create-data-personal-info {
+        padding: 24px 0;
+
+        .reservation-create-data-personal-info-link {
+          color: var(--primary-color);
+        }
+
+        .reservation-create-data-personal-info-descriptions {
+          display: grid;
+          grid-template-columns: 1fr 3fr;
+          margin-bottom: 16px;
+
+          .reservation-create-data-personal-info-data-cars {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+          }
+
+          .reservation-create-data-personal-info-data-cars-error {
+            color: red;
+          }
+
+          @media (max-width: 500px) {
+            grid-template-columns: 1fr 1fr;
+            font-size: 14px;
+
+            &:last-of-type {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .reservation-create-container {
+      grid-column: 4/6;
+
+      .reservation-create-payment {
+        padding: 24px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .reservation-create-payment-row {
+          display: flex;
+          justify-content: space-between;
+
+          @media (max-width: 500px) {
+            font-size: 14px;
+          }
+        }
+
+        .reservation-create-payment-sum {
+          display: flex;
+          justify-content: space-between;
+          padding: 24px 0;
+          margin-top: 8px;
+          border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+          .reservation-create-payment-text {
+            font-size: 20px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    padding: 150px 15px 15px 15px;
+
+    .reservation-create-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+.reservation-create-data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 10px;
+
+  .reservation-create-data-header-text {
+    font-size: 24px;
+    font-weight: 500;
+
+    @media (max-width: 400px) {
+      font-size: 20px;
+    }
+  }
+
+  .reservation-create-action-wrapper {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+
+    .reservation-create-action-icon {
+      height: 22px;
+    }
+  }
+}

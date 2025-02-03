@@ -1,0 +1,22 @@
+.admin-users-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: end;
+  width: 100%;
+
+  .admin-users-filters-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+
+    lib-input,
+    lib-select {
+      width: 100%;
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+}

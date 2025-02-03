@@ -1,0 +1,15 @@
+FROM node:20.18-bullseye
+
+WORKDIR /code
+
+COPY frontend/package.json /code/
+COPY frontend/package-lock.json /code/
+
+RUN npm install --verbose
+RUN npm install -g @angular/cli --verbose
+
+COPY frontend /code
+
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host=0.0.0.0", "--poll=2000", "--disable-host-check"]

@@ -14,9 +14,21 @@ export class ProfileBaseFormComponent {
   @Input() data: string;
   @Input() title: string;
   @Input() isPassword = false;
+  @Input() isMasked = false;
   @Output() valueChanged = new EventEmitter<any>();
 
   private dialog = inject(MatDialog);
+
+  maskIdCard(id_card: string): string {
+    if (!id_card) {
+      return '';
+    }
+    const start = id_card.slice(0, 2);
+    const end = id_card.slice(-2);
+    const masked = '*'.repeat(id_card.length - 4);
+
+    return `${start}${masked}${end}`;
+  }
 
   opeEditForm() {
     if (this.isPassword) {

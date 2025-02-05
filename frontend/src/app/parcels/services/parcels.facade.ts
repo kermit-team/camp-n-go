@@ -17,6 +17,7 @@ import { ParcelsApi } from './parcels.api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UtilService } from '../../shared/services/util.service';
 import { Router } from '@angular/router';
+import { ContactRequest } from '../../landing-page/models/contact.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -127,5 +128,19 @@ export class ParcelsFacade {
 
   selectParcelForReservation$() {
     return this.parcelsState.selectParcelForReservation$();
+  }
+
+  sendContact(data: ContactRequest) {
+    this.parcelsApi
+      .contact(data)
+      .pipe(first())
+      .subscribe({
+        next: (response: ContactRequest) => {
+          this.alertService.showDialog('Wysłano email', 'success');
+        },
+        error: () => {
+          this.alertService.showDialog('Nie udało się wysłać emaila', 'error');
+        },
+      });
   }
 }

@@ -79,6 +79,10 @@ export class ReservationCreateComponent implements OnInit, OnDestroy {
     this.router.navigate([`/parcels/search`]);
   }
 
+  goToProfile() {
+    this.router.navigate([`/profile`]);
+  }
+
   createReservation(parcel: ParcelToReserve) {
     this.parcelFacade.reserveParcel({
       date_from: new Date(parcel.date_from).toISOString().slice(0, 10),

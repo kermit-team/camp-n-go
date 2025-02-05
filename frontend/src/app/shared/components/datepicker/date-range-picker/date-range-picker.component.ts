@@ -47,6 +47,11 @@ export class DateRangePickerComponent {
     end: new FormControl<Date>(this.tomorrow),
   });
 
+  constructor() {
+    this.search.get('start').disable();
+    this.search.get('end').disable();
+  }
+
   private patchForm({ dateFrom, dateTo }: { dateFrom?: Date; dateTo?: Date }) {
     this.search.patchValue({
       start: dateFrom,

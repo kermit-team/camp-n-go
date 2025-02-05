@@ -101,8 +101,11 @@ class _ContactFormPageState extends State<ContactFormPage> {
                       case SubmissionStatus.loading:
                         break;
                       case SubmissionStatus.success:
+                        emailController.text = '';
+                        textController.text = '';
                         AppSnackBar.showSnackBar(
                             context: context, text: LocaleKeys.emailSent.tr());
+
                       case SubmissionStatus.failure:
                         AppSnackBar.showErrorSnackBar(
                             context: context,

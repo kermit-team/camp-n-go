@@ -21,6 +21,14 @@ bin/dev_init.sh
 After that you should replace `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SIGNING_SECRET` variables 
 inside `.stripe.env` file.
 
+`STRIPE_API_KEY` can be obtained from 
+[Stripe dashboard](https://dashboard.stripe.comS/dashboard), 
+under API keys - Secret key.
+`STRIPE_WEBHOOK_SIGNING_SECRET` can be obtained from 
+[Stripe webhooks tab](https://dashboard.stripe.com/webhooks) - if you don't have existing webhook,
+you can obtain webhook for local development from 
+[create webhook page](https://dashboard.stripe.com/webhooks/create).
+
 ## Running 
 Local development server should be run with script
 ```bash

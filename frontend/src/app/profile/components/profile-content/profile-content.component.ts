@@ -21,13 +21,19 @@ export class ProfileContentComponent implements OnInit {
   }
 
   dataEdited(path: string, newValue: any): void {
-    if (this.user.profile.id_card === this.oldUser.profile.id_card) {
-      delete this.user.profile.id_card;
+    const user = { ...this.user };
+    if (path !== 'profile.id_card') {
+      delete user.profile.id_card;
     }
-    this.setValueByPath(this.user, path, newValue);
-    delete this.user.profile.avatar;
+    delete user.profile.avatar;
+    //
+    // if (this.user.profile.id_card === this.oldUser.profile.id_card) {
+    //   delete this.user.profile.id_card;
+    // }
+    this.setValueByPath(user, path, newValue);
+    // delete this.user.profile.avatar;
     this.userChanged.emit({
-      profile: this.user.profile,
+      profile: user.profile,
     });
   }
 
@@ -44,9 +50,12 @@ export class ProfileContentComponent implements OnInit {
   }
 
   passwordChanged(data: PasswordEdit) {
-    delete this.user.profile.avatar;
+    // delete this.user.profile.avatar;
+    const user = { ...this.user };
+    delete user.profile.id_card;
+    delete user.profile.avatar;
     this.userChanged.emit({
-      profile: this.user.profile,
+      profile: user.profile,
       old_password: data.old_password,
       new_password: data.new_password,
     });
